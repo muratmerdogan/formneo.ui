@@ -1,0 +1,14 @@
+#workCompanyIdBox .MuiAutocomplete-inputRoot {
+    height: 45px;
+}
+
+
+
+
+
+
+#workCompanyIdBox .MuiAutocomplete-inputFocused{
+    margin-top: -3px !important;
+}
+
+

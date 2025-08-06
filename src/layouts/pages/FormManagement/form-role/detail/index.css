@@ -1,0 +1,122 @@
+:root {
+  --primary-color: #4f46e5;
+  --primary-light: #6366f1;
+  --surface-border: #e5e7eb;
+  --text-color-secondary: #6b7280;
+}
+
+.picklist-custom .p-picklist-list {
+  border: 1px solid var(--surface-border);
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.picklist-custom .p-picklist-item {
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--surface-border);
+  transition: background-color 0.2s ease;
+}
+
+.picklist-custom .p-picklist-item:last-child {
+  border-bottom: none;
+}
+
+.picklist-custom .p-picklist-filter-container {
+  padding: 1rem;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--surface-border);
+  position: relative;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.picklist-custom .p-picklist-header {
+  background: #f9fafb;
+  padding: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--surface-border);
+  color: var(--primary-color);
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.picklist-custom .p-picklist-item:hover {
+  background: #f3f4f6;
+}
+
+.picklist-custom .p-picklist-filter-container .p-picklist-filter-icon {
+  position: absolute;
+  right: 1.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary);
+}
+
+.picklist-custom .p-picklist-filter-container .p-inputtext {
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 0.875rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.picklist-custom .p-picklist-filter-container .p-inputtext::placeholder {
+  color: #9ca3af;
+  opacity: 0.75;
+  font-size: 0.875rem;
+}
+
+.picklist-custom .p-picklist-filter-container .p-inputtext:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  outline: none;
+}
+
+.surface-card {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.shadow-2 {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-2:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.border-round {
+  border-radius: 0.75rem;
+}
+
+/* Add styles for selected items */
+.picklist-custom .p-picklist-item.p-highlight {
+  background-color: rgba(99, 102, 241, 0.1);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Improve the picklist controls */
+.picklist-custom .p-picklist-buttons {
+  padding: 1rem 0.5rem;
+}
+
+.picklist-custom .p-picklist-buttons .p-button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: var(--primary-color);
+  transition: all 0.2s ease;
+  border-radius: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.picklist-custom .p-picklist-buttons .p-button:hover {
+  background: var(--primary-light);
+  color: white;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}

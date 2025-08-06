@@ -1,0 +1,194 @@
+/* Kanban Board Custom Styles */
+
+.e-kanban .e-card {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e0e0e0 !important;
+  margin: 8px 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.e-kanban .e-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+.e-kanban .e-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 8px 8px 0 0 !important;
+  padding: 8px 12px !important;
+}
+
+.e-kanban .e-card-content {
+  padding: 12px !important;
+  background: #fff !important;
+}
+
+.e-kanban .e-column-header {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  padding: 12px !important;
+  border-radius: 8px 8px 0 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.e-kanban .e-column-header .e-header-text {
+  color: white !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.e-kanban .e-content-row {
+  background: #f8f9fa !important;
+  border-radius: 0 0 8px 8px !important;
+  padding: 8px !important;
+  min-height: 400px !important;
+}
+
+.e-kanban .e-swimlane-header {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  margin: 4px 0 !important;
+}
+
+.e-kanban .e-swimlane-header .e-swimlane-text {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+/* Dialog Styles */
+.e-kanban .e-dialog {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+.e-kanban .e-dialog .e-dlg-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.e-kanban .e-dialog .e-dlg-content {
+  padding: 20px !important;
+  background: #fff !important;
+}
+
+/* Custom Card Priority Indicators */
+.priority-low {
+  border-left: 4px solid #28a745 !important;
+}
+
+.priority-normal {
+  border-left: 4px solid #17a2b8 !important;
+}
+
+.priority-high {
+  border-left: 4px solid #ffc107 !important;
+}
+
+.priority-critical {
+  border-left: 4px solid #fd7e14 !important;
+}
+
+.priority-release-breaker {
+  border-left: 4px solid #dc3545 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .e-kanban .e-column-header {
+    font-size: 12px !important;
+    padding: 8px !important;
+  }
+
+  .e-kanban .e-card {
+    margin: 4px 0 !important;
+  }
+
+  .e-kanban .e-card-header {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
+
+  .e-kanban .e-card-content {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Loading Animation */
+.kanban-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 16px;
+  color: #666;
+}
+
+.kanban-loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Drag and Drop Styles */
+.e-kanban .e-card.e-draggable {
+  cursor: grab !important;
+}
+
+.e-kanban .e-card.e-draggable:active {
+  cursor: grabbing !important;
+}
+
+.e-kanban .e-target-dragged-clone {
+  transform: rotate(5deg) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Custom Scrollbar */
+.e-kanban .e-content-row::-webkit-scrollbar {
+  width: 6px;
+}
+
+.e-kanban .e-content-row::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.e-kanban .e-content-row::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.e-kanban .e-content-row::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.e-kanban-dialog.e-dialog {
+  min-width: 500px;
+  min-height: 790px;
+}

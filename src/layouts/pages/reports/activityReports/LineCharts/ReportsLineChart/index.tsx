@@ -1,0 +1,130 @@
+/**
+=========================================================
+* Material Dashboard 2 PRO React TS - v1.0.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
+import { useMemo, ReactNode, useRef, useEffect } from "react";
+
+// react-chartjs-2 components
+import { Line } from "react-chartjs-2";
+
+// @mui material components
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+import Icon from "@mui/material/Icon";
+
+// Material Dashboard 2 PRO React TS components
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
+// ReportsLineChart configurations
+import configs from "examples/Charts/LineCharts/ReportsLineChart/configs";
+
+// Declaring props types for ReportsLineChart
+interface Props {
+  color?: "primary" | "secondary" | "info" | "success" | "warning" | "error" | "dark";
+  title: string;
+  description?: string | ReactNode;
+  photo?: string | ReactNode;
+  date: string;
+  chart: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+    };
+  };
+  [key: string]: any;
+}
+
+function ReportsLineChart({ color, title, description, date, chart, photo }: Props): JSX.Element {
+  const { data, options } = configs(chart.labels || [], chart.datasets || {});
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+
+    const chartInstance = chartRef.current;
+
+
+    if (chartInstance) {
+
+      chartInstance.options.animation = {
+        ...chartInstance.options.animation,
+        onComplete: () => {
+          console.log("Grafik çizimi tamamlandı!");
+        },
+      };
+
+    }
+  }, []);
+  return (
+    <Card sx={{ height: "100%" }}>
+
+      <MDBox padding="1rem">
+
+        {useMemo(
+          () => (
+            <MDBox
+              variant="gradient"
+              bgColor={color}
+              borderRadius="lg"
+              coloredShadow={color}
+              py={2}
+              pr={0.5}
+              mt={-5}
+              height="12.5rem"
+            >
+              <Line data={data} ref={chartRef} options={options} />
+            </MDBox>
+          ),
+          [chart, color]
+        )}
+
+        <MDBox pt={3} pb={1} px={1}>
+          <MDTypography variant="h6" textTransform="capitalize">
+            {title}
+          </MDTypography>
+          <MDTypography component="div" variant="button" color="text" fontWeight="light">
+            {description}
+          </MDTypography>
+
+          {/* <MDBox display="flex" alignItems="center">
+            <MDTypography variant="button" color="text" lineHeight={1} sx={{ mt: 0.15, mr: 0.5 }}>
+              <Icon>schedule</Icon>
+            </MDTypography>
+            <MDTypography variant="button" color="text" fontWeight="light">
+              {date}
+            </MDTypography>
+          </MDBox> */}
+
+        </MDBox>
+        {photo != undefined ? <img style={{
+          top: 0, // Yukarıdan sıfır mesafe
+          right: 0, // Sağdan sıfır mesafe (sol köşe için left: 0 kullanın)
+          margin: "10px", // Kenarlardan biraz boşluk
+          width: 80,
+          height: 80,
+        }} alt="SAP Logo" src={photo ? `data:image/png;base64,${photo}` : null} /> : null}
+      </MDBox>
+
+    </Card>
+  );
+}
+
+// Declaring default props for ReportsLineChart
+ReportsLineChart.defaultProps = {
+  color: "dark",
+  description: "",
+};
+
+export default ReportsLineChart;

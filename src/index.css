@@ -1,0 +1,62 @@
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-kanban/styles/material.css";
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Diğer içeriklerin üzerinde olacak şekilde */
+}
+
+.css-10z7ynq-MuiGrid-root {
+    -webkit-flex-basis: 41.666667%;
+    -ms-flex-preferred-size: 41.666667%;
+    flex-basis: max-content !important;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    max-width: max-content !important;
+}
+.css-hm816m-MuiGrid-root {
+    -webkit-flex-basis: 58.333333%;
+    -ms-flex-preferred-size: 58.333333%;
+    flex-basis: max-content !important;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    max-width: max-content !important;
+}
+.css-19y8bcr {
+    height: 12.5rem;
+    opacity: 1;
+    background: transparent;
+    color: #344767;
+    border-radius: none;
+    box-shadow: none;
+    width: 12.5rem;
+}
+.css-10z7ynq-MuiGrid-root {
+    -webkit-flex-basis: 41.666667%;
+    -ms-flex-preferred-size: 41.666667%;
+    flex-basis: max-content !important;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    max-width: max-content !important;
+}
