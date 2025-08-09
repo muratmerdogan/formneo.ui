@@ -2,15 +2,18 @@
   background-color: #212121;
   color: #dedede;
   width: 100%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Enhanced shadow for depth */
 }
 
 /* Menu Item Stilleri */
 .menu-item {
-  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Added color transition */
+  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  /* Added color transition */
   background-color: #212121 !important;
   border-radius: 4px;
-  position: relative; /* For pseudo-element positioning */
+  position: relative;
+  /* For pseudo-element positioning */
 }
 
 .menu-item:hover {
@@ -30,7 +33,7 @@
   color: #dedede;
 }
 
-.submenu > .menu-item {
+.submenu>.menu-item {
   margin-left: 30px;
 }
 
@@ -44,21 +47,25 @@
 
 /* Link Stilleri */
 .menu-link {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  /* Remove underline */
+  color: inherit;
+  /* Inherit color from parent */
   width: 100%;
   display: block;
 }
 
 .menu-link:hover {
-  color: inherit; /* Ensure color remains the same on hover */
+  color: inherit;
+  /* Ensure color remains the same on hover */
 }
 
 /* İkon Stilleri (eğer varsa) */
 .menu-item-icon {
   margin-right: 10px;
   color: #dedede;
-  transition: color 0.3s ease; /* Added transition for icon color */
+  transition: color 0.3s ease;
+  /* Added transition for icon color */
 }
 
 .menu-item:hover .menu-item-icon {
@@ -69,8 +76,10 @@
 
 /* Additional Improvements */
 .menu-item:focus {
-  outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 0 2px var(--primary-color); /* Custom focus outline */
+  outline: none;
+  /* Remove default focus outline */
+  box-shadow: 0 0 0 2px var(--primary-color);
+  /* Custom focus outline */
 }
 
 /* New Effect for Active Menu Item */
@@ -81,8 +90,6 @@
   bottom: 0;
   height: 3px;
   width: 100%;
-  background-color: var(--primary-color); /* Underline effect for active item */
+  background-color: var(--primary-color);
+  /* Underline effect for active item */
 }
-
-
-

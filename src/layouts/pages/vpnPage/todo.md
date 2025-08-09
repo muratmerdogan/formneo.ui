@@ -1,6 +1,6 @@
-Tamamlandı - 1-logon edit herkes <=> herkes düzenleme yapabilmeli 
+Tamamlandı - 1-logon edit herkes <=> herkes düzenleme yapabilmeli
 
-Tamamlndı -  2-log history logon login tab <=> primereact tabbar kullanarak 2 log table oluşturulcaj
+Tamamlndı - 2-log history logon login tab <=> primereact tabbar kullanarak 2 log table oluşturulcaj
 
 Tamamlandı - 3-üst birim alanı eklenicek login alanına ve ek Bilgi alanı <=> new textField eklenicek ustBirim
 
@@ -16,10 +16,9 @@ Tamamlandı - 7- vpn card kurulum link carda ekle
 
 9- vpn giriş düzenleme yetkisi belli kişilerde olsun
 
-10- tickettan yönlendirme 
+10- tickettan yönlendirme
 
-11- sadece şirket içi maili seçilicek @vesacons.com
-
+11- sadece şirket içi maili seçilicek @formneo.com
 
 12- vpn için en güncel sabitlenicek, ss, kurulum lazım, güncel iconu,isim ile aranınca en günceli gelicek
 
@@ -30,17 +29,3 @@ Tamamlandı - 7- vpn card kurulum link carda ekle
 15- vpn, sistem logon giriş adresleri,
 
 16- linkleri supporta tutalım? sorulucak
-
-
-
-
-
-
-
-
-
-
-
-
-
-

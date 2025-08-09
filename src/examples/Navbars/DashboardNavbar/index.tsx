@@ -141,7 +141,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   const dispatchAlert = useAlert();
   const dispatchBusy = useBusy();
 
-  // 
+  //
   useEffect(() => {
     const handleStorageChange = () => {
       const currentTheme = (localStorage.getItem("themePreference") as Theme) || "light";
@@ -500,16 +500,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   return (
     <div style={{ position: "sticky", top: 0, zIndex: 1000, width: "100%" }}>
       <ShellBar
-        // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent 
+        // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent
         style={{ paddingLeft: 10, }}
-        logo={
-          <img
-            style={{ width: "100%", height: "100%", objectFit: "cover", marginLeft: 0 }}
-            alt="SAP Logo"
-            loading="lazy"
-            src="https://sap.github.io/ui5-webcomponents/images/sap-logo-svg.svg"
-          />
-        }
         // menuItems={<><ListItemStandard data-key="1">Menu Item 1</ListItemStandard><ListItemStandard data-key="2">Menu Item 2</ListItemStandard><ListItemStandard data-key="3">Menu Item 3</ListItemStandard></>}
         notificationsCount={waitingCount.toString()}
         onLogoClick={function Ki() { }}

@@ -111,6 +111,8 @@ import WorkFlowList from "layouts/pages/WorkFlow/WorkFlowList";
 import WorkFlowDetail from "layouts/pages/WorkFlow/WorkFlowDetail.jsx";
 import ApproveList from "layouts/pages/WorkFlow/ApproveList";
 import ParameterView from "layouts/pages/FormManagement/listForm/ParameterView";
+import TenantsList from "layouts/pages/tenants/index";
+import TenantDetail from "layouts/pages/tenants/detail";
 // const { userAppDto } = useUser(); // Context'ten veriyi alıyoruz
 
 
@@ -1129,6 +1131,26 @@ const routes = [
     href: "https://github.com/creativetimofficial/ct-material-dashboard-pro-react/blob/main/CHANGELOG.md",
     icon: <Icon fontSize="medium">receipt_long</Icon>,
     noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Tenants",
+    key: "tenants",
+    icon: <Icon fontSize="medium">business</Icon>,
+    collapse: [
+      {
+        name: "Tenant List",
+        key: "tenant-list",
+        route: "/tenants",
+        component: <TenantsList />,
+      },
+      {
+        name: "Tenant Detail",
+        key: "tenant-detail",
+        route: "/tenants/detail",
+        component: <TenantDetail />,
+      },
+    ],
   },
 ];
 

@@ -55,6 +55,7 @@ import "primeicons/primeicons.css";
 
 // Custom styles for the Sidenav
 import logo from "../../assets/images/vesapng.png";
+import formneoLogo from "assets/images/formneolog.png";
 
 // Material Dashboard 2 PRO React context
 import {
@@ -78,16 +79,16 @@ interface Props {
   brandName: string;
   routes: {
     [key: string]:
+    | ReactNode
+    | string
+    | {
+      [key: string]:
       | ReactNode
       | string
       | {
-          [key: string]:
-            | ReactNode
-            | string
-            | {
-                [key: string]: ReactNode | string;
-              }[];
-        }[];
+        [key: string]: ReactNode | string;
+      }[];
+    }[];
   }[];
   [key: string]: any;
 }
@@ -553,7 +554,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
           {/* Header with logo */}
           <Box
             sx={{
-              padding: "24px 20px",
+              padding: "12px 16px",
               display: "flex",
               alignItems: "center",
               justifyContent: miniSidenav ? "center" : "space-between",
@@ -561,23 +562,23 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
             }}
           >
             {!miniSidenav ? (
-              <img
-                src={logo}
-                alt="Vesa Solutions"
-                style={{
-                  width: "100%",
-                  transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
-                }}
-              />
+              <Box sx={{ height: 28, maxWidth: 160, display: "flex", alignItems: "center" }}>
+                <img
+                  src={formneoLogo}
+                  alt="FormNeo"
+                  style={{ height: "100%", width: "auto", display: "block", objectFit: "contain" }}
+                  loading="lazy"
+                />
+              </Box>
             ) : (
-              <img
-                src={logo}
-                alt="Vesa Solutions"
-                style={{
-                  width: "100%",
-                  transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
-                }}
-              />
+              <Box sx={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img
+                  src={formneoLogo}
+                  alt="FormNeo"
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                  loading="lazy"
+                />
+              </Box>
             )}
           </Box>
 
@@ -1001,8 +1002,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
                             selectedLanguage === lang.value
                               ? themes[theme].menu.icon
                               : theme === "dark"
-                              ? "rgba(255, 255, 255, 0.1)"
-                              : "rgba(0, 0, 0, 0.08)",
+                                ? "rgba(255, 255, 255, 0.1)"
+                                : "rgba(0, 0, 0, 0.08)",
                           overflow: "hidden",
                           transition: "all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1)",
                           transform:
@@ -1028,8 +1029,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
                                   selectedLanguage === lang.value
                                     ? themes[theme].menu.icon
                                     : theme === "dark"
-                                    ? "rgba(255, 255, 255, 0.5)"
-                                    : "rgba(0, 0, 0, 0.4)",
+                                      ? "rgba(255, 255, 255, 0.5)"
+                                      : "rgba(0, 0, 0, 0.4)",
                                 transition: "transform 0.2s ease, color 0.2s ease",
                               },
                               "&.Mui-checked .MuiSvgIcon-root": {

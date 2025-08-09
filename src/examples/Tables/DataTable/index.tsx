@@ -59,6 +59,8 @@ interface Props {
   noEndBorder?: boolean;
   setItemsPerPage?: (data: number) => void;
   totalRowCount?: number;
+  // Opsiyonel: Satıra ek prop/inline style uygulamak için callback
+  getRowProps?: (row: any) => { [key: string]: any } | undefined;
 }
 
 function DataTable({
@@ -71,6 +73,7 @@ function DataTable({
   noEndBorder,
   setItemsPerPage,
   totalRowCount
+  , getRowProps
 }: Props): JSX.Element {
   let defaultValue: any;
   let entries: any[];
@@ -252,7 +255,10 @@ function DataTable({
             : page.map((row: any, key: any) => {
               prepareRow(row);
               return (
-                <TableRow key={key} {...row.getRowProps()}>
+                <TableRow
+                  key={key}
+                  {...row.getRowProps(getRowProps ? getRowProps(row) : undefined)}
+                >
                   {row.cells.map((cell: any, key: any) => (
                     <DataTableBodyCell
                       key={key}

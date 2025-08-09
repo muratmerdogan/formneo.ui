@@ -114,7 +114,7 @@ function ReportsLineChart({ color, title, description, date, chart, photo }: Pro
           margin: "10px", // Kenarlardan biraz boşluk
           width: 80,
           height: 80,
-        }} alt="SAP Logo" src={photo ? `data:image/png;base64,${photo}` : null} /> : null}
+        }} alt="User Photo" src={photo ? `data:image/png;base64,${photo}` : null} /> : null}
       </MDBox>
 
     </Card>

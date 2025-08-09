@@ -47,15 +47,15 @@ function Footer({ company, links }: Props): JSX.Element {
       <MDBox key={link.name} component="li" px={2} lineHeight={1}>
         <Link href={link.href} target="_blank">
           <MDTypography variant="button" fontWeight="regular" color="text">
-            {link.name === "Vesacons"
+            {link.name === "formneo"
               ? link.name
               : link.name === "Hakkimizda"
-              ? t("ns1:FooterPage.Hakkimizda")
-              : link.name === "Blog"
-              ? t("ns1:FooterPage.Blog")
-              : link.name === "Lisans"
-              ? t("ns1:FooterPage.Lisans")
-              : link.name}
+                ? t("ns1:FooterPage.Hakkimizda")
+                : link.name === "Blog"
+                  ? t("ns1:FooterPage.Blog")
+                  : link.name === "Lisans"
+                    ? t("ns1:FooterPage.Lisans")
+                    : link.name}
           </MDTypography>
         </Link>
       </MDBox>
@@ -84,9 +84,9 @@ function Footer({ company, links }: Props): JSX.Element {
         <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
           <Icon color="inherit" fontSize="inherit"></Icon>
         </MDBox>
-        <Link href="https://vesacons.com/" target="_blank">
+        <Link href="https://formneo.com/" target="_blank">
           <MDTypography variant="button" fontWeight="medium">
-            {t("ns1:FooterPage.VesaconsSoftwareDevelopment")}
+            {t("ns1:FooterPage.formneoSoftwareDevelopment")}
           </MDTypography>
         </Link>
       </MDBox>
@@ -115,12 +115,12 @@ function Footer({ company, links }: Props): JSX.Element {
 
 // Declaring default props for Footer
 Footer.defaultProps = {
-  company: { href: "https://vesacons.com/", name: "Vesacons" },
+  company: { href: "https://formneo.com/", name: "formneo" },
   links: [
-    { href: "https://vesacons.com/", name: "Vesacons" },
-    { href: "https://vesacons.com/", name: "Hakkimizda" },
-    { href: "https://vesacons.com/", name: "Blog" },
-    { href: "https://vesacons.com/", name: "Lisans" },
+    { href: "https://formneo.com/", name: "formneo" },
+    { href: "https://formneo.com/", name: "Hakkimizda" },
+    { href: "https://formneo.com/", name: "Blog" },
+    { href: "https://formneo.com/", name: "Lisans" },
   ],
 };
 

@@ -210,10 +210,10 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Vesa Support"
+              brandName="FormNeo"
               routes={routes}
-              // onMouseEnter={handleOnMouseEnter}
-              // onMouseLeave={handleOnMouseLeave}
+            // onMouseEnter={handleOnMouseEnter}
+            // onMouseLeave={handleOnMouseLeave}
             />
             {/* <Configurator /> */}
             {/* {configsButton} */}
@@ -235,10 +235,10 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Vesa Soluitions"
+            brandName="FormNeo"
             routes={routes}
-            // onMouseEnter={handleOnMouseEnter}
-            // onMouseLeave={handleOnMouseLeave}
+          // onMouseEnter={handleOnMouseEnter}
+          // onMouseLeave={handleOnMouseLeave}
           />
           {/* <Configurator /> */}
           {/* {configsButton} */}
@@ -290,12 +290,12 @@ export default function App() {
         <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
         <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
         <Route path="/inventory" element={<Inventory />} />
-        <Route path="/inventory/detail" element={<CreateInventory/>} />
+        <Route path="/inventory/detail" element={<CreateInventory />} />
         <Route path="/inventory/detail/:id" element={<CreateInventory />} />
         <Route path="/resumeBuild" element={<ResumeBuild />} />
         <Route path="/pcTracking" element={<PCTrackingManagement />} />
         <Route path="/userTasks" element={<UserTasks />} />
-        <Route path="/userProjects" element={<UserProjects/>} />
+        <Route path="/userProjects" element={<UserProjects />} />
         <Route path="/vpn" element={<VpnDashboard />} />
         <Route path="/kanban" element={<KanbanPage />} />
         <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />

@@ -15,6 +15,11 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { styled } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -22,12 +27,59 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
-// Authentication layout components
-import CoverLayout from "layouts/authentication/components/CoverLayout";
+// Layout components
+import PageLayout from "examples/LayoutContainers/PageLayout";
 
-// Images
-import bgImage from "assets/images/bg-profile.jpeg";
-import startPageImg from "assets/images/startPageImg.png";
+// Styled components for Metronic-style layout
+const ResetContainer = styled(Box)(({ theme }) => ({
+  minHeight: "100vh",
+  display: "flex",
+  alignItems: "center",
+  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+}));
+
+const ResetCard = styled(Card)(({ theme }) => ({
+  borderRadius: "20px",
+  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+  overflow: "hidden",
+  maxWidth: "1000px",
+  width: "100%",
+  margin: "0 auto",
+}));
+
+const LeftSection = styled(Box)(({ theme }) => ({
+  background: "linear-gradient(135deg, #3e5d8f 0%, #2c4a7a 100%)",
+  color: "white",
+  padding: theme.spacing(6),
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center",
+  minHeight: "600px",
+}));
+
+const RightSection = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(6),
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  backgroundColor: "#ffffff",
+  minHeight: "600px",
+}));
+
+const BrandLogo = styled(Box)(({ theme }) => ({
+  width: "80px",
+  height: "80px",
+  borderRadius: "50%",
+  background: "rgba(255, 255, 255, 0.1)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: theme.spacing(3),
+  fontSize: "32px",
+  fontWeight: "bold",
+}));
 import { useEffect, useState } from "react";
 import { getAccessToken } from "confiuration";
 import { Configuration, ForgotPasswordApi, UserApi } from "api/generated";
@@ -213,118 +265,335 @@ function Cover(): JSX.Element {
 
 
   return (
-    <CoverLayout image={startPageImg}>
-      <Card sx={{ mb: "84%" }}>
-        <MDBox
-          variant="gradient"
-          style={{ backgroundColor: "#3e5d8f" }}
-          borderRadius="lg"
-          coloredShadow="dark"
-          mx={2}
-          mt={-3}
-          py={2}
-          mb={1}
-          textAlign="center"
-        >
-          <MDTypography variant="h3" fontWeight="medium" color="white" mt={1}>
-            Şifremi Sıfırla
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
-            {infoMsg}
-          </MDTypography>
-        </MDBox>
-        {!showNewPswVisible ? (
-          <MDBox pt={4} pb={3} px={3}>
-            <MDBox component="form" role="form">
-              <MDBox mb={4}>
-                <MDInput
-                  type="email"
-                  label="Email"
-                  variant="standard"
-                  fullWidth
-                  value={email}
-                  onChange={(e: any) => setEmail(e.target.value)}
-                />
-              </MDBox>
-              <MDBox mb={4}>
-                <MDInput
-                  label="Kod"
-                  variant="standard"
-                  hidden={showPsw}
-                  fullWidth
-                  value={resetCode}
-                  onChange={(e: any) => setresetCode(e.target.value)}
-                />
-              </MDBox>
-              <MDBox mt={6} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  style={{ backgroundColor: "#3e5d8f", color: "white" }}
-                  fullWidth
-                  hidden={!showPsw}
-                  onClick={handleResetPassword}
-                  disabled={checkValidateEmail()}
-                >
-                  Sıfırla
-                </MDButton>
-              </MDBox>
-              <MDBox mt={6} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  style={{ backgroundColor: "#3e5d8f", color: "white" }}
-                  fullWidth
-                  hidden={showPsw}
-                  onClick={verifyResetCode}
-                >
-                  Kodu Doğrula
-                </MDButton>
-              </MDBox>
-            </MDBox>
-          </MDBox>
-        ) :
-          (
-            <MDBox pt={4} pb={3} px={3}>
-              <MDBox component="form" role="form">
-                <MDBox mb={4}>
-                  <MDInput
-                    label="Yeni Şifre"
-                    variant="standard"
-                    fullWidth
-                    type="Password"
-                    value={newPw}
-                    error={!!passwordError}
-                    onChange={(e: any) => handlePasswordChange(e.target.value)}
-                  />
-                  <MDInput
-                    label="Yeni Şifreyi Doğrula"
-                    variant="standard"
-                    fullWidth
-                    type="Password"
-                    value={newPwConfirm}
-                    error={!!passwordError}
-                    onChange={(e: any) => handleConfirmPasswordChange(e.target.value)}
-                  />
-                </MDBox>
-                <MDBox component="ul" m={0} pl={3.25} mb={{ xs: 8, sm: 0 }}>
-                  {renderPasswordRequirements}
-                </MDBox>
-                <MDBox mt={6} mb={1}>
-                  <MDButton
-                    variant="gradient"
-                    style={{ backgroundColor: "#3e5d8f", color: "white" }}
-                    fullWidth
-                    hidden={showPsw}
-                    disabled={pswTrue}
-                    onClick={changePassword}
-                  >
-                    Şifreyi Değiştir
-                  </MDButton>
-                </MDBox>
-              </MDBox>
-            </MDBox>
-          )}
+    <PageLayout>
+      <ResetContainer>
+        <Container maxWidth="lg">
+          <ResetCard>
+            <Grid container>
+              {/* Sol Bölüm - Marka ve Açıklama */}
+              <Grid item xs={12} md={6}>
+                <LeftSection>
+                  <BrandLogo>
+                    <Typography variant="h4" fontWeight="bold" color="inherit">
+                      F
+                    </Typography>
+                  </BrandLogo>
 
-      </Card>
+                  <MDTypography variant="h3" fontWeight="bold" color="white" mb={2}>
+                    FormNeo
+                  </MDTypography>
+
+                  <MDTypography variant="h6" color="white" mb={4} textAlign="center" sx={{ opacity: 0.8 }}>
+                    Şifre Sıfırlama
+                  </MDTypography>
+
+                  <MDTypography variant="body1" color="white" textAlign="center" lineHeight={1.6} sx={{ opacity: 0.7 }}>
+                    {infoMsg}
+                  </MDTypography>
+
+                  <Box mt={4}>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Box
+                        width="8px"
+                        height="8px"
+                        borderRadius="50%"
+                        bgcolor="rgba(255,255,255,0.8)"
+                        mr={2}
+                      />
+                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
+                        Güvenli şifre sıfırlama
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Box
+                        width="8px"
+                        height="8px"
+                        borderRadius="50%"
+                        bgcolor="rgba(255,255,255,0.8)"
+                        mr={2}
+                      />
+                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
+                        E-posta doğrulama
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Box
+                        width="8px"
+                        height="8px"
+                        borderRadius="50%"
+                        bgcolor="rgba(255,255,255,0.8)"
+                        mr={2}
+                      />
+                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
+                        Hızlı ve kolay süreç
+                      </Typography>
+                    </Box>
+                  </Box>
+                </LeftSection>
+              </Grid>
+
+              {/* Sağ Bölüm - Reset Formu */}
+              <Grid item xs={12} md={6}>
+                <RightSection>
+                  <MDBox mb={4}>
+                    <MDTypography variant="h4" fontWeight="bold" color="dark" mb={1}>
+                      Şifre Sıfırlama
+                    </MDTypography>
+                    <MDTypography variant="body1" color="text" sx={{ opacity: 0.7 }}>
+                      {showNewPswVisible ? "Yeni şifrenizi belirleyin" : "E-posta adresinizi girin"}
+                    </MDTypography>
+                  </MDBox>
+
+                  {!showNewPswVisible ? (
+                    <MDBox component="form" role="form">
+                      <MDBox mb={3}>
+                        <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
+                          E-posta Adresi
+                        </MDTypography>
+                        <MDInput
+                          type="email"
+                          value={email}
+                          onChange={(e: any) => setEmail(e.target.value)}
+                          variant="outlined"
+                          fullWidth
+                          placeholder="ornek@sirket.com"
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              borderRadius: "12px",
+                              backgroundColor: "#f8f9fa",
+                              border: "1px solid #e9ecef",
+                              "&:hover": {
+                                borderColor: "#3e5d8f",
+                              },
+                              "&.Mui-focused": {
+                                borderColor: "#3e5d8f",
+                                boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
+                              }
+                            }
+                          }}
+                        />
+                      </MDBox>
+
+                      {!showPsw && (
+                        <MDBox mb={3}>
+                          <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
+                            Doğrulama Kodu
+                          </MDTypography>
+                          <MDInput
+                            value={resetCode}
+                            onChange={(e: any) => setresetCode(e.target.value)}
+                            variant="outlined"
+                            fullWidth
+                            placeholder="E-postanıza gelen kodu girin"
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                borderRadius: "12px",
+                                backgroundColor: "#f8f9fa",
+                                border: "1px solid #e9ecef",
+                                "&:hover": {
+                                  borderColor: "#3e5d8f",
+                                },
+                                "&.Mui-focused": {
+                                  borderColor: "#3e5d8f",
+                                  boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
+                                }
+                              }
+                            }}
+                          />
+                        </MDBox>
+                      )}
+
+                      <MDBox mb={3}>
+                        {showPsw ? (
+                          <MDButton
+                            onClick={handleResetPassword}
+                            disabled={checkValidateEmail()}
+                            variant="gradient"
+                            color="info"
+                            fullWidth
+                            size="large"
+                            sx={{
+                              backgroundColor: "#3e5d8f",
+                              backgroundImage: "linear-gradient(135deg, #3e5d8f 0%, #2c4a7a 100%)",
+                              borderRadius: "12px",
+                              padding: "12px 24px",
+                              fontSize: "16px",
+                              fontWeight: "600",
+                              textTransform: "none",
+                              boxShadow: "0 8px 25px rgba(62, 93, 143, 0.3)",
+                              "&:hover": {
+                                transform: "translateY(-2px)",
+                                boxShadow: "0 12px 35px rgba(62, 93, 143, 0.4)",
+                              },
+                              "&:disabled": {
+                                opacity: 0.6,
+                                transform: "none",
+                                boxShadow: "0 4px 15px rgba(62, 93, 143, 0.2)",
+                              }
+                            }}
+                          >
+                            Kod Gönder
+                          </MDButton>
+                        ) : (
+                          <MDButton
+                            onClick={verifyResetCode}
+                            variant="gradient"
+                            color="info"
+                            fullWidth
+                            size="large"
+                            sx={{
+                              backgroundColor: "#3e5d8f",
+                              backgroundImage: "linear-gradient(135deg, #3e5d8f 0%, #2c4a7a 100%)",
+                              borderRadius: "12px",
+                              padding: "12px 24px",
+                              fontSize: "16px",
+                              fontWeight: "600",
+                              textTransform: "none",
+                              boxShadow: "0 8px 25px rgba(62, 93, 143, 0.3)",
+                              "&:hover": {
+                                transform: "translateY(-2px)",
+                                boxShadow: "0 12px 35px rgba(62, 93, 143, 0.4)",
+                              }
+                            }}
+                          >
+                            Kodu Doğrula
+                          </MDButton>
+                        )}
+                      </MDBox>
+                    </MDBox>
+                  ) : (
+                    <MDBox component="form" role="form">
+                      <MDBox mb={3}>
+                        <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
+                          Yeni Şifre
+                        </MDTypography>
+                        <MDInput
+                          type="password"
+                          value={newPw}
+                          error={!!passwordError}
+                          onChange={(e: any) => handlePasswordChange(e.target.value)}
+                          variant="outlined"
+                          fullWidth
+                          placeholder="••••••••••"
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              borderRadius: "12px",
+                              backgroundColor: "#f8f9fa",
+                              border: "1px solid #e9ecef",
+                              "&:hover": {
+                                borderColor: "#3e5d8f",
+                              },
+                              "&.Mui-focused": {
+                                borderColor: "#3e5d8f",
+                                boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
+                              }
+                            }
+                          }}
+                        />
+                      </MDBox>
+
+                      <MDBox mb={3}>
+                        <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
+                          Şifreyi Tekrar Girin
+                        </MDTypography>
+                        <MDInput
+                          type="password"
+                          value={newPwConfirm}
+                          error={!!passwordError}
+                          onChange={(e: any) => handleConfirmPasswordChange(e.target.value)}
+                          variant="outlined"
+                          fullWidth
+                          placeholder="••••••••••"
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              borderRadius: "12px",
+                              backgroundColor: "#f8f9fa",
+                              border: "1px solid #e9ecef",
+                              "&:hover": {
+                                borderColor: "#3e5d8f",
+                              },
+                              "&.Mui-focused": {
+                                borderColor: "#3e5d8f",
+                                boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
+                              }
+                            }
+                          }}
+                        />
+                      </MDBox>
+
+                      {passwordError && (
+                        <MDBox mb={2}>
+                          <Typography variant="caption" color="error" fontWeight="medium">
+                            {passwordError}
+                          </Typography>
+                        </MDBox>
+                      )}
+
+                      <MDBox mb={3}>
+                        <MDTypography variant="body2" color="text" mb={1} sx={{ opacity: 0.8 }}>
+                          Şifre Gereksinimleri:
+                        </MDTypography>
+                        <MDBox component="ul" m={0} pl={2}>
+                          {renderPasswordRequirements}
+                        </MDBox>
+                      </MDBox>
+
+                      <MDBox mb={3}>
+                        <MDButton
+                          onClick={changePassword}
+                          disabled={pswTrue}
+                          variant="gradient"
+                          color="info"
+                          fullWidth
+                          size="large"
+                          sx={{
+                            backgroundColor: "#3e5d8f",
+                            backgroundImage: "linear-gradient(135deg, #3e5d8f 0%, #2c4a7a 100%)",
+                            borderRadius: "12px",
+                            padding: "12px 24px",
+                            fontSize: "16px",
+                            fontWeight: "600",
+                            textTransform: "none",
+                            boxShadow: "0 8px 25px rgba(62, 93, 143, 0.3)",
+                            "&:hover": {
+                              transform: "translateY(-2px)",
+                              boxShadow: "0 12px 35px rgba(62, 93, 143, 0.4)",
+                            },
+                            "&:disabled": {
+                              opacity: 0.6,
+                              transform: "none",
+                              boxShadow: "0 4px 15px rgba(62, 93, 143, 0.2)",
+                            }
+                          }}
+                        >
+                          Şifreyi Değiştir
+                        </MDButton>
+                      </MDBox>
+                    </MDBox>
+                  )}
+
+                  <MDBox textAlign="center">
+                    <MDTypography variant="body2" color="text" sx={{ opacity: 0.7 }}>
+                      Şifrenizi hatırladınız mı?{" "}
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="info"
+                        fontWeight="medium"
+                        sx={{ cursor: "pointer", textDecoration: "underline" }}
+                        onClick={() => window.location.href = "/authentication/sign-in/cover"}
+                      >
+                        Giriş yapın
+                      </Typography>
+                    </MDTypography>
+                  </MDBox>
+                </RightSection>
+              </Grid>
+            </Grid>
+          </ResetCard>
+        </Container>
+      </ResetContainer>
+
       <MessageBox
         type="Information"
         open={msgOpen}
@@ -334,7 +603,7 @@ function Cover(): JSX.Element {
       >
         Şifreniz başarıyla değiştirilmiştir
       </MessageBox>
-    </CoverLayout>
+    </PageLayout>
   );
 }
 

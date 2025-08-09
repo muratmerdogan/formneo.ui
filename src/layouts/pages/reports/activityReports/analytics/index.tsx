@@ -492,7 +492,7 @@ function ActivityReports(): JSX.Element {
                 </MultiComboBox>
               </Grid>
               <Grid item xs={2}>
-                {EmployeePhoto != undefined ? <img style={{ marginBottom: "10px", width: 100, height: 100 }} alt="SAP Logo" src={EmployeePhoto ? `data:image/png;base64,${EmployeePhoto}` : null} /> : null}
+                {EmployeePhoto != undefined ? <img style={{ marginBottom: "10px", width: 100, height: 100 }} alt="Employee Photo" src={EmployeePhoto ? `data:image/png;base64,${EmployeePhoto}` : null} /> : null}
               </Grid>
             </Grid>
           </Grid>
@@ -502,8 +502,8 @@ function ActivityReports(): JSX.Element {
         <h3>Yıllık Gösterimler</h3>Müşteri
         <MDBox mt={6} >
 
-          <Grid style={{ marginLeft: "10px"}} container spacing={3}>
-            <Grid item xs sm={6} md={4} lg={4} xl={4}  mt={2} >
+          <Grid style={{ marginLeft: "10px" }} container spacing={3}>
+            <Grid item xs sm={6} md={4} lg={4} xl={4} mt={2} >
               {chartData != null ? (
                 <MDBox mb={3}>
                   <ReportsLineChart
@@ -522,13 +522,13 @@ function ActivityReports(): JSX.Element {
                 <p>Yükleniyor...</p>
               )}
             </Grid>
-       
+
 
             <Grid container spacing={2} style={{ marginLeft: "-16px" }}>
               {selectedEmployees.map((item, index) => (
                 <Grid
-                  style={{ marginTop: "20px"}}
-                  
+                  style={{ marginTop: "20px" }}
+
                   item xs={12} sm={6} md={4} lg={4} xl={4}
                   key={index}
                 >
