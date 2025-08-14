@@ -6850,6 +6850,12 @@ export interface MainClient {
      * @type {string}
      * @memberof MainClient
      */
+    'slug'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
     'name': string;
     /**
      * 
@@ -6863,6 +6869,90 @@ export interface MainClient {
      * @memberof MainClient
      */
     'phoneNumber'?: string | null;
+    /**
+     * 
+     * @type {MainClientStatus}
+     * @memberof MainClient
+     */
+    'status': MainClientStatus;
+    /**
+     * 
+     * @type {MainClientPlan}
+     * @memberof MainClient
+     */
+    'plan': MainClientPlan;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'timezone': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'ownerUserId'?: string | null;
+    /**
+     * 
+     * @type {UserApp}
+     * @memberof MainClient
+     */
+    'ownerUser'?: UserApp;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'logoUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'customDomain'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MainClient
+     */
+    'domainVerified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'featureFlags': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'quotas': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'billingCustomerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'billingEmail'?: string | null;
+    /**
+     * 
+     * @type {SsoType}
+     * @memberof MainClient
+     */
+    'ssoType'?: SsoType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClient
+     */
+    'ssoMetadataUrl'?: string | null;
     /**
      * 
      * @type {string}
@@ -6888,12 +6978,20 @@ export interface MainClient {
      */
     'companies'?: Array<Company> | null;
 }
+
+
 /**
  * 
  * @export
  * @interface MainClientInsertDto
  */
 export interface MainClientInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'slug'?: string | null;
     /**
      * 
      * @type {string}
@@ -6912,7 +7010,124 @@ export interface MainClientInsertDto {
      * @memberof MainClientInsertDto
      */
     'phoneNumber'?: string | null;
+    /**
+     * 
+     * @type {MainClientStatus}
+     * @memberof MainClientInsertDto
+     */
+    'status'?: MainClientStatus;
+    /**
+     * 
+     * @type {MainClientPlan}
+     * @memberof MainClientInsertDto
+     */
+    'plan'?: MainClientPlan;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'timezone'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'ownerUserId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'logoUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'subdomain'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'customDomain'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MainClientInsertDto
+     */
+    'domainVerified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'featureFlags'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'quotas'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'billingCustomerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'billingEmail'?: string | null;
+    /**
+     * 
+     * @type {SsoType}
+     * @memberof MainClientInsertDto
+     */
+    'ssoType'?: SsoType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientInsertDto
+     */
+    'ssoMetadataUrl'?: string | null;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {number}
+ */
+
+export const MainClientPlan = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2
+} as const;
+
+export type MainClientPlan = typeof MainClientPlan[keyof typeof MainClientPlan];
+
+
+/**
+ * 
+ * @export
+ * @enum {number}
+ */
+
+export const MainClientStatus = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3
+} as const;
+
+export type MainClientStatus = typeof MainClientStatus[keyof typeof MainClientStatus];
+
+
 /**
  * 
  * @export
@@ -6930,6 +7145,12 @@ export interface MainClientUpdateDto {
      * @type {string}
      * @memberof MainClientUpdateDto
      */
+    'slug'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
     'name'?: string | null;
     /**
      * 
@@ -6945,6 +7166,90 @@ export interface MainClientUpdateDto {
     'phoneNumber'?: string | null;
     /**
      * 
+     * @type {MainClientStatus}
+     * @memberof MainClientUpdateDto
+     */
+    'status'?: MainClientStatus;
+    /**
+     * 
+     * @type {MainClientPlan}
+     * @memberof MainClientUpdateDto
+     */
+    'plan'?: MainClientPlan;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'timezone'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'ownerUserId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'logoUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'subdomain'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'customDomain'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MainClientUpdateDto
+     */
+    'domainVerified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'featureFlags'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'quotas'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'billingCustomerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'billingEmail'?: string | null;
+    /**
+     * 
+     * @type {SsoType}
+     * @memberof MainClientUpdateDto
+     */
+    'ssoType'?: SsoType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MainClientUpdateDto
+     */
+    'ssoMetadataUrl'?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof MainClientUpdateDto
      */
@@ -6956,6 +7261,8 @@ export interface MainClientUpdateDto {
      */
     'updatedDate'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -9625,6 +9932,22 @@ export interface SFUSerList {
      */
     'username'?: string | null;
 }
+/**
+ * 
+ * @export
+ * @enum {number}
+ */
+
+export const SsoType = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3
+} as const;
+
+export type SsoType = typeof SsoType[keyof typeof SsoType];
+
+
 /**
  * 
  * @export
@@ -14485,6 +14808,100 @@ export interface UserSFListDto {
      * @memberof UserSFListDto
      */
     'sfuSerList'?: Array<SFUSerList> | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserTenantBulkAssignUsersDto
+ */
+export interface UserTenantBulkAssignUsersDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantBulkAssignUsersDto
+     */
+    'tenantId'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UserTenantBulkAssignUsersDto
+     */
+    'userIds'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantBulkAssignUsersDto
+     */
+    'isActive'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UserTenantByTenantDto
+ */
+export interface UserTenantByTenantDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantByTenantDto
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantByTenantDto
+     */
+    'userFullName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantByTenantDto
+     */
+    'tenantName'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserTenantInsertDto
+ */
+export interface UserTenantInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'tenantId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'isActive'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UserTenantUpdateDto
+ */
+export interface UserTenantUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'isActive'?: boolean;
 }
 /**
  * 
@@ -27055,6 +27472,39 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        apiMenuAllPlainGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Menu/all-plain`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         apiMenuGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Menu`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -27290,6 +27740,17 @@ export const MenuApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async apiMenuAllPlainGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MenuListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuAllPlainGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuAllPlainGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async apiMenuGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Menu>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -27378,6 +27839,14 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        apiMenuAllPlainGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<MenuListDto>> {
+            return localVarFp.apiMenuAllPlainGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         apiMenuGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<Menu>> {
             return localVarFp.apiMenuGet(options).then((request) => request(axios, basePath));
         },
@@ -27443,6 +27912,16 @@ export class MenuApi extends BaseAPI {
      */
     public apiMenuAllListDataGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuAllListDataGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MenuApi
+     */
+    public apiMenuAllPlainGet(options?: RawAxiosRequestConfig) {
+        return MenuApiFp(this.configuration).apiMenuAllPlainGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -42843,6 +43322,659 @@ export class UserCalendarApi extends BaseAPI {
      */
     public apiUserCalendarWorkLocationsGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarWorkLocationsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * UserTenantsApi - axios parameter creator
+ * @export
+ */
+export const UserTenantsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {UserTenantBulkAssignUsersDto} [userTenantBulkAssignUsersDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsBulkAssignUsersPost: async (userTenantBulkAssignUsersDto?: UserTenantBulkAssignUsersDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenants/bulk/assign-users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userTenantBulkAssignUsersDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByTenantTenantIdGet: async (tenantId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tenantId' is not null or undefined
+            assertParamExists('apiUserTenantsByTenantTenantIdGet', 'tenantId', tenantId)
+            const localVarPath = `/api/UserTenants/by-tenant/{tenantId}`
+                .replace(`{${"tenantId"}}`, encodeURIComponent(String(tenantId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByUserIdTenantIdGet: async (userId: string, tenantId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('apiUserTenantsByUserIdTenantIdGet', 'userId', userId)
+            // verify required parameter 'tenantId' is not null or undefined
+            assertParamExists('apiUserTenantsByUserIdTenantIdGet', 'tenantId', tenantId)
+            const localVarPath = `/api/UserTenants/by/{userId}/{tenantId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"tenantId"}}`, encodeURIComponent(String(tenantId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByUserUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('apiUserTenantsByUserUserIdGet', 'userId', userId)
+            const localVarPath = `/api/UserTenants/by-user/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsFullGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenants/full`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenants`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiUserTenantsIdDelete', 'id', id)
+            const localVarPath = `/api/UserTenants/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UserTenantInsertDto} [userTenantInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsPost: async (userTenantInsertDto?: UserTenantInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenants`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userTenantInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UserTenantUpdateDto} [userTenantUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsPut: async (userTenantUpdateDto?: UserTenantUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenants`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userTenantUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserTenantsApi - functional programming interface
+ * @export
+ */
+export const UserTenantsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserTenantsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {UserTenantBulkAssignUsersDto} [userTenantBulkAssignUsersDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto?: UserTenantBulkAssignUsersDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsBulkAssignUsersPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserTenantByTenantDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByTenantTenantIdGet(tenantId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByTenantTenantIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByUserIdTenantIdGet(userId, tenantId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByUserIdTenantIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByUserUserIdGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByUserUserIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsFullGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsFullGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsFullGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UserTenantInsertDto} [userTenantInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsPost(userTenantInsertDto?: UserTenantInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsPost(userTenantInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UserTenantUpdateDto} [userTenantUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantsPut(userTenantUpdateDto?: UserTenantUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsPut(userTenantUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * UserTenantsApi - factory interface
+ * @export
+ */
+export const UserTenantsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserTenantsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {UserTenantBulkAssignUsersDto} [userTenantBulkAssignUsersDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto?: UserTenantBulkAssignUsersDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserTenantByTenantDto>> {
+            return localVarFp.apiUserTenantsByTenantTenantIdGet(tenantId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsFullGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsFullGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UserTenantInsertDto} [userTenantInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsPost(userTenantInsertDto?: UserTenantInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsPost(userTenantInsertDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UserTenantUpdateDto} [userTenantUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantsPut(userTenantUpdateDto?: UserTenantUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantsPut(userTenantUpdateDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserTenantsApi - object-oriented interface
+ * @export
+ * @class UserTenantsApi
+ * @extends {BaseAPI}
+ */
+export class UserTenantsApi extends BaseAPI {
+    /**
+     * 
+     * @param {UserTenantBulkAssignUsersDto} [userTenantBulkAssignUsersDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto?: UserTenantBulkAssignUsersDto, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} tenantId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsByTenantTenantIdGet(tenantId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} tenantId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsFullGet(options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsFullGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsGet(options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UserTenantInsertDto} [userTenantInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsPost(userTenantInsertDto?: UserTenantInsertDto, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsPost(userTenantInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UserTenantUpdateDto} [userTenantUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantsApi
+     */
+    public apiUserTenantsPut(userTenantUpdateDto?: UserTenantUpdateDto, options?: RawAxiosRequestConfig) {
+        return UserTenantsApiFp(this.configuration).apiUserTenantsPut(userTenantUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

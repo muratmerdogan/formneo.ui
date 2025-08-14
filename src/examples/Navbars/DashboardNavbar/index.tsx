@@ -51,6 +51,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
+  setSelectedTenantId,
 } from "context";
 import {
   Avatar,
@@ -83,9 +84,12 @@ import {
   UserApi,
   ApproveItemsApi,
   ForgotPasswordApi,
+  ClientApi,
 } from "api/generated/api";
 import { Configuration } from "api/generated";
 import getConfiguration from "confiuration";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { themes } from "examples/Sidenav";
@@ -129,6 +133,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
 
   const [waitingCount, setwaitingCount] = useState(0);
   const [showNoNotification, setShowNoNotification] = useState(false);
+  const [tenants, setTenants] = useState<{ id: string; label: string }[]>([]);
+  const [selectedTenant, setSelectedTenant] = useState<{ id: string; label: string } | null>(null);
 
   //sifre sifirlama
   const [currentPw, setcurrentPw] = useState<string>("");
@@ -196,6 +202,35 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
       }
     };
     fetchUserData();
+    // Tenant options for ShellBar search field
+    (async () => {
+      try {
+        const api = new ClientApi(getConfiguration());
+        const res = await api.apiClientGet();
+        const payload: any = (res as any)?.data;
+        const list: any[] = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.items)
+            ? payload.items
+            : Array.isArray(payload?.data)
+              ? payload.data
+              : Array.isArray(payload?.result)
+                ? payload.result
+                : [];
+        const opts = list.map((t: any) => ({
+          id: String(t.id || t.clientId || t.uid || ""),
+          label: t.name || t.clientName || t.title || "-",
+        }));
+        setTenants(opts);
+        const savedTenantId = localStorage.getItem("selectedTenantId");
+        if (savedTenantId) {
+          const match = opts.find((o) => o.id === savedTenantId) || null;
+          setSelectedTenant(match);
+        }
+      } catch (e) {
+        setTenants([]);
+      }
+    })();
   }, []);
 
   const fetchMenuData = async () => {
@@ -640,7 +675,35 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         // }
         showNotifications
         showProductSwitch
-      ></ShellBar>
+        searchField={
+          <div style={{ minWidth: 260 }}>
+            <Autocomplete
+              size="small"
+              options={tenants}
+              value={selectedTenant}
+              onChange={(e, v) => {
+                setSelectedTenant(v);
+                const id = v?.id || null;
+                if (id) localStorage.setItem("selectedTenantId", id);
+                else localStorage.removeItem("selectedTenantId");
+                setSelectedTenantId(dispatch as any, id);
+              }}
+              getOptionLabel={(o) => o.label}
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Tenant seç" variant="outlined" />
+              )}
+            />
+          </div>
+        }
+      >
+        {selectedTenant?.label && (
+          <ShellBarItem
+            text={selectedTenant.label}
+            icon="building"
+            onClick={() => { }}
+          />
+        )}
+      </ShellBar>
 
       <Popover
         open={popoverOpen}

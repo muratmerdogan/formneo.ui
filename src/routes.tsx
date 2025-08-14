@@ -113,6 +113,14 @@ import ApproveList from "layouts/pages/WorkFlow/ApproveList";
 import ParameterView from "layouts/pages/FormManagement/listForm/ParameterView";
 import TenantsList from "layouts/pages/tenants/index";
 import TenantDetail from "layouts/pages/tenants/detail";
+import TenantsManagement from "layouts/pages/tenants/tenantsmanagement";
+import TenantRoles from "layouts/pages/tenants/tenantsmanagement/roles";
+import TenantUsers from "layouts/pages/tenants/tenantsmanagement/users";
+import TenantPermissions from "layouts/pages/tenants/tenantsmanagement/permissions";
+import TenantRolesDetail from "layouts/pages/tenantroles/detail";
+// User Tenants pages (under tenantsuser)
+import UserTenantsList from "layouts/pages/tenantsuser";
+import UserTenantsDetail from "layouts/pages/tenantsuser/detail";
 // const { userAppDto } = useUser(); // Context'ten veriyi alıyoruz
 
 
@@ -1149,6 +1157,50 @@ const routes = [
         key: "tenant-detail",
         route: "/tenants/detail",
         component: <TenantDetail />,
+      },
+      {
+        name: "Tenants Management",
+        key: "tenants-management",
+        route: "/tenants/management",
+        component: <TenantsManagement />,
+      },
+      {
+        name: "Tenants Management Roles",
+        key: "tenants-management-roles",
+        route: "/tenants/management/roles",
+        component: <TenantRolesDetail />,
+      },
+      {
+        name: "Tenants Management Users",
+        key: "tenants-management-users",
+        route: "/tenants/management/users",
+        component: <TenantUsers />,
+      },
+      {
+        name: "Tenants Management Permissions",
+        key: "tenants-management-permissions",
+        route: "/tenants/management/permissions",
+        component: <TenantPermissions />,
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "User Tenants",
+    key: "user-tenants",
+    icon: <Icon fontSize="medium">group</Icon>,
+    collapse: [
+      {
+        name: "User Tenants List",
+        key: "user-tenants-list",
+        route: "/tenantsuser",
+        component: <UserTenantsList />,
+      },
+      {
+        name: "User Tenants Detail",
+        key: "user-tenants-detail",
+        route: "/tenantsuser/detail",
+        component: <UserTenantsDetail />,
       },
     ],
   },

@@ -44,21 +44,21 @@ function TenantsList(): JSX.Element {
 
             dispatchBusy({ isBusy: false });
             setRows(
-
                 list.map((item: any) => {
                     const created = item.createdDate || item.createdAt || item.created_on;
                     return {
                         id: item.id || item.clientId || item.uid,
                         name: item.name || item.clientName || item.title || "-",
-                        email: item.email || item.domain || "-",
-                        phoneNumber: item.phoneNumber || item.plan || "-",
+                        email: item.email || item.billingEmail || item.domain || "-",
+                        phoneNumber: item.phoneNumber || "-",
+                        plan: item.plan ?? "-",
+                        status: item.status ?? "-",
+                        customDomain: item.customDomain || "-",
+                        domainVerified: Boolean(item.domainVerified ?? false),
                         isActive: Boolean(item.isActive ?? item.active ?? false),
                         createdDate: created ? new Date(created).toLocaleDateString("tr-TR") : "",
                     };
                 })
-
-
-
             );
 
         } catch (error) {
@@ -123,6 +123,36 @@ function TenantsList(): JSX.Element {
                 },
                 {
                     Header: (
+                        <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Plan</div>
+                    ),
+                    accessor: "plan",
+                    width: "10%",
+                    Cell: ({ row, value, column }: any) => (
+                        <GlobalCell value={value} columnName={column.id} testRow={row.original} />
+                    ),
+                },
+                {
+                    Header: (
+                        <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Durum</div>
+                    ),
+                    accessor: "status",
+                    width: "10%",
+                    Cell: ({ row, value, column }: any) => (
+                        <GlobalCell value={value} columnName={column.id} testRow={row.original} />
+                    ),
+                },
+                {
+                    Header: (
+                        <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Domain</div>
+                    ),
+                    accessor: "customDomain",
+                    width: "14%",
+                    Cell: ({ row, value, column }: any) => (
+                        <GlobalCell value={value} columnName={column.id} testRow={row.original} />
+                    ),
+                },
+                {
+                    Header: (
                         <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Aktif</div>
                     ),
                     accessor: "isActive",
@@ -154,6 +184,12 @@ function TenantsList(): JSX.Element {
                                 onClick={() => navigate(`/tenants/detail/?id=${row.original.id}`)}
                             >
                                 edit
+                            </Icon>
+                            <Icon
+                                style={{ marginRight: "12px", cursor: "pointer", color: "#1e88e5" }}
+                                onClick={() => navigate(`/tenants/users/?id=${row.original.id}`)}
+                            >
+                                group_add
                             </Icon>
                             <Icon
                                 style={{ color: "#e53935", cursor: "pointer" }}

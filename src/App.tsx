@@ -98,6 +98,8 @@ import UserTasks from "layouts/pages/userTasks";
 import UserProjects from "layouts/pages/userProjects";
 import KanbanPage from "layouts/pages/kanban";
 import TicketProjectProgress from "layouts/pages/ticketProjectProgress";
+import CustomerList from "layouts/pages/customer";
+import CustomerDetail from "layouts/pages/customer/detail";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -299,6 +301,10 @@ export default function App() {
         <Route path="/vpn" element={<VpnDashboard />} />
         <Route path="/kanban" element={<KanbanPage />} />
         <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
+
+        <Route path="/customer" element={<CustomerList />} />
+        <Route path="/customer/detail" element={<CustomerDetail />} />
+        <Route path="/customer/detail/:id" element={<CustomerDetail />} />
 
         <Route path="/formAuth" element={<FormAuth />} />
         <Route path="/formAuth/detail" element={<FormAuthDetail />} />

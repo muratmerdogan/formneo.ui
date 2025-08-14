@@ -730,7 +730,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
                 </IconButton>
               </Tooltip>
 
-              {/* <Tooltip title={theme === "light" ? "Dark Mode" : "Light Mode"}>
+              <Tooltip title={theme === "light" ? "Dark Mode" : "Light Mode"}>
                 <IconButton
                   onClick={handleThemeToggle}
                   sx={{
@@ -747,7 +747,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
                 >
                   <Icon>{theme === "light" ? "dark_mode" : "light_mode"}</Icon>
                 </IconButton>
-              </Tooltip> */}
+              </Tooltip>
             </Box>
 
             {/* Database indicator */}

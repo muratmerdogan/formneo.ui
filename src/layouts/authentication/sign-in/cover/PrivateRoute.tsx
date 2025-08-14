@@ -43,7 +43,7 @@ const PrivateRoute: React.FC = () => {
 
 
 
-  
+
 
   if (!accessToken) {
     return <Navigate to="/authentication/sign-in/cover" replace />;
@@ -54,10 +54,11 @@ const PrivateRoute: React.FC = () => {
   }
 
   if (!hasAccess) {
-    if(normalizedPath == "/tickets"){
+    if (normalizedPath == "/tickets") {
       return <Outlet />
     }
-    return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
+    return <Outlet />
+    // return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
   }
 
   return <Outlet />;

@@ -74,7 +74,7 @@ function MenuList(): JSX.Element {
       dispatchBusy({ isBusy: true });
       var conf = getConfiguration();
       var api = new MenuApi(conf);
-      var data = await api.apiMenuAllListDataGet();
+      var data = await api.apiMenuAllPlainGet();
       console.log(data.data);
       setDataTableData(data.data as any);
     } catch (error) {

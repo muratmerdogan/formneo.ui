@@ -39,8 +39,10 @@ function RoleScreenDefination() {
     try {
       var conf = getConfiguration();
       var api = new MenuApi(conf);
-      var response = await api.apiMenuAllListDataGet();
+      var response = await api.apiMenuAllPlainGet();
       var data = response.data;
+
+
       const filteredData = data.filter((item: any) => item.parentMenuId !== null);
 
       if (id) {
@@ -59,6 +61,8 @@ function RoleScreenDefination() {
         setRoleName(dataRole.data.roleName);
         setRoleDescription(dataRole.data.description);
       } else {
+
+        alert(filteredData.length);
         setSource(filteredData);
       }
     } catch (error) {

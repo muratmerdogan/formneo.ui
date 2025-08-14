@@ -48,6 +48,8 @@ interface StateTypes {
   direction: "ltr" | "rtl";
   layout: "dashboard" | "page";
   darkMode: boolean;
+  selectedTenantId?: string | null;
+  isHostAdmin?: boolean;
 }
 
 interface ActionTypes {
@@ -61,7 +63,9 @@ interface ActionTypes {
   | "OPEN_CONFIGURATOR"
   | "DIRECTION"
   | "LAYOUT"
-  | "DARKMODE";
+  | "DARKMODE"
+  | "SELECTED_TENANT_ID"
+  | "IS_HOST_ADMIN";
   value: any;
 }
 
@@ -98,6 +102,12 @@ function reducer(state: StateTypes, action: ActionTypes) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
+    case "SELECTED_TENANT_ID": {
+      return { ...state, selectedTenantId: action.value };
+    }
+    case "IS_HOST_ADMIN": {
+      return { ...state, isHostAdmin: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -117,6 +127,8 @@ function MaterialUIControllerProvider({ children }: { children: ReactNode }): JS
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
+    selectedTenantId: typeof window !== "undefined" ? localStorage.getItem("selectedTenantId") : null,
+    isHostAdmin: typeof window !== "undefined" ? localStorage.getItem("isHostAdmin") === "true" : false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -183,6 +195,14 @@ const setDarkMode = (
   dispatch: (arg: { type: "DARKMODE"; value: boolean }) => void,
   value: boolean
 ) => dispatch({ type: "DARKMODE", value });
+const setSelectedTenantId = (
+  dispatch: (arg: { type: "SELECTED_TENANT_ID"; value: string | null }) => void,
+  value: string | null
+) => dispatch({ type: "SELECTED_TENANT_ID", value });
+const setIsHostAdmin = (
+  dispatch: (arg: { type: "IS_HOST_ADMIN"; value: boolean }) => void,
+  value: boolean
+) => dispatch({ type: "IS_HOST_ADMIN", value });
 
 export {
   MaterialUIControllerProvider,
@@ -197,4 +217,6 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
+  setSelectedTenantId,
+  setIsHostAdmin,
 };
