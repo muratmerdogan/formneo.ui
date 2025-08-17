@@ -118,6 +118,7 @@ import TenantRoles from "layouts/pages/tenants/tenantsmanagement/roles";
 import TenantUsers from "layouts/pages/tenants/tenantsmanagement/users";
 import TenantPermissions from "layouts/pages/tenants/tenantsmanagement/permissions";
 import TenantRolesDetail from "layouts/pages/tenantroles/detail";
+import SuccessFactorsHome from "layouts/pages/successfactors";
 // User Tenants pages (under tenantsuser)
 import UserTenantsList from "layouts/pages/tenantsuser";
 import UserTenantsDetail from "layouts/pages/tenantsuser/detail";
@@ -125,6 +126,21 @@ import UserTenantsDetail from "layouts/pages/tenantsuser/detail";
 
 
 const routes = [
+
+  {
+    type: "collapse",
+    name: "Ana Sayfa",
+    key: "home",
+    icon: <Icon fontSize="medium">home</Icon>,
+    collapse: [
+      {
+        name: "Home",
+        key: "home",
+        route: "/home",
+        component: <SuccessFactorsHome />,
+      },
+    ],
+  },
   {
     type: "collapse",
     name: "User Form List",

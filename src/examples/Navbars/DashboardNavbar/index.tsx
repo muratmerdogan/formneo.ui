@@ -85,6 +85,7 @@ import {
   ApproveItemsApi,
   ForgotPasswordApi,
   ClientApi,
+  UserTenantsApi,
 } from "api/generated/api";
 import { Configuration } from "api/generated";
 import getConfiguration from "confiuration";
@@ -205,27 +206,77 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     // Tenant options for ShellBar search field
     (async () => {
       try {
-        const api = new ClientApi(getConfiguration());
-        const res = await api.apiClientGet();
-        const payload: any = (res as any)?.data;
-        const list: any[] = Array.isArray(payload)
-          ? payload
-          : Array.isArray(payload?.items)
-            ? payload.items
-            : Array.isArray(payload?.data)
-              ? payload.data
-              : Array.isArray(payload?.result)
-                ? payload.result
+        const conf = getConfiguration();
+        const userApi = new UserApi(conf);
+        const user = await userApi.apiUserGetLoginUserDetailGet();
+        const userId = String((user as any)?.data?.id || (user as any)?.data?.userId || "");
+        const isSysAdmin = Boolean((user as any)?.data?.isSystemAdmin);
+        const clientApi = new ClientApi(conf);
+        const clientsRes = await clientApi.apiClientGet();
+        const clientsPayload: any = (clientsRes as any)?.data;
+        const clients: any[] = Array.isArray(clientsPayload)
+          ? clientsPayload
+          : Array.isArray(clientsPayload?.items)
+            ? clientsPayload.items
+            : Array.isArray(clientsPayload?.data)
+              ? clientsPayload.data
+              : Array.isArray(clientsPayload?.result)
+                ? clientsPayload.result
                 : [];
-        const opts = list.map((t: any) => ({
+
+        let allowedTenantIds = new Set<string>();
+        let allowedTenantNames = new Set<string>();
+        if (userId) {
+          try {
+            const utApi = new UserTenantsApi(conf);
+            const res = await utApi.apiUserTenantsByUserUserIdGet(userId);
+            const upayload: any = (res as any)?.data;
+            const ulist: any[] = Array.isArray(upayload)
+              ? upayload
+              : Array.isArray(upayload?.items)
+                ? upayload.items
+                : Array.isArray(upayload?.data)
+                  ? upayload.data
+                  : Array.isArray(upayload?.result)
+                    ? upayload.result
+                    : [];
+            allowedTenantIds = new Set(ulist.map((r: any) => String(r.tenantId || r.id)));
+            allowedTenantNames = new Set(
+              ulist
+                .map((r: any) => String(r.tenantName || r.name || r.clientName || r.title || "").trim().toLowerCase())
+                .filter((s: string) => s !== "")
+            );
+          } catch {
+            allowedTenantIds = new Set<string>();
+            allowedTenantNames = new Set<string>();
+          }
+        }
+
+        const allOpts = clients.map((t: any) => ({
           id: String(t.id || t.clientId || t.uid || ""),
           label: t.name || t.clientName || t.title || "-",
         }));
+        const opts = isSysAdmin
+          ? allOpts
+          : allOpts.filter(
+              (o) =>
+                allowedTenantIds.has(o.id) ||
+                allowedTenantNames.has(String(o.label || "").trim().toLowerCase())
+            );
+
         setTenants(opts);
         const savedTenantId = localStorage.getItem("selectedTenantId");
-        if (savedTenantId) {
+        if (savedTenantId && opts.some((o) => o.id === savedTenantId)) {
           const match = opts.find((o) => o.id === savedTenantId) || null;
           setSelectedTenant(match);
+        } else if (opts.length > 0) {
+          setSelectedTenant(opts[0]);
+          localStorage.setItem("selectedTenantId", opts[0].id);
+          setSelectedTenantId(dispatch as any, opts[0].id);
+        } else {
+          setSelectedTenant(null);
+          localStorage.removeItem("selectedTenantId");
+          setSelectedTenantId(dispatch as any, null as any);
         }
       } catch (e) {
         setTenants([]);
@@ -690,7 +741,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
               }}
               getOptionLabel={(o) => o.label}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Tenant seç" variant="outlined" />
+                <TextField {...params} placeholder="Şirket seç" variant="outlined" />
               )}
             />
           </div>
@@ -698,11 +749,21 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
       >
         {selectedTenant?.label && (
           <ShellBarItem
-            text={selectedTenant.label}
+            text={`Şirket: ${selectedTenant.label}`}
             icon="building"
             onClick={() => { }}
           />
         )}
+        <ShellBarItem
+          text="Global Admin'e Geç"
+          icon="settings"
+          onClick={() => {
+            setSelectedTenant(null);
+            localStorage.removeItem("selectedTenantId");
+            setSelectedTenantId(dispatch as any, null as any);
+            navigate("/tenants/management");
+          }}
+        />
       </ShellBar>
 
       <Popover
