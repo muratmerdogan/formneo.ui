@@ -100,6 +100,8 @@ import KanbanPage from "layouts/pages/kanban";
 import TicketProjectProgress from "layouts/pages/ticketProjectProgress";
 import CustomerList from "layouts/pages/customer";
 import CustomerDetail from "layouts/pages/customer/detail";
+// axios interceptors (global) – must be imported once at startup
+import "api/interceptors";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();

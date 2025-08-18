@@ -78,6 +78,29 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                         </Card>
                     </Grid>
                     <Grid item xs={12} md={4}>
+                        <Card
+                            className="project-info-card"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                                const tenantId = selectedTenant?.id || selectedTenant?.clientId;
+                                const tenantName = selectedTenant?.name || selectedTenant?.clientName || selectedTenant?.title;
+                                navigate(`/tenants/${tenantId}/users`, {
+                                    state: {
+                                        backTo: "/tenants/management",
+                                        tenant: { id: tenantId, name: tenantName },
+                                    },
+                                });
+                            }}
+                        >
+                            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                <Icon color="info">group_add</Icon> Tenant Kullanıcı Atama
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                Sadece bu tenant için kullanıcı üyeliği
+                            </Typography>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
                         <Card className="project-info-card" style={{ cursor: "pointer" }} onClick={() => navigate("/tenants/management/permissions", { state: { tenantId: selectedTenant?.id || selectedTenant?.clientId, tenantName: selectedTenant?.name || selectedTenant?.clientName || selectedTenant?.title } })}>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Icon color="info">lock</Icon> Tenant İzinleri

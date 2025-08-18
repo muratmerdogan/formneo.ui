@@ -15148,6 +15148,61 @@ export interface UserTenantByTenantDto {
 /**
  * 
  * @export
+ * @interface UserTenantFullDto
+ */
+export interface UserTenantFullDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'tenantId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantFullDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'userFullName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'userEmail'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'tenantName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantFullDto
+     */
+    'tenantSlug'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface UserTenantInsertDto
  */
 export interface UserTenantInsertDto {
@@ -44603,6 +44658,121 @@ export class UserCalendarApi extends BaseAPI {
 
 
 /**
+ * UserTenantRolesApi - axios parameter creator
+ * @export
+ */
+export const UserTenantRolesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantRolesByUserIdTenantIdGet: async (userId: string, tenantId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('apiUserTenantRolesByUserIdTenantIdGet', 'userId', userId)
+            // verify required parameter 'tenantId' is not null or undefined
+            assertParamExists('apiUserTenantRolesByUserIdTenantIdGet', 'tenantId', tenantId)
+            const localVarPath = `/api/UserTenantRoles/by/{userId}/{tenantId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"tenantId"}}`, encodeURIComponent(String(tenantId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserTenantRolesApi - functional programming interface
+ * @export
+ */
+export const UserTenantRolesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserTenantRolesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantRolesByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantRolesByUserIdTenantIdGet(userId, tenantId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantRolesApi.apiUserTenantRolesByUserIdTenantIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * UserTenantRolesApi - factory interface
+ * @export
+ */
+export const UserTenantRolesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserTenantRolesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} tenantId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantRolesByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<any>> {
+            return localVarFp.apiUserTenantRolesByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserTenantRolesApi - object-oriented interface
+ * @export
+ * @class UserTenantRolesApi
+ * @extends {BaseAPI}
+ */
+export class UserTenantRolesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} tenantId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserTenantRolesApi
+     */
+    public apiUserTenantRolesByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig) {
+        return UserTenantRolesApiFp(this.configuration).apiUserTenantRolesByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * UserTenantsApi - axios parameter creator
  * @export
  */
@@ -44990,7 +45160,7 @@ export const UserTenantsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserTenantFullDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByUserUserIdGet(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByUserUserIdGet']?.[localVarOperationServerIndex]?.url;
@@ -45098,7 +45268,7 @@ export const UserTenantsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserTenantFullDto>> {
             return localVarFp.apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(axios, basePath));
         },
         /**

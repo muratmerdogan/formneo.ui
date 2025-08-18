@@ -133,11 +133,8 @@ function Cover(): JSX.Element {
         if (result?.data?.accessToken) {
           localStorage.setItem("accessToken", result.data.accessToken);
 
-          if (email.includes("formneo")) {
-            navigate("/tickets/statistic");
-          } else {
-            navigate("/tickets/customer");
-          }
+          // Giriş sonrası tenant seçimi zorunlu
+          navigate("/authentication/tenant-select");
         } else {
           throw new Error("Access token alınamadı. E-posta veya şifre hatalı.");
         }

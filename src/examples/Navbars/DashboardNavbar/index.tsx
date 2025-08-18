@@ -124,6 +124,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElNoNotification, setAnchorElNoNotification] = useState<null | HTMLElement>(null);
   const route = useLocation().pathname.split("/").slice(1);
+  const currentPath = useLocation().pathname;
   const [menuData, setMenuData] = useState<any>(null);
   const [filteredMenuData, setFilteredMenuData] = useState<any>(null);
   const navigate = useNavigate();
@@ -136,6 +137,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   const [showNoNotification, setShowNoNotification] = useState(false);
   const [tenants, setTenants] = useState<{ id: string; label: string }[]>([]);
   const [selectedTenant, setSelectedTenant] = useState<{ id: string; label: string } | null>(null);
+  const savedTenantIdLS = typeof window !== "undefined" ? localStorage.getItem("selectedTenantId") : null;
+  const isGlobalMode = !(selectedTenant?.id || savedTenantIdLS);
 
   //sifre sifirlama
   const [currentPw, setcurrentPw] = useState<string>("");
@@ -186,94 +189,110 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   // }, [localStorage.getItem("themePreference")]);
 
   useEffect(() => {
+    const isSpecialRoute = currentPath.startsWith("/authentication") || currentPath.startsWith("/NotAuthorization");
+    if (isSpecialRoute) return;
+
     const fetchUserData = async () => {
       try {
         var conf = getConfiguration();
         var api = new TicketApi(conf);
         var data = await api.apiTicketCheckPermGet();
-        setUserData(data.data);
+        if (data?.data) {
+          setUserData(data.data);
+          if ((data.data as any)?.id) {
+            getApproveDetail((data.data as any).id);
+          }
+        }
         var userApi = new UserApi(conf);
         var xx = await userApi.apiUserGetLoginUserDetailGet();
-        setloginMail(xx.data.email);
-
-        setuserPhoto(xx.data.photo);
-        getApproveDetail(data.data.id);
+        setloginMail(xx?.data?.email || "");
+        setuserPhoto(xx?.data?.photo || "");
       } catch (error) {
-        alert(`${error}`);
+        // ignore
       }
     };
     fetchUserData();
     // Tenant options for ShellBar search field
     (async () => {
       try {
+        if (isSpecialRoute) return;
         const conf = getConfiguration();
         const userApi = new UserApi(conf);
         const user = await userApi.apiUserGetLoginUserDetailGet();
         const userId = String((user as any)?.data?.id || (user as any)?.data?.userId || "");
-        const isSysAdmin = Boolean((user as any)?.data?.isSystemAdmin);
-        const clientApi = new ClientApi(conf);
-        const clientsRes = await clientApi.apiClientGet();
-        const clientsPayload: any = (clientsRes as any)?.data;
-        const clients: any[] = Array.isArray(clientsPayload)
-          ? clientsPayload
-          : Array.isArray(clientsPayload?.items)
-            ? clientsPayload.items
-            : Array.isArray(clientsPayload?.data)
-              ? clientsPayload.data
-              : Array.isArray(clientsPayload?.result)
-                ? clientsPayload.result
-                : [];
-
-        let allowedTenantIds = new Set<string>();
-        let allowedTenantNames = new Set<string>();
-        if (userId) {
-          try {
-            const utApi = new UserTenantsApi(conf);
-            const res = await utApi.apiUserTenantsByUserUserIdGet(userId);
-            const upayload: any = (res as any)?.data;
-            const ulist: any[] = Array.isArray(upayload)
-              ? upayload
-              : Array.isArray(upayload?.items)
-                ? upayload.items
-                : Array.isArray(upayload?.data)
-                  ? upayload.data
-                  : Array.isArray(upayload?.result)
-                    ? upayload.result
-                    : [];
-            allowedTenantIds = new Set(ulist.map((r: any) => String(r.tenantId || r.id)));
-            allowedTenantNames = new Set(
-              ulist
-                .map((r: any) => String(r.tenantName || r.name || r.clientName || r.title || "").trim().toLowerCase())
-                .filter((s: string) => s !== "")
-            );
-          } catch {
-            allowedTenantIds = new Set<string>();
-            allowedTenantNames = new Set<string>();
-          }
+        if (!userId) {
+          setTenants([]);
+          setSelectedTenant(null);
+          localStorage.removeItem("selectedTenantId");
+          setSelectedTenantId(dispatch as any, null as any);
+          return;
         }
+        const utApi = new UserTenantsApi(conf);
+        const res = await utApi.apiUserTenantsByUserUserIdGet(userId);
+        const upayload: any = (res as any)?.data;
+        const ulist: any[] = Array.isArray(upayload)
+          ? upayload
+          : Array.isArray(upayload?.items)
+            ? upayload.items
+            : Array.isArray(upayload?.data)
+              ? upayload.data
+              : Array.isArray(upayload?.result)
+                ? upayload.result
+                : [];
+        const clientsApi = new ClientApi(conf);
+        let clientsIndex = new Map<string, string>();
+        try {
+          const allClientsRes = await clientsApi.apiClientGet();
+          const payload: any = (allClientsRes as any)?.data;
+          const list: any[] = Array.isArray(payload)
+            ? payload
+            : Array.isArray(payload?.items)
+              ? payload.items
+              : Array.isArray(payload?.data)
+                ? payload.data
+                : Array.isArray(payload?.result)
+                  ? payload.result
+                  : [];
+          clientsIndex = new Map(
+            list.map((c: any) => [String(c.id || c.clientId || c.uid || ""), c.name || c.clientName || c.title || "-"])
+          );
+        } catch { }
 
-        const allOpts = clients.map((t: any) => ({
-          id: String(t.id || t.clientId || t.uid || ""),
-          label: t.name || t.clientName || t.title || "-",
-        }));
-        const opts = isSysAdmin
-          ? allOpts
-          : allOpts.filter(
-              (o) =>
-                allowedTenantIds.has(o.id) ||
-                allowedTenantNames.has(String(o.label || "").trim().toLowerCase())
-            );
-
+        const opts = Array.from(
+          new Map(
+            (ulist || []).map((r: any) => {
+              const id = String(r.tenantId || r.id || r.clientId || r.uid || "");
+              const labelFromUserTenant = r.tenantName || r.name || r.clientName || r.title;
+              const labelFromClients = clientsIndex.get(id);
+              const label = labelFromUserTenant || labelFromClients || "-";
+              return [id, { id, label, name: label }];
+            })
+          ).values()
+        );
         setTenants(opts);
         const savedTenantId = localStorage.getItem("selectedTenantId");
         if (savedTenantId && opts.some((o) => o.id === savedTenantId)) {
           const match = opts.find((o) => o.id === savedTenantId) || null;
           setSelectedTenant(match);
-        } else if (opts.length > 0) {
-          setSelectedTenant(opts[0]);
-          localStorage.setItem("selectedTenantId", opts[0].id);
-          setSelectedTenantId(dispatch as any, opts[0].id);
+          setSelectedTenantId(dispatch as any, savedTenantId);
+        } else if (savedTenantId) {
+          // Kayit yoksa id'ye göre şirket adını çekip placeholder ekle
+          try {
+            const one = await clientsApi.apiClientIdGet(savedTenantId);
+            const payloadOne: any = (one as any)?.data;
+            const label = payloadOne?.name || payloadOne?.clientName || payloadOne?.title || "-";
+            const fallback: any = { id: savedTenantId, label, name: label };
+            setTenants((curr) => (curr.some((c) => c.id === savedTenantId) ? curr : [...curr, fallback]));
+            setSelectedTenant(fallback);
+            setSelectedTenantId(dispatch as any, savedTenantId);
+          } catch {
+            const fallback: any = { id: savedTenantId, label: "-", name: "-" };
+            setTenants((curr) => (curr.some((c) => c.id === savedTenantId) ? curr : [...curr, fallback]));
+            setSelectedTenant(fallback);
+            setSelectedTenantId(dispatch as any, savedTenantId);
+          }
         } else {
+          // Hiç tenant yoksa global mod
           setSelectedTenant(null);
           localStorage.removeItem("selectedTenantId");
           setSelectedTenantId(dispatch as any, null as any);
@@ -286,6 +305,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
 
   const fetchMenuData = async () => {
     try {
+      const isSpecialRoute = currentPath.startsWith("/authentication") || currentPath.startsWith("/NotAuthorization");
+      if (isSpecialRoute) return;
       var conf = getConfiguration();
       var api = new MenuApi(conf);
       var data = await api.apiMenuAllListDataGet();
@@ -362,6 +383,43 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
 
   const handleProfileClick = (event: any) => {
     setAnchorEl(event.detail.targetRef);
+  };
+
+  const switchToGlobal = () => {
+    const current = selectedTenant?.id || localStorage.getItem("selectedTenantId");
+    if (current) localStorage.setItem("prevTenantId", current);
+    setSelectedTenant(null);
+    localStorage.removeItem("selectedTenantId");
+    setSelectedTenantId(dispatch as any, null as any);
+    // Tam yenileme: tüm context ve header'lar sıfırlansın
+    window.location.href = "/tenants/management";
+  };
+
+  const switchBackToTenant = async () => {
+    const prev = localStorage.getItem("prevTenantId");
+    if (!prev) return;
+    let match = tenants.find((t) => t.id === prev) || null;
+    if (!match) {
+      try {
+        const conf = getConfiguration();
+        const clientApi = new ClientApi(conf);
+        const res = await clientApi.apiClientIdGet(prev);
+        const payload: any = (res as any)?.data;
+        const label = payload?.name || payload?.clientName || payload?.title || "-";
+        match = { id: prev, label, name: label } as any;
+        setTenants((curr) => (curr.some((c) => c.id === prev) ? curr : [...curr, match as any]));
+      } catch {
+        match = { id: prev, label: "-", name: "-" } as any;
+        setTenants((curr) => (curr.some((c) => c.id === prev) ? curr : [...curr, match as any]));
+      }
+    }
+    setSelectedTenant(match);
+    if (match) {
+      localStorage.setItem("selectedTenantId", match.id);
+      setSelectedTenantId(dispatch as any, match.id);
+      // Tam yenileme: mevcut rota korunarak yeniden yükle
+      window.location.href = window.location.pathname + window.location.search;
+    }
   };
 
   const popoverOpen = Boolean(anchorEl);
@@ -587,7 +645,15 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     <div style={{ position: "sticky", top: 0, zIndex: 1000, width: "100%" }}>
       <ShellBar
         // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent
-        style={{ paddingLeft: 10, }}
+        style={{
+          paddingLeft: 10,
+          ...(isGlobalMode
+            ? {
+              background: darkMode ? "#2b3445" : "#fff8e1",
+              borderBottom: darkMode ? "2px solid #f59e0b" : "2px solid #f59e0b",
+            }
+            : {}),
+        }}
         // menuItems={<><ListItemStandard data-key="1">Menu Item 1</ListItemStandard><ListItemStandard data-key="2">Menu Item 2</ListItemStandard><ListItemStandard data-key="3">Menu Item 3</ListItemStandard></>}
         notificationsCount={waitingCount.toString()}
         onLogoClick={function Ki() { }}
@@ -596,7 +662,12 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         onProductSwitchClick={function Ki() { }}
         onProfileClick={handleProfileClick}
         onSearchButtonClick={function Ki() { }}
-        primaryTitle={userData?.name}
+        primaryTitle={(() => {
+          const userName = userData?.name || "";
+          if (isGlobalMode) return `${userName} (Global Mod)`;
+          const company = selectedTenant?.label || "";
+          return company ? `${userName} - ${company}` : userName;
+        })()}
         placeholder="Search"
         profile={
           <Avatar>
@@ -728,22 +799,9 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         showProductSwitch
         searchField={
           <div style={{ minWidth: 260 }}>
-            <Autocomplete
-              size="small"
-              options={tenants}
-              value={selectedTenant}
-              onChange={(e, v) => {
-                setSelectedTenant(v);
-                const id = v?.id || null;
-                if (id) localStorage.setItem("selectedTenantId", id);
-                else localStorage.removeItem("selectedTenantId");
-                setSelectedTenantId(dispatch as any, id);
-              }}
-              getOptionLabel={(o) => o.label}
-              renderInput={(params) => (
-                <TextField {...params} placeholder="Şirket seç" variant="outlined" />
-              )}
-            />
+            <MDButton variant="outlined" color="info" size="small" onClick={() => navigate('/authentication/tenant-select')}>
+              Şirket Değiştir
+            </MDButton>
           </div>
         }
       >
@@ -754,16 +812,6 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
             onClick={() => { }}
           />
         )}
-        <ShellBarItem
-          text="Global Admin'e Geç"
-          icon="settings"
-          onClick={() => {
-            setSelectedTenant(null);
-            localStorage.removeItem("selectedTenantId");
-            setSelectedTenantId(dispatch as any, null as any);
-            navigate("/tenants/management");
-          }}
-        />
       </ShellBar>
 
       <Popover
@@ -873,6 +921,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
           >
             Şifre Değiştir
           </MDButton>
+          {/* Global Admin veya Tenant mod geçiş butonları shellbardan kaldırıldı */}
           <MDButton
             variant="contained"
             fullWidth

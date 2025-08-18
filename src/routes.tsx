@@ -65,6 +65,7 @@ import SignInCover from "layouts/authentication/sign-in/cover";
 import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
+import TenantSelect from "layouts/authentication/tenant-select";
 
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
@@ -118,6 +119,7 @@ import TenantRoles from "layouts/pages/tenants/tenantsmanagement/roles";
 import TenantUsers from "layouts/pages/tenants/tenantsmanagement/users";
 import TenantPermissions from "layouts/pages/tenants/tenantsmanagement/permissions";
 import TenantRolesDetail from "layouts/pages/tenantroles/detail";
+import TenantUsersForTenant from "layouts/pages/tenants/users";
 import SuccessFactorsHome from "layouts/pages/successfactors";
 // User Tenants pages (under tenantsuser)
 import UserTenantsList from "layouts/pages/tenantsuser";
@@ -986,6 +988,18 @@ const routes = [
           },
         ],
       },
+      {
+        name: "Tenant Select",
+        key: "tenant-select",
+        collapse: [
+          {
+            name: "Select",
+            key: "select",
+            route: "/authentication/tenant-select",
+            component: <TenantSelect />,
+          },
+        ],
+      },
     ],
   },
   { type: "divider", key: "divider-1" },
@@ -1191,6 +1205,12 @@ const routes = [
         key: "tenants-management-users",
         route: "/tenants/management/users",
         component: <TenantUsers />,
+      },
+      {
+        name: "Tenant Users (Scoped)",
+        key: "tenants-management-users-scoped",
+        route: "/tenants/:tenantId/users",
+        component: <TenantUsersForTenant />,
       },
       {
         name: "Tenants Management Permissions",

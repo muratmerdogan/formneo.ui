@@ -37,29 +37,46 @@ const handleUnauthorizedOrBlocked = () => {
 };
 
 const getConfiguration = () => {
-    handleUnauthorizedOrBlocked(); // Token kontrolünü burada çağır
-
+    // Pre-flight doğrulama kaldırıldı; response interceptor 401/403'ü yönetecek
     const accessToken = getAccessToken();
+    const selectedTenantId = localStorage.getItem("selectedTenantId");
     return new Configuration({
         basePath: process.env.REACT_APP_BASE_PATH || '',
         accessToken: accessToken || "",
+        baseOptions: {
+            headers: {
+                'X-Tenant-Id': selectedTenantId ? selectedTenantId : null,
+            }
+        }
     });
 };
 
 export const getConfigurationLogin = () => {
 
     const accessToken = getAccessToken();
+    const selectedTenantId = localStorage.getItem("selectedTenantId");
     return new Configuration({
         basePath: process.env.REACT_APP_BASE_PATH || '',
-        accessToken: ""
+        accessToken: "",
+        baseOptions: {
+            headers: {
+                'X-Tenant-Id': selectedTenantId ? selectedTenantId : null,
+            }
+        }
     });
 };
 export const getConfigurationAccessTokenLogin = () => {
 
     const accessToken = getAccessToken();
+    const selectedTenantId = localStorage.getItem("selectedTenantId");
     return new Configuration({
         basePath: process.env.REACT_APP_BASE_PATH || '',
-        accessToken: accessToken
+        accessToken: accessToken,
+        baseOptions: {
+            headers: {
+                'X-Tenant-Id': selectedTenantId ? selectedTenantId : null,
+            }
+        }
     });
 };
 
