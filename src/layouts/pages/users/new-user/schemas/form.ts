@@ -118,7 +118,7 @@ let form = {
       type: "checkbox",
       errorMsg: "Blocked status is required.",
     },
-      isTestData: {
+    isTestData: {
       name: "isTestData",
       label: "Is Test Data?",
       type: "checkbox",
@@ -172,31 +172,9 @@ let form = {
       type: "multiselect",
       errorMsg: "roleIds",
     },
-    ticketDepartmentId: {
-      name: "ticketDepartmentId",
-      label: "ticketDepartmentId",
-      type: "text",
-      errorMsg: "ticketDepartmentId",
-    },
-    workCompanyId: {
-      name: "workCompanyId",
-      label: "workCompanyId",
-      type: "text",
-      errorMsg: "workCompanyId",
-    },
-    hasTicketPermission: {
-      name: "hasTicketPermission",
-      label: "Başkası Adına Talep Oluşturma",
-      type: "checkbox",
-      errorMsg: "hasTicketPermission",
-    },
-    hasDepartmentPermission: {
-      name: "hasDepartmentPermission",
-      label: "Tüm departman taleplerini görüntüleme",
-      type: "checkbox",
-      errorMsg: "hasDepartmentPermission",
-    },
-    mainManagerUserAppId:{
+
+
+    mainManagerUserAppId: {
       name: "mainManagerUserAppId",
       label: "Asıl Yönetici",
       type: "text",
@@ -207,24 +185,6 @@ let form = {
       label: "Tüm şirket taleplerini görüntüleme",
       type: "checkbox",
       errorMsg: "hasOtherCompanyPermission",
-    },
-    hasOtherDeptCalendarPerm: {
-      name: "hasOtherDeptCalendarPerm",
-      label: "Ekip planlama departman seçebilme",
-      type: "checkbox",
-      errorMsg: "hasOtherDeptCalendarPerm",
-    },
-    canEditTicket: {
-      name: "canEditTicket",
-      label: "Oluşturulan talebi düzenleyebilme",
-      type: "checkbox",
-      errorMsg: "canEditTicket",
-    },
-    dontApplyDefaultFilters: {
-      name: "dontApplyDefaultFilters",
-      label: "Varsayılan filtreleri uygulama",
-      type: "checkbox",
-      errorMsg: "dontApplyDefaultFilters",
     },
     isMailSender: {
       name: "isMailSender",
@@ -250,7 +210,7 @@ let form = {
       type: "text",
       errorMsg: "PC Name",
     },
-  
+
 
   },
 };

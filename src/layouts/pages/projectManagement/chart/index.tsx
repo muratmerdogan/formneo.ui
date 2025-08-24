@@ -529,7 +529,7 @@ function ProjectChart() {
         });
         return;
       }
-      if(args.taskData.ParentID){
+      if (args.taskData.ParentID) {
         // ! KRİTİK : Eğer Alt Alan eklenmek istiyorsa ve herhangi bir hatadan dolayı parentId null ise, alert ver yoksa proje patlar.
         const parentTask = projectData.find((task: any) => task.TaskID === Number(args.taskData.ParentID));
         if (!parentTask) {
@@ -811,7 +811,7 @@ function ProjectChart() {
         showTest: true,
         workCompany,
         projectId,
-        
+
 
       },
     });
@@ -1071,11 +1071,11 @@ function ProjectChart() {
         open={pdfDialogOpen}
         onClose={handlePdfDialogClose}
         maxWidth="lg"
-        // sx={{
-        //   "& .MuiDialog-paper": {
-        //     minWidth: "500px",
-        //   },
-        // }}
+      // sx={{
+      //   "& .MuiDialog-paper": {
+      //     minWidth: "500px",
+      //   },
+      // }}
       >
         <DialogTitle>
           <MDTypography variant="h5">PDF Dışa Aktarma Ayarları</MDTypography>

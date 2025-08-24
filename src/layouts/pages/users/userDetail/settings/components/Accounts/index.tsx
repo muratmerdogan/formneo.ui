@@ -86,42 +86,6 @@ function Accounts({ formData }: any): JSX.Element {
 
         </MDBox>
 
-        <Divider />
-        <MDBox
-          display="flex"
-          justifyContent="space-between"
-          alignItems={{ xs: "flex-start", sm: "center" }}
-          flexDirection={{ xs: "column", sm: "row" }}
-        >
-          <MDBox display="flex" alignItems="center">
-            {/* <MDAvatar src={logoSpotify} alt="Slack logo" variant="rounded" /> */}
-            <MDBox ml={2} lineHeight={0}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Vesa SSO
-              </MDTypography>
-              <MDTypography variant="button" color="text">
-                SSO Kullanarak girebilirs
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-          <MDBox
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="center"
-            width={{ xs: "100%", sm: "auto" }}
-            mt={{ xs: 1, sm: 0 }}
-          >
-            <MDBox lineHeight={0} mx={2}>
-              <MDTypography variant="button" color="text">
-                {values.canSsoLogin ? "SSO Giriş Yapabilir" : "SSO Kapalı"}
-              </MDTypography>
-            </MDBox>
-            <MDBox mr={1}>
-              <Switch checked={values.canSsoLogin} onChange={handleSSOLogin} />
-            </MDBox>
-          </MDBox>
-        </MDBox>
-        <Divider />
 
         <MDBox
           display="flex"
@@ -129,35 +93,9 @@ function Accounts({ formData }: any): JSX.Element {
           alignItems={{ xs: "flex-start", sm: "center" }}
           flexDirection={{ xs: "column", sm: "row" }}
         >
-          <MDBox display="flex" alignItems="center">
-            {/* <MDAvatar src={logoSpotify} alt="Slack logo" variant="rounded" /> */}
-            <MDBox ml={2} lineHeight={0}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Yönetici mi
-              </MDTypography>
-              <MDTypography variant="button" color="text">
-                Admin yetkisi verir
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-          <MDBox
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="center"
-            width={{ xs: "100%", sm: "auto" }}
-            mt={{ xs: 1, sm: 0 }}
-          >
-            <MDBox lineHeight={0} mx={2}>
-              <MDTypography variant="button" color="text">
-                {values.isSystemAdmin ? "Admin Yetkisi Var" : "Admin Değil"}
-              </MDTypography>
-            </MDBox>
-            <MDBox mr={1}>
-              <Switch checked={values.isSystemAdmin} onChange={handleSystemAdmin} />
-            </MDBox>
-          </MDBox>
+
+
         </MDBox>
-        <Divider />
 
         <MDBox
           display="flex"

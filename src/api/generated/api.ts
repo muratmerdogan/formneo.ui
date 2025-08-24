@@ -3410,7 +3410,7 @@ export interface CreateUserDto {
      * @type {string}
      * @memberof CreateUserDto
      */
-    'lastLoginDate'?: string;
+    'lastLoginDate'?: string | null;
     /**
      * 
      * @type {string}
@@ -3470,18 +3470,6 @@ export interface CreateUserDto {
      * @type {string}
      * @memberof CreateUserDto
      */
-    'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
-    'manager2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'title'?: string | null;
     /**
      * 
@@ -3527,30 +3515,6 @@ export interface CreateUserDto {
     'workCompanyId'?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof CreateUserDto
      */
@@ -3561,30 +3525,6 @@ export interface CreateUserDto {
      * @memberof CreateUserDto
      */
     'userLevel'?: UserLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
-    'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
-    'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
-    'pCname'?: string | null;
 }
 
 
@@ -6794,23 +6734,6 @@ export interface LoginDto {
 /**
  * 
  * @export
- * @enum {number}
- */
-
-export const LoginType = {
-    NUMBER_1: 1,
-    NUMBER_2: 2,
-    NUMBER_5: 5,
-    NUMBER_7: 7,
-    NUMBER_11: 11
-} as const;
-
-export type LoginType = typeof LoginType[keyof typeof LoginType];
-
-
-/**
- * 
- * @export
  * @interface LoginUserDto
  */
 export interface LoginUserDto {
@@ -7745,115 +7668,6 @@ export interface OrganizationDto {
 /**
  * 
  * @export
- * @interface PCTrackDto
- */
-export interface PCTrackDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'pCname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'processTime'?: string | null;
-    /**
-     * 
-     * @type {ProcessTypes}
-     * @memberof PCTrackDto
-     */
-    'processType'?: ProcessTypes;
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'processTypeText'?: string | null;
-    /**
-     * 
-     * @type {LoginType}
-     * @memberof PCTrackDto
-     */
-    'loginType'?: LoginType;
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'loginProcessName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'loginId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PCTrackDto
-     */
-    'subjectLoginId'?: string | null;
-}
-
-
-/**
- * 
- * @export
- * @interface PcDto
- */
-export interface PcDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof PcDto
-     */
-    'id'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PcDto
-     */
-    'pCname'?: string | null;
-}
-/**
- * 
- * @export
- * @interface PcTrackGraphicDto
- */
-export interface PcTrackGraphicDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PcTrackGraphicDto
-     */
-    'adjustedProcessTime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PcTrackGraphicDto
-     */
-    'pCname'?: string | null;
-    /**
-     * 
-     * @type {LoginType}
-     * @memberof PcTrackGraphicDto
-     */
-    'loginType'?: LoginType;
-    /**
-     * 
-     * @type {UserAppDtoOnlyNameId}
-     * @memberof PcTrackGraphicDto
-     */
-    'user'?: UserAppDtoOnlyNameId;
-}
-
-
-/**
- * 
- * @export
  * @enum {number}
  */
 
@@ -8149,24 +7963,6 @@ export const ProcessType = {
 } as const;
 
 export type ProcessType = typeof ProcessType[keyof typeof ProcessType];
-
-
-/**
- * 
- * @export
- * @enum {number}
- */
-
-export const ProcessTypes = {
-    NUMBER_1: 1,
-    NUMBER_2: 2,
-    NUMBER_3: 3,
-    NUMBER_4: 4,
-    NUMBER_5: 5,
-    NUMBER_4624: 4624
-} as const;
-
-export type ProcessTypes = typeof ProcessTypes[keyof typeof ProcessTypes];
 
 
 /**
@@ -9298,6 +9094,12 @@ export interface RoleWithMenusItemDto {
      * @memberof RoleWithMenusItemDto
      */
     'roleId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleWithMenusItemDto
+     */
+    'roleName'?: string | null;
     /**
      * 
      * @type {boolean}
@@ -13711,7 +13513,7 @@ export interface UpdateUserDto {
      * @type {string}
      * @memberof UpdateUserDto
      */
-    'lastLoginDate'?: string;
+    'lastLoginDate'?: string | null;
     /**
      * 
      * @type {string}
@@ -13789,18 +13591,6 @@ export interface UpdateUserDto {
      * @type {string}
      * @memberof UpdateUserDto
      */
-    'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
-    'manager2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'title'?: string | null;
     /**
      * 
@@ -13846,42 +13636,6 @@ export interface UpdateUserDto {
     'workCompanyId'?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
-    'resetPasswordCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
-    'resetCodeExpiry'?: string | null;
-    /**
-     * 
      * @type {string}
      * @memberof UpdateUserDto
      */
@@ -13897,25 +13651,13 @@ export interface UpdateUserDto {
      * @type {string}
      * @memberof UpdateUserDto
      */
-    'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
-    'dontApplyDefaultFilters'?: boolean;
+    'resetPasswordCode'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof UpdateUserDto
      */
-    'pCname'?: string | null;
+    'resetCodeExpiry'?: string | null;
 }
 
 
@@ -14068,18 +13810,6 @@ export interface UserApp {
      * @type {string}
      * @memberof UserApp
      */
-    'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
-    'manager2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'profileInfo'?: string | null;
     /**
      * 
@@ -14173,30 +13903,6 @@ export interface UserApp {
     'workCompany'?: WorkCompany;
     /**
      * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof UserApp
      */
@@ -14231,30 +13937,6 @@ export interface UserApp {
      * @memberof UserApp
      */
     'userLevel'?: UserLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
-    'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
-    'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
-    'pCname'?: string | null;
 }
 
 
@@ -14452,30 +14134,6 @@ export interface UserAppDto {
     'workCompanyId'?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof UserAppDto
      */
@@ -14498,30 +14156,6 @@ export interface UserAppDto {
      * @memberof UserAppDto
      */
     'userLevel'?: UserLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
-    'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
-    'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
-    'pCname'?: string | null;
 }
 
 
@@ -14750,30 +14384,6 @@ export interface UserAppDtoWithoutPhoto {
     'workCompanyText'?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof UserAppDtoWithoutPhoto
      */
@@ -14784,30 +14394,6 @@ export interface UserAppDtoWithoutPhoto {
      * @memberof UserAppDtoWithoutPhoto
      */
     'userLevel'?: UserLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
-    'pCname'?: string | null;
 }
 
 
@@ -15060,6 +14646,118 @@ export type UserLevel = typeof UserLevel[keyof typeof UserLevel];
 /**
  * 
  * @export
+ * @interface UserRoleAssignmentGetDto
+ */
+export interface UserRoleAssignmentGetDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentGetDto
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentGetDto
+     */
+    'tenantId'?: string;
+    /**
+     * 
+     * @type {Array<UserRoleAssignmentItemDto>}
+     * @memberof UserRoleAssignmentGetDto
+     */
+    'roles'?: Array<UserRoleAssignmentItemDto> | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserRoleAssignmentItemDto
+ */
+export interface UserRoleAssignmentItemDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'roleId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'roleName'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'isLocked'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'isAssignedToUser'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentItemDto
+     */
+    'userTenantRoleId'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserRoleAssignmentSaveDto
+ */
+export interface UserRoleAssignmentSaveDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentSaveDto
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentSaveDto
+     */
+    'tenantId'?: string;
+    /**
+     * 
+     * @type {Array<UserRoleAssignmentSaveItemDto>}
+     * @memberof UserRoleAssignmentSaveDto
+     */
+    'roleAssignments'?: Array<UserRoleAssignmentSaveItemDto> | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserRoleAssignmentSaveItemDto
+ */
+export interface UserRoleAssignmentSaveItemDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRoleAssignmentSaveItemDto
+     */
+    'roleId'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserRoleAssignmentSaveItemDto
+     */
+    'shouldAssign'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface UserRoleDto
  */
 export interface UserRoleDto {
@@ -15224,6 +14922,66 @@ export interface UserTenantInsertDto {
      * @memberof UserTenantInsertDto
      */
     'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'hasTicketPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'hasDepartmentPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'hasOtherCompanyPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'hasOtherDeptCalendarPerm'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'canEditTicket'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantInsertDto
+     */
+    'dontApplyDefaultFilters'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'mainManagerUserAppId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'pCname'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'manager1'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantInsertDto
+     */
+    'manager2'?: string | null;
 }
 /**
  * 
@@ -15243,6 +15001,66 @@ export interface UserTenantUpdateDto {
      * @memberof UserTenantUpdateDto
      */
     'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'hasTicketPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'hasDepartmentPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'hasOtherCompanyPermission'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'hasOtherDeptCalendarPerm'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'canEditTicket'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserTenantUpdateDto
+     */
+    'dontApplyDefaultFilters'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantUpdateDto
+     */
+    'mainManagerUserAppId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantUpdateDto
+     */
+    'pCname'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantUpdateDto
+     */
+    'manager1'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserTenantUpdateDto
+     */
+    'manager2'?: string | null;
 }
 /**
  * 
@@ -28504,677 +28322,6 @@ export class OrganizationApi extends BaseAPI {
 
 
 /**
- * PCTrackingApi - axios parameter creator
- * @export
- */
-export const PCTrackingApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {Array<string>} [userId] 
-         * @param {string} [startDate] 
-         * @param {string} [endDate] 
-         * @param {number} [startHour] 
-         * @param {number} [endHour] 
-         * @param {boolean} [isAll] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetByUserGet: async (userId?: Array<string>, startDate?: string, endDate?: string, startHour?: number, endHour?: number, isAll?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetByUser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (userId) {
-                localVarQueryParameter['userId'] = userId;
-            }
-
-            if (startDate !== undefined) {
-                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
-                    (startDate as any).toISOString() :
-                    startDate;
-            }
-
-            if (endDate !== undefined) {
-                localVarQueryParameter['endDate'] = (endDate as any instanceof Date) ?
-                    (endDate as any).toISOString() :
-                    endDate;
-            }
-
-            if (startHour !== undefined) {
-                localVarQueryParameter['startHour'] = startHour;
-            }
-
-            if (endHour !== undefined) {
-                localVarQueryParameter['endHour'] = endHour;
-            }
-
-            if (isAll !== undefined) {
-                localVarQueryParameter['isAll'] = isAll;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetDatabaseSizesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetDatabaseSizes`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [pcName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetLastTimeByPcNameGet: async (pcName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetLastTimeByPcName`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (pcName !== undefined) {
-                localVarQueryParameter['pcName'] = pcName;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetPcNamesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetPcNames`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetTopSizeTablesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetTopSizeTables`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetUsersWithoutPcTrackingTodayGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking/GetUsersWithoutPcTrackingToday`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingPost: async (pCTrackDto?: PCTrackDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pCTrackDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingPut: async (pCTrackDto?: PCTrackDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PCTracking`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(pCTrackDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * PCTrackingApi - functional programming interface
- * @export
- */
-export const PCTrackingApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = PCTrackingApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PCTrackDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {Array<string>} [userId] 
-         * @param {string} [startDate] 
-         * @param {string} [endDate] 
-         * @param {number} [startHour] 
-         * @param {number} [endHour] 
-         * @param {boolean} [isAll] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetByUserGet(userId?: Array<string>, startDate?: string, endDate?: string, startHour?: number, endHour?: number, isAll?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PcTrackGraphicDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetByUserGet(userId, startDate, endDate, startHour, endHour, isAll, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetByUserGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetDatabaseSizesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetDatabaseSizesGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetDatabaseSizesGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [pcName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetLastTimeByPcNameGet(pcName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetLastTimeByPcNameGet(pcName, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetLastTimeByPcNameGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetPcNamesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PcDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetPcNamesGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetPcNamesGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetTopSizeTablesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetTopSizeTablesGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetTopSizeTablesGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserAppDtoOnlyNameId>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingGetUsersWithoutPcTrackingTodayGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingPost(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingPost(pCTrackDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPCTrackingPut(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPCTrackingPut(pCTrackDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PCTrackingApi.apiPCTrackingPut']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * PCTrackingApi - factory interface
- * @export
- */
-export const PCTrackingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = PCTrackingApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<PCTrackDto>> {
-            return localVarFp.apiPCTrackingGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {Array<string>} [userId] 
-         * @param {string} [startDate] 
-         * @param {string} [endDate] 
-         * @param {number} [startHour] 
-         * @param {number} [endHour] 
-         * @param {boolean} [isAll] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetByUserGet(userId?: Array<string>, startDate?: string, endDate?: string, startHour?: number, endHour?: number, isAll?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<Array<PcTrackGraphicDto>> {
-            return localVarFp.apiPCTrackingGetByUserGet(userId, startDate, endDate, startHour, endHour, isAll, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetDatabaseSizesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiPCTrackingGetDatabaseSizesGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [pcName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetLastTimeByPcNameGet(pcName?: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiPCTrackingGetLastTimeByPcNameGet(pcName, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetPcNamesGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<PcDto>> {
-            return localVarFp.apiPCTrackingGetPcNamesGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetTopSizeTablesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiPCTrackingGetTopSizeTablesGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserAppDtoOnlyNameId>> {
-            return localVarFp.apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingPost(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiPCTrackingPost(pCTrackDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {PCTrackDto} [pCTrackDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPCTrackingPut(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiPCTrackingPut(pCTrackDto, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * PCTrackingApi - object-oriented interface
- * @export
- * @class PCTrackingApi
- * @extends {BaseAPI}
- */
-export class PCTrackingApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGet(options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {Array<string>} [userId] 
-     * @param {string} [startDate] 
-     * @param {string} [endDate] 
-     * @param {number} [startHour] 
-     * @param {number} [endHour] 
-     * @param {boolean} [isAll] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetByUserGet(userId?: Array<string>, startDate?: string, endDate?: string, startHour?: number, endHour?: number, isAll?: boolean, options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetByUserGet(userId, startDate, endDate, startHour, endHour, isAll, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetDatabaseSizesGet(options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetDatabaseSizesGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [pcName] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetLastTimeByPcNameGet(pcName?: string, options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetLastTimeByPcNameGet(pcName, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetPcNamesGet(options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetPcNamesGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetTopSizeTablesGet(options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetTopSizeTablesGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingGetUsersWithoutPcTrackingTodayGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {PCTrackDto} [pCTrackDto] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingPost(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingPost(pCTrackDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {PCTrackDto} [pCTrackDto] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PCTrackingApi
-     */
-    public apiPCTrackingPut(pCTrackDto?: PCTrackDto, options?: RawAxiosRequestConfig) {
-        return PCTrackingApiFp(this.configuration).apiPCTrackingPut(pCTrackDto, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * PdksApi - axios parameter creator
  * @export
  */
@@ -32099,6 +31246,195 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesByUserGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/roles-by-user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesByUserGet_1: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/roles/by-user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesWithMenusByUserGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/roles-with-menus/by-user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuUserRoleAssignmentsGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/user-role-assignments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UserRoleAssignmentSaveDto} [userRoleAssignmentSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuUserRoleAssignmentsPost: async (userRoleAssignmentSaveDto?: UserRoleAssignmentSaveDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/user-role-assignments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userRoleAssignmentSaveDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -32147,6 +31483,66 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRoleIdTenantIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantMenuListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesByUserGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet_1(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesByUserGet_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleTenantWithMenusGetDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesWithMenusByUserGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesWithMenusByUserGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserRoleAssignmentGetDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuUserRoleAssignmentsGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuUserRoleAssignmentsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UserRoleAssignmentSaveDto} [userRoleAssignmentSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto?: UserRoleAssignmentSaveDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuUserRoleAssignmentsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -32185,6 +31581,51 @@ export const RoleTenantMenuApiFactory = function (configuration?: Configuration,
          */
         apiRoleTenantMenuRoleIdTenantIdGet(roleId: string, tenantId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantMenuListDto>> {
             return localVarFp.apiRoleTenantMenuRoleIdTenantIdGet(roleId, tenantId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantMenuListDto>> {
+            return localVarFp.apiRoleTenantMenuRolesByUserGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.apiRoleTenantMenuRolesByUserGet_1(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<RoleTenantWithMenusGetDto> {
+            return localVarFp.apiRoleTenantMenuRolesWithMenusByUserGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<UserRoleAssignmentGetDto> {
+            return localVarFp.apiRoleTenantMenuUserRoleAssignmentsGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UserRoleAssignmentSaveDto} [userRoleAssignmentSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto?: UserRoleAssignmentSaveDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -32229,6 +31670,61 @@ export class RoleTenantMenuApi extends BaseAPI {
      */
     public apiRoleTenantMenuRoleIdTenantIdGet(roleId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRoleIdTenantIdGet(roleId, tenantId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet_1(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesWithMenusByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UserRoleAssignmentSaveDto} [userRoleAssignmentSaveDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto?: UserRoleAssignmentSaveDto, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -42482,6 +41978,44 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserIsGlobalAdminGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/User/is-global-admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {boolean} [isSendMail] 
          * @param {CreateUserDto} [createUserDto] 
          * @param {*} [options] Override http request option.
@@ -42986,6 +42520,18 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserIsGlobalAdminGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserIsGlobalAdminGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.apiUserIsGlobalAdminGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {boolean} [isSendMail] 
          * @param {CreateUserDto} [createUserDto] 
          * @param {*} [options] Override http request option.
@@ -43220,6 +42766,15 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserIsGlobalAdminGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
+            return localVarFp.apiUserIsGlobalAdminGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {boolean} [isSendMail] 
          * @param {CreateUserDto} [createUserDto] 
          * @param {*} [options] Override http request option.
@@ -43451,6 +43006,17 @@ export class UserApi extends BaseAPI {
      */
     public apiUserGetUserGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetUserGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public apiUserIsGlobalAdminGet(userId?: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).apiUserIsGlobalAdminGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

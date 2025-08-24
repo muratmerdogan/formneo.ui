@@ -23,6 +23,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 import "wx-react-gantt/dist/gantt.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -90,7 +93,6 @@ import FormAuthDetail from "layouts/pages/FormManagement/FormAuth/FormAuthDetail
 import FormList from "layouts/pages/FormManagement/UsersForm/FormList";
 import ResumeBuild from "layouts/pages/resumeBuilder";
 import MainScreen from "layouts/pages/projectManagement";
-import PCTrackingManagement from "layouts/pages/pcTracking";
 import Inventory from "layouts/pages/inventory";
 import CreateInventory from "layouts/pages/inventory/createInventory";
 import VpnDashboard from "layouts/pages/vpnPage";
@@ -297,7 +299,6 @@ export default function App() {
         <Route path="/inventory/detail" element={<CreateInventory />} />
         <Route path="/inventory/detail/:id" element={<CreateInventory />} />
         <Route path="/resumeBuild" element={<ResumeBuild />} />
-        <Route path="/pcTracking" element={<PCTrackingManagement />} />
         <Route path="/userTasks" element={<UserTasks />} />
         <Route path="/userProjects" element={<UserProjects />} />
         <Route path="/vpn" element={<VpnDashboard />} />

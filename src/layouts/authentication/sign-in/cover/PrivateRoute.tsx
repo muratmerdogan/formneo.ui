@@ -1,4 +1,4 @@
-import { Menu, RoleMenuApi } from "api/generated";
+import { Menu, MenuApi } from "api/generated";
 import getConfiguration from "confiuration";
 import { useQuery } from "react-query";
 import React, { useEffect, useState } from "react";
@@ -8,8 +8,8 @@ const PrivateRoute: React.FC = () => {
   const [menuAuth, setmenuAuth] = useState<Menu[]>([]);
   const fetchRoleMenuPermissions = async () => {
     var conf = getConfiguration();
-    var api = new RoleMenuApi(conf);
-    var result = await api.apiRoleMenuGetAuthByUserGet();
+    var api = new MenuApi(conf);
+    var result = await api.apiMenuGetAuthByUserGet();
 
     setmenuAuth(result.data);
     return result.data;

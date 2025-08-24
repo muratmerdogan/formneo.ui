@@ -41,14 +41,6 @@ let {
     sapDepartmentText,
     sapPositionText, // Yeni eklenen alan
     roleIds, // Ticket Yetki
-    ticketDepartmentId,
-    workCompanyId,
-    hasTicketPermission,
-    hasDepartmentPermission,
-    hasOtherCompanyPermission,
-    hasOtherDeptCalendarPerm,
-    canEditTicket,
-    dontApplyDefaultFilters,
     isMailSender,
     positionId,
     userLevel,
@@ -85,22 +77,11 @@ let initialValues: InitialValuesType = {
   [isSystemAdmin.name]: false,// Yeni alan, başlangıç değeri false,
   [photo.name]: "",
   [canSsoLogin.name]: false,
-  [sapDepartmentText.name]: "",
-  [sapPositionText.name]: "",
   [roleIds.name]: [],
-  [ticketDepartmentId.name]: "",
-  [workCompanyId.name]: "",
-  [hasTicketPermission.name]: false,
-  [hasDepartmentPermission.name]: false,
-  [hasOtherCompanyPermission.name]: false,
-  [hasOtherDeptCalendarPerm.name]: false,
-  [canEditTicket.name]: false,
-  [dontApplyDefaultFilters.name]: false,
   [isMailSender.name]: false,
   [positionId.name]: null,
   [userLevel.name]: null,
   [mainManagerUserAppId.name]: null,
-  [pCname.name]: "",
 };
 
 

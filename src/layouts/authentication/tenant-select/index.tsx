@@ -21,6 +21,7 @@ function TenantSelect(): JSX.Element {
     const [filtered, setFiltered] = useState<Option[]>([]);
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState<Option | null>(null);
+    const [isGlobalAdmin, setIsGlobalAdmin] = useState<boolean>(false);
 
     useEffect(() => {
         const load = async () => {
@@ -33,7 +34,16 @@ function TenantSelect(): JSX.Element {
                 if (!userId) {
                     setAllTenants([]);
                     setFiltered([]);
+                    setIsGlobalAdmin(false);
                     return;
+                }
+                // Global admin mi?
+                try {
+                    const isAdminRes = await userApi.apiUserIsGlobalAdminGet(userId);
+                    const val = (isAdminRes as any)?.data;
+                    setIsGlobalAdmin(Boolean(val));
+                } catch {
+                    setIsGlobalAdmin(false);
                 }
                 const utApi = new UserTenantsApi(conf);
                 const res = await utApi.apiUserTenantsByUserUserIdGet(userId);
@@ -94,7 +104,9 @@ function TenantSelect(): JSX.Element {
                         Şirket Seçimi
                     </MDTypography>
                     <MDTypography variant="button" color="text">
-                        Lütfen devam etmek için bir şirket seçiniz veya Global Admin olarak devam edin.
+                        {isGlobalAdmin
+                            ? "Lütfen devam etmek için bir şirket seçiniz veya Global Admin olarak devam edin."
+                            : "Lütfen devam etmek için bir şirket seçiniz."}
                     </MDTypography>
                 </MDBox>
 
@@ -130,7 +142,9 @@ function TenantSelect(): JSX.Element {
                 <MDBox mt={3} display="flex" justifyContent="space-between" gap={1}>
                     <MDButton variant="outlined" color="secondary" onClick={() => navigate("/authentication/sign-in/cover")}>Geri</MDButton>
                     <MDBox display="flex" gap={1}>
-                        <MDButton variant="outlined" color="warning" onClick={handleGlobalAdmin}>Global Admin olarak devam et</MDButton>
+                        {isGlobalAdmin && (
+                            <MDButton variant="outlined" color="warning" onClick={handleGlobalAdmin}>Global Admin olarak devam et</MDButton>
+                        )}
                         <MDButton variant="gradient" color="info" disabled={!selected} onClick={handleContinue}>Devam Et</MDButton>
                     </MDBox>
                 </MDBox>

@@ -19,6 +19,8 @@ import { useState } from "react";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
+import Chip from "@mui/material/Chip";
+import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -57,35 +59,40 @@ function Header({ formData }: any): JSX.Element {
     setFieldValue("isTestData", !values.isTestData);
   }
   return (
-    <Card id="profile">
-      <MDBox p={2}>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={6} lg={3}>
+    <Card
+      id="profile"
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 2,
+        boxShadow: (t) => t.palette.mode === 'dark' ? '0 6px 20px rgba(0,0,0,.45)' : '0 6px 20px rgba(0,0,0,.12)',
+        backgroundColor: (t) => t.palette.mode === 'dark' ? '#111827' : '#eff6ff',
+      }}
+    >
+      {/* Banner */}
+      <MDBox sx={{ height: 140 }} />
+
+      {/* Content */}
+      <MDBox sx={{ px: 2, pb: 2, mt: -8 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={3}>
             <MDBox display="flex" flexDirection="column" alignItems="center">
-              {values.photo && (
-                <img
-                  src={
-                    values.photo
-                      ? values.photo.startsWith("data:image")
-                        ? values.photo
-                        : `data:image/png;base64,${values.photo}`
-                      : null
-                  }
-                  alt="profile-image"
-                  style={{
-                    width: "150px", // Genişlik
-                    height: "150px", // Yükseklik
-                    borderRadius: "50%", // Yuvarlak görünüm
-                    objectFit: "cover", // Görüntüyü kesmeden sığdır
-                    objectPosition: "center", // Görüntüyü ortala
-                    border: "2px solid #fff", // Şık bir beyaz kenarlık
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Hafif gölge efekti
-                  }}
-                  onError={(e) => {
-                    // Hata kontrolü: Görsel yüklenemezse varsayılan resme geçiş yapar
-                  }}
-                />
-              )}
+              <MDBox sx={{
+                width: 120,
+                height: 120,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: (t) => `3px solid ${t.palette.background.paper}`,
+                boxShadow: (t) => t.palette.mode === 'dark' ? '0 6px 18px rgba(0,0,0,.6)' : '0 6px 18px rgba(0,0,0,.15)'
+              }}>
+                {values.photo && (
+                  <img
+                    src={values.photo.startsWith('data:image') ? values.photo : `data:image/png;base64,${values.photo}`}
+                    alt="profile-image"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
+              </MDBox>
 
               <input
                 accept="image/*"
@@ -97,8 +104,6 @@ function Header({ formData }: any): JSX.Element {
                     const reader = new FileReader();
                     reader.onload = (event) => {
                       if (event.target?.result) {
-                        // Update the avatar URL in your form values
-                        console.log(event.target.result);
                         setFieldValue("photo", event.target.result);
                       }
                     };
@@ -107,62 +112,35 @@ function Header({ formData }: any): JSX.Element {
                 }}
               />
               <label htmlFor="raised-button-file">
-                <MDTypography
-                  variant="button"
-                  color="blue"
-                  fontWeight="medium"
-                  style={{ cursor: "pointer" }}
-                >
+                <MDTypography variant="caption" color="text" fontWeight="medium" style={{ cursor: "pointer", marginTop: 8 }}>
                   Fotoğraf Yükle
                 </MDTypography>
               </label>
-              <MDBox mt={1}>
-                <MDTypography
-                  variant="button"
-                  color="secondary"
-                  fontWeight="medium"
-                  onClick={async () => {
-                    var conf = getConfiguration();
-                    var api = new SAPReportsApi(conf);
-                    var data = await api.apiSAPReportsGetSapInfoGet(values.email);
-                    console.log(data.data);
-                    setFieldValue("photo", data.data.photo);
-                    setFieldValue("sapPositionText", data.data.stext);
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  SAP Bilgileriden Getir
-                </MDTypography>
-              </MDBox>
             </MDBox>
           </Grid>
-
-          <Grid item>
-            <MDBox style={{ marginTop: "1px" }} height="100%" mt={0.5} lineHeight={1}>
-              <MDBox display="flex" flexDirection="column">
-                <MDTypography variant="h5" fontWeight="medium">
-                  {values.firstName} {values.lastName}
-                </MDTypography>
-                <MDTypography variant="button" color="text" fontWeight="medium">
-                  {values.email}
-                </MDTypography>
-                <MDTypography variant="button" color="text" fontWeight="medium">
-                  {values.SAPDepartmentText}
-                </MDTypography>
-                <MDTypography variant="button" color="orange" fontWeight="medium">
-                  {values.sapPositionText}
-                </MDTypography>
+          <Grid item xs={12} md={6}>
+            <MDBox lineHeight={1} sx={{ textAlign: { xs: 'center', md: 'left' }, mt: 1.5 }}>
+              <MDTypography variant="h5" fontWeight="medium" color={(t: any) => t.palette.mode === 'dark' ? 'white' : 'text.primary'}>
+                {values.firstName} {values.lastName}
+              </MDTypography>
+              <MDBox mt={0.5} display="flex" alignItems="center" justifyContent={{ xs: 'center', md: 'flex-start' }} gap={1} flexWrap="wrap">
+                <Chip size="small" label={values.email} variant="outlined" />
+                {!values.isBlocked && <Chip size="small" label="Aktif" color="success" variant="outlined" />}
+                {values.isBlocked && <Chip size="small" label="Pasif" color="warning" variant="outlined" />}
+                {values.isSystemAdmin && <Chip size="small" label="System Admin" color="info" variant="outlined" />}
+                {values.isTestData && <Chip size="small" label="Test" color="default" variant="outlined" />}
               </MDBox>
+              {(values.sapPositionText || values.SAPDepartmentText) && (
+                <MDBox mt={0.5}>
+                  <MDTypography variant="caption" color="text">
+                    {values.SAPDepartmentText} {values.sapPositionText ? `• ${values.sapPositionText}` : ''}
+                  </MDTypography>
+                </MDBox>
+              )}
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={3} sx={{ ml: "auto" }}>
-            <MDBox
-              display="flex"
-              flexDirection="column"
-              justifyContent={{ md: "flex-end" }}
-              alignItems="flex-end"
-              lineHeight={1}
-            >
+          <Grid item xs={12} md={3}>
+            <MDBox display="flex" flexDirection="column" alignItems={{ xs: 'center', md: 'flex-end' }}>
               <MDBox display="flex" alignItems="center">
                 <MDTypography variant="caption" fontWeight="regular">
                   Kullanıcı {values.isBlocked ? "Pasif" : "Aktif"}

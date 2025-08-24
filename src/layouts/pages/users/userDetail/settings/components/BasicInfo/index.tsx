@@ -32,7 +32,7 @@ import { an } from "@fullcalendar/core/internal-common";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import getConfiguration from "confiuration";
-import { PcDto, PCTrackingApi } from "api/generated";
+
 import MDInput from "components/MDInput";
 
 
@@ -41,29 +41,10 @@ function BasicInfo({ formData, readOnlyUserName }: any): JSX.Element {
   const { userName, firstName, lastName, email, password, pCname } = formField;
   const { userName: userNameV, firstName: firstNameV, lastName: lastNameV, email: emailV, password: passwordV, isSystemAdmin: isSystemAdminV, vacationMode: vacationModeV, isBlocked: isBlockedV, pCname: pCnameV } = values;
   const { setFieldValue } = useFormikContext();
-  const [pcData, setPcData] = useState<PcDto[]>([]);
 
-  useEffect(() => {
-    const fetchNames = async () => {
-      try{
-        let config = getConfiguration();
-        let api = new PCTrackingApi(config);
-        let response = await api.apiPCTrackingGetPcNamesGet();
-        setPcData(response.data);
-      }catch(error){
-        console.log(error);
-      }
-    }
-    fetchNames();
-  }, []);
 
-  const handleChange = (e: any, value: PcDto) => {
-    if (value === null) {
-      setFieldValue("pCname", "");
-      return;
-    }
-    setFieldValue("pCname", value.pCname);
-  };
+
+
   return (
     <Card id="basic-info" sx={{ overflow: "visible" }}>
       <MDBox p={3}>
@@ -114,26 +95,12 @@ function BasicInfo({ formData, readOnlyUserName }: any): JSX.Element {
               label={email.label}
               name={email.name}
               value={emailV}
+              disabled={readOnlyUserName}
               placeholder={email.placeholder}
               error={errors.email && touched.email}
               success={emailV.length > 0 && !errors.email}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-             <Autocomplete
-              options={pcData}
-              isOptionEqualToValue={(option: PcDto, value: any) => {
-                if (typeof value === 'string') {
-                  return option.pCname === value;
-                }
-                return option.pCname === value?.pCname;
-              }}
-              getOptionLabel={(option: PcDto) => option?.pCname || ''}
-              renderInput={(params) => <MDInput {...params} label="Computer Name" />}
-              onChange={handleChange}
-              value={pcData.find(pc => pc.pCname === pCnameV) || null}
-             />
-              </Grid>
 
           <Grid item xs={12} sm={6}>
 
@@ -141,7 +108,7 @@ function BasicInfo({ formData, readOnlyUserName }: any): JSX.Element {
           <Grid item xs={12}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
-              {/* <FormField
+                {/* <FormField
               name="computerName"
               label="Phone Number"
               placeholder="+40 735 631 620"

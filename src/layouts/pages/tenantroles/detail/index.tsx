@@ -504,6 +504,7 @@ function TenantRolesDetail(): JSX.Element {
                                             const menuIdsForRole = Array.from(roleSelectionMenuIdsMap.get(r.id) || new Set<string>());
                                             return {
                                                 roleId: String(r.id),
+                                                roleName: String(r.label || r.id),
                                                 isActive: true,
                                                 isLocked: Boolean(roleLockedMap.get(r.id)),
                                                 selected: isSelected,
