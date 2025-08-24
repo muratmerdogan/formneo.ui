@@ -18,7 +18,8 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import { TabMenu } from "primereact/tabmenu";
+import { TabContainer, Tab } from "@ui5/webcomponents-react";
+import "@ui5/webcomponents-icons/dist/key.js";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -255,100 +256,93 @@ function Settings(): JSX.Element {
                       </MDBox>
                     </MDBox>
 
-                    {/* PrimeReact TabMenu */}
-                    <MDBox mb={2}>
-                      <TabMenu
-                        model={items as any}
-                        activeIndex={activeIndex}
-                        onTabChange={(e: any) => setActiveTab(items[e.index].key as string)}
-                        pt={{
-                          root: { style: { border: 'none' } },
-                          menu: { style: { border: 'none', padding: '4px 0' } },
-                          action: { className: 'p-2', style: { gap: 8, borderRadius: 10 } },
-                        }}
-                      />
-                    </MDBox>
-                    {/* PrimeReact TabMenu custom styles */}
-                    <MDBox sx={{
-                      '& .p-tabmenu': { background: 'transparent' },
-                      '& .p-tabmenu-nav': { gap: 8, borderBottom: 'none' },
-                      '& .p-tabmenuitem .p-menuitem-link': {
-                        borderRadius: 10,
-                        transition: 'all .2s ease',
-                        padding: '8px 12px',
-                        border: '2px solid transparent',
-                        color: (t) => (t as any).palette.text.secondary,
-                        boxShadow: 'inset 0 -2px 0 rgba(0,0,0,0)'
-                      },
-                      '& .p-tabmenuitem .p-menuitem-link:hover': {
-                        backgroundColor: (t) => (t as any).palette.mode === 'dark' ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.03)'
-                      },
-                      '& .p-tabmenuitem.p-highlight .p-menuitem-link': {
-                        backgroundColor: (t) => (t as any).palette.mode === 'dark' ? 'rgba(59,130,246,.25)' : 'rgba(59,130,246,.18)',
-                        color: (t) => (t as any).palette.mode === 'dark' ? (t as any).palette.primary.light : (t as any).palette.primary.dark,
-                        borderColor: (t) => (t as any).palette.primary.main,
-                        boxShadow: (t) => `${(t as any).palette.mode === 'dark' ? '0 2px 10px rgba(0,0,0,.45)' : '0 2px 10px rgba(0,0,0,.08)'} , inset 0 -2px 0 ${(t as any).palette.primary.main}`
-                      },
-                      '& .p-menuitem-icon': { marginRight: 8, fontSize: 18, opacity: .9 },
-                      '& .p-menuitem-text': { fontWeight: 500 },
-                      '& .p-tabmenuitem.p-highlight .p-menuitem-text': { fontWeight: 600 },
-                    }} />
+                    {/* UI5 TabContainer */}
+                    <TabContainer
+                      collapsed={false}
+                      onTabSelect={(e: any) => setActiveTab(String(e.detail?.tab?.dataset?.key || items[0]?.key))}
+                      style={{ width: '100%' }}
+                    >
+                      {items.map((it: any) => {
+                        const ui5Icon = ({
+                          profile: 'sap-icon://employee',
+                          password: 'sap-icon://key',
+                          accounts: 'sap-icon://account',
+                          ticket: 'sap-icon://task',
+                          tenantRoles: 'sap-icon://role',
+                          danger: 'sap-icon://delete',
+                        } as any)[it.key];
+                        return (
+                          <Tab key={it.key} data-key={it.key} text={it.label} selected={activeTab === it.key} icon={ui5Icon}>
+                            {it.key === "profile" && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <BasicInfo
+                                      readOnlyUserName={formGudid!!}
+                                      formData={{ values, touched, formField, errors }}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
 
-                    {/* İçerik */}
-                    {activeTab === 'profile' && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <BasicInfo
-                            readOnlyUserName={formGudid!!}
-                            formData={{ values, touched, formField, errors }}
-                          />
-                        </Grid>
-                      </Grid>
-                    )}
+                            {it.key === "password" && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    {formGudid ? (
+                                      <ChangePassword formData={{ values, touched, formField, errors }} />
+                                    ) : (
+                                      <NewPaswword formData={{ values, touched, formField, errors }} />
+                                    )}
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
 
-                    {activeTab === 'password' && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          {formGudid ? (
-                            <ChangePassword formData={{ values, touched, formField, errors }} />
-                          ) : (
-                            <NewPaswword formData={{ values, touched, formField, errors }} />
-                          )}
-                        </Grid>
-                      </Grid>
-                    )}
+                            {it.key === "accounts" && isGlobalAdmin && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    {/* Accounts içeriği burada eklenebilir */}
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
 
-                    {activeTab === 'accounts' && isGlobalAdmin && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          {/* Accounts içeriği burada eklenebilir */}
-                        </Grid>
-                      </Grid>
-                    )}
+                            {it.key === "ticket" && isTenantMode && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <TicketManagement formData={{ values, touched, formField, errors }} />
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
 
-                    {activeTab === 'ticket' && isTenantMode && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <TicketManagement formData={{ values, touched, formField, errors }} />
-                        </Grid>
-                      </Grid>
-                    )}
+                            {it.key === "tenantRoles" && isTenantMode && !isGlobalAdmin && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <UserTenantRoles userId={formGudid || undefined} />
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
 
-                    {activeTab === 'tenantRoles' && isTenantMode && !isGlobalAdmin && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <UserTenantRoles userId={formGudid || undefined} />
-                        </Grid>
-                      </Grid>
-                    )}
-
-                    {activeTab === 'danger' && (
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <DeleteAccount />
-                        </Grid>
-                      </Grid>
-                    )}
+                            {it.key === "danger" && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <DeleteAccount />
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
+                          </Tab>
+                        );
+                      })}
+                    </TabContainer>
                   </Form>
                 )}
               </Formik>

@@ -132,6 +132,8 @@ function Cover(): JSX.Element {
 
         if (result?.data?.accessToken) {
           localStorage.setItem("accessToken", result.data.accessToken);
+          // Login sonrası eski tenant seçimlerini temizle
+          localStorage.removeItem("selectedTenantId");
 
           // Giriş sonrası tenant seçimi zorunlu
           navigate("/authentication/tenant-select");

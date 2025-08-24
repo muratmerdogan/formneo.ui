@@ -15,6 +15,8 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "layouts/pages/roles/RoleScreen/index.css";
+import { useAlert } from "layouts/pages/hooks/useAlert";
+import { MessageBoxType } from "@ui5/webcomponents-react";
 
 type Option = { id: string; label: string };
 type AssignmentItem = { roleId: string; label: string; assignmentId?: string; locked?: boolean; refresh?: boolean };
@@ -24,6 +26,8 @@ function TenantRolesDetail(): JSX.Element {
     const location = useLocation() as any;
     const [searchParams] = useSearchParams();
     const tenantId = searchParams.get("id");
+    const dispatchAlert = useAlert();
+    const [saving, setSaving] = useState<boolean>(false);
 
     const roleApi = new RoleMenuApi(getConfiguration());
     const rolesTenantsApi = new RolesTenantsApi(getConfiguration());
@@ -445,6 +449,7 @@ function TenantRolesDetail(): JSX.Element {
                                     if (!tenantId) {
                                         return;
                                     }
+                                    setSaving(true);
                                     // Değişiklik kontrolü: sağ taraftaki (target) durum mevcut atamalarla (existingAssignments) aynıysa ve hiçbir rol 'Rolü yenile' değilse çağrı yapma
                                     const currentMap = new Map<string, boolean>(target.map((t) => [t.roleId, Boolean(t.locked)]));
                                     let hasChange = false;
@@ -520,20 +525,18 @@ function TenantRolesDetail(): JSX.Element {
                                         await rolesTenantsApi.apiRolesTenantsBulkSaveWithMenusPost({ tenantId: String(tenantId), items });
                                         const sentRoles = items.map((i) => i.roleId).join(", ");
                                         console.info(`Bulk kaydedildi. Roller: ${sentRoles}`);
+                                        dispatchAlert({ message: "Değişiklikler başarıyla kaydedildi", type: MessageBoxType.Success });
                                     } catch (e) {
                                         console.error(e);
                                     } finally {
-                                        const backTo = location?.state?.backTo as string | undefined;
-                                        const tenant = location?.state?.tenant as { id: string; name: string } | undefined;
-                                        if (backTo && tenant) {
-                                            navigate(backTo, { state: { tenant } });
-                                        } else {
-                                            navigate("/tenants/management");
-                                        }
+                                        // Kaydetme sonrası bu sayfada kal
+                                        setSaving(false);
                                     }
                                 }}
                                 variant="gradient"
                                 color="info"
+                                disabled={saving}
+                                startIcon={saving ? <i className="pi pi-spin pi-spinner" /> : undefined}
                             >
                                 Kaydet
                             </MDButton>
