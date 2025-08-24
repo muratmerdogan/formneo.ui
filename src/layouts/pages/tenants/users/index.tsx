@@ -38,7 +38,7 @@ function TenantUsersForTenant(): JSX.Element {
             try {
                 dispatchBusy({ isBusy: true });
                 // 1) Tüm kullanıcıları yükle (ad/soyad)
-                const usersRes = await userApi.apiUserGetAllUsersNameIdOnlyGet();
+                const usersRes = await userApi.apiUserGetAllUsersNameIdOnlyGet(undefined as any);
                 const usersPayload: UserAppDtoOnlyNameId[] = (usersRes as any)?.data || [];
                 const mappedUsers: Option[] = (usersPayload || []).map((u) => ({
                     id: String(u.id || ""),
@@ -59,7 +59,9 @@ function TenantUsersForTenant(): JSX.Element {
 
     const loadAssignments = async (tid: string, usersForSource?: Option[]) => {
         try {
-            const res = await userTenantsApi.apiUserTenantsByTenantTenantIdGet(String(tid));
+            const res = await userTenantsApi.apiUserTenantsByTenantTenantIdGet(String(tid), {
+                headers: { 'X-Tenant-Id': String(tid) },
+            } as any);
             const payload: any = (res as any)?.data;
             const list: any[] = Array.isArray(payload)
                 ? payload
@@ -177,7 +179,9 @@ function TenantUsersForTenant(): JSX.Element {
                                             userIds: target.map((t) => t.userId),
                                             isActive: true,
                                         };
-                                        await userTenantsApi.apiUserTenantsBulkAssignUsersPost(dto);
+                                        await userTenantsApi.apiUserTenantsBulkAssignUsersPost(dto, {
+                                            headers: { 'X-Tenant-Id': String(tenantId) },
+                                        } as any);
                                         navigate("/tenants/management");
                                     } catch (e) {
                                         console.error(e);

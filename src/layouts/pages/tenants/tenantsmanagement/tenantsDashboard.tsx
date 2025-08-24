@@ -61,7 +61,7 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             onClick={() => {
                                 const tenantId = selectedTenant?.id || selectedTenant?.clientId;
                                 const tenantName = selectedTenant?.name || selectedTenant?.clientName || selectedTenant?.title;
-                                navigate(`/tenantsuser/detail?id=${tenantId}`, {
+                                navigate(`/tenants/${tenantId}/users`, {
                                     state: {
                                         backTo: "/tenants/management",
                                         tenant: { id: tenantId, name: tenantName },

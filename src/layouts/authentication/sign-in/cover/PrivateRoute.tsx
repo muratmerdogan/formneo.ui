@@ -54,11 +54,11 @@ const PrivateRoute: React.FC = () => {
   }
 
   if (!hasAccess) {
-    if (normalizedPath == "/tickets") {
+
+    if (normalizedPath == "/authentication" || normalizedPath == "dashboards/analytics") {
       return <Outlet />
     }
-    return <Outlet />
-    // return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
+    return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
   }
 
   return <Outlet />;
