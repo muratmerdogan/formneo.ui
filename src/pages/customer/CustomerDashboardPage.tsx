@@ -9,6 +9,12 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import GeneralTab from "./tabs/GeneralTab";
+import ContactsTab from "./tabs/ContactsTab";
+import FinanceTab from "./tabs/FinanceTab";
+import OpportunitiesTab from "./tabs/OpportunitiesTab";
+import ActivitiesTab from "./tabs/ActivitiesTab";
+import NotesTab from "./tabs/NotesTab";
+import TasksTab from "./tabs/TasksTab";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -139,12 +145,12 @@ export default function CustomerDashboardPage(): JSX.Element {
                     {tab === "genel" && (
                         <GeneralTab customer={customer} />
                     )}
-                    {tab === "iletisim" && <div className="rounded-2xl border bg-white shadow-sm p-4">Kişiler (mock)</div>}
-                    {tab === "finans" && <div className="rounded-2xl border bg-white shadow-sm p-4">Finans (mock)</div>}
-                    {tab === "firsatlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Fırsatlar (mock)</div>}
-                    {tab === "aktiviteler" && <div className="rounded-2xl border bg-white shadow-sm p-4"><Timeline items={acts} /></div>}
-                    {tab === "notlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Notlar (mock)</div>}
-                    {tab === "gorevler" && <div className="rounded-2xl border bg-white shadow-sm p-4">Görevler (mock)</div>}
+                    {tab === "iletisim" && <ContactsTab />}
+                    {tab === "finans" && <FinanceTab totalRevenue={customer.kpis.totalRevenue} arRisk={customer.kpis.arRisk} nps={customer.kpis.nps ?? 0} />}
+                    {tab === "firsatlar" && <OpportunitiesTab rows={opp} />}
+                    {tab === "aktiviteler" && <ActivitiesTab items={acts} />}
+                    {tab === "notlar" && <NotesTab initial={customer.notes ?? ""} />}
+                    {tab === "gorevler" && <TasksTab />}
                     {tab === "dokumanlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Dokümanlar (mock)</div>}
                 </form>
             </FormProvider>
