@@ -103,6 +103,8 @@ import KanbanPage from "layouts/pages/kanban";
 import TicketProjectProgress from "layouts/pages/ticketProjectProgress";
 import CustomerList from "layouts/pages/customer";
 import CustomerDetail from "layouts/pages/customer/detail";
+import CustomersPage from "pages/customers/CustomersPage";
+import CustomerDashboardPage from "pages/customer/CustomerDashboardPage";
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 
@@ -310,6 +312,9 @@ export default function App() {
         <Route path="/customer" element={<CustomerList />} />
         <Route path="/customer/detail" element={<CustomerDetail />} />
         <Route path="/customer/detail/:id" element={<CustomerDetail />} />
+
+        <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/customers/:id" element={<CustomerDashboardPage />} />
 
         <Route path="/formAuth" element={<FormAuth />} />
         <Route path="/formAuth/detail" element={<FormAuthDetail />} />

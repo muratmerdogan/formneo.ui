@@ -6,7 +6,9 @@
 @import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-kanban/styles/material.css";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .overlay {
     position: fixed;
     top: 0;
