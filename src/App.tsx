@@ -121,6 +121,7 @@ export default function App() {
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
   const { t } = useTranslation();
+  const isTenantSelectRoute = pathname.startsWith('/authentication/tenant-select');
 
   // Cache for the rtl
   useMemo(() => {
@@ -211,7 +212,7 @@ export default function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && (
+        {layout === "dashboard" && !isTenantSelectRoute && (
           <>
             <Sidenav
               color={sidenavColor}
@@ -236,7 +237,7 @@ export default function App() {
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {layout === "dashboard" && !isTenantSelectRoute && (
         <>
           <Sidenav
             color={sidenavColor}
