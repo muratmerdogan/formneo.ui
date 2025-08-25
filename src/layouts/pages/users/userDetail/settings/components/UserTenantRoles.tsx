@@ -34,10 +34,20 @@ function UserTenantRoles({ userId }: Props): JSX.Element {
 
     const renderNode = (node: any) => {
         const isRole = String(node?.key || "").startsWith("role:");
+        const isLocked = Boolean(node?.data?.isLocked);
+        const isActive = node?.data?.isActive === undefined ? true : Boolean(node?.data?.isActive);
         return (
             <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 4px", lineHeight: "22px" }}>
                 <i className={`pi ${isRole ? "pi-shield" : "pi-box"}`} style={{ fontSize: isRole ? 16 : 15, opacity: 0.85 }} />
                 <span style={{ fontWeight: isRole ? 600 : 500 }}>{node?.label}</span>
+                {isLocked && (
+                    <i className="pi pi-lock" title="Kilitli rol" style={{ marginLeft: 6, fontSize: 14, color: "#6b7280" }} />
+                )}
+                <i
+                    className="pi pi-circle-fill"
+                    title={isActive ? "Aktif" : "Pasif"}
+                    style={{ marginLeft: 4, fontSize: 10, color: isActive ? "#16a34a" : "#9ca3af" }}
+                />
             </div>
         );
     };
@@ -79,6 +89,10 @@ function UserTenantRoles({ userId }: Props): JSX.Element {
                         key: `role:${roleId}`,
                         label: roleName,
                         children: [],
+                        data: {
+                            isLocked: Boolean(r.isLocked ?? r.IsLocked),
+                            isActive: r.isActive ?? r.IsActive ?? true,
+                        },
                         selectable: true,
                     } as TreeNode;
                 });

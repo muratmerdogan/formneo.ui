@@ -20,6 +20,11 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { TabContainer, Tab } from "@ui5/webcomponents-react";
 import "@ui5/webcomponents-icons/dist/key.js";
+import "@ui5/webcomponents-icons/dist/employee.js";
+import "@ui5/webcomponents-icons/dist/contacts.js";
+import "@ui5/webcomponents-icons/dist/task.js";
+import "@ui5/webcomponents-icons/dist/shield.js";
+import "@ui5/webcomponents-icons/dist/delete.js";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -218,7 +223,7 @@ function Settings(): JSX.Element {
     <BaseLayout>
       <DashboardNavbar />
 
-      <MDBox mt={4}>
+      <MDBox mt={0}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <MDBox mb={3}>
@@ -231,7 +236,7 @@ function Settings(): JSX.Element {
                 {({ values, errors, touched, isSubmitting }) => (
                   <Form>
                     {/* Üst bilgi (Fotoğraf + İsim) – Tab bar'ın üstünde */}
-                    <Grid container spacing={3} sx={{ mb: 2, mt: -2 }}>
+                    <Grid container spacing={3} sx={{ mb: 1, mt: -3 }}>
                       <Grid item xs={12}>
                         <Header
                           formData={{
@@ -245,7 +250,7 @@ function Settings(): JSX.Element {
                     </Grid>
 
                     {/* Üst aksiyonlar */}
-                    <MDBox mb={2} sx={{ position: "sticky", top: 64, zIndex: 5, bgcolor: "background.paper", borderBottom: "1px solid", borderColor: "divider", backdropFilter: 'blur(6px)', boxShadow: (theme) => `0 2px 8px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0,.35)' : 'rgba(0,0,0,.06)'}` }}>
+                    <MDBox mb={1} sx={{ position: "sticky", top: 48, zIndex: 5, bgcolor: "background.paper", borderBottom: "1px solid", borderColor: "divider", backdropFilter: 'blur(6px)', boxShadow: (theme) => `0 2px 8px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0,.35)' : 'rgba(0,0,0,.06)'}` }}>
                       <MDBox display="flex" alignItems="center" justifyContent="flex-end" sx={{ gap: 1, flexWrap: "wrap", py: 1 }}>
                         <MDButton variant="outlined" color="secondary" onClick={() => navigate(-1)} startIcon={<Icon>close</Icon>}>
                           İptal
@@ -266,9 +271,9 @@ function Settings(): JSX.Element {
                         const ui5Icon = ({
                           profile: 'sap-icon://employee',
                           password: 'sap-icon://key',
-                          accounts: 'sap-icon://account',
+                          accounts: 'sap-icon://contacts',
                           ticket: 'sap-icon://task',
-                          tenantRoles: 'sap-icon://role',
+                          tenantRoles: 'sap-icon://shield',
                           danger: 'sap-icon://delete',
                         } as any)[it.key];
                         return (

@@ -1,8 +1,17 @@
 {
   "compilerOptions": {
-    "typeRoots": ["node_modules/@types", "./src/types"],
+    "allowImportingTsExtensions": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/types"
+    ],
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext", "es2015.iterable"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2015.iterable"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,9 +31,18 @@
     "downlevelIteration": true,
     "baseUrl": "src",
     "paths": {
-      "api/generated": ["api/generated/index"]
+      "api/generated": [
+        "api/generated/index"
+      ],
+      "@/*": [
+        "*"
+      ],
+      "lucide-react": [
+        "components/ui/icons"
+      ]
     }
-
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

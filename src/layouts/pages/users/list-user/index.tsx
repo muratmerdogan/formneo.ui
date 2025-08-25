@@ -82,20 +82,7 @@ function DataTables(): JSX.Element {
         width: "15%",
         Cell: ({ value, row }: any) => <GlobalCell value={value} />,
       },
-      {
-        Header: <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Şirket</div>,
-        accessor: "workCompanyText",
-        width: "15%",
-        Cell: ({ value, row }: any) => <GlobalCell value={value} />,
-      },
-      {
-        Header: (
-          <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Departman</div>
-        ),
-        accessor: "departmentText",
-        width: "15%",
-        Cell: ({ value, row }: any) => <GlobalCell value={value} />,
-      },
+      // Şirket ve Departman kolonları kaldırıldı
 
       {
         Header: <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>E-mail</div>,
