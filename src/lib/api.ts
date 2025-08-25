@@ -88,6 +88,15 @@ export async function updateCustomer(payload: Customer): Promise<Customer> {
     return getCustomer(payload.id);
 }
 
+export async function createCustomer(payload: Omit<Customer, "id" | "createdAt" | "updatedAt">): Promise<Customer> {
+    await wait(350);
+    const id = String(customers.length ? Math.max(...customers.map((c) => Number(c.id))) + 1 : 1);
+    const now = new Date().toISOString();
+    const customer: Customer = { ...payload, id, createdAt: now, updatedAt: now } as Customer;
+    customers = [customer, ...customers];
+    return customer;
+}
+
 export async function listOpportunities(customerId: string): Promise<Opportunity[]> {
     await wait(350);
     return opportunities.filter((o) => o.customerId === customerId);

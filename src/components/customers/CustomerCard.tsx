@@ -26,13 +26,13 @@ export default function CustomerCard({ c }: { c: Customer }) {
                     </div>
                     <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <div className="max-w-full text-base sm:text-lg font-semibold text-slate-900 truncate leading-snug">{c.name}</div>
+                            <div className="max-w-full text-lg sm:text-xl font-semibold text-slate-900 truncate leading-snug">{c.name}</div>
                             <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${c.status === "active" ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-slate-100 text-slate-600 border-slate-200"}`}>
                                 <span className={`inline-block w-1.5 h-1.5 rounded-full ${c.status === "active" ? "bg-emerald-600" : "bg-slate-500"}`} />
                                 {c.status === "active" ? "Aktif" : "Pasif"}
                             </span>
                         </div>
-                        <div className="text-sm text-slate-500 mt-0.5 flex items-center gap-2">
+                        <div className="text-sm sm:text-base text-slate-500 mt-0.5 flex items-center gap-2">
                             <span className="inline-flex items-center gap-1">
                                 <svg className="w-3 h-3 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" /></svg>
                                 {c.sector}
@@ -50,10 +50,10 @@ export default function CustomerCard({ c }: { c: Customer }) {
 
                 <div className="mt-4 flex flex-wrap gap-2">
                     {c.tags.map((t) => (
-                        <span key={t} className="text-xs px-2 py-0.5 rounded-full border bg-slate-50 text-slate-700 border-slate-200">{t}</span>
+                        <span key={t} className="text-xs sm:text-sm px-2 py-0.5 rounded-full border bg-slate-50 text-slate-700 border-slate-200">{t}</span>
                     ))}
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${healthTone[c.health]} border border-transparent`}>{c.health === "good" ? "Sağlıklı" : c.health === "warning" ? "Uyarı" : "Risk"}</span>
-                    <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border bg-slate-50 text-slate-600 border-slate-200">
+                    <span className={`text-xs sm:text-sm px-2 py-0.5 rounded-full ${healthTone[c.health]} border border-transparent`}>{c.health === "good" ? "Sağlıklı" : c.health === "warning" ? "Uyarı" : "Risk"}</span>
+                    <span className="inline-flex items-center gap-1 text-xs sm:text-sm px-2 py-0.5 rounded-full border bg-slate-50 text-slate-600 border-slate-200">
                         <svg className="w-3 h-3 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 4h18M8 2v4M16 2v4" /><rect x="3" y="6" width="18" height="15" rx="2" /></svg>
                         Son temas: {dateShort(c.lastContactAt)}
                     </span>

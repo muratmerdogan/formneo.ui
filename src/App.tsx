@@ -105,6 +105,7 @@ import CustomerList from "layouts/pages/customer";
 import CustomerDetail from "layouts/pages/customer/detail";
 import CustomersPage from "pages/customers/CustomersPage";
 import CustomerDashboardPage from "pages/customer/CustomerDashboardPage";
+import CustomerFormPage from "pages/customer/CustomerFormPage";
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 
@@ -314,7 +315,9 @@ export default function App() {
         <Route path="/customer/detail/:id" element={<CustomerDetail />} />
 
         <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/customers/new" element={<CustomerFormPage />} />
         <Route path="/customers/:id" element={<CustomerDashboardPage />} />
+        <Route path="/customers/:id/edit" element={<CustomerFormPage />} />
 
         <Route path="/formAuth" element={<FormAuth />} />
         <Route path="/formAuth/detail" element={<FormAuthDetail />} />

@@ -1,13 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import KpiBar from "components/customers/KpiBar";
 import Timeline from "components/customers/Timeline";
 import { Activity, Customer, Opportunity } from "../../types/customer";
 import { currency } from "../../lib/format";
 import { getCustomer, listActivities, listOpportunities, updateCustomer } from "../../lib/api";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import GeneralTab from "./tabs/GeneralTab";
+import { useForm, FormProvider } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+    name: z.string().min(2),
+    sector: z.string().min(1),
+    status: z.enum(["active", "inactive"]),
+    email: z.string().email().optional().or(z.literal("")),
+    phone: z.string().optional().or(z.literal("")),
+    website: z.string().url().optional().or(z.literal("")),
+    country: z.string().min(1),
+    city: z.string().optional().or(z.literal("")),
+    notes: z.string().optional().or(z.literal("")),
+    tags: z.array(z.string()).optional(),
+});
+
+type FormValues = z.infer<typeof schema>;
 
 export default function CustomerDashboardPage(): JSX.Element {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [customer, setCustomer] = useState<Customer | null>(null);
     const [opp, setOpp] = useState<Opportunity[]>([]);
     const [acts, setActs] = useState<Activity[]>([]);
@@ -22,7 +45,51 @@ export default function CustomerDashboardPage(): JSX.Element {
             .finally(() => setLoading(false));
     }, [id]);
 
-    if (loading || !customer) return <div className="container-px py-6">Yükleniyor…</div>;
+    const methods = useForm<FormValues>({
+        resolver: zodResolver(schema),
+        values: customer ? {
+            name: customer.name,
+            sector: customer.sector,
+            status: customer.status,
+            email: customer.email ?? "",
+            phone: customer.phone ?? "",
+            website: customer.website ?? "",
+            country: customer.country,
+            city: customer.city ?? "",
+            notes: customer.notes ?? "",
+            tags: customer.tags ?? [],
+        } : undefined,
+        mode: "onBlur",
+    });
+
+    const { handleSubmit, formState: { isSubmitting, isDirty } } = methods;
+
+    const onSubmit = async (values: FormValues) => {
+        if (!customer) return;
+        const next: Customer = {
+            ...customer,
+            name: values.name,
+            sector: values.sector,
+            status: values.status,
+            email: values.email || undefined,
+            phone: values.phone || undefined,
+            website: values.website || undefined,
+            country: values.country,
+            city: values.city || undefined,
+            notes: values.notes || undefined,
+            tags: values.tags || [],
+        };
+        const saved = await updateCustomer(next);
+        setCustomer(saved);
+    };
+
+    if (loading || !customer) return (
+        <DashboardLayout>
+            <DashboardNavbar />
+            <div className="px-6 lg:px-10 py-6">Yükleniyor…</div>
+            <Footer />
+        </DashboardLayout>
+    );
 
     const kpis = [
         { label: "Toplam Ciro", value: currency(customer.kpis.totalRevenue) },
@@ -32,42 +99,56 @@ export default function CustomerDashboardPage(): JSX.Element {
     ];
 
     return (
-        <div className="container-px py-6 space-y-6">
-            <header className="flex items-start gap-3">
-                <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white grid place-items-center text-sm font-semibold">
-                    {(customer.name[0] || "?").toUpperCase()}
-                </div>
-                <div className="min-w-0">
-                    <div className="text-xl font-semibold text-slate-900">{customer.name}</div>
-                    <div className="text-sm text-slate-500">{customer.sector} • {customer.country}{customer.city ? ` / ${customer.city}` : ""}</div>
-                </div>
-            </header>
+        <DashboardLayout>
+            <DashboardNavbar />
+            <FormProvider {...methods}>
+                <form onSubmit={handleSubmit(onSubmit)} className="px-6 lg:px-10 py-6 space-y-6">
+                    {/* Global Sticky Action Bar */}
+                    <div className="sticky top-16 z-10 -mt-2 -mx-6 lg:-mx-10 px-6 lg:px-10 py-2 bg-gradient-to-b from-white/95 to-white/60 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b flex items-center justify-end gap-2">
+                        <button type="button" onClick={() => navigate(-1)} className="h-9 px-3 rounded-md border">Vazgeç</button>
+                        <button disabled={!isDirty || isSubmitting} type="submit" className="h-9 px-4 rounded-md border bg-slate-900 text-white disabled:opacity-50">Kaydet</button>
+                    </div>
 
-            <KpiBar items={kpis} />
+                    <header className="flex items-start gap-3">
+                        <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white grid place-items-center text-sm font-semibold">
+                            {(customer.name[0] || "?").toUpperCase()}
+                        </div>
+                        <div className="min-w-0">
+                            <div className="text-xl font-semibold text-slate-900">{customer.name}</div>
+                            <div className="text-sm text-slate-500">{customer.sector} • {customer.country}{customer.city ? ` / ${customer.city}` : ""}</div>
+                        </div>
+                    </header>
 
-            <nav className="flex items-center gap-2 flex-wrap">
-                {[
-                    ["genel", "Genel"],
-                    ["iletisim", "İletişim"],
-                    ["finans", "Finans"],
-                    ["firsatlar", "Fırsatlar"],
-                    ["aktiviteler", "Aktiviteler"],
-                    ["notlar", "Notlar"],
-                    ["gorevler", "Görevler"],
-                    ["dokumanlar", "Dokümanlar"],
-                ].map(([k, t]) => (
-                    <button key={k} className={`h-9 px-3 rounded-md border ${tab === k ? "bg-slate-900 text-white" : "bg-white"}`} onClick={() => setTab(k)}>{t}</button>
-                ))}
-            </nav>
+                    <KpiBar items={kpis} />
 
-            {tab === "genel" && <div className="rounded-2xl border bg-white shadow-sm p-4">Genel (form mock)</div>}
-            {tab === "iletisim" && <div className="rounded-2xl border bg-white shadow-sm p-4">Kişiler (mock)</div>}
-            {tab === "finans" && <div className="rounded-2xl border bg-white shadow-sm p-4">Finans (mock)</div>}
-            {tab === "firsatlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Fırsatlar (mock)</div>}
-            {tab === "aktiviteler" && <div className="rounded-2xl border bg-white shadow-sm p-4"><Timeline items={acts} /></div>}
-            {tab === "notlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Notlar (mock)</div>}
-            {tab === "gorevler" && <div className="rounded-2xl border bg-white shadow-sm p-4">Görevler (mock)</div>}
-            {tab === "dokumanlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Dokümanlar (mock)</div>}
-        </div>
+                    <nav className="flex items-center gap-2 flex-wrap">
+                        {[
+                            ["genel", "Genel"],
+                            ["iletisim", "İletişim"],
+                            ["finans", "Finans"],
+                            ["firsatlar", "Fırsatlar"],
+                            ["aktiviteler", "Aktiviteler"],
+                            ["notlar", "Notlar"],
+                            ["gorevler", "Görevler"],
+                            ["dokumanlar", "Dokümanlar"],
+                        ].map(([k, t]) => (
+                            <button key={k} type="button" className={`h-9 px-3 rounded-md border ${tab === k ? "bg-slate-900 text-white" : "bg-white"}`} onClick={() => setTab(k)}>{t}</button>
+                        ))}
+                    </nav>
+
+                    {tab === "genel" && (
+                        <GeneralTab customer={customer} />
+                    )}
+                    {tab === "iletisim" && <div className="rounded-2xl border bg-white shadow-sm p-4">Kişiler (mock)</div>}
+                    {tab === "finans" && <div className="rounded-2xl border bg-white shadow-sm p-4">Finans (mock)</div>}
+                    {tab === "firsatlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Fırsatlar (mock)</div>}
+                    {tab === "aktiviteler" && <div className="rounded-2xl border bg-white shadow-sm p-4"><Timeline items={acts} /></div>}
+                    {tab === "notlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Notlar (mock)</div>}
+                    {tab === "gorevler" && <div className="rounded-2xl border bg-white shadow-sm p-4">Görevler (mock)</div>}
+                    {tab === "dokumanlar" && <div className="rounded-2xl border bg-white shadow-sm p-4">Dokümanlar (mock)</div>}
+                </form>
+            </FormProvider>
+            <Footer />
+        </DashboardLayout>
     );
 }
