@@ -2,7 +2,7 @@ import React from "react";
 import { Customer } from "../../types/customer";
 import CustomerCard from "./CustomerCard";
 
-export default function CustomerGrid({ items, loading }: { items: Customer[]; loading: boolean }) {
+function CustomerGrid({ items, loading }: { items: Customer[]; loading: boolean }) {
     if (loading) return <SkeletonGrid />;
     if (!items.length) return <EmptyState />;
     return (
@@ -13,6 +13,8 @@ export default function CustomerGrid({ items, loading }: { items: Customer[]; lo
         </div>
     );
 }
+
+export default React.memo(CustomerGrid);
 
 function SkeletonGrid() {
     return (

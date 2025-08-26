@@ -30,6 +30,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDBadge from "components/MDBadge";
 import profile from "../../../assets/images/profile-icon.png";
+import logoSon from "../../../assets/images/logoson.svg";
 
 // Material Dashboard 2 PRO React TS examples components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -73,6 +74,7 @@ import {
   Popover,
   ListSubheader,
   ListItemButton,
+  Divider,
 } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
@@ -117,6 +119,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     "fixed" | "absolute" | "relative" | "static" | "sticky"
   >();
   const [userPhoto, setuserPhoto] = useState("");
+  const [photoSrc, setPhotoSrc] = useState<string>("");
+  const [userFullName, setUserFullName] = useState<string>("");
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState<any>(false);
@@ -153,6 +157,17 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
 
   //
   useEffect(() => {
+    // Senkron ön-yükleme: kullanıcı adı ve seçili şirket adı (label)
+    try {
+      const cachedFullName = localStorage.getItem("userFullName");
+      if (cachedFullName) setUserFullName(cachedFullName);
+      const id = localStorage.getItem("selectedTenantId");
+      const label = localStorage.getItem("selectedTenantLabel");
+      if (id && label && !selectedTenant) {
+        setSelectedTenant({ id, label });
+      }
+    } catch { }
+
     const handleStorageChange = () => {
       const currentTheme = (localStorage.getItem("themePreference") as Theme) || "light";
       setTheme(currentTheme);
@@ -162,24 +177,40 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
       setTheme(event.detail as Theme);
     };
 
-    // Set up event listeners
+    // Set up event listeners (polling kaldırıldı)
     window.addEventListener("storage", handleStorageChange);
     window.addEventListener("themeChange", handleThemeChange as EventListener);
 
-    // Check for theme changes every second as a fallback
-    const intervalId = setInterval(() => {
-      const currentTheme = (localStorage.getItem("themePreference") as Theme) || "light";
-      if (currentTheme !== theme) {
-        setTheme(currentTheme);
-      }
-    }, 1000);
+    // İlk yüklemede localStorage'tan uygula
+    handleStorageChange();
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
       window.removeEventListener("themeChange", handleThemeChange as EventListener);
-      clearInterval(intervalId);
     };
-  }, [theme]);
+  }, []);
+
+  // Fotoğrafı ilk render sonrası boşta yükle
+  useEffect(() => {
+    const raw = userPhoto;
+    if (!raw) {
+      setPhotoSrc("");
+      return;
+    }
+    const nextSrc = `data:image/jpeg;base64,${raw}`;
+    const ric: any = (window as any).requestIdleCallback || ((cb: any) => setTimeout(cb, 120));
+    let cancelled = false;
+    ric(() => {
+      if (cancelled) return;
+      const img = new Image();
+      (img as any).decoding = "async";
+      (img as any).loading = "lazy";
+      img.src = nextSrc;
+      img.onload = () => { if (!cancelled) setPhotoSrc(nextSrc); };
+      img.onerror = () => { if (!cancelled) setPhotoSrc(""); };
+    });
+    return () => { cancelled = true; };
+  }, [userPhoto]);
 
   // useEffect(()=> {
   //   const currentTheme = localStorage.getItem("themePreference") as Theme;
@@ -207,6 +238,14 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         var xx = await userApi.apiUserGetLoginUserDetailGet();
         setloginMail(xx?.data?.email || "");
         setuserPhoto(xx?.data?.photo || "");
+        const fullName = `${xx?.data?.firstName || ""} ${xx?.data?.lastName || ""}`.trim();
+        if (fullName) {
+          setUserFullName(fullName);
+          localStorage.setItem("userFullName", fullName);
+        }
+        if (xx?.data?.photo) {
+          localStorage.setItem("userPhoto", xx?.data?.photo || "");
+        }
       } catch (error) {
         // ignore
       }
@@ -224,6 +263,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
           setTenants([]);
           setSelectedTenant(null);
           localStorage.removeItem("selectedTenantId");
+          localStorage.removeItem("selectedTenantLabel");
           setSelectedTenantId(dispatch as any, null as any);
           return;
         }
@@ -239,32 +279,13 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
               : Array.isArray(upayload?.result)
                 ? upayload.result
                 : [];
-        const clientsApi = new ClientApi(conf);
-        let clientsIndex = new Map<string, string>();
-        try {
-          const allClientsRes = await clientsApi.apiClientGet();
-          const payload: any = (allClientsRes as any)?.data;
-          const list: any[] = Array.isArray(payload)
-            ? payload
-            : Array.isArray(payload?.items)
-              ? payload.items
-              : Array.isArray(payload?.data)
-                ? payload.data
-                : Array.isArray(payload?.result)
-                  ? payload.result
-                  : [];
-          clientsIndex = new Map(
-            list.map((c: any) => [String(c.id || c.clientId || c.uid || ""), c.name || c.clientName || c.title || "-"])
-          );
-        } catch { }
+        // Ağır tüm-şirket çekimi kaldırıldı; kullanıcı-tenant kaydındaki adları kullan
 
         const opts = Array.from(
           new Map(
             (ulist || []).map((r: any) => {
               const id = String(r.tenantId || r.id || r.clientId || r.uid || "");
-              const labelFromUserTenant = r.tenantName || r.name || r.clientName || r.title;
-              const labelFromClients = clientsIndex.get(id);
-              const label = labelFromUserTenant || labelFromClients || "-";
+              const label = r.tenantName || r.name || r.clientName || r.title || "-";
               return [id, { id, label, name: label }];
             })
           ).values()
@@ -275,9 +296,12 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
           const match = opts.find((o) => o.id === savedTenantId) || null;
           setSelectedTenant(match);
           setSelectedTenantId(dispatch as any, savedTenantId);
+          if (match?.label) localStorage.setItem("selectedTenantLabel", match.label);
         } else if (savedTenantId) {
           // Kayit yoksa id'ye göre şirket adını çekip placeholder ekle
           try {
+            const conf = getConfiguration();
+            const clientsApi = new ClientApi(conf);
             const one = await clientsApi.apiClientIdGet(savedTenantId);
             const payloadOne: any = (one as any)?.data;
             const label = payloadOne?.name || payloadOne?.clientName || payloadOne?.title || "-";
@@ -285,16 +309,19 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
             setTenants((curr) => (curr.some((c) => c.id === savedTenantId) ? curr : [...curr, fallback]));
             setSelectedTenant(fallback);
             setSelectedTenantId(dispatch as any, savedTenantId);
+            localStorage.setItem("selectedTenantLabel", label);
           } catch {
             const fallback: any = { id: savedTenantId, label: "-", name: "-" };
             setTenants((curr) => (curr.some((c) => c.id === savedTenantId) ? curr : [...curr, fallback]));
             setSelectedTenant(fallback);
             setSelectedTenantId(dispatch as any, savedTenantId);
+            localStorage.setItem("selectedTenantLabel", "-");
           }
         } else {
           // Hiç tenant yoksa global mod
           setSelectedTenant(null);
           localStorage.removeItem("selectedTenantId");
+          localStorage.removeItem("selectedTenantLabel");
           setSelectedTenantId(dispatch as any, null as any);
         }
       } catch (e) {
@@ -375,6 +402,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     var photo = localStorage.getItem("userPhoto");
 
     setuserPhoto(photo);
+    const cachedFullName = localStorage.getItem("userFullName");
+    if (cachedFullName) setUserFullName(cachedFullName);
   }
 
   const handlePopoverClose = () => {
@@ -390,6 +419,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     if (current) localStorage.setItem("prevTenantId", current);
     setSelectedTenant(null);
     localStorage.removeItem("selectedTenantId");
+    localStorage.removeItem("selectedTenantLabel");
     setSelectedTenantId(dispatch as any, null as any);
     // Tam yenileme: tüm context ve header'lar sıfırlansın
     window.location.href = "/tenants/management";
@@ -416,6 +446,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     setSelectedTenant(match);
     if (match) {
       localStorage.setItem("selectedTenantId", match.id);
+      if ((match as any).label) localStorage.setItem("selectedTenantLabel", (match as any).label);
       setSelectedTenantId(dispatch as any, match.id);
       // Tam yenileme: mevcut rota korunarak yeniden yükle
       window.location.href = window.location.pathname + window.location.search;
@@ -643,176 +674,442 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
 
   return (
     <div style={{ position: "sticky", top: 0, zIndex: 1000, width: "100%" }}>
-      <ShellBar
-        // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent
-        style={{
-          paddingLeft: 10,
-          ...(isGlobalMode
-            ? {
-              background: darkMode ? "#2b3445" : "#fff8e1",
-              borderBottom: darkMode ? "2px solid #f59e0b" : "2px solid #f59e0b",
-            }
-            : {}),
+      {/* Full-bleed wrapper: ShellBar sol/sağ kenara tam yapışır */}
+      <MDBox
+        sx={{
+          position: "relative",
+          left: "50%",
+          right: "50%",
+          marginLeft: "-50vw",
+          marginRight: "-50vw",
+          width: "100vw",
         }}
-        // menuItems={<><ListItemStandard data-key="1">Menu Item 1</ListItemStandard><ListItemStandard data-key="2">Menu Item 2</ListItemStandard><ListItemStandard data-key="3">Menu Item 3</ListItemStandard></>}
-        notificationsCount={waitingCount.toString()}
-        onLogoClick={function Ki() { }}
-        onMenuItemClick={function Ki() { }}
-        onNotificationsClick={handleNotificationClick}
-        onProductSwitchClick={function Ki() { }}
-        onProfileClick={handleProfileClick}
-        onSearchButtonClick={function Ki() { }}
-        primaryTitle={(() => {
-          const userName = userData?.name || "";
-          if (isGlobalMode) return `${userName} (Global Mod)`;
-          const company = selectedTenant?.label || "";
-          return company ? `${userName} - ${company}` : userName;
-        })()}
-        placeholder="Search"
-        profile={
-          <Avatar>
-            {userPhoto ? (
-              <img
-                src={`data:image/jpeg;base64,${userPhoto}`}
-                alt="Profile"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                loading="lazy"
-              />
-            ) : (
-              <img
-                src={profile}
-                alt="Default Avatar"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                loading="lazy"
-              />
-            )}
-          </Avatar>
-        }
-        // searchField={
-        //   <div>
-        //     <InputBase
-        //       sx={{
-        //         border: darkMode ? "1px solid #ffffff40" : "1px solid #e0e0e0",
-        //         borderRadius: "5px",
-        //         fontSize: "16px",
-        //         width: "400px",
-        //         padding: "1px 12px",
-        //         color: darkMode ? "#fff" : "#344767",
-        //         "& input::placeholder": {
-        //           color: darkMode ? "#ffffff80" : "#66666f",
-        //           opacity: 1,
-        //         },
-        //         "&:hover": {
-        //           border: darkMode ? "1px solid #ffffff80" : "1px solid #1383ce",
-        //         },
-        //         "&.Mui-focused": {
-        //           border: "1px solid #1383ce",
-        //           boxShadow: "0 0 0 2px rgba(19, 131, 206, 0.2)",
-        //         },
-        //         transition: "all 0.2s ease-in-out",
-        //       }}
-        //       placeholder="Arama"
-        //       autoComplete="on"
-        //       onKeyDown={(e: React.KeyboardEvent) => {
-        //         if (e.key === "Enter" && filteredMenuData?.length > 0) {
-        //           const searchValue = (e.target as HTMLInputElement).value.toLowerCase();
-        //           const exactMatch = filteredMenuData.find(
-        //             (item: any) => item.menuCode.toLowerCase() === searchValue
-        //           );
-        //           if (exactMatch?.href) {
-        //             navigate(exactMatch.href);
-        //             setFilteredMenuData([]);
-        //           }
-        //         }
-        //       }}
-        //       onChange={(e: any) => {
-        //         if (e.target.value === "") {
-        //           setFilteredMenuData([]);
-        //         } else {
-        //           const searchValue = e.target.value.toLowerCase();
-        //           const filteredData = menuData?.filter(
-        //             (item: any) =>
-        //               item.name.toLowerCase().includes(searchValue) ||
-        //               item.menuCode?.toLowerCase().includes(searchValue)
-        //           );
-        //           setFilteredMenuData(filteredData || []);
-        //         }
-        //       }}
-        //     />
-        //     {filteredMenuData?.length > 0 && (
-        //       <Paper
-        //         style={{
-        //           position: "absolute",
-        //           zIndex: 1,
-        //           width: "400px",
-        //           maxHeight: "auto",
-        //           overflowY: "auto",
-        //         }}
-        //       >
-        //         <List
-        //           subheader={
-        //             <ListSubheader
-        //               component="div"
-        //               id="nested-list-subheader"
-        //               sx={{
-        //                 fontSize: "16px",
-        //                 fontWeight: "bold",
-        //                 color: darkMode ? "#fff" : "#344767",
-        //               }}
-        //             >
-        //               Uygulamalar
-        //             </ListSubheader>
-        //           }
-        //         >
-        //           {filteredMenuData.map((item: any, index: any) =>
-        //             item.href && item.href.trim() !== "" ? (
-        //               <ListItem key={index}>
-        //                 <ListItemButton
-        //                   onClick={() => {
-        //                     navigate(item.href);
-        //                     setFilteredMenuData([]);
-        //                   }}
-        //                   tabIndex={0}
-        //                 >
-        //                   <ListItemText
-        //                     primary={`${item.name} - ${item.menuCode || ""}`}
-        //                     sx={{
-        //                       "& .MuiListItemText-primary": {
-        //                         fontSize: "14px",
-        //                         color: darkMode ? "#fff" : "#344767",
-        //                         "&:hover": {
-        //                           color: "#1383ce",
-        //                         },
-        //                       },
-        //                     }}
-        //                   />
-        //                 </ListItemButton>
-        //               </ListItem>
-        //             ) : null
-        //           )}
-        //         </List>
-        //       </Paper>
-        //     )}
-        //   </div>
-        // }
-        showNotifications
-        showProductSwitch
-        searchField={
-          <div style={{ minWidth: 260 }}>
-            <MDButton variant="outlined" color="info" size="small" onClick={() => navigate('/authentication/tenant-select')}>
-              Şirket Değiştir
-            </MDButton>
-          </div>
-        }
       >
-        {selectedTenant?.label && (
-          <ShellBarItem
-            text={`Şirket: ${selectedTenant.label}`}
-            icon="building"
-            onClick={() => { }}
+        {/* Büyük logo - ShellBar dışında, sola yapışık ve dikey ortalı */}
+        <MDBox
+          sx={{
+            position: "absolute",
+            left: 24,
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            alignItems: "center",
+            zIndex: 2,
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/ActivityReports")}
+        >
+          <MDBox
+            component="img"
+            src={logoSon}
+            alt="FormNeo"
+            loading="lazy"
+            sx={{
+              height: { xs: 64, sm: 80, md: 92, lg: 104, xl: 112 },
+              width: "auto",
+              display: "block",
+              objectFit: "contain",
+              filter: "none",
+              imageRendering: "-webkit-optimize-contrast",
+            }}
           />
-        )}
-      </ShellBar>
+        </MDBox>
+        {/* Şirket etiketi: sağda, profile yakın (mobilde gizle) */}
+        <MDBox
+          sx={{
+            position: "absolute",
+            right: 280,
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 2,
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            maxWidth: "30vw",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              color: darkMode ? '#0f172a' : '#0f172a',
+              backgroundColor: darkMode ? '#e2e8f0' : '#e2e8f0',
+              border: `1px solid ${darkMode ? '#cbd5e1' : '#cbd5e1'}`,
+              padding: '4px 10px',
+              borderRadius: 9999,
+              lineHeight: 1.1,
+            }}
+            title={selectedTenant?.label || ''}
+          >
+            {(selectedTenant?.label || '').toString()}{isGlobalMode ? ' · Global' : ''}
+          </span>
+        </MDBox>
+        <ShellBar
+          // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent
+          style={{
+            paddingLeft: 240,
+            paddingRight: 12,
+            minHeight: 52,
+            ...(isGlobalMode
+              ? {
+                background: darkMode ? "#2b3445" : "#fff8e1",
+                borderBottom: darkMode ? "2px solid #f59e0b" : "2px solid #f59e0b",
+              }
+              : {}),
+          }}
+          // menuItems={<><ListItemStandard data-key="1">Menu Item 1</ListItemStandard><ListItemStandard data-key="2">Menu Item 2</ListItemStandard><ListItemStandard data-key="3">Menu Item 3</ListItemStandard></>}
+          notificationsCount={waitingCount.toString()}
+          onLogoClick={() => navigate("/ActivityReports")}
+          onMenuItemClick={function Ki() { }}
+          onNotificationsClick={handleNotificationClick}
+          onProductSwitchClick={function Ki() { }}
+          onProfileClick={handleProfileClick}
+          onSearchButtonClick={function Ki() { }}
+          primaryTitle=""
+          placeholder="Search"
+          profile={
+            <Avatar>
+              {photoSrc ? (
+                <img
+                  src={photoSrc}
+                  alt="Profile"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              ) : (
+                <img
+                  src={profile}
+                  alt="Default Avatar"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              )}
+            </Avatar>
+          }
+          // searchField={
+          //   <div>
+          //     <InputBase
+          //       sx={{
+          //         border: darkMode ? "1px solid #ffffff40" : "1px solid #e0e0e0",
+          //         borderRadius: "5px",
+          //         fontSize: "16px",
+          //         width: "400px",
+          //         padding: "1px 12px",
+          //         color: darkMode ? "#fff" : "#344767",
+          //         "& input::placeholder": {
+          //           color: darkMode ? "#ffffff80" : "#66666f",
+          //           opacity: 1,
+          //         },
+          //         "&:hover": {
+          //           border: darkMode ? "1px solid #ffffff80" : "1px solid #1383ce",
+          //         },
+          //         "&.Mui-focused": {
+          //           border: "1px solid #1383ce",
+          //           boxShadow: "0 0 0 2px rgba(19, 131, 206, 0.2)",
+          //         },
+          //         transition: "all 0.2s ease-in-out",
+          //       }}
+          //       placeholder="Arama"
+          //       autoComplete="on"
+          //       onKeyDown={(e: React.KeyboardEvent) => {
+          //         if (e.key === "Enter" && filteredMenuData?.length > 0) {
+          //           const searchValue = (e.target as HTMLInputElement).value.toLowerCase();
+          //           const exactMatch = filteredMenuData.find(
+          //             (item: any) => item.menuCode.toLowerCase() === searchValue
+          //           );
+          //           if (exactMatch?.href) {
+          //             navigate(exactMatch.href);
+          //             setFilteredMenuData([]);
+          //           }
+          //         }
+          //       }}
+          //       onChange={(e: any) => {
+          //         if (e.target.value === "") {
+          //           setFilteredMenuData([]);
+          //         } else {
+          //           const searchValue = e.target.value.toLowerCase();
+          //           const filteredData = menuData?.filter(
+          //             (item: any) =>
+          //               item.name.toLowerCase().includes(searchValue) ||
+          //               item.menuCode?.toLowerCase().includes(searchValue)
+          //           );
+          //           setFilteredMenuData(filteredData || []);
+          //         }
+          //       }}
+          //     />
+          //     {filteredMenuData?.length > 0 && (
+          //       <Paper
+          //         style={{
+          //           position: "absolute",
+          //           zIndex: 1,
+          //           width: "400px",
+          //           maxHeight: "auto",
+          //           overflowY: "auto",
+          //         }}
+          //       >
+          //         <List
+          //           subheader={
+          //             <ListSubheader
+          //               component="div"
+          //               id="nested-list-subheader"
+          //               sx={{
+          //                 fontSize: "16px",
+          //                 fontWeight: "bold",
+          //                 color: darkMode ? "#fff" : "#344767",
+          //               }}
+          //             >
+          //               Uygulamalar
+          //             </ListSubheader>
+          //           }
+          //         >
+          //           {filteredMenuData.map((item: any, index: any) =>
+          //             item.href && item.href.trim() !== "" ? (
+          //               <ListItem key={index}>
+          //                 <ListItemButton
+          //                   onClick={() => {
+          //                     navigate(item.href);
+          //                     setFilteredMenuData([]);
+          //                   }}
+          //                   tabIndex={0}
+          //                 >
+          //                   <ListItemText
+          //                     primary={`${item.name} - ${item.menuCode || ""}`}
+          //                     sx={{
+          //                       "& .MuiListItemText-primary": {
+          //                         fontSize: "14px",
+          //                         color: darkMode ? "#fff" : "#344767",
+          //                         "&:hover": {
+          //                           color: "#1383ce",
+          //                         },
+          //                       },
+          //                     }}
+          //                   />
+          //                 </ListItemButton>
+          //               </ListItem>
+          //             ) : null
+          //           )}
+          //         </List>
+          //       </Paper>
+          //     )}
+          //   </div>
+          // }
+          showNotifications
+          showProductSwitch
+          searchField={
+            <div style={{ minWidth: 260 }}>
+              <MDButton variant="outlined" color="info" size="small" onClick={() => navigate('/authentication/tenant-select')}>
+                Şirket Değiştir
+              </MDButton>
+            </div>
+          }
+        >
+          {selectedTenant?.label && (
+            <ShellBarItem
+              text={`Şirket: ${selectedTenant.label}`}
+              icon="building"
+              onClick={() => { }}
+            />
+          )}
+        </ShellBar>
+      </MDBox>
+
+      {/* Zoho CRM tarzı: ShellBar altı modül sekmeleri (full-bleed) */}
+      {(() => {
+        const moduleTabs: { label: string; href: string }[] = [
+          { label: "Ana Sayfa", href: "/ActivityReports" },
+          { label: "Müşteriler", href: "/customers" },
+          { label: "Talepler", href: "/tickets" },
+          { label: "Projeler", href: "/profile/all-projects" },
+          { label: "Takvim", href: "/calendar" },
+          { label: "Envanter", href: "/inventory" },
+          { label: "Kanban", href: "/kanban" },
+          { label: "Raporlar", href: "/tickets/statistic" },
+          { label: "Organizasyon", href: "/organizationalChart" },
+          { label: "İş Akışı", href: "/projectManagement" },
+        ];
+
+        const isActiveTab = (href: string) =>
+          currentPath === href || currentPath.startsWith(href + "/");
+
+        // Modül bazlı alt sekmeler (sub-tabs)
+        const subTabMap: Record<string, { label: string; href: string }[]> = {
+          "/customers": [
+            { label: "Liste", href: "/customers" },
+            { label: "Yeni", href: "/customers/new" },
+          ],
+          "/tickets": [
+            { label: "Panel", href: "/tickets" },
+            { label: "Çözümleme", href: "/solveAllTicket" },
+          ],
+          "/profile/all-projects": [
+            { label: "Projelerim", href: "/profile/all-projects" },
+          ],
+          "/calendar": [
+            { label: "Takvim", href: "/calendar" },
+          ],
+          "/inventory": [
+            { label: "Envanter", href: "/inventory" },
+            { label: "Yeni", href: "/inventory/detail" },
+          ],
+          "/tickets/statistic": [
+            { label: "İstatistik", href: "/tickets/statistic" },
+          ],
+          "/organizationalChart": [
+            { label: "Şema", href: "/organizationalChart" },
+          ],
+          "/projectManagement": [
+            { label: "Panolar", href: "/projectManagement" },
+            { label: "Grafik", href: "/projectManagement/chart" },
+          ],
+          "/ActivityReports": [
+            { label: "Aktiviteler", href: "/ActivityReports" },
+          ],
+          "/kanban": [
+            { label: "Kanban", href: "/kanban" },
+          ],
+        };
+
+        const activeModule = moduleTabs.find((m) => isActiveTab(m.href));
+        const subTabs = activeModule ? (subTabMap[activeModule.href] || []) : [];
+
+        return (
+          <>
+            {/* Ana modül sekmeleri - full viewport genişlik */}
+            <MDBox
+              sx={{
+                position: "relative",
+                left: "50%",
+                right: "50%",
+                marginLeft: "-50vw",
+                marginRight: "-50vw",
+                width: "100vw",
+                backgroundColor: darkMode ? "#1a2035" : "#ffffff",
+                borderBottom: darkMode ? "1px solid #2d3748" : "1px solid #e5e7eb",
+              }}
+            >
+              <MDBox
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  height: 40,
+                  px: 1.5,
+                  overflowX: "auto",
+                  whiteSpace: "nowrap",
+                  "&::-webkit-scrollbar": { height: 6 },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: darkMode ? "#334155" : "#cbd5e1",
+                    borderRadius: 8,
+                  },
+                }}
+              >
+                {moduleTabs.map((tab) => {
+                  const active = isActiveTab(tab.href);
+                  return (
+                    <MDBox
+                      key={tab.href}
+                      onClick={() => navigate(tab.href)}
+                      sx={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        px: 1.5,
+                        height: 40,
+                        cursor: "pointer",
+                        borderBottom: active
+                          ? `2px solid ${darkMode ? "#38bdf8" : "#0284c7"}`
+                          : "2px solid transparent",
+                        color: active
+                          ? darkMode
+                            ? "#7dd3fc"
+                            : "#0369a1"
+                          : darkMode
+                            ? "#cbd5e1"
+                            : "#475569",
+                        fontWeight: active ? 600 : 500,
+                        fontSize: 14,
+                        transition: "color .15s ease, transform .15s ease",
+                        '&:hover': {
+                          color: active ? undefined : (darkMode ? '#e2e8f0' : '#0f172a'),
+                          transform: active ? undefined : 'translateY(-1px)'
+                        }
+                      }}
+                    >
+                      {tab.label}
+                    </MDBox>
+                  );
+                })}
+              </MDBox>
+            </MDBox>
+
+            {/* Aktif modüle göre alt sekmeler - full viewport genişlik */}
+            {subTabs.length > 0 && (
+              <MDBox
+                sx={{
+                  position: "relative",
+                  left: "50%",
+                  right: "50%",
+                  marginLeft: "-50vw",
+                  marginRight: "-50vw",
+                  width: "100vw",
+                  backgroundColor: darkMode ? "#111827" : "#f8fafc",
+                  borderBottom: darkMode ? "1px solid #2d3748" : "1px solid #e5e7eb",
+                }}
+              >
+                <MDBox
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.25,
+                    height: 36,
+                    px: 1.5,
+                    overflowX: "auto",
+                    whiteSpace: "nowrap",
+                    "&::-webkit-scrollbar": { height: 6 },
+                    "&::-webkit-scrollbar-thumb": {
+                      backgroundColor: darkMode ? "#334155" : "#cbd5e1",
+                      borderRadius: 8,
+                    },
+                  }}
+                >
+                  {subTabs.map((sub) => {
+                    const active = currentPath === sub.href || currentPath.startsWith(sub.href + '/');
+                    return (
+                      <MDBox
+                        key={sub.href}
+                        onClick={() => navigate(sub.href)}
+                        sx={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          px: 1.25,
+                          height: 30,
+                          cursor: "pointer",
+                          borderBottom: active
+                            ? `2px solid ${darkMode ? "#60a5fa" : "#2563eb"}`
+                            : "2px solid transparent",
+                          color: active
+                            ? darkMode
+                              ? "#93c5fd"
+                              : "#1d4ed8"
+                            : darkMode
+                              ? "#94a3b8"
+                              : "#64748b",
+                          fontWeight: active ? 600 : 500,
+                          fontSize: 13,
+                        }}
+                      >
+                        {sub.label}
+                      </MDBox>
+                    );
+                  })}
+                </MDBox>
+              </MDBox>
+            )}
+          </>
+        );
+      })()}
 
       <Popover
         open={popoverOpen}
@@ -832,6 +1129,16 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         }}
       >
         <MDBox mt={1} mb={1} mx={2} display="flex" justifyContent="center" flexDirection="column">
+          {/* Kullanıcı — Şirket bilgisi */}
+          <MDBox mb={1}>
+            <MDTypography variant="button" sx={{ fontWeight: 600, color: darkMode ? "#e2e8f0" : "#0f172a" }}>
+              {userData?.name || "Kullanıcı"}
+            </MDTypography>
+            <MDTypography variant="caption" sx={{ display: "block", color: darkMode ? "#94a3b8" : "#64748b" }}>
+              {selectedTenant?.label || (isGlobalMode ? "Global Mod" : "")}
+            </MDTypography>
+          </MDBox>
+          <Divider sx={{ my: 1, opacity: 0.5 }} />
           <MDButton
             variant="contained"
             fullWidth

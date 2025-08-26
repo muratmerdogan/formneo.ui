@@ -42,7 +42,7 @@ function DashboardLayout({ children }: { children: ReactNode }): JSX.Element {
         const config = getConfiguration();
         let api = new UserApi(config);
         await api.apiUserCheckIsAdminGet().then((res) => {
-          if (res.data){
+          if (res.data) {
             createChat({
               webhookUrl: "https://n8n.vesa-tech.com/webhook/85f1f01d-a39d-42df-8ac5-832cd4b8a212/chat",
               mode: "window",
@@ -79,7 +79,7 @@ function DashboardLayout({ children }: { children: ReactNode }): JSX.Element {
               },
             });
           } else {
-            
+
           }
         });
       } catch (error) {
@@ -92,11 +92,13 @@ function DashboardLayout({ children }: { children: ReactNode }): JSX.Element {
   return (
     <MDBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
-        p: 3,
+        px: 3,
+        pb: 3,
+        pt: 0,
         position: "relative",
 
         [breakpoints.up("xl")]: {
-          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
+          marginLeft: 0,
           transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,

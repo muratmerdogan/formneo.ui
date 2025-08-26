@@ -32,7 +32,6 @@ import "primeicons/primeicons.css";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 PRO React TS exampless
-import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 PRO React TS themes
@@ -55,8 +54,7 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+
 import NewUser from "layouts/pages/users/new-user";
 import UserDetail from "layouts/pages/users/userDetail/settings/index";
 import ActivityReports from "layouts/pages/reports/activityReports/analytics/index";
@@ -112,13 +110,9 @@ import "api/interceptors";
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
-    miniSidenav,
     direction,
     layout,
     openConfigurator,
-    sidenavColor,
-    transparentSidenav,
-    whiteSidenav,
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -216,20 +210,7 @@ export default function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && !isTenantSelectRoute && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="FormNeo"
-              routes={routes}
-            // onMouseEnter={handleOnMouseEnter}
-            // onMouseLeave={handleOnMouseLeave}
-            />
-            {/* <Configurator /> */}
-            {/* {configsButton} */}
-          </>
-        )}
+        {/* Sidenav gizlendi */}
         {/* {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
@@ -241,20 +222,7 @@ export default function App() {
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && !isTenantSelectRoute && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="FormNeo"
-            routes={routes}
-          // onMouseEnter={handleOnMouseEnter}
-          // onMouseLeave={handleOnMouseLeave}
-          />
-          {/* <Configurator /> */}
-          {/* {configsButton} */}
-        </>
-      )}
+      {/* Sidenav gizlendi */}
       {layout === "vr" && <Configurator />}
 
       <Routes>

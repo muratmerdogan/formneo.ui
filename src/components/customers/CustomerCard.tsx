@@ -9,7 +9,7 @@ const healthTone: Record<Customer["health"], string> = {
     risk: "bg-rose-50 text-rose-700",
 };
 
-export default function CustomerCard({ c }: { c: Customer }) {
+function CustomerCard({ c }: { c: Customer }) {
     const nav = useNavigate();
     return (
         <button
@@ -74,6 +74,8 @@ export default function CustomerCard({ c }: { c: Customer }) {
         </button>
     );
 }
+
+export default React.memo(CustomerCard);
 
 function Kpi({ label, value, icon, tone }: { label: string; value: string; icon?: React.ReactNode; tone?: "blue" | "amber" | "rose" | "slate" }) {
     const ring = tone === "blue" ? "ring-blue-100" : tone === "amber" ? "ring-amber-100" : tone === "rose" ? "ring-rose-100" : "ring-slate-100";

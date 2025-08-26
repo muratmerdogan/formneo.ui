@@ -4,7 +4,7 @@ import KpiBar from "components/customers/KpiBar";
 import Timeline from "components/customers/Timeline";
 import { Activity, Customer, Opportunity } from "../../types/customer";
 import { currency } from "../../lib/format";
-import { getCustomer, listActivities, listOpportunities, updateCustomer } from "../../lib/api";
+import { ActivitiesApi, CustomersApi, OpportunitiesApi } from "api/generated/api";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -18,6 +18,7 @@ import TasksTab from "./tabs/TasksTab";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import getConfiguration from "confiuration";
 
 const schema = z.object({
     name: z.string().min(2),
@@ -45,10 +46,27 @@ export default function CustomerDashboardPage(): JSX.Element {
 
     useEffect(() => {
         if (!id) return;
+        let isMounted = true;
         setLoading(true);
-        Promise.all([getCustomer(id), listOpportunities(id), listActivities(id)])
-            .then(([c, o, a]) => { setCustomer(c); setOpp(o); setActs(a); })
-            .finally(() => setLoading(false));
+        const customersApi = new CustomersApi(getConfiguration());
+        const oppApi = new OpportunitiesApi(getConfiguration());
+        const actApi = new ActivitiesApi(getConfiguration());
+        Promise.all([
+            customersApi.apiCustomersIdGet(id),
+            oppApi.apiCrmOpportunitiesCustomerCustomerIdGet(id as string),
+            actApi.apiCrmActivitiesCustomerCustomerIdGet(id as string),
+        ])
+            .then(([cRes, oRes, aRes]: any[]) => {
+                if (!isMounted) return;
+                const c = normalizeCustomerFromDto(cRes?.data);
+                const o: Opportunity[] = Array.isArray(oRes?.data) ? (oRes.data as any[]).map(normalizeOpportunityFromDto) : [];
+                const a: Activity[] = Array.isArray(aRes?.data) ? (aRes.data as any[]).map(normalizeActivityFromDto) : [];
+                setCustomer(c);
+                setOpp(o);
+                setActs(a);
+            })
+            .finally(() => { if (isMounted) setLoading(false); });
+        return () => { isMounted = false; };
     }, [id]);
 
     const methods = useForm<FormValues>({
@@ -72,21 +90,25 @@ export default function CustomerDashboardPage(): JSX.Element {
 
     const onSubmit = async (values: FormValues) => {
         if (!customer) return;
-        const next: Customer = {
-            ...customer,
+        const api = new CustomersApi(getConfiguration());
+        const dto: any = {
+            id: customer.id,
             name: values.name,
-            sector: values.sector,
-            status: values.status,
-            email: values.email || undefined,
-            phone: values.phone || undefined,
-            website: values.website || undefined,
-            country: values.country,
-            city: values.city || undefined,
-            notes: values.notes || undefined,
+            sectors: values.sector ? [values.sector] : [],
+            status: values.status === "active" ? 1 : 0,
+            emailPrimary: values.email || null,
+            phone: values.phone || null,
+            website: values.website || null,
             tags: values.tags || [],
+            note: values.notes || null,
         };
-        const saved = await updateCustomer(next);
-        setCustomer(saved);
+        try {
+            const res: any = await api.apiCustomersPut(dto);
+            const saved = normalizeCustomerFromDto(res?.data ?? dto);
+            setCustomer(saved);
+        } catch {
+            // sessizce geç
+        }
     };
 
     if (loading || !customer) return (
@@ -157,4 +179,100 @@ export default function CustomerDashboardPage(): JSX.Element {
             <Footer />
         </DashboardLayout>
     );
+}
+
+function normalizeCustomerFromDto(dto: any): Customer {
+    if (!dto) {
+        const now = new Date().toISOString();
+        return { id: "", name: "", sector: "", country: "", tags: [], status: "active", health: "good", kpis: { totalRevenue: 0, openOpportunities: 0, arRisk: 0 }, createdAt: now, updatedAt: now };
+    }
+    const id = String(dto?.id ?? dto?.cusid ?? dto?.customerId ?? "");
+    const name = String(dto?.name ?? dto?.custx ?? dto?.title ?? "");
+    const firstAddress = Array.isArray(dto?.addresses) && dto.addresses.length ? dto.addresses[0] : undefined;
+    const country = String(firstAddress?.country ?? dto?.country ?? "");
+    const city = (firstAddress?.city ?? dto?.city) ? String(firstAddress?.city ?? dto?.city) : undefined;
+    const website = (dto?.website ?? dto?.webSite) ? String(dto?.website ?? dto?.webSite) : undefined;
+    const email = (dto?.emailPrimary ?? dto?.email) ? String(dto?.emailPrimary ?? dto?.email) : undefined;
+    const phone = (dto?.phone ?? dto?.mobile) ? String(dto?.phone ?? dto?.mobile) : undefined;
+    const statusNum = typeof dto?.status === "number" ? dto.status : undefined;
+    const status = (dto?.status === "active" || dto?.status === "inactive")
+        ? dto.status
+        : (statusNum !== undefined ? (statusNum > 0 ? "active" : "inactive") : "active");
+    const sectors = Array.isArray(dto?.sectors) ? dto.sectors : (dto?.sector ? [dto.sector] : []);
+    const sector = sectors.length ? String(sectors[0]) : "";
+    const tags = Array.isArray(dto?.tags) ? dto.tags as string[] : [];
+    const nowIso = new Date().toISOString();
+    const createdAt = String(dto?.createdDate ?? dto?.createdAt ?? nowIso);
+    const updatedAt = String(dto?.updatedDate ?? dto?.updatedAt ?? createdAt);
+    return {
+        id,
+        name,
+        logoUrl: undefined,
+        sector,
+        country,
+        city,
+        website,
+        email,
+        phone,
+        taxId: dto?.taxNumber ?? undefined,
+        tags,
+        status,
+        health: "good",
+        lastContactAt: updatedAt,
+        kpis: { totalRevenue: 0, openOpportunities: 0, arRisk: 0 },
+        notes: dto?.note ?? undefined,
+        createdAt,
+        updatedAt,
+    };
+}
+
+function normalizeOpportunityFromDto(dto: any): Opportunity {
+    return {
+        id: String(dto?.id ?? ""),
+        customerId: String(dto?.customerId ?? ""),
+        name: String(dto?.title ?? dto?.name ?? ""),
+        amount: Number(dto?.amount ?? 0),
+        stage: mapStageNumberToName(dto?.stage),
+        probability: Number(dto?.probability ?? 0),
+        closeDate: dto?.expectedCloseDate ?? undefined,
+    };
+}
+
+function normalizeActivityFromDto(dto: any): Activity {
+    const type = mapActivityTypeNumberToName(dto?.type);
+    const at = dto?.startTime || dto?.dueDate || dto?.endTime || new Date().toISOString();
+    const owner = dto?.assignedToUserId ? String(dto.assignedToUserId) : "Sistem";
+    return {
+        id: String(dto?.id ?? ""),
+        customerId: String(dto?.customerId ?? ""),
+        type,
+        title: String(dto?.subject ?? dto?.description ?? "Aktivite"),
+        at: String(at),
+        owner,
+        description: dto?.description ?? undefined,
+    };
+}
+
+function mapStageNumberToName(stageNum: any): Opportunity["stage"] {
+    const n = Number(stageNum ?? 0);
+    switch (n) {
+        case 1: return "new";
+        case 2: return "qualified";
+        case 3: return "proposal";
+        case 4: return "negotiation";
+        case 5: return "won";
+        case 6: return "lost";
+        default: return "new";
+    }
+}
+
+function mapActivityTypeNumberToName(typeNum: any): Activity["type"] {
+    const n = Number(typeNum ?? 0);
+    switch (n) {
+        case 1: return "call";
+        case 2: return "meeting";
+        case 3: return "email";
+        case 4: return "task";
+        default: return "task";
+    }
 }

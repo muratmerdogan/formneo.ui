@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import CustomerFilters from "../../components/customers/CustomerFilters";
 import CustomerGrid from "../../components/customers/CustomerGrid";
-import { listCustomers } from "../../lib/api";
+import { CustomersApi } from "api/generated/api";
 import { Customer } from "../../types/customer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import getConfiguration from "confiuration";
 
 export default function CustomersPage(): JSX.Element {
     const [params, setParams] = useSearchParams();
-    const [items, setItems] = useState<Customer[]>([]);
-    const [total, setTotal] = useState(0);
+    const [all, setAll] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(true);
 
     const q = params.get("q") ?? "";
@@ -30,13 +30,39 @@ export default function CustomersPage(): JSX.Element {
     };
 
     useEffect(() => {
+        let isMounted = true;
         setLoading(true);
-        const statusFilter = (status === "active" || status === "inactive") ? status : undefined;
+        const api = new CustomersApi(getConfiguration());
+        api.apiCustomersGet()
+            .then((res: any) => {
+                const data = Array.isArray(res?.data) ? res.data : (res?.data?.items ?? []);
+                const mapped: Customer[] = (data as any[]).map(normalizeCustomerFromDto);
+                if (isMounted) setAll(mapped);
+            })
+            .finally(() => { if (isMounted) setLoading(false); });
+        return () => { isMounted = false; };
+    }, []);
+
+    const { items, total } = useMemo(() => {
+        // Önceden client-side filtreleme/paging vardı; aynı mantığı koruyoruz
         const sortBy = (sort === "recent" || sort === "revenue" || sort === "name") ? sort : "recent";
-        listCustomers({ q, sector, tag, status: statusFilter, sort: sortBy, page, pageSize })
-            .then((res) => { setItems(res.items); setTotal(res.total); })
-            .finally(() => setLoading(false));
-    }, [q, sector, tag, status, sort, page, pageSize]);
+        let data = [...all];
+        if (q) {
+            const s = q.toLowerCase();
+            data = data.filter((c) => c.name.toLowerCase().includes(s));
+        }
+        if (sector) data = data.filter((c) => c.sector === sector);
+        if (tag) data = data.filter((c) => (c.tags || []).includes(tag));
+        if (status === "active" || status === "inactive") data = data.filter((c) => c.status === status);
+
+        if (sortBy === "revenue") data.sort((a, b) => (b.kpis?.totalRevenue ?? 0) - (a.kpis?.totalRevenue ?? 0));
+        if (sortBy === "name") data.sort((a, b) => a.name.localeCompare(b.name));
+        if (sortBy === "recent") data.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+        const start = (page - 1) * pageSize;
+        const pageItems = data.slice(start, start + pageSize);
+        return { items: pageItems, total: data.length };
+    }, [all, q, sector, tag, status, sort, page, pageSize]);
 
     const onClear = () => setParams(new URLSearchParams(), { replace: true });
 
@@ -80,4 +106,45 @@ export default function CustomersPage(): JSX.Element {
             <Footer />
         </DashboardLayout>
     );
+}
+
+function normalizeCustomerFromDto(dto: any): Customer {
+    const id = String(dto?.id ?? dto?.cusid ?? dto?.customerId ?? "");
+    const name = String(dto?.name ?? dto?.custx ?? dto?.title ?? "");
+    const firstAddress = Array.isArray(dto?.addresses) && dto.addresses.length ? dto.addresses[0] : undefined;
+    const country = String(firstAddress?.country ?? dto?.country ?? "");
+    const city = (firstAddress?.city ?? dto?.city) ? String(firstAddress?.city ?? dto?.city) : undefined;
+    const website = (dto?.website ?? dto?.webSite) ? String(dto?.website ?? dto?.webSite) : undefined;
+    const email = (dto?.emailPrimary ?? dto?.email) ? String(dto?.emailPrimary ?? dto?.email) : undefined;
+    const phone = (dto?.phone ?? dto?.mobile) ? String(dto?.phone ?? dto?.mobile) : undefined;
+    const statusNum = typeof dto?.status === "number" ? dto.status : undefined;
+    const status = (dto?.status === "active" || dto?.status === "inactive")
+        ? dto.status
+        : (statusNum !== undefined ? (statusNum > 0 ? "active" : "inactive") : "active");
+    const sectors = Array.isArray(dto?.sectors) ? dto.sectors : (dto?.sector ? [dto.sector] : []);
+    const sector = sectors.length ? String(sectors[0]) : "";
+    const tags = Array.isArray(dto?.tags) ? dto.tags as string[] : [];
+    const nowIso = new Date().toISOString();
+    const createdAt = String(dto?.createdDate ?? dto?.createdAt ?? nowIso);
+    const updatedAt = String(dto?.updatedDate ?? dto?.updatedAt ?? createdAt);
+    return {
+        id,
+        name,
+        logoUrl: undefined,
+        sector,
+        country,
+        city,
+        website,
+        email,
+        phone,
+        taxId: dto?.taxNumber ?? undefined,
+        tags,
+        status,
+        health: "good",
+        lastContactAt: updatedAt,
+        kpis: { totalRevenue: 0, openOpportunities: 0, arRisk: 0 },
+        notes: dto?.note ?? undefined,
+        createdAt,
+        updatedAt,
+    };
 }

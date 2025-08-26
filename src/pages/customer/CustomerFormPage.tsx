@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Customer } from "../../types/customer";
-import { createCustomer, updateCustomer } from "../../lib/api";
+import { CustomersApi } from "api/generated/api";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import getConfiguration from "confiuration";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import DraggableSection from "components/customers/sections/DraggableSection";
+import BasicInfoSection from "components/customers/sections/BasicInfoSection";
+import EmailInfoSection from "components/customers/sections/EmailInfoSection";
+import AddressInfoSection from "components/customers/sections/AddressInfoSection";
+import PhoneInfoSection from "components/customers/sections/PhoneInfoSection";
 
 const schema = z.object({
     name: z.string().min(2, "Zorunlu"),
@@ -31,29 +39,82 @@ export default function CustomerFormPage(): JSX.Element {
         defaultValues: { status: "active" },
     });
 
+    const [sectionOrder, setSectionOrder] = useState<string[]>(["basic", "email", "address", "phone"]);
+    const orderStorageKey = "customerForm:sectionOrder";
+
+    // İlk yüklemede sürükle-bırak sırasını localStorage'dan yükle
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem(orderStorageKey);
+            if (!raw) return;
+            const saved: unknown = JSON.parse(raw);
+            if (!Array.isArray(saved)) return;
+            const ids = ["basic", "email", "address", "phone"];
+            const valid = (saved as unknown[]).map(String).filter((id) => ids.includes(id));
+            const withoutBasic = valid.filter((x) => x !== "basic");
+            const missing = ids.filter((x) => !valid.includes(x) && x !== "basic");
+            setSectionOrder(["basic", ...withoutBasic, ...missing]);
+        } catch { }
+    }, []);
+
+    type SectionDef = { id: string; title: string; color?: string; content: JSX.Element };
+    const sections: SectionDef[] = useMemo(() => ([
+        { id: "basic", title: "Temel Firma Bilgileri", content: <BasicInfoSection register={register} errors={errors} /> },
+        { id: "email", title: "E-posta Bilgileri", content: <EmailInfoSection register={register} errors={errors} /> },
+        { id: "address", title: "Adres Bilgileri", content: <AddressInfoSection register={register} errors={errors} /> },
+        { id: "phone", title: "Telefon Bilgileri", content: <PhoneInfoSection register={register} errors={errors} /> },
+    ]), [register, errors]);
+
+    const orderedSections = sectionOrder
+        .map((id) => sections.find((s) => s.id === id))
+        .filter(Boolean) as { id: string; title: string; content: JSX.Element }[];
+
+    const onDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event;
+        if (!over) return;
+        const activeId = String(active.id);
+        const overId = String(over.id).replace(/^drop-/, "");
+        if (activeId === overId) return;
+        const oldIndex = sectionOrder.indexOf(activeId);
+        const newIndex = sectionOrder.indexOf(overId);
+        if (oldIndex === -1 || newIndex === -1) return;
+        setSectionOrder((items) => {
+            const moved = arrayMove(items, oldIndex, newIndex);
+            // 'basic' her zaman en başta kalsın
+            const withoutBasic = moved.filter((x) => x !== "basic");
+            const next = ["basic", ...withoutBasic];
+            try { localStorage.setItem(orderStorageKey, JSON.stringify(next)); } catch { }
+            return next;
+        });
+    };
+
     const onSubmit = async (values: FormValues) => {
+        const api = new CustomersApi(getConfiguration());
         if (isEdit) {
-            const payload = { ...(values as any), id } as Customer;
-            await updateCustomer(payload);
+            const dto: any = {
+                id,
+                name: values.name,
+                sectors: values.sector ? [values.sector] : [],
+                status: values.status === "active" ? 1 : 0,
+                emailPrimary: values.email || null,
+                phone: values.phone || null,
+                tags: values.tags || [],
+            };
+            await api.apiCustomersPut(dto);
             navigate(`/customers/${id}`);
         } else {
-            const payload = {
+            const dto: any = {
                 name: values.name,
-                sector: values.sector,
-                country: values.country,
-                city: values.city,
-                email: values.email || undefined,
-                phone: values.phone,
-                status: values.status,
+                sectors: values.sector ? [values.sector] : [],
+                status: values.status === "active" ? 1 : 0,
+                emailPrimary: values.email || null,
+                phone: values.phone || null,
                 tags: values.tags || [],
-                health: "good",
-                lastContactAt: new Date().toISOString(),
-                kpis: { totalRevenue: 0, openOpportunities: 0, arRisk: 0 },
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            } as any;
-            const c = await createCustomer(payload);
-            navigate(`/customers/${c.id}`);
+                addresses: values.country ? [{ country: values.country, city: values.city || null }] : [],
+            };
+            const res: any = await api.apiCustomersPost(dto);
+            const createdId = String(res?.data?.id ?? "");
+            navigate(`/customers/${createdId}`);
         }
     };
 
@@ -72,43 +133,17 @@ export default function CustomerFormPage(): JSX.Element {
                     </div>
                 </div>
 
-                <div className="rounded-2xl border bg-white shadow-sm p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Ad</label>
-                        <input {...register("name")} className="w-full h-10 px-3 rounded-md border" placeholder="Müşteri adı" />
-                        {errors.name && <div className="text-xs text-rose-600 mt-1">{errors.name.message}</div>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Sektör</label>
-                        <input {...register("sector")} className="w-full h-10 px-3 rounded-md border" placeholder="Sektör" />
-                        {errors.sector && <div className="text-xs text-rose-600 mt-1">{errors.sector.message}</div>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Ülke</label>
-                        <input {...register("country")} className="w-full h-10 px-3 rounded-md border" placeholder="Ülke" />
-                        {errors.country && <div className="text-xs text-rose-600 mt-1">{errors.country.message}</div>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Şehir</label>
-                        <input {...register("city")} className="w-full h-10 px-3 rounded-md border" placeholder="Şehir" />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">E-posta</label>
-                        <input {...register("email")} className="w-full h-10 px-3 rounded-md border" placeholder="ornek@firma.com" />
-                        {errors.email && <div className="text-xs text-rose-600 mt-1">{errors.email.message}</div>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Telefon</label>
-                        <input {...register("phone")} className="w-full h-10 px-3 rounded-md border" placeholder="+90 ..." />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Durum</label>
-                        <select {...register("status")} className="w-full h-10 px-3 rounded-md border">
-                            <option value="active">Aktif</option>
-                            <option value="inactive">Pasif</option>
-                        </select>
-                    </div>
-                </div>
+                <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+                    <SortableContext items={sectionOrder} strategy={verticalListSortingStrategy}>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            {orderedSections.map((s) => (
+                                <DraggableSection key={s.id} id={s.id} title={s.title}>
+                                    {s.content}
+                                </DraggableSection>
+                            ))}
+                        </div>
+                    </SortableContext>
+                </DndContext>
             </form>
             <Footer />
         </DashboardLayout>
