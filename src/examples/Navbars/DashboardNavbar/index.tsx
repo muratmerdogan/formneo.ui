@@ -697,7 +697,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
             zIndex: 2,
             cursor: "pointer",
           }}
-          onClick={() => navigate("/ActivityReports")}
+          onClick={() => navigate("/")}
         >
           <MDBox
             component="img"
@@ -762,7 +762,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
           }}
           // menuItems={<><ListItemStandard data-key="1">Menu Item 1</ListItemStandard><ListItemStandard data-key="2">Menu Item 2</ListItemStandard><ListItemStandard data-key="3">Menu Item 3</ListItemStandard></>}
           notificationsCount={waitingCount.toString()}
-          onLogoClick={() => navigate("/ActivityReports")}
+          onLogoClick={() => navigate("/dashboards/analytics")}
           onMenuItemClick={function Ki() { }}
           onNotificationsClick={handleNotificationClick}
           onProductSwitchClick={function Ki() { }}
@@ -916,198 +916,100 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         </ShellBar>
       </MDBox>
 
-      {/* Zoho CRM tarzı: ShellBar altı modül sekmeleri (full-bleed) */}
+      {/* ShellBar altı: dinamik üst menüler (SideNav ile aynı kaynak) */}
       {(() => {
-        const moduleTabs: { label: string; href: string }[] = [
-          { label: "Ana Sayfa", href: "/ActivityReports" },
-          { label: "Müşteriler", href: "/customers" },
-          { label: "Talepler", href: "/tickets" },
-          { label: "Projeler", href: "/profile/all-projects" },
-          { label: "Takvim", href: "/calendar" },
-          { label: "Envanter", href: "/inventory" },
-          { label: "Kanban", href: "/kanban" },
-          { label: "Raporlar", href: "/tickets/statistic" },
-          { label: "Organizasyon", href: "/organizationalChart" },
-          { label: "İş Akışı", href: "/projectManagement" },
-        ];
+        const menus: any[] = Array.isArray(menuData) ? menuData : [];
+        if (!menus.length) return null;
 
-        const isActiveTab = (href: string) =>
-          currentPath === href || currentPath.startsWith(href + "/");
+        // Kök: bir üst menüsü (parentMenuId) olmayanlar
+        const rawRoots = menus.filter((m: any) => !m.parentMenuId || String(m.parentMenuId).trim() === "");
+        const roots = rawRoots
+          .filter((m: any) => (m.isActive ?? true))
+          .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
 
-        // Modül bazlı alt sekmeler (sub-tabs)
-        const subTabMap: Record<string, { label: string; href: string }[]> = {
-          "/customers": [
-            { label: "Liste", href: "/customers" },
-            { label: "Yeni", href: "/customers/new" },
-          ],
-          "/tickets": [
-            { label: "Panel", href: "/tickets" },
-            { label: "Çözümleme", href: "/solveAllTicket" },
-          ],
-          "/profile/all-projects": [
-            { label: "Projelerim", href: "/profile/all-projects" },
-          ],
-          "/calendar": [
-            { label: "Takvim", href: "/calendar" },
-          ],
-          "/inventory": [
-            { label: "Envanter", href: "/inventory" },
-            { label: "Yeni", href: "/inventory/detail" },
-          ],
-          "/tickets/statistic": [
-            { label: "İstatistik", href: "/tickets/statistic" },
-          ],
-          "/organizationalChart": [
-            { label: "Şema", href: "/organizationalChart" },
-          ],
-          "/projectManagement": [
-            { label: "Panolar", href: "/projectManagement" },
-            { label: "Grafik", href: "/projectManagement/chart" },
-          ],
-          "/ActivityReports": [
-            { label: "Aktiviteler", href: "/ActivityReports" },
-          ],
-          "/kanban": [
-            { label: "Kanban", href: "/kanban" },
-          ],
+        const resolveHref = (m: any): string => {
+          // Kural: Kök menüler (parentMenuId yok/boş) daima hub'a gider
+          if (!m.parentMenuId || String(m.parentMenuId).trim() === "") {
+            return `/menu/${m.id || m.menuCode}`;
+          }
+          // Alt menüsü olan ara düğümler de hub'a gidebilir
+          if (Array.isArray(m.subMenus) && m.subMenus.length > 0) {
+            return `/menu/${m.id || m.menuCode}`;
+          }
+          const h = (m.href && String(m.href).trim()) || (m.route && String(m.route).trim());
+          return h || "#";
         };
-
-        const activeModule = moduleTabs.find((m) => isActiveTab(m.href));
-        const subTabs = activeModule ? (subTabMap[activeModule.href] || []) : [];
+        const isActiveTab = (href: string) => href !== "#" && (currentPath === href || currentPath.startsWith(href + "/"));
 
         return (
-          <>
-            {/* Ana modül sekmeleri - full viewport genişlik */}
+          <MDBox
+            sx={{
+              position: "relative",
+              left: "50%",
+              right: "50%",
+              marginLeft: "-50vw",
+              marginRight: "-50vw",
+              width: "100vw",
+              backgroundColor: darkMode ? "#1a2035" : "#ffffff",
+              borderBottom: darkMode ? "1px solid #2d3748" : "1px solid #e5e7eb",
+              zIndex: 3,
+              pointerEvents: "auto",
+            }}
+          >
             <MDBox
               sx={{
-                position: "relative",
-                left: "50%",
-                right: "50%",
-                marginLeft: "-50vw",
-                marginRight: "-50vw",
-                width: "100vw",
-                backgroundColor: darkMode ? "#1a2035" : "#ffffff",
-                borderBottom: darkMode ? "1px solid #2d3748" : "1px solid #e5e7eb",
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                height: 40,
+                px: 1.5,
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+                "&::-webkit-scrollbar": { height: 6 },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: darkMode ? "#334155" : "#cbd5e1",
+                  borderRadius: 8,
+                },
               }}
             >
-              <MDBox
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 0.5,
-                  height: 40,
-                  px: 1.5,
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                  "&::-webkit-scrollbar": { height: 6 },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: darkMode ? "#334155" : "#cbd5e1",
-                    borderRadius: 8,
-                  },
-                }}
-              >
-                {moduleTabs.map((tab) => {
-                  const active = isActiveTab(tab.href);
-                  return (
-                    <MDBox
-                      key={tab.href}
-                      onClick={() => navigate(tab.href)}
-                      sx={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        px: 1.5,
-                        height: 40,
-                        cursor: "pointer",
-                        borderBottom: active
-                          ? `2px solid ${darkMode ? "#38bdf8" : "#0284c7"}`
-                          : "2px solid transparent",
-                        color: active
-                          ? darkMode
-                            ? "#7dd3fc"
-                            : "#0369a1"
-                          : darkMode
-                            ? "#cbd5e1"
-                            : "#475569",
-                        fontWeight: active ? 600 : 500,
-                        fontSize: 14,
-                        transition: "color .15s ease, transform .15s ease",
-                        '&:hover': {
-                          color: active ? undefined : (darkMode ? '#e2e8f0' : '#0f172a'),
-                          transform: active ? undefined : 'translateY(-1px)'
-                        }
-                      }}
-                    >
-                      {tab.label}
-                    </MDBox>
-                  );
-                })}
-              </MDBox>
+              {roots.map((m: any) => {
+                const href = resolveHref(m);
+                const active = isActiveTab(href);
+                return (
+                  <MDBox
+                    key={String(m.id || m.menuCode || m.name)}
+                    onClick={(e: any) => { e.preventDefault(); e.stopPropagation(); alert(`Nav: ${href}`); if (href !== "#") navigate(href); }}
+                    sx={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      px: 1.5,
+                      height: 40,
+                      cursor: href === "#" ? "default" : "pointer",
+                      borderBottom: active
+                        ? `2px solid ${darkMode ? "#38bdf8" : "#0284c7"}`
+                        : "2px solid transparent",
+                      color: active
+                        ? darkMode
+                          ? "#7dd3fc"
+                          : "#0369a1"
+                        : darkMode
+                          ? "#cbd5e1"
+                          : "#475569",
+                      fontWeight: active ? 600 : 500,
+                      fontSize: 14,
+                      transition: "color .15s ease, transform .15s ease",
+                      '&:hover': {
+                        color: active ? undefined : (darkMode ? '#e2e8f0' : '#0f172a'),
+                        transform: active || href === "#" ? undefined : 'translateY(-1px)'
+                      }
+                    }}
+                  >
+                    {m.name}
+                  </MDBox>
+                );
+              })}
             </MDBox>
-
-            {/* Aktif modüle göre alt sekmeler - full viewport genişlik */}
-            {subTabs.length > 0 && (
-              <MDBox
-                sx={{
-                  position: "relative",
-                  left: "50%",
-                  right: "50%",
-                  marginLeft: "-50vw",
-                  marginRight: "-50vw",
-                  width: "100vw",
-                  backgroundColor: darkMode ? "#111827" : "#f8fafc",
-                  borderBottom: darkMode ? "1px solid #2d3748" : "1px solid #e5e7eb",
-                }}
-              >
-                <MDBox
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.25,
-                    height: 36,
-                    px: 1.5,
-                    overflowX: "auto",
-                    whiteSpace: "nowrap",
-                    "&::-webkit-scrollbar": { height: 6 },
-                    "&::-webkit-scrollbar-thumb": {
-                      backgroundColor: darkMode ? "#334155" : "#cbd5e1",
-                      borderRadius: 8,
-                    },
-                  }}
-                >
-                  {subTabs.map((sub) => {
-                    const active = currentPath === sub.href || currentPath.startsWith(sub.href + '/');
-                    return (
-                      <MDBox
-                        key={sub.href}
-                        onClick={() => navigate(sub.href)}
-                        sx={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          px: 1.25,
-                          height: 30,
-                          cursor: "pointer",
-                          borderBottom: active
-                            ? `2px solid ${darkMode ? "#60a5fa" : "#2563eb"}`
-                            : "2px solid transparent",
-                          color: active
-                            ? darkMode
-                              ? "#93c5fd"
-                              : "#1d4ed8"
-                            : darkMode
-                              ? "#94a3b8"
-                              : "#64748b",
-                          fontWeight: active ? 600 : 500,
-                          fontSize: 13,
-                        }}
-                      >
-                        {sub.label}
-                      </MDBox>
-                    );
-                  })}
-                </MDBox>
-              </MDBox>
-            )}
-          </>
+          </MDBox>
         );
       })()}
 

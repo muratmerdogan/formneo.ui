@@ -121,6 +121,8 @@ import TenantPermissions from "layouts/pages/tenants/tenantsmanagement/permissio
 import TenantRolesDetail from "layouts/pages/tenantroles/detail";
 import TenantUsersForTenant from "layouts/pages/tenants/users";
 import SuccessFactorsHome from "layouts/pages/successfactors";
+import ParametersPage from "layouts/pages/settings/ParametersPage";
+import MenuHubPage from "layouts/pages/menuHub/MenuHubPage";
 // User Tenants pages (under tenantsuser)
 import UserTenantsList from "layouts/pages/tenantsuser";
 import UserTenantsDetail from "layouts/pages/tenantsuser/detail";
@@ -864,6 +866,18 @@ const routes = [
     key: "applications",
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
+      {
+        name: "Parameters",
+        key: "parameters",
+        route: "/settings/parameters",
+        component: <ParametersPage />,
+      },
+      {
+        name: "Menu Hub",
+        key: "menu-hub",
+        route: "/menu/:id",
+        component: <MenuHubPage />,
+      },
       {
         name: "Kanban",
         key: "kanban",

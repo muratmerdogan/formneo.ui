@@ -234,7 +234,7 @@ export default function App() {
         {/* Private Routes */}
         <Route element={<PrivateRoute />}>
           {getRoutes(routes)} {/* Tüm özel rotaları ekler */}
-          <Route path="*" element={<Navigate to="/ActivityReports" />} />
+          <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
           <Route path="/users/detail" element={<UserDetail />} />
           <Route path="/ActivityReports" element={<ActivityReports />} />
           <Route path="/Messages" element={<MessagePage />} />

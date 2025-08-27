@@ -37,9 +37,11 @@ const PrivateRoute: React.FC = () => {
 
   const normalizeUrl = (url: string) => "/" + url.split("/").slice(1, 2).join("/");
 
-  const hasAccess = menuAuth!.some(
-    (permission) => normalizeUrl(permission.href) === normalizedPath
-  );
+  // MenuHub sayfası /menu/:id için yetki kontrolü: üst seviye menüler yetki kapsamındadır
+  const isMenuHub = normalizedPath === "/menu";
+  const hasAccess = isMenuHub
+    ? true
+    : menuAuth!.some((permission) => normalizeUrl(permission.href) === normalizedPath);
 
 
 
@@ -55,7 +57,7 @@ const PrivateRoute: React.FC = () => {
 
   if (!hasAccess) {
 
-    if (normalizedPath == "/authentication" || normalizedPath == "dashboards/analytics") {
+    if (normalizedPath == "/authentication" || normalizedPath == "/dashboards" || isMenuHub) {
       return <Outlet />
     }
     return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
