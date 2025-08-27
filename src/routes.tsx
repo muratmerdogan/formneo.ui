@@ -122,6 +122,8 @@ import TenantRolesDetail from "layouts/pages/tenantroles/detail";
 import TenantUsersForTenant from "layouts/pages/tenants/users";
 import SuccessFactorsHome from "layouts/pages/successfactors";
 import ParametersPage from "layouts/pages/settings/ParametersPage";
+import ParametersAdminPage from "layouts/pages/settings/ParametersAdminPage";
+import LookupAdminPage from "layouts/pages/settings/LookupAdminPage";
 import MenuHubPage from "layouts/pages/menuHub/MenuHubPage";
 // User Tenants pages (under tenantsuser)
 import UserTenantsList from "layouts/pages/tenantsuser";
@@ -458,7 +460,7 @@ const routes = [
       {
         name: "List Parameters",
         key: "listParameters",
-        route: "/parameters",
+        route: "/forms",
         component: <ListForm />,
       },
     ],
@@ -472,7 +474,7 @@ const routes = [
       {
         name: "Create Form",
         key: "createForm",
-        route: "/parameters/detail",
+        route: "/forms/detail",
         component: <CreateForm />,
 
       },
@@ -504,7 +506,7 @@ const routes = [
       {
         name: "Create Form",
         key: "createForm",
-        route: "/parameters/view/:formId/:formRunId?/:isVisibility?",
+        route: "/forms/view/:formId/:formRunId?/:isVisibility?",
         component: <ParameterView />,
 
       },
@@ -519,7 +521,7 @@ const routes = [
       {
         name: "Create Form With Params",
         key: "createFormWithParams",
-        route: "/parameters/detail/:id",
+        route: "/forms/detail/:id",
         component: <CreateForm />,
 
       },
@@ -871,6 +873,18 @@ const routes = [
         key: "parameters",
         route: "/settings/parameters",
         component: <ParametersPage />,
+      },
+      {
+        name: "Parameters Admin",
+        key: "parameters-admin",
+        route: "/settings/parameters/admin",
+        component: <ParametersAdminPage />,
+      },
+      {
+        name: "Lookup Admin",
+        key: "lookup-admin",
+        route: "/settings/lookups",
+        component: <LookupAdminPage />,
       },
       {
         name: "Menu Hub",

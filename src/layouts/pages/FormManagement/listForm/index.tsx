@@ -89,7 +89,7 @@ function ListForm() {
   };
 
   const handlePreview = (id: string) => {
-    navigate("/parameters/view/" + id);
+    navigate("/forms/view/" + id);
 
   };
   const handleData = (id: string) => {
@@ -155,7 +155,7 @@ function ListForm() {
       Header: <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>İşlemler</div>,
       Cell: ({ row }: any) => (
         <MDBox mx={2}>
-          <Icon sx={{ cursor: "pointer", marginRight:'2px'}} onClick={() => handleOpenQuestionBox(row.original.id)}>
+          <Icon sx={{ cursor: "pointer", marginRight: '2px' }} onClick={() => handleOpenQuestionBox(row.original.id)}>
             delete
           </Icon>
           <Icon
@@ -174,7 +174,7 @@ function ListForm() {
           </Icon>
           <Icon
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/parameters/detail/${row.original.id}`)}
+            onClick={() => navigate(`/forms/detail/${row.original.id}`)}
             style={{ marginRight: "8px" }}
             hidden={!row.original.canEdit}
           >

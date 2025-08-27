@@ -2,13 +2,13 @@ import { SettingsBundle, SettingsCategory, SettingsParameter, SettingsScope } fr
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const mockCategories: SettingsCategory[] = [
+let mockCategories: SettingsCategory[] = [
     { id: "general", name: "Genel", description: "Genel uygulama ayarları", orderNo: 1 },
     { id: "crm", name: "CRM", description: "Müşteri ve satış parametreleri", orderNo: 2 },
     { id: "email", name: "E-posta", description: "SMTP ve bildirimler", orderNo: 3 },
 ];
 
-const mockParameters: SettingsParameter[] = [
+let mockParameters: SettingsParameter[] = [
     {
         id: "locale", categoryId: "general", name: "Varsayılan Dil", type: "select", options: [
             { value: "tr", label: "Türkçe" }, { value: "en", label: "English" }
@@ -41,6 +41,56 @@ export async function getCategoryBundle(categoryId: string, scope: SettingsScope
 export async function saveValues(categoryId: string, scope: SettingsScope, data: Record<string, unknown>): Promise<void> {
     await delay(300);
     console.log("[mock save]", categoryId, scope, data);
+}
+
+
+// Admin CRUD (Mock, in-memory)
+export async function listParameters(categoryId?: string): Promise<SettingsParameter[]> {
+    await delay(150);
+    const items = categoryId ? mockParameters.filter(p => p.categoryId === categoryId) : mockParameters;
+    return [...items].sort((a, b) => (a.orderNo || 0) - (b.orderNo || 0));
+}
+
+export async function createCategory(input: Omit<SettingsCategory, "orderNo"> & { orderNo?: number }): Promise<SettingsCategory> {
+    await delay(200);
+    if (mockCategories.some(c => c.id === input.id)) throw new Error("Category id already exists");
+    const cat: SettingsCategory = { ...input, orderNo: input.orderNo ?? mockCategories.length + 1 };
+    mockCategories = [...mockCategories, cat];
+    return cat;
+}
+
+export async function updateCategory(id: string, changes: Partial<SettingsCategory>): Promise<SettingsCategory> {
+    await delay(200);
+    const idx = mockCategories.findIndex(c => c.id === id);
+    if (idx === -1) throw new Error("Category not found");
+    mockCategories[idx] = { ...mockCategories[idx], ...changes };
+    return mockCategories[idx];
+}
+
+export async function deleteCategory(id: string): Promise<void> {
+    await delay(200);
+    mockCategories = mockCategories.filter(c => c.id !== id);
+    mockParameters = mockParameters.filter(p => p.categoryId !== id);
+}
+
+export async function createParameter(input: SettingsParameter): Promise<SettingsParameter> {
+    await delay(250);
+    if (mockParameters.some(p => p.id === input.id)) throw new Error("Parameter id already exists");
+    mockParameters = [...mockParameters, input];
+    return input;
+}
+
+export async function updateParameter(id: string, changes: Partial<SettingsParameter>): Promise<SettingsParameter> {
+    await delay(250);
+    const idx = mockParameters.findIndex(p => p.id === id);
+    if (idx === -1) throw new Error("Parameter not found");
+    mockParameters[idx] = { ...mockParameters[idx], ...changes };
+    return mockParameters[idx];
+}
+
+export async function deleteParameter(id: string): Promise<void> {
+    await delay(200);
+    mockParameters = mockParameters.filter(p => p.id !== id);
 }
 
 

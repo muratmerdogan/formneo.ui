@@ -132,10 +132,10 @@ function UserForms() {
     const handlePreview = (id: string, assignId: string, formRunId?: string, isVisibility?: string) => {
         // navigate("/parameters/view/" + id);
         if (formRunId) {
-            navigate("/parameters/view/" + id + "/" + formRunId + "/" + isVisibility);
+            navigate("/forms/view/" + id + "/" + formRunId + "/" + isVisibility);
         }
         else {
-            navigate("/parameters/view/" + id, {
+            navigate("/forms/view/" + id, {
                 state: { formAssignId: assignId },
             });
         }

@@ -186,7 +186,7 @@ export default function SuccessFactorsHome() {
                             </MDBox>
                             <Divider />
                             <MDBox p={2} display="grid" gridTemplateColumns={{ xs: "1fr 1fr" }} gap={1.5}>
-                                <MDButton color="info" variant="outlined" onClick={() => navigate("/parameters")}>Form Parametreleri</MDButton>
+                                <MDButton color="info" variant="outlined" onClick={() => navigate("/settings/parameters")}>Form Parametreleri</MDButton>
                                 <MDButton color="success" variant="outlined" onClick={() => navigate("/menus")}>Menüler</MDButton>
                                 <MDButton color="warning" variant="outlined" onClick={() => navigate("/inventory")}>Envanter</MDButton>
                                 <MDButton color="primary" variant="outlined" onClick={() => navigate("/projectManagement")}>Projeler</MDButton>

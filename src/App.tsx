@@ -66,7 +66,7 @@ import AllProjects from "layouts/pages/profile/all-projects";
 import MessagePage from "layouts/applications/chat/MessagePage";
 import MenuList from "layouts/pages/menuDefination/MenuList";
 import MenuDetail from "layouts/pages/menuDefination/MenuDetail";
-import CreateForm from "layouts/pages/FormManagement/ParamtetersDefination";
+import ParametersPage from "layouts/pages/settings/ParametersPage";
 import NotAuthorizationPage from "layouts/pages/notAuthorizationPage";
 import ResetCover from "layouts/authentication/reset-password/cover";
 import Sales from "layouts/dashboards/sales";
@@ -242,7 +242,7 @@ export default function App() {
             <Route path="/Messages" element={<MessagePage />} />
             <Route path="/Menus" element={<MenuList />} />
             <Route path="/MenuDetail" element={<MenuDetail />} />
-            <Route path="/parameters" element={<CreateForm />} />
+            <Route path="/parameters" element={<ParametersPage />} />
             {/* <Route path="/mmessages" element={<ChatPage />} /> */}
           </Route>
 

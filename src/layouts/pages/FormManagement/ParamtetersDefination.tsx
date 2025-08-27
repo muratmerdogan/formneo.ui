@@ -96,7 +96,7 @@ type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 interface JsonObject {
   [key: string]: JsonValue;
 }
-interface JsonArray extends Array<JsonValue> {}
+interface JsonArray extends Array<JsonValue> { }
 
 const ParamtetersDefination = (): JSX.Element => {
   const { id } = useParams();
@@ -283,7 +283,7 @@ const ParamtetersDefination = (): JSX.Element => {
         console.log("Form başarıyla oluşturuldu");
       }
       console.log("Navigating to /parameters...");
-      navigate("/parameters", { replace: true });
+      navigate("/forms", { replace: true });
     } catch (error) {
       console.error("Form gönderme hatası:", error);
       alert("Form kaydedilirken bir hata oluştu!");
@@ -729,27 +729,27 @@ export class ${formName}Handler {
   };
 
 ${formSchema.components
-  .map((component: any) => {
-    if (component.key) {
-      switch (component.type) {
-        case "button":
-          return `  public handle${component.key}Click = () => {
+        .map((component: any) => {
+          if (component.key) {
+            switch (component.type) {
+              case "button":
+                return `  public handle${component.key}Click = () => {
     this.events.on${component.key}Click?.();
   };\n`;
-        case "textfield":
-        case "number":
-        case "select":
-          return `  public handle${component.key}Change = (value: any) => {
+              case "textfield":
+              case "number":
+              case "select":
+                return `  public handle${component.key}Change = (value: any) => {
     this.formData.${component.key} = value;
     this.events.on${component.key}Change?.(value);
   };\n`;
-        default:
+              default:
+                return "";
+            }
+          }
           return "";
-      }
-    }
-    return "";
-  })
-  .join("\n")}
+        })
+        .join("\n")}
 }
 
 // Kullanım örneği:
@@ -802,8 +802,8 @@ const ${formName}Instance = new ${formName}Handler({
 document.addEventListener('DOMContentLoaded', function() {
   // Form oluştur
   Formio.createForm(document.getElementById('formio'), ${JSON.stringify(
-    formSchema
-  )}).then(function(form) {
+      formSchema
+    )}).then(function(form) {
     console.log('Form yüklendi:', form);
 
     // Form submit olayı
@@ -814,11 +814,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Her component için event listener'ları ekle
     ${formSchema.components
-      .map((comp: any) => {
-        if (comp.key) {
-          switch (comp.type) {
-            case "button":
-              return `
+        .map((comp: any) => {
+          if (comp.key) {
+            switch (comp.type) {
+              case "button":
+                return `
     // ${comp.key} butonu için click event
     const ${comp.key}Btn = form.getComponent('${comp.key}');
     if (${comp.key}Btn) {
@@ -826,8 +826,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('${comp.key} butonuna tıklandı');
       });
     }`;
-            case "textfield":
-              return `
+              case "textfield":
+                return `
     // ${comp.key} text alanı için change event
     const ${comp.key}Field = form.getComponent('${comp.key}');
     if (${comp.key}Field) {
@@ -835,8 +835,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('${comp.key} değeri değişti:', e.value);
       });
     }`;
-            case "number":
-              return `
+              case "number":
+                return `
     // ${comp.key} sayı alanı için change event
     const ${comp.key}Field = form.getComponent('${comp.key}');
     if (${comp.key}Field) {
@@ -844,8 +844,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('${comp.key} sayısı değişti:', e.value);
       });
     }`;
-            case "select":
-              return `
+              case "select":
+                return `
     // ${comp.key} seçim alanı için change event
     const ${comp.key}Select = form.getComponent('${comp.key}');
     if (${comp.key}Select) {
@@ -853,8 +853,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('${comp.key} seçimi değişti:', e.value);
       });
     }`;
-            default:
-              return `
+              default:
+                return `
     // ${comp.key} componenti için change event
     const ${comp.key}Comp = form.getComponent('${comp.key}');
     if (${comp.key}Comp) {
@@ -862,11 +862,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('${comp.key} değeri değişti:', e.value);
       });
     }`;
+            }
           }
-        }
-        return "";
-      })
-      .join("\n")}
+          return "";
+        })
+        .join("\n")}
 
     // Form hazır olduğunda
     form.on('ready', () => {

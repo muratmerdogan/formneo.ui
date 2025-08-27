@@ -3878,6 +3878,18 @@ export interface CustomerInsertDto {
      * @type {string}
      * @memberof CustomerInsertDto
      */
+    'legalName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'companyType'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
     'code'?: string | null;
     /**
      * 
@@ -3899,6 +3911,12 @@ export interface CustomerInsertDto {
     'taxNumber'?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof CustomerInsertDto
+     */
+    'isReferenceCustomer'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof CustomerInsertDto
      */
@@ -3915,6 +3933,12 @@ export interface CustomerInsertDto {
      * @memberof CustomerInsertDto
      */
     'emailPrimary'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'defaultNotificationEmail'?: string | null;
     /**
      * 
      * @type {Array<string>}
@@ -3951,6 +3975,42 @@ export interface CustomerInsertDto {
      * @memberof CustomerInsertDto
      */
     'preferredContact'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'facebookUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'instagramUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'twitterUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'linkedinUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'utsInstitutionNumber'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
+    'connectionCode'?: string | null;
     /**
      * 
      * @type {Array<string>}
@@ -4181,6 +4241,18 @@ export interface CustomerUpdateDto {
      * @type {string}
      * @memberof CustomerUpdateDto
      */
+    'legalName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'companyType'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
     'code'?: string | null;
     /**
      * 
@@ -4202,6 +4274,12 @@ export interface CustomerUpdateDto {
     'taxNumber'?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof CustomerUpdateDto
+     */
+    'isReferenceCustomer'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof CustomerUpdateDto
      */
@@ -4218,6 +4296,12 @@ export interface CustomerUpdateDto {
      * @memberof CustomerUpdateDto
      */
     'emailPrimary'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'defaultNotificationEmail'?: string | null;
     /**
      * 
      * @type {Array<string>}
@@ -4254,6 +4338,42 @@ export interface CustomerUpdateDto {
      * @memberof CustomerUpdateDto
      */
     'preferredContact'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'facebookUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'instagramUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'twitterUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'linkedinUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'utsInstitutionNumber'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'connectionCode'?: string | null;
     /**
      * 
      * @type {Array<string>}
@@ -7451,6 +7571,98 @@ export interface LoginUserDto {
      * @memberof LoginUserDto
      */
     'password'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface LookupCategoryDto
+ */
+export interface LookupCategoryDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategoryDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategoryDto
+     */
+    'key'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategoryDto
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupCategoryDto
+     */
+    'isTenantScoped'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupCategoryDto
+     */
+    'isReadOnly'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface LookupItemDto
+ */
+export interface LookupItemDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'categoryId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'code'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'nameLocalizedJson'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof LookupItemDto
+     */
+    'orderNo'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupItemDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItemDto
+     */
+    'externalKey'?: string | null;
 }
 /**
  * 
@@ -29655,6 +29867,314 @@ export class KanbanApi extends BaseAPI {
      */
     public apiKanbanPut(kanbanTasksUpdateDto?: KanbanTasksUpdateDto, options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanPut(kanbanTasksUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * LookupApi - axios parameter creator
+ * @export
+ */
+export const LookupApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupCategoriesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Lookup/categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {LookupCategoryDto} [lookupCategoryDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupCategoriesPost: async (lookupCategoryDto?: LookupCategoryDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Lookup/categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(lookupCategoryDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupItemsKeyGet: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('apiLookupItemsKeyGet', 'key', key)
+            const localVarPath = `/api/Lookup/items/{key}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {LookupItemDto} [lookupItemDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupItemsPost: async (lookupItemDto?: LookupItemDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Lookup/items`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(lookupItemDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LookupApi - functional programming interface
+ * @export
+ */
+export const LookupApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LookupApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiLookupCategoriesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLookupCategoriesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LookupApi.apiLookupCategoriesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {LookupCategoryDto} [lookupCategoryDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiLookupCategoriesPost(lookupCategoryDto?: LookupCategoryDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLookupCategoriesPost(lookupCategoryDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LookupApi.apiLookupCategoriesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiLookupItemsKeyGet(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLookupItemsKeyGet(key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LookupApi.apiLookupItemsKeyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {LookupItemDto} [lookupItemDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiLookupItemsPost(lookupItemDto?: LookupItemDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLookupItemsPost(lookupItemDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LookupApi.apiLookupItemsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * LookupApi - factory interface
+ * @export
+ */
+export const LookupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LookupApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupCategoriesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiLookupCategoriesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {LookupCategoryDto} [lookupCategoryDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupCategoriesPost(lookupCategoryDto?: LookupCategoryDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiLookupCategoriesPost(lookupCategoryDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupItemsKeyGet(key: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiLookupItemsKeyGet(key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {LookupItemDto} [lookupItemDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiLookupItemsPost(lookupItemDto?: LookupItemDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiLookupItemsPost(lookupItemDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * LookupApi - object-oriented interface
+ * @export
+ * @class LookupApi
+ * @extends {BaseAPI}
+ */
+export class LookupApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LookupApi
+     */
+    public apiLookupCategoriesGet(options?: RawAxiosRequestConfig) {
+        return LookupApiFp(this.configuration).apiLookupCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {LookupCategoryDto} [lookupCategoryDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LookupApi
+     */
+    public apiLookupCategoriesPost(lookupCategoryDto?: LookupCategoryDto, options?: RawAxiosRequestConfig) {
+        return LookupApiFp(this.configuration).apiLookupCategoriesPost(lookupCategoryDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} key 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LookupApi
+     */
+    public apiLookupItemsKeyGet(key: string, options?: RawAxiosRequestConfig) {
+        return LookupApiFp(this.configuration).apiLookupItemsKeyGet(key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {LookupItemDto} [lookupItemDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LookupApi
+     */
+    public apiLookupItemsPost(lookupItemDto?: LookupItemDto, options?: RawAxiosRequestConfig) {
+        return LookupApiFp(this.configuration).apiLookupItemsPost(lookupItemDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

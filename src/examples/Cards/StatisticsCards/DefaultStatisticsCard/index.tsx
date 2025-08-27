@@ -112,7 +112,7 @@ function DefaultStatisticsCard({ title, count, percentage, dropdown, isOpenCard,
   );
 
   const handlePreview = (id: string, assignId: string) => {
-    navigate("/parameters/view/" + id, {
+    navigate("/forms/view/" + id, {
       state: { formAssignId: assignId },
     });
   };
