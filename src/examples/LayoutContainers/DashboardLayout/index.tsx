@@ -19,6 +19,7 @@ import { useEffect, ReactNode, useState } from "react";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
+import AppActionBar from "components/ui/AppActionBar";
 
 // Material Dashboard 2 PRO React context
 import { useMaterialUIController, setLayout } from "context";
@@ -106,6 +107,7 @@ function DashboardLayout({ children }: { children: ReactNode }): JSX.Element {
         },
       })}
     >
+      <AppActionBar />
       {children}
     </MDBox>
   );

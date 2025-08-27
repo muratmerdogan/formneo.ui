@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CustomerFilters from "../../components/customers/CustomerFilters";
 import CustomerGrid from "../../components/customers/CustomerGrid";
 import { CustomersApi } from "api/generated/api";
@@ -8,8 +8,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
+import { useRegisterActions } from "context/ActionBarContext";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function CustomersPage(): JSX.Element {
+    const navigate = useNavigate();
     const [params, setParams] = useSearchParams();
     const [all, setAll] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(true);
@@ -28,6 +31,16 @@ export default function CustomersPage(): JSX.Element {
         if (!patch.page) next.set("page", "1");
         setParams(next, { replace: true });
     };
+
+    // Action Bar: Yeni müşteri oluştur
+    useRegisterActions([
+        {
+            id: "new-customer",
+            label: "Yeni Müşteri",
+            icon: <AddIcon fontSize="small" />,
+            onClick: () => navigate("/customers/new"),
+        },
+    ], [navigate]);
 
     useEffect(() => {
         let isMounted = true;
@@ -77,7 +90,6 @@ export default function CustomersPage(): JSX.Element {
                     </div>
                     <div className="hidden md:flex items-center gap-3 text-sm text-slate-600">
                         <div className="rounded-xl border bg-white shadow-sm px-3 py-2">Toplam: {total}</div>
-                        <Link to="/customers/new" className="h-9 px-3 rounded-md border bg-slate-900 text-white hover:bg-slate-800">Yeni Müşteri</Link>
                     </div>
                 </div>
 

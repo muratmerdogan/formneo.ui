@@ -715,38 +715,40 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
           />
         </MDBox>
         {/* Şirket etiketi: sağda, profile yakın (mobilde gizle) */}
-        <MDBox
-          sx={{
-            position: "absolute",
-            right: 280,
-            top: "50%",
-            transform: "translateY(-50%)",
-            zIndex: 2,
-            display: { xs: "none", md: "flex" },
-            alignItems: "center",
-            maxWidth: "30vw",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            pointerEvents: "none",
-          }}
-        >
-          <span
-            style={{
-              fontSize: 12,
-              fontWeight: 600,
-              color: darkMode ? '#0f172a' : '#0f172a',
-              backgroundColor: darkMode ? '#e2e8f0' : '#e2e8f0',
-              border: `1px solid ${darkMode ? '#cbd5e1' : '#cbd5e1'}`,
-              padding: '4px 10px',
-              borderRadius: 9999,
-              lineHeight: 1.1,
+        {selectedTenant?.label && (
+          <MDBox
+            sx={{
+              position: "absolute",
+              right: 280,
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              maxWidth: "30vw",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              pointerEvents: "none",
             }}
-            title={selectedTenant?.label || ''}
           >
-            {(selectedTenant?.label || '').toString()}{isGlobalMode ? ' · Global' : ''}
-          </span>
-        </MDBox>
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                color: darkMode ? '#0f172a' : '#0f172a',
+                backgroundColor: darkMode ? '#e2e8f0' : '#e2e8f0',
+                border: `1px solid ${darkMode ? '#cbd5e1' : '#cbd5e1'}`,
+                padding: '4px 10px',
+                borderRadius: 9999,
+                lineHeight: 1.1,
+              }}
+              title={selectedTenant?.label || ''}
+            >
+              {(selectedTenant?.label || '').toString()}{isGlobalMode ? ' · Global' : ''}
+            </span>
+          </MDBox>
+        )}
         <ShellBar
           // backgroundColor: theme == "light" ? themes[theme].menu.menuContent : themes[theme].menu.menuContent
           style={{
@@ -978,7 +980,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
                 return (
                   <MDBox
                     key={String(m.id || m.menuCode || m.name)}
-                    onClick={(e: any) => { e.preventDefault(); e.stopPropagation(); alert(`Nav: ${href}`); if (href !== "#") navigate(href); }}
+                    onClick={(e: any) => { e.preventDefault(); e.stopPropagation(); if (href !== "#") navigate(href); }}
                     sx={{
                       display: "inline-flex",
                       alignItems: "center",

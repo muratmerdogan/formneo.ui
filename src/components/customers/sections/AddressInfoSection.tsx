@@ -9,9 +9,12 @@ type Props = {
 export default function AddressInfoSection({ register, errors }: Props): JSX.Element {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <TextInput label="Adres Satırı 1" name="address1" register={register} error={errors?.address1?.message} placeholder="Adres" />
-            <TextInput label="Adres Satırı 2" name="address2" register={register} error={errors?.address2?.message} placeholder="Adres (opsiyonel)" />
+            <TextInput label="Ülke" name="country" register={register} error={errors?.country?.message} placeholder="Ülke" />
+            <TextInput label="Şehir" name="city" register={register} error={errors?.city?.message} placeholder="Şehir" />
+            <TextInput label="İlçe" name="district" register={register} error={errors?.district?.message} placeholder="İlçe" />
             <TextInput label="Posta Kodu" name="postalCode" register={register} error={errors?.postalCode?.message} placeholder="00000" />
+            <TextInput label="Adres Satırı 1" name="line1" register={register} error={errors?.line1?.message} placeholder="Adres" />
+            <TextInput label="Adres Satırı 2" name="line2" register={register} error={errors?.line2?.message} placeholder="Adres (opsiyonel)" />
         </div>
     );
 }
