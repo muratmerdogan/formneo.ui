@@ -1,4 +1,9 @@
 import React, { useMemo, useState } from "react";
+import { IconButton } from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 export type EmailRow = {
     id: string;
@@ -97,9 +102,15 @@ export default function EmailsGrid({ label, rows, onChange, disabled }: Props) {
                                 </td>
                                 <td className="px-3 py-2 border-b">{r.isPrimary ? "Evet" : "Hayır"}</td>
                                 <td className="px-3 py-2 border-b text-right">
-                                    <button className="h-8 px-2 rounded-md border bg-white mr-2" onClick={() => openEdit(r)} disabled={disabled}>Düzenle</button>
-                                    <button className="h-8 px-2 rounded-md border bg-white mr-2" onClick={() => setPrimary(r.id)} disabled={disabled || r.isPrimary}>Birincil Yap</button>
-                                    <button className="h-8 px-2 rounded-md border bg-rose-600 text-white" onClick={() => removeRow(r.id)} disabled={disabled}>Sil</button>
+                                    <IconButton size="small" onClick={() => openEdit(r)} disabled={disabled} title="Düzenle">
+                                        <EditOutlinedIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton size="small" onClick={() => setPrimary(r.id)} disabled={disabled} title="Birincil Yap">
+                                        {r.isPrimary ? <StarIcon fontSize="small" color="warning" /> : <StarBorderIcon fontSize="small" />}
+                                    </IconButton>
+                                    <IconButton size="small" onClick={() => removeRow(r.id)} disabled={disabled} title="Sil">
+                                        <DeleteOutlineIcon fontSize="small" />
+                                    </IconButton>
                                 </td>
                             </tr>
                         ))}
