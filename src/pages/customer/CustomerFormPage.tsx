@@ -9,28 +9,33 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
 import BasicInfoSection from "components/customers/sections/BasicInfoSection";
-import AddressInfoSection from "components/customers/sections/AddressInfoSection";
+// import AddressInfoSection from "components/customers/sections/AddressInfoSection";
 import { useRegisterActions } from "context/ActionBarContext";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
 import OtherInfoSection from "components/customers/sections/OtherInfoSection";
-import ContactsSection from "components/customers/sections/ContactsSection";
-import FinanceSection from "components/customers/sections/FinanceSection";
+// import ContactsSection from "components/customers/sections/ContactsSection";
+import EmailsGrid, { EmailRow } from "components/form/EmailsGrid";
+import AddressesGrid, { AddressRow } from "components/form/AddressesGrid";
+import PhonesGrid, { PhoneRow } from "components/form/PhonesGrid";
 import ContractSection from "components/customers/sections/ContractSection";
 import NotesSection from "components/customers/sections/NotesSection";
 import SocialMediaSection from "components/customers/sections/SocialMediaSection";
 import { Box, Tabs, Tab } from "@mui/material";
+import LookupSelect from "components/form/LookupSelect";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import DraggableSection from "components/customers/sections/DraggableSection";
 
 const schema = z.object({
     // Kimlik/Temel
     name: z.string().min(2, "Zorunlu"),
+    legalName: z.string().optional(),
     code: z.string().optional(),
     customerType: z.string().optional(),
     category: z.string().optional(),
     status: z.enum(["active", "inactive"]),
     sectorsCsv: z.string().optional(),
+    isReferenceCustomer: z.boolean().optional(),
     // İletişim
     emailPrimary: z.string().email().optional().or(z.literal("")),
     emailSecondaryCsv: z.string().optional(),
@@ -79,7 +84,7 @@ export default function CustomerFormPage(): JSX.Element {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: { status: "active" },
     });
@@ -94,6 +99,9 @@ export default function CustomerFormPage(): JSX.Element {
     );
 
     const [activeTab, setActiveTab] = useState(0);
+    const [emailRows, setEmailRows] = useState<EmailRow[]>([]);
+    const [addressRows, setAddressRows] = useState<AddressRow[]>([]);
+    const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
 
     const onSubmit = async (values: FormValues) => {
         const api = new CustomersApi(getConfiguration());
@@ -135,6 +143,7 @@ export default function CustomerFormPage(): JSX.Element {
         } else {
             const dto: any = {
                 name: values.name,
+                legalName: values.legalName || null,
                 code: values.code || null,
                 customerType: values.customerType ? Number(values.customerType) : undefined,
                 category: values.category ? Number(values.category) : undefined,
@@ -149,6 +158,7 @@ export default function CustomerFormPage(): JSX.Element {
                 website: values.website || null,
                 taxOffice: values.taxOffice || null,
                 taxNumber: values.taxNumber || null,
+                isReferenceCustomer: !!values.isReferenceCustomer,
                 tags: values.tagsCsv ? values.tagsCsv.split(",").map((s) => s.trim()).filter(Boolean) : null,
                 addresses: values.country || values.city || values.line1 ? [{
                     country: values.country || null,
@@ -194,17 +204,34 @@ export default function CustomerFormPage(): JSX.Element {
                 <DndContext collisionDetection={closestCenter}>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <DraggableSection id="basic" title="Temel Bilgiler">
-                            <BasicInfoSection register={register} errors={errors} />
+                            <BasicInfoSection
+                                register={register}
+                                errors={errors}
+                                customerTypeValue={watch("customerType") || null}
+                                onCustomerTypeChange={(val) => setValue("customerType", val || "")}
+                            />
                         </DraggableSection>
-                        <DraggableSection id="email" title="E-Posta Bilgileri">
-                            <ContactsSection register={register} errors={errors} />
+                        <DraggableSection id="emails" title="E-Postalar">
+                            <div className="space-y-2">
+                                <EmailsGrid label="E-Postalar" rows={emailRows} onChange={setEmailRows} />
+                                {/* Form saklama alanları */}
+                                <input type="hidden" value={emailRows.map(r => r.email).join(",")} {...register("emailSecondaryCsv")} />
+                                <input type="hidden" value={JSON.stringify(emailRows)} name="emailSecondaryJson" />
+                            </div>
                         </DraggableSection>
-                        <DraggableSection id="address" title="Adres Bilgileri">
-                            <AddressInfoSection register={register} errors={errors} />
+                        <DraggableSection id="addresses" title="Adresler">
+                            <div className="space-y-2">
+                                <AddressesGrid label="Adresler" rows={addressRows} onChange={setAddressRows} />
+                                <input type="hidden" value={JSON.stringify(addressRows)} name="addressesJson" />
+                            </div>
                         </DraggableSection>
-                        <DraggableSection id="finance" title="Finans Bilgileri">
-                            <FinanceSection register={register} errors={errors} />
+                        <DraggableSection id="phones" title="Telefonlar">
+                            <div className="space-y-2">
+                                <PhonesGrid label="Telefonlar" rows={phoneRows} onChange={setPhoneRows} />
+                                <input type="hidden" value={JSON.stringify(phoneRows)} name="phonesJson" />
+                            </div>
                         </DraggableSection>
+
                     </div>
 
                     <DraggableSection id="extra" title="Ek Bilgiler">
