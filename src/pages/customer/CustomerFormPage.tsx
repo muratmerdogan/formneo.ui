@@ -13,12 +13,10 @@ import BasicInfoSection from "components/customers/sections/BasicInfoSection";
 import { useRegisterActions } from "context/ActionBarContext";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
-import OtherInfoSection from "components/customers/sections/OtherInfoSection";
 // import ContactsSection from "components/customers/sections/ContactsSection";
 import EmailsGrid, { EmailRow } from "components/form/EmailsGrid";
 import AddressesGrid, { AddressRow } from "components/form/AddressesGrid";
 import PhonesGrid, { PhoneRow } from "components/form/PhonesGrid";
-import ContractSection from "components/customers/sections/ContractSection";
 import NotesSection from "components/customers/sections/NotesSection";
 import SocialMediaSection from "components/customers/sections/SocialMediaSection";
 import { Box, Tabs, Tab } from "@mui/material";
@@ -69,13 +67,8 @@ const schema = z.object({
     eInvoice: z.boolean().optional(),
     iban: z.string().optional(),
     taxExemptionCode: z.string().optional(),
-    // Sözleşme
-    contractNo: z.string().optional(),
-    contractStart: z.string().optional(),
-    contractEnd: z.string().optional(),
-    // Notlar
-    note: z.string().optional(),
-    richNote: z.string().optional(),
+    // Notlar (çoklu grid JSON)
+    notesJson: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -132,11 +125,7 @@ export default function CustomerFormPage(): JSX.Element {
                 eInvoice: values.eInvoice ?? false,
                 iban: values.iban || null,
                 taxExemptionCode: values.taxExemptionCode || null,
-                contractNo: values.contractNo || null,
-                contractStart: values.contractStart || null,
-                contractEnd: values.contractEnd || null,
-                note: values.note || null,
-                richNote: values.richNote || null,
+                // Ek bilgi: Notlar çoklu grid olarak tutuluyor (notesJson). API alanı tanımlanırsa burada dönüştürülebilir.
             };
             await api.apiCustomersPut(dto);
             navigate(`/customers/${id}`);
@@ -178,11 +167,7 @@ export default function CustomerFormPage(): JSX.Element {
                 eInvoice: values.eInvoice ?? false,
                 iban: values.iban || null,
                 taxExemptionCode: values.taxExemptionCode || null,
-                contractNo: values.contractNo || null,
-                contractStart: values.contractStart || null,
-                contractEnd: values.contractEnd || null,
-                note: values.note || null,
-                richNote: values.richNote || null,
+                // Ek bilgi: Notlar çoklu grid olarak tutuluyor (notesJson). API alanı tanımlanırsa burada dönüştürülebilir.
             };
             const res: any = await api.apiCustomersPost(dto);
             const createdId = String(res?.data?.id ?? "");
@@ -243,16 +228,12 @@ export default function CustomerFormPage(): JSX.Element {
                                 onChange={(_, v) => setActiveTab(v)}
                                 sx={{ borderRight: 1, borderColor: 'divider', minWidth: 220 }}
                             >
-                                <Tab label="Sözleşme" />
-                                <Tab label="Diğer" />
                                 <Tab label="Notlar" />
                                 <Tab label="Sosyal Medya" />
                             </Tabs>
                             <Box sx={{ p: 2, flex: 1 }}>
-                                {activeTab === 0 && <ContractSection register={register} errors={errors} />}
-                                {activeTab === 1 && <OtherInfoSection register={register} errors={errors} />}
-                                {activeTab === 2 && <NotesSection register={register} errors={errors} />}
-                                {activeTab === 3 && <SocialMediaSection register={register} errors={errors} />}
+                                {activeTab === 0 && <NotesSection register={register} errors={errors} />}
+                                {activeTab === 1 && <SocialMediaSection register={register} errors={errors} />}
                             </Box>
                         </Box>
                     </DraggableSection>
@@ -260,6 +241,8 @@ export default function CustomerFormPage(): JSX.Element {
             </form>
             <Footer />
         </DashboardLayout>
+
+
     );
 }
 

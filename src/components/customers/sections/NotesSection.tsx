@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import NotesGrid, { NoteRow } from "components/form/NotesGrid";
 
 type Props = {
     register: any;
@@ -6,16 +7,12 @@ type Props = {
 };
 
 export default function NotesSection({ register, errors }: Props): JSX.Element {
+    const [rows, setRows] = useState<NoteRow[]>([]);
     return (
         <div className="grid grid-cols-1 gap-4">
-            <div>
-                <label className="block text-sm font-medium mb-1">Not</label>
-                <textarea {...register("note")} rows={4} className="w-full px-3 py-2 rounded-md border" placeholder="Kısa not" />
-            </div>
-            <div>
-                <label className="block text-sm font-medium mb-1">Zengin Not</label>
-                <textarea {...register("richNote")} rows={6} className="w-full px-3 py-2 rounded-md border font-mono text-xs" placeholder={'<p>Not</p>'} />
-            </div>
+            <NotesGrid label="Notlar" rows={rows} onChange={setRows} />
+            {/* İstenirse form submitte saklamak için */}
+            <input type="hidden" value={JSON.stringify(rows)} {...register("notesJson")} />
         </div>
     );
 }

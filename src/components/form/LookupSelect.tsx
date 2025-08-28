@@ -13,6 +13,7 @@ type LookupSelectProps = {
     placeholder?: string;
     includeInactive?: boolean;
     allowCreate?: boolean; // show create in combobox
+    manualFetch?: boolean; // true ise otomatik fetch yapmaz, açılınca yükler
     disabled?: boolean;
     className?: string;
     inlineLabel?: boolean; // true => label solda, select sağda (SelectInput uyumu)
@@ -36,6 +37,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
     placeholder,
     includeInactive = false,
     allowCreate = false,
+    manualFetch = false,
     disabled = false,
     className,
     inlineLabel,
@@ -57,18 +59,27 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
         return base.filter(i => (i.code || "").toLowerCase().includes(q) || (i.name || "").toLowerCase().includes(q));
     }, [items, includeInactive, inputValue]);
 
-    const fetchItems = async () => {
+    const fetchItems = async (): Promise<LookupItemDto[]> => {
         setLoading(true);
         try {
             const res: any = await api.apiLookupItemsKeyGet(categoryKey);
             const data = (res?.data || []) as LookupItemDto[];
             setItems(data);
+            return data;
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => { fetchItems(); }, [categoryKey]);
+    useEffect(() => {
+        if (manualFetch) {
+            // kategori değişince önceki seçenekleri sıfırla, çağrı yapma
+            setItems([]);
+        } else {
+            fetchItems();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoryKey, manualFetch]);
 
     const shouldOfferCreate = useMemo(() => {
         if (!allowCreate) return false;
@@ -114,8 +125,8 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
                 isActive: true,
             });
             // Sunucudan güncel listeyi çek ve eklenen öğeyi seç
-            await fetchItems();
-            const created = (items || []).find(i => (i.code || "") === create.code.trim()) || null;
+            const latest = await fetchItems();
+            const created = (latest || []).find(i => (i.code || "") === create.code.trim()) || null;
             onChange(created?.code || create.code.trim(), created || null);
             closeCreateModal();
         } catch (err: any) {
@@ -137,6 +148,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
             size="small"
             openOnFocus
             disablePortal
+            onOpen={() => { if (manualFetch && items.length === 0) { void fetchItems(); } }}
             renderOption={(props, option) => (
                 <li {...props} style={{ display: "flex", alignItems: "center", padding: "6px 12px" }}>
                     <div>

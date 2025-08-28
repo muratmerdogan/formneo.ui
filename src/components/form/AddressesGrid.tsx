@@ -65,7 +65,7 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                                 <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isShipping} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isShipping: e.target.checked } : x))} disabled={disabled} /></td>
                                 <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled} /></td>
                                 <td className="px-3 py-2 border-b text-right">
-                                    <button className="h-8 px-2 rounded-md border bg-rose-600 text-white" onClick={() => removeRow(r.id)} disabled={disabled}>Sil</button>
+                                    <button type="button" className="h-8 px-2 rounded-md border bg-rose-600 text-white" onClick={() => removeRow(r.id)} disabled={disabled}>Sil</button>
                                 </td>
                             </tr>
                         ))}
@@ -77,7 +77,7 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
             </div>
             {!disabled && (
                 <div className="mt-2 flex justify-end">
-                    <button className="h-9 px-3 rounded-md border bg-white" onClick={openModal}>+ Adres Ekle</button>
+                    <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={openModal}>+ Adres Ekle</button>
                 </div>
             )}
 
@@ -87,7 +87,7 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                     <div className="relative bg-white rounded-lg shadow-lg w-[92vw] max-w-2xl p-4">
                         <div className="flex items-center justify-between mb-2">
                             <div className="text-base font-semibold">Adres Ekle</div>
-                            <button onClick={closeModal} className="h-8 px-2 rounded-md border">Kapat</button>
+                            <button type="button" onClick={closeModal} className="h-8 px-2 rounded-md border">Kapat</button>
                         </div>
                         {error && <div className="mb-2 p-2 rounded border border-rose-200 bg-rose-50 text-rose-700 text-sm">{error}</div>}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -101,8 +101,8 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isShipping} onChange={(e) => setForm(s => ({ ...s, isShipping: e.target.checked }))} /> Kargo Adresi</label>
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isActive} onChange={(e) => setForm(s => ({ ...s, isActive: e.target.checked }))} /> Aktif</label>
                             <div className="md:col-span-2 flex items-center justify-end gap-2">
-                                <button className="h-9 px-3 rounded-md border bg-white" onClick={closeModal}>İptal</button>
-                                <button className="h-9 px-3 rounded-md border bg-slate-900 text-white" onClick={submit}>Kaydet</button>
+                                <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={closeModal}>İptal</button>
+                                <button type="button" className="h-9 px-3 rounded-md border bg-slate-900 text-white" onClick={submit}>Kaydet</button>
                             </div>
                         </div>
                     </div>

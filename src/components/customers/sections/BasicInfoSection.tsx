@@ -28,6 +28,7 @@ export default function BasicInfoSection({ register, errors, customerTypeValue, 
                 value={sectorsValue || null}
                 onChange={(val) => onSectorsChange && onSectorsChange(val)}
                 allowCreate
+                manualFetch
             />
             <SelectInput label="Durum" name="status" register={register} error={errors?.status?.message} options={[{ value: "active", label: "Aktif" }, { value: "inactive", label: "Pasif" }]} />
             <LookupSelect
@@ -38,6 +39,7 @@ export default function BasicInfoSection({ register, errors, customerTypeValue, 
                 value={customerTypeValue || null}
                 onChange={(val) => onCustomerTypeChange && onCustomerTypeChange(val)}
                 allowCreate
+                manualFetch
             />
             <TextInput label="Vergi Dairesi" name="taxOffice" register={register} error={errors?.taxOffice?.message} placeholder="Vergi dairesi" maxLength={100} />
             <TextInput label="VKN / TC" name="taxNumber" register={register} error={errors?.taxNumber?.message} placeholder="1234567890" maxLength={20} />
