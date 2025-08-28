@@ -19,7 +19,7 @@ import AddressesGrid, { AddressRow } from "components/form/AddressesGrid";
 import PhonesGrid, { PhoneRow } from "components/form/PhonesGrid";
 import NotesSection from "components/customers/sections/NotesSection";
 import SocialMediaSection from "components/customers/sections/SocialMediaSection";
-import { Box, Tabs, Tab } from "@mui/material";
+import { Box, Tabs, Tab, Avatar, Chip, Menu, MenuItem } from "@mui/material";
 import LookupSelect from "components/form/LookupSelect";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import DraggableSection from "components/customers/sections/DraggableSection";
@@ -32,6 +32,8 @@ const schema = z.object({
     customerType: z.string().optional(),
     category: z.string().optional(),
     status: z.enum(["active", "inactive"]),
+    lifecycleStage: z.enum(["lead", "mql", "sql", "opportunity", "customer"]).optional(),
+    ownerId: z.string().optional(),
     sectorsCsv: z.string().optional(),
     isReferenceCustomer: z.boolean().optional(),
     // İletişim
@@ -92,6 +94,8 @@ export default function CustomerFormPage(): JSX.Element {
     );
 
     const [activeTab, setActiveTab] = useState(0);
+    const [ownerAnchor, setOwnerAnchor] = useState<null | HTMLElement>(null);
+    const [owner, setOwner] = useState<{ id: string; name: string; email?: string } | null>(null);
     const [emailRows, setEmailRows] = useState<EmailRow[]>([]);
     const [addressRows, setAddressRows] = useState<AddressRow[]>([]);
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
@@ -181,8 +185,27 @@ export default function CustomerFormPage(): JSX.Element {
             <form onSubmit={handleSubmit(onSubmit)} className="px-6 lg:px-10 py-6 space-y-6">
                 <div className="flex items-start justify-between">
                     <div>
-                        <div className="text-xl font-semibold">{isEdit ? "Müşteri Düzenle" : "Yeni Müşteri"}</div>
+                        <div className="flex items-center gap-3">
+                            <div className="text-xl font-semibold">{isEdit ? "Müşteri Düzenle" : "Yeni Müşteri"}</div>
+                            {/* Owner chip */}
+                            <Chip
+                                avatar={<Avatar sx={{ width: 24, height: 24 }}>{(owner?.name || "").charAt(0) || "U"}</Avatar>}
+                                label={owner?.name || "Sahip atanmamış"}
+                                variant="outlined"
+                                onClick={(e) => setOwnerAnchor(e.currentTarget)}
+                                size="small"
+                            />
+                            <Menu anchorEl={ownerAnchor} open={Boolean(ownerAnchor)} onClose={() => setOwnerAnchor(null)}>
+                                {mockOwners.map(u => (
+                                    <MenuItem key={u.id} onClick={() => { setOwner(u); setValue("ownerId", u.id); setOwnerAnchor(null); }}>{u.name}</MenuItem>
+                                ))}
+                            </Menu>
+                        </div>
                         <div className="text-sm text-slate-500">CustomerInsertDto ile uyumlu alanlar</div>
+                    </div>
+                    {/* Lifecycle Stage pill */}
+                    <div className="flex items-center gap-2">
+                        {lifecyclePill(watch("lifecycleStage"))}
                     </div>
                 </div>
 
@@ -245,5 +268,27 @@ export default function CustomerFormPage(): JSX.Element {
 
     );
 }
+
+function lifecyclePill(stage?: "lead" | "mql" | "sql" | "opportunity" | "customer") {
+    const map: Record<string, { label: string; color: string }> = {
+        lead: { label: "Lead", color: "#64748b" },
+        mql: { label: "MQL", color: "#0ea5e9" },
+        sql: { label: "SQL", color: "#6366f1" },
+        opportunity: { label: "Opportunity", color: "#f59e0b" },
+        customer: { label: "Customer", color: "#10b981" },
+    };
+    const info = stage ? map[stage] : { label: "Stage Yok", color: "#94a3b8" };
+    return (
+        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: `${info.color}1a`, color: info.color }}>
+            {info.label}
+        </span>
+    );
+}
+
+const mockOwners = [
+    { id: "1", name: "Ahmet Yılmaz" },
+    { id: "2", name: "Ayşe Demir" },
+    { id: "3", name: "Mehmet Kaya" },
+];
 
 
