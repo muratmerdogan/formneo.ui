@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo, JSXElementConstructor, Key, ReactElement } from "react";
+import { useState, useEffect, useMemo, JSXElementConstructor, Key, ReactElement, Suspense, lazy } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -55,55 +55,55 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 
 // Images
 
-import NewUser from "layouts/pages/users/new-user";
-import UserDetail from "layouts/pages/users/userDetail/settings/index";
-import ActivityReports from "layouts/pages/reports/activityReports/analytics/index";
-import AllDemos from "layouts/pages/demos/all-projects";
-import Logout from "layouts/authentication/sign-in/cover/Logout";
+const NewUser = lazy(() => import("layouts/pages/users/new-user"));
+const UserDetail = lazy(() => import("layouts/pages/users/userDetail/settings/index"));
+const ActivityReports = lazy(() => import("layouts/pages/reports/activityReports/analytics/index"));
+const AllDemos = lazy(() => import("layouts/pages/demos/all-projects"));
+const Logout = lazy(() => import("layouts/authentication/sign-in/cover/Logout"));
 import PrivateRoute from "layouts/authentication/sign-in/cover/PrivateRoute";
-import Cover from "layouts/authentication/sign-in/cover";
-import AllProjects from "layouts/pages/profile/all-projects";
-import MessagePage from "layouts/applications/chat/MessagePage";
-import MenuList from "layouts/pages/menuDefination/MenuList";
-import MenuDetail from "layouts/pages/menuDefination/MenuDetail";
-import ParametersPage from "layouts/pages/settings/ParametersPage";
-import NotAuthorizationPage from "layouts/pages/notAuthorizationPage";
-import ResetCover from "layouts/authentication/reset-password/cover";
-import Sales from "layouts/dashboards/sales";
-import CustomerSales from "layouts/dashboards/customer";
-import QueryList from "layouts/pages/queryBuild/queryList";
-import QueryDetail from "layouts/pages/queryBuild/queryDetail/queryDetail";
+const Cover = lazy(() => import("layouts/authentication/sign-in/cover"));
+const AllProjects = lazy(() => import("layouts/pages/profile/all-projects"));
+const MessagePage = lazy(() => import("layouts/applications/chat/MessagePage"));
+const MenuList = lazy(() => import("layouts/pages/menuDefination/MenuList"));
+const MenuDetail = lazy(() => import("layouts/pages/menuDefination/MenuDetail"));
+const ParametersPage = lazy(() => import("layouts/pages/settings/ParametersPage"));
+const NotAuthorizationPage = lazy(() => import("layouts/pages/notAuthorizationPage"));
+const ResetCover = lazy(() => import("layouts/authentication/reset-password/cover"));
+const Sales = lazy(() => import("layouts/dashboards/sales"));
+const CustomerSales = lazy(() => import("layouts/dashboards/customer"));
+const QueryList = lazy(() => import("layouts/pages/queryBuild/queryList"));
+const QueryDetail = lazy(() => import("layouts/pages/queryBuild/queryDetail/queryDetail"));
 // import ChatPage from "layouts/applications/chat/chatpage";
-import CalendarPage from "layouts/pages/calendar";
-import CalendarList from "layouts/pages/calendar/list";
-import PositionPage from "layouts/pages/position";
-import PositionDetailPage from "layouts/pages/position/details";
-import OrganizationalChart from "layouts/pages/organizational-chart";
-import FormRoleList from "layouts/pages/FormManagement/form-role/list";
-import FormRoleDetail from "layouts/pages/FormManagement/form-role/detail";
+const CalendarPage = lazy(() => import("layouts/pages/calendar"));
+const CalendarList = lazy(() => import("layouts/pages/calendar/list"));
+const PositionPage = lazy(() => import("layouts/pages/position"));
+const PositionDetailPage = lazy(() => import("layouts/pages/position/details"));
+const OrganizationalChart = lazy(() => import("layouts/pages/organizational-chart"));
+const FormRoleList = lazy(() => import("layouts/pages/FormManagement/form-role/list"));
+const FormRoleDetail = lazy(() => import("layouts/pages/FormManagement/form-role/detail"));
 import { useTranslation } from "react-i18next";
-import CompanyRelation from "layouts/pages/companyRelation";
-import CompanyRelationDetail from "layouts/pages/companyRelation/detail";
-import ProjectChart from "layouts/pages/projectManagement/chart";
-import TicketProjects from "layouts/pages/ticketProjects";
-import CreateTicketProject from "layouts/pages/ticketProjects/createTicketProject";
-import FormAuth from "layouts/pages/FormManagement/FormAuth/FormAuth";
-import FormAuthDetail from "layouts/pages/FormManagement/FormAuth/FormAuthDetail";
-import FormList from "layouts/pages/FormManagement/UsersForm/FormList";
-import ResumeBuild from "layouts/pages/resumeBuilder";
-import MainScreen from "layouts/pages/projectManagement";
-import Inventory from "layouts/pages/inventory";
-import CreateInventory from "layouts/pages/inventory/createInventory";
-import VpnDashboard from "layouts/pages/vpnPage";
-import UserTasks from "layouts/pages/userTasks";
-import UserProjects from "layouts/pages/userProjects";
-import KanbanPage from "layouts/pages/kanban";
-import TicketProjectProgress from "layouts/pages/ticketProjectProgress";
-import CustomerList from "layouts/pages/customer";
-import CustomerDetail from "layouts/pages/customer/detail";
-import CustomersPage from "pages/customers/CustomersPage";
-import CustomerDashboardPage from "pages/customer/CustomerDashboardPage";
-import CustomerFormPage from "pages/customer/CustomerFormPage";
+const CompanyRelation = lazy(() => import("layouts/pages/companyRelation"));
+const CompanyRelationDetail = lazy(() => import("layouts/pages/companyRelation/detail"));
+const ProjectChart = lazy(() => import("layouts/pages/projectManagement/chart"));
+const TicketProjects = lazy(() => import("layouts/pages/ticketProjects"));
+const CreateTicketProject = lazy(() => import("layouts/pages/ticketProjects/createTicketProject"));
+const FormAuth = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuth"));
+const FormAuthDetail = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuthDetail"));
+const FormList = lazy(() => import("layouts/pages/FormManagement/UsersForm/FormList"));
+const ResumeBuild = lazy(() => import("layouts/pages/resumeBuilder"));
+const MainScreen = lazy(() => import("layouts/pages/projectManagement"));
+const Inventory = lazy(() => import("layouts/pages/inventory"));
+const CreateInventory = lazy(() => import("layouts/pages/inventory/createInventory"));
+const VpnDashboard = lazy(() => import("layouts/pages/vpnPage"));
+const UserTasks = lazy(() => import("layouts/pages/userTasks"));
+const UserProjects = lazy(() => import("layouts/pages/userProjects"));
+const KanbanPage = lazy(() => import("layouts/pages/kanban"));
+const TicketProjectProgress = lazy(() => import("layouts/pages/ticketProjectProgress"));
+const CustomerList = lazy(() => import("layouts/pages/customer"));
+const CustomerDetail = lazy(() => import("layouts/pages/customer/detail"));
+const CustomersPage = lazy(() => import("pages/customers/CustomersPage"));
+const CustomerDashboardPage = lazy(() => import("pages/customer/CustomerDashboardPage"));
+const CustomerFormPage = lazy(() => import("pages/customer/CustomerFormPage"));
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
@@ -227,77 +227,79 @@ export default function App() {
       {layout === "vr" && <Configurator />}
 
       <ActionBarProvider>
-        <Routes>
-          {/* Login Sayfası (Herkese Açık) */}
-          <Route path="/authentication/sign-in/cover" element={<Cover />} />
-          <Route path="/LogOut" element={<Logout />} />
-          <Route path="/authentication/reset-password" element={<ResetCover />} />
-          <Route path="/tickets/customer" element={<CustomerSales />} />
-          {/* Private Routes */}
-          <Route element={<PrivateRoute />}>
-            {getRoutes(routes)} {/* Tüm özel rotaları ekler */}
-            <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
-            <Route path="/users/detail" element={<UserDetail />} />
-            <Route path="/ActivityReports" element={<ActivityReports />} />
-            <Route path="/Messages" element={<MessagePage />} />
-            <Route path="/Menus" element={<MenuList />} />
-            <Route path="/MenuDetail" element={<MenuDetail />} />
-            <Route path="/parameters" element={<ParametersPage />} />
-            {/* <Route path="/mmessages" element={<ChatPage />} /> */}
-          </Route>
+        <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
+          <Routes>
+            {/* Login Sayfası (Herkese Açık) */}
+            <Route path="/authentication/sign-in/cover" element={<Cover />} />
+            <Route path="/LogOut" element={<Logout />} />
+            <Route path="/authentication/reset-password" element={<ResetCover />} />
+            <Route path="/tickets/customer" element={<CustomerSales />} />
+            {/* Private Routes */}
+            <Route element={<PrivateRoute />}>
+              {getRoutes(routes)} {/* Tüm özel rotaları ekler */}
+              <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+              <Route path="/users/detail" element={<UserDetail />} />
+              <Route path="/ActivityReports" element={<ActivityReports />} />
+              <Route path="/Messages" element={<MessagePage />} />
+              <Route path="/Menus" element={<MenuList />} />
+              <Route path="/MenuDetail" element={<MenuDetail />} />
+              <Route path="/parameters" element={<ParametersPage />} />
+              {/* <Route path="/mmessages" element={<ChatPage />} /> */}
+            </Route>
 
-          <Route path="/pages/demos/alldemos" element={<AllDemos />} />
-          <Route path="/tickets/statistic" element={<Sales />} />
-          <Route path="/queryBuild" element={<QueryList />} />
-          <Route path="/queryBuild/detail" element={<QueryDetail />} />
-          <Route path="/queryBuild/detail/:id" element={<QueryDetail />} />
-          <Route path="/calendar" element={<CalendarList />} />
-          <Route path="/calendar/detail" element={<CalendarPage />} />
-          <Route path="/calendar/detail/:id" element={<CalendarPage />} />
-          <Route path="/position" element={<PositionPage />} />
-          <Route path="/position/detail" element={<PositionDetailPage />} />
-          <Route path="/position/detail/:id" element={<PositionDetailPage />} />
-          <Route path="/organizationalChart" element={<OrganizationalChart />} />
-          <Route path="/form-role" element={<FormRoleList />} />
-          <Route path="/form-role/detail" element={<FormRoleDetail />} />
-          <Route path="/form-role/detail/:id" element={<FormRoleDetail />} />
-          <Route path="/NotAuthorization" element={<NotAuthorizationPage />} />
-          <Route path="/companyRelation" element={<CompanyRelation />} />
-          <Route path="/companyRelation/detail" element={<CompanyRelationDetail />} />
-          <Route path="/companyRelation/detail/:id" element={<CompanyRelationDetail />} />
-          <Route path="/projectManagement" element={<MainScreen />} />
-          <Route path="/projectManagement/chart" element={<ProjectChart />} />
-          <Route path="/ticketProjects" element={<TicketProjects />} />
-          <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
-          <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/inventory/detail" element={<CreateInventory />} />
-          <Route path="/inventory/detail/:id" element={<CreateInventory />} />
-          <Route path="/resumeBuild" element={<ResumeBuild />} />
-          <Route path="/userTasks" element={<UserTasks />} />
-          <Route path="/userProjects" element={<UserProjects />} />
-          <Route path="/vpn" element={<VpnDashboard />} />
-          <Route path="/kanban" element={<KanbanPage />} />
-          <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
+            <Route path="/pages/demos/alldemos" element={<AllDemos />} />
+            <Route path="/tickets/statistic" element={<Sales />} />
+            <Route path="/queryBuild" element={<QueryList />} />
+            <Route path="/queryBuild/detail" element={<QueryDetail />} />
+            <Route path="/queryBuild/detail/:id" element={<QueryDetail />} />
+            <Route path="/calendar" element={<CalendarList />} />
+            <Route path="/calendar/detail" element={<CalendarPage />} />
+            <Route path="/calendar/detail/:id" element={<CalendarPage />} />
+            <Route path="/position" element={<PositionPage />} />
+            <Route path="/position/detail" element={<PositionDetailPage />} />
+            <Route path="/position/detail/:id" element={<PositionDetailPage />} />
+            <Route path="/organizationalChart" element={<OrganizationalChart />} />
+            <Route path="/form-role" element={<FormRoleList />} />
+            <Route path="/form-role/detail" element={<FormRoleDetail />} />
+            <Route path="/form-role/detail/:id" element={<FormRoleDetail />} />
+            <Route path="/NotAuthorization" element={<NotAuthorizationPage />} />
+            <Route path="/companyRelation" element={<CompanyRelation />} />
+            <Route path="/companyRelation/detail" element={<CompanyRelationDetail />} />
+            <Route path="/companyRelation/detail/:id" element={<CompanyRelationDetail />} />
+            <Route path="/projectManagement" element={<MainScreen />} />
+            <Route path="/projectManagement/chart" element={<ProjectChart />} />
+            <Route path="/ticketProjects" element={<TicketProjects />} />
+            <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
+            <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/inventory/detail" element={<CreateInventory />} />
+            <Route path="/inventory/detail/:id" element={<CreateInventory />} />
+            <Route path="/resumeBuild" element={<ResumeBuild />} />
+            <Route path="/userTasks" element={<UserTasks />} />
+            <Route path="/userProjects" element={<UserProjects />} />
+            <Route path="/vpn" element={<VpnDashboard />} />
+            <Route path="/kanban" element={<KanbanPage />} />
+            <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
 
-          <Route path="/customer" element={<CustomerList />} />
-          <Route path="/customer/detail" element={<CustomerDetail />} />
-          <Route path="/customer/detail/:id" element={<CustomerDetail />} />
+            <Route path="/customer" element={<CustomerList />} />
+            <Route path="/customer/detail" element={<CustomerDetail />} />
+            <Route path="/customer/detail/:id" element={<CustomerDetail />} />
 
-          <Route path="/customers" element={<CustomersPage />} />
-          <Route path="/customers/new" element={<CustomerFormPage />} />
-          <Route path="/customers/:id" element={<CustomerDashboardPage />} />
-          <Route path="/customers/:id/edit" element={<CustomerFormPage />} />
+            <Route path="/customers" element={<CustomersPage />} />
+            <Route path="/customers/new" element={<CustomerFormPage />} />
+            <Route path="/customers/:id" element={<CustomerDashboardPage />} />
+            <Route path="/customers/:id/edit" element={<CustomerFormPage />} />
 
-          <Route path="/formAuth" element={<FormAuth />} />
-          <Route path="/formAuth/detail" element={<FormAuthDetail />} />
-          <Route path="/formAuth/detail/:id" element={<FormAuthDetail />} />
+            <Route path="/formAuth" element={<FormAuth />} />
+            <Route path="/formAuth/detail" element={<FormAuthDetail />} />
+            <Route path="/formAuth/detail/:id" element={<FormAuthDetail />} />
 
-          <Route path="/formlist/:formId" element={<FormList />} />
+            <Route path="/formlist/:formId" element={<FormList />} />
 
-          {/* Tüm Eşleşmeyen URL'ler için Yönlendirme */}
-          {/* <Route path="*" element={<Navigate to="/dashboards/analytics" replace />} /> */}
-        </Routes>
+            {/* Tüm Eşleşmeyen URL'ler için Yönlendirme */}
+            {/* <Route path="*" element={<Navigate to="/dashboards/analytics" replace />} /> */}
+          </Routes>
+        </Suspense>
       </ActionBarProvider>
     </ThemeProvider>
   );

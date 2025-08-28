@@ -7,6 +7,8 @@ import { LookupApi, LookupCategoryDto, LookupItemDto } from "api/generated";
 
 export default function LookupAdminPage(): JSX.Element {
     const [categories, setCategories] = useState<LookupCategoryDto[]>([]);
+    const [moduleOptions, setModuleOptions] = useState<{ id: string; name: string }[]>([]);
+    const [treeExpanded, setTreeExpanded] = useState<Record<string, boolean>>({});
     const [categoryFilter, setCategoryFilter] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<LookupCategoryDto | undefined>(undefined);
     const [items, setItems] = useState<LookupItemDto[]>([]);
@@ -29,6 +31,20 @@ export default function LookupAdminPage(): JSX.Element {
 
     const api = useMemo(() => new LookupApi(getConfiguration()), []);
 
+    const fetchModuleOptions = async () => {
+        try {
+            // Not: Burada idealde ayrı Module API kullanılmalı.
+            // Şimdilik kategorilerden benzersiz moduleId'leri çıkarıp placeholder isim üretiyoruz.
+            const res: any = await api.apiLookupCategoriesGet();
+            const data = (res?.data || []) as LookupCategoryDto[];
+            const ids = Array.from(new Set((data || []).map(d => (d.moduleId || '').trim()).filter(Boolean)));
+            const opts = ids.map((id) => ({ id, name: id }));
+            setModuleOptions(opts);
+        } catch (e: any) {
+            setError(e?.message || "Modüller yüklenirken hata oluştu");
+        }
+    };
+
     const fetchCategories = async () => {
         try {
             setIsLoadingCats(true);
@@ -37,6 +53,7 @@ export default function LookupAdminPage(): JSX.Element {
             const data = (res?.data || []) as LookupCategoryDto[];
             setCategories(data);
             if (!selectedCategory && data.length > 0) setSelectedCategory(data[0]);
+            if (selectedCategory && !data.find(d => d.id === selectedCategory.id)) setSelectedCategory(data[0]);
         } catch (e: any) {
             setError(e?.message || "Kategoriler yüklenirken hata oluştu");
         } finally {
@@ -59,6 +76,7 @@ export default function LookupAdminPage(): JSX.Element {
         }
     };
 
+    useEffect(() => { fetchModuleOptions(); }, []);
     useEffect(() => { fetchCategories(); }, []);
     useEffect(() => { fetchItemsByKey(selectedCategory?.key ?? null); }, [selectedCategory?.key]);
 
@@ -72,9 +90,11 @@ export default function LookupAdminPage(): JSX.Element {
                 description: (catForm.description || "").trim(),
                 isTenantScoped: Boolean(catForm.isTenantScoped),
                 isReadOnly: Boolean(catForm.isReadOnly),
+                moduleId: (catForm.moduleId || '').trim() || undefined,
             };
             await api.apiLookupCategoriesPost(payload as any);
             setCatForm({ key: "", description: "", isTenantScoped: false, isReadOnly: false });
+            await fetchModuleOptions();
             await fetchCategories();
             // Yeni oluşturulan kategoriyi seçmeye çalış
             const created = categories.find(c => c.key === payload.key);
@@ -84,6 +104,42 @@ export default function LookupAdminPage(): JSX.Element {
             setError(e?.message || "Kategori oluşturulamadı");
         } finally {
             setIsSubmittingCat(false);
+        }
+    };
+
+    const onUpdateCategory = async () => {
+        if (!catForm.id) return;
+        try {
+            setIsSubmittingCat(true);
+            setError(null);
+            const payload: LookupCategoryDto = {
+                key: (catForm.key || '').trim(),
+                description: (catForm.description || "").trim(),
+                isTenantScoped: Boolean(catForm.isTenantScoped),
+                isReadOnly: Boolean(catForm.isReadOnly),
+                moduleId: (catForm.moduleId || '').trim() || undefined,
+            };
+            await api.apiLookupCategoriesIdPut(catForm.id as string, payload as any);
+            await fetchModuleOptions();
+            await fetchCategories();
+            setCatModalOpen(false);
+        } catch (e: any) {
+            setError(e?.message || "Kategori güncellenemedi");
+        } finally {
+            setIsSubmittingCat(false);
+        }
+    };
+
+    const onDeleteCategory = async (id?: string) => {
+        if (!id) return;
+        if (!window.confirm('Kategoriyi silmek istediğinize emin misiniz?')) return;
+        try {
+            setError(null);
+            await api.apiLookupCategoriesIdDelete(id);
+            await fetchModuleOptions();
+            await fetchCategories();
+        } catch (e: any) {
+            setError(e?.message || "Kategori silinemedi");
         }
     };
 
@@ -109,6 +165,40 @@ export default function LookupAdminPage(): JSX.Element {
             setError(e?.message || "Öğe oluşturulamadı");
         } finally {
             setIsSubmittingItem(false);
+        }
+    };
+
+    const onUpdateItem = async () => {
+        if (!itemForm.id) return;
+        try {
+            setIsSubmittingItem(true);
+            setError(null);
+            const payload: LookupItemDto = {
+                code: (itemForm.code || '').trim(),
+                name: (itemForm.name || '').trim(),
+                orderNo: itemForm.orderNo ?? 0,
+                isActive: Boolean(itemForm.isActive),
+                externalKey: itemForm.externalKey ? itemForm.externalKey.trim() : undefined,
+            };
+            await api.apiLookupItemsIdPut(itemForm.id as string, payload as any);
+            await fetchItemsByKey(selectedCategory?.key ?? null);
+            setItemModalOpen(false);
+        } catch (e: any) {
+            setError(e?.message || "Öğe güncellenemedi");
+        } finally {
+            setIsSubmittingItem(false);
+        }
+    };
+
+    const onDeleteItem = async (id?: string) => {
+        if (!id) return;
+        if (!window.confirm('Öğeyi silmek istediğinize emin misiniz?')) return;
+        try {
+            setError(null);
+            await api.apiLookupItemsIdDelete(id);
+            await fetchItemsByKey(selectedCategory?.key ?? null);
+        } catch (e: any) {
+            setError(e?.message || "Öğe silinemedi");
         }
     };
 
@@ -153,46 +243,63 @@ export default function LookupAdminPage(): JSX.Element {
                 )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Sol: Kategoriler */}
+                    {/* Sol: Modül > Kategori Ağacı */}
                     <section className="lg:col-span-1">
                         <div className="p-3 rounded-xl border bg-white shadow-sm">
                             <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm font-medium text-slate-700">Kategoriler</div>
-                                <button onClick={() => { setIsEditCat(false); setCatForm({ key: "", description: "", isTenantScoped: false, isReadOnly: false }); setCatModalOpen(true); }} className="h-8 px-3 rounded-md border bg-slate-900 text-white">Yeni</button>
+                                <div className="text-sm font-medium text-slate-700">Modüller</div>
+                                <div className="flex items-center gap-2">
+                                    <button onClick={() => {
+                                        const id = prompt('Yeni modül anahtarı (ör. customer)');
+                                        if (id && id.trim()) {
+                                            const exists = moduleOptions.some(m => m.id === id.trim());
+                                            if (!exists) setModuleOptions(prev => [...prev, { id: id.trim(), name: id.trim() }]);
+                                        }
+                                    }} className="h-8 px-3 rounded-md border bg-slate-900 text-white">Yeni Modül</button>
+                                </div>
                             </div>
-                            <input placeholder="Ara..." value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="w-full h-9 px-3 rounded-md border mb-2" />
+                            <input placeholder="Kategori ara..." value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="w-full h-9 px-3 rounded-md border mb-2" />
                             <div className="space-y-2 max-h-[520px] overflow-auto">
                                 {isLoadingCats && <div className="text-sm text-slate-500">Yükleniyor…</div>}
-                                {!isLoadingCats && filteredCategories.length === 0 && (
-                                    <div className="text-sm text-slate-500">Kategori bulunamadı</div>
-                                )}
-                                {!isLoadingCats && pagedCategories.map((c) => (
-                                    <div key={c.id || c.key!} className={`w-full px-3 py-2 rounded-lg border transition ${selectedCategory?.id === c.id || selectedCategory?.key === c.key ? "bg-slate-900 text-white" : "bg-white hover:bg-slate-50"}`}>
-                                        <div className="flex items-start justify-between gap-2">
-                                            <button onClick={() => setSelectedCategory(c)} className="text-left flex-1">
-                                                <div className="text-sm font-medium">{c.key}</div>
-                                                {c.description && <div className="text-xs opacity-70">{c.description}</div>}
-                                                <div className="text-[10px] opacity-60 mt-1">Tenant Scoped: {c.isTenantScoped ? "Evet" : "Hayır"} • ReadOnly: {c.isReadOnly ? "Evet" : "Hayır"}</div>
-                                            </button>
-                                            <div className="shrink-0 flex items-center gap-1">
-                                                <button title="Düzenle (API PUT yok)" onClick={() => { setIsEditCat(true); setCatForm({ id: c.id, key: c.key, description: c.description, isTenantScoped: c.isTenantScoped, isReadOnly: c.isReadOnly }); setCatModalOpen(true); }} className="h-7 px-2 text-xs rounded-md border" disabled>
-                                                    Düzenle
-                                                </button>
-                                                <button title="Sil (API DELETE yok)" className="h-7 px-2 text-xs rounded-md border text-rose-600" disabled>
-                                                    Sil
-                                                </button>
+                                {!isLoadingCats && (
+                                    (() => {
+                                        const moduleIdsInCats = Array.from(new Set((categories || []).map(c => (c.moduleId || '').trim()).filter(Boolean)));
+                                        const allMods = Array.from(new Set([...(moduleOptions || []).map(m => m.id), ...moduleIdsInCats]));
+                                        return allMods.map(modId => (
+                                            <div key={modId} className="rounded-lg border">
+                                                <div className="flex items-center justify-between px-3 py-2 bg-slate-50 rounded-t-lg">
+                                                    <button className="text-left flex-1" onClick={() => setTreeExpanded(prev => ({ ...prev, [modId]: !prev[modId] }))}>
+                                                        <div className="text-sm font-medium">{modId}</div>
+                                                    </button>
+                                                    <div className="shrink-0 flex items-center gap-2">
+                                                        <button onClick={() => { setIsEditCat(false); setCatForm({ key: "", description: "", isTenantScoped: false, isReadOnly: false, moduleId: modId }); setCatModalOpen(true); }} className="h-7 px-2 text-xs rounded-md border">Yeni Kategori</button>
+                                                    </div>
+                                                </div>
+                                                {treeExpanded[modId] && (
+                                                    <div className="p-2 space-y-2">
+                                                        {filteredCategories.filter(c => (c.moduleId || '').trim() === modId).map((c) => (
+                                                            <div key={c.id || c.key!} className={`w-full px-3 py-2 rounded-md border transition ${selectedCategory?.id === c.id ? 'bg-slate-900 text-white' : 'bg-white hover:bg-slate-50'}`}>
+                                                                <div className="flex items-start justify-between gap-2">
+                                                                    <button onClick={() => setSelectedCategory(c)} className="text-left flex-1">
+                                                                        <div className="text-sm font-medium">{c.key}</div>
+                                                                        {c.description && <div className="text-xs opacity-70">{c.description}</div>}
+                                                                    </button>
+                                                                    <div className="shrink-0 flex items-center gap-1">
+                                                                        <button title="Düzenle" onClick={() => { setIsEditCat(true); setCatForm({ id: c.id, key: c.key, description: c.description, isTenantScoped: c.isTenantScoped, isReadOnly: c.isReadOnly, moduleId: c.moduleId }); setCatModalOpen(true); }} className="h-7 px-2 text-xs rounded-md border">Düzenle</button>
+                                                                        <button title="Sil" onClick={() => onDeleteCategory(c.id)} className="h-7 px-2 text-xs rounded-md border text-rose-600">Sil</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                        {filteredCategories.filter(c => (c.moduleId || '').trim() === modId).length === 0 && (
+                                                            <div className="text-xs text-slate-500 px-2 py-1">Kategori yok</div>
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex items-center justify-between mt-2 text-xs text-slate-600">
-                                <div>Toplam: {filteredCategories.length}</div>
-                                <div className="flex items-center gap-2">
-                                    <button onClick={() => setCategoryPage((p) => Math.max(0, p - 1))} disabled={categoryPage === 0} className="h-7 px-2 rounded-md border disabled:opacity-50">Önceki</button>
-                                    <div>Sayfa {categoryPage + 1} / {Math.max(1, Math.ceil(filteredCategories.length / categoryPageSize))}</div>
-                                    <button onClick={() => setCategoryPage((p) => (p + 1 < Math.ceil(filteredCategories.length / categoryPageSize) ? p + 1 : p))} disabled={(categoryPage + 1) >= Math.ceil(filteredCategories.length / categoryPageSize)} className="h-7 px-2 rounded-md border disabled:opacity-50">Sonraki</button>
-                                </div>
+                                        ));
+                                    })()
+                                )}
                             </div>
                         </div>
                     </section>
@@ -237,10 +344,10 @@ export default function LookupAdminPage(): JSX.Element {
                                                     <td className="py-2 pr-3">{it.externalKey || "-"}</td>
                                                     <td className="py-2 pr-3">
                                                         <div className="flex items-center justify-end gap-2">
-                                                            <button title="Düzenle (API PUT yok)" onClick={() => { setIsEditItem(true); setItemForm({ ...it }); setItemModalOpen(true); }} className="h-7 px-2 text-xs rounded-md border" disabled>
+                                                            <button title="Düzenle" onClick={() => { setIsEditItem(true); setItemForm({ ...it }); setItemModalOpen(true); }} className="h-7 px-2 text-xs rounded-md border">
                                                                 Düzenle
                                                             </button>
-                                                            <button title="Sil (API DELETE yok)" className="h-7 px-2 text-xs rounded-md border text-rose-600" disabled>
+                                                            <button title="Sil" onClick={() => onDeleteItem(it.id)} className="h-7 px-2 text-xs rounded-md border text-rose-600">
                                                                 Sil
                                                             </button>
                                                         </div>
@@ -270,10 +377,14 @@ export default function LookupAdminPage(): JSX.Element {
                                     <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(catForm.isTenantScoped)} onChange={(e) => setCatForm({ ...catForm, isTenantScoped: e.target.checked })} /> Tenant Scoped</label>
                                     <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(catForm.isReadOnly)} onChange={(e) => setCatForm({ ...catForm, isReadOnly: e.target.checked })} /> Read Only</label>
                                 </div>
+                                <select value={catForm.moduleId || ""} onChange={(e) => setCatForm({ ...catForm, moduleId: e.target.value })} className="w-full h-9 px-3 rounded-md border">
+                                    <option value="">Modül seçin</option>
+                                    {moduleOptions.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
+                                </select>
                                 <div className="flex gap-2 justify-end pt-2">
                                     <button onClick={() => setCatModalOpen(false)} className="h-9 px-3 rounded-md border">İptal</button>
                                     {!isEditCat && <button onClick={onCreateCategory} disabled={isSubmittingCat} className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Kaydet</button>}
-                                    {isEditCat && <button title="Güncelleme için API PUT gerekli" disabled className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Güncelle</button>}
+                                    {isEditCat && <button onClick={onUpdateCategory} disabled={isSubmittingCat} className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Güncelle</button>}
                                 </div>
                             </div>
                         </div>
@@ -300,7 +411,7 @@ export default function LookupAdminPage(): JSX.Element {
                                 <div className="flex gap-2 justify-end pt-2">
                                     <button onClick={() => setItemModalOpen(false)} className="h-9 px-3 rounded-md border">İptal</button>
                                     {!isEditItem && <button onClick={onCreateItem} disabled={!selectedCategory || isSubmittingItem} className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Kaydet</button>}
-                                    {isEditItem && <button title="Güncelleme için API PUT gerekli" disabled className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Güncelle</button>}
+                                    {isEditItem && <button onClick={onUpdateItem} disabled={isSubmittingItem} className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50">Güncelle</button>}
                                 </div>
                             </div>
                         </div>

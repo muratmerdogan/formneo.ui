@@ -35,37 +35,38 @@ Coded by www.creative-tim.com
   10. The `component` key is used to store the component of its route.
 */
 
-// Material Dashboard 2 PRO React layouts
-import Analytics from "layouts/dashboards/analytics";
-import Sales from "layouts/dashboards/sales";
-import ProfileOverview from "layouts/pages/profile/profile-overview";
-import AllProjects from "layouts/pages/profile/all-projects";
-import NewUser from "layouts/pages/users/new-user";
-import ListUser from "layouts/pages/users/list-user";
+import { lazy } from "react";
+// Material Dashboard 2 PRO React layouts (lazy loaded)
+const Analytics = lazy(() => import("layouts/dashboards/analytics"));
+const Sales = lazy(() => import("layouts/dashboards/sales"));
+const ProfileOverview = lazy(() => import("layouts/pages/profile/profile-overview"));
+const AllProjects = lazy(() => import("layouts/pages/profile/all-projects"));
+const NewUser = lazy(() => import("layouts/pages/users/new-user"));
+const ListUser = lazy(() => import("layouts/pages/users/list-user"));
 
-import Billing from "layouts/pages/account/billing";
-import Invoice from "layouts/pages/account/invoice";
-import Timeline from "layouts/pages/projects/timeline";
-import PricingPage from "layouts/pages/pricing-page";
-import Widgets from "layouts/pages/widgets";
-import RTL from "layouts/pages/rtl";
-import Charts from "layouts/pages/charts";
-import Notifications from "layouts/pages/notifications";
-import Kanban from "layouts/applications/kanban";
-import Wizard from "layouts/applications/wizard";
+const Billing = lazy(() => import("layouts/pages/account/billing"));
+const Invoice = lazy(() => import("layouts/pages/account/invoice"));
+const Timeline = lazy(() => import("layouts/pages/projects/timeline"));
+const PricingPage = lazy(() => import("layouts/pages/pricing-page"));
+const Widgets = lazy(() => import("layouts/pages/widgets"));
+const RTL = lazy(() => import("layouts/pages/rtl"));
+const Charts = lazy(() => import("layouts/pages/charts"));
+const Notifications = lazy(() => import("layouts/pages/notifications"));
+const Kanban = lazy(() => import("layouts/applications/kanban"));
+const Wizard = lazy(() => import("layouts/applications/wizard"));
 
-import Calendar from "layouts/applications/calendar";
-import NewProduct from "layouts/ecommerce/products/new-product";
-import EditProduct from "layouts/ecommerce/products/edit-product";
-import ProductPage from "layouts/ecommerce/products/product-page";
-import OrderList from "layouts/ecommerce/orders/order-list";
-import OrderDetails from "layouts/ecommerce/orders/order-details";
-import SignInBasic from "layouts/authentication/sign-in/basic";
-import SignInCover from "layouts/authentication/sign-in/cover";
-import SignInIllustration from "layouts/authentication/sign-in/illustration";
-import SignUpCover from "layouts/authentication/sign-up/cover";
-import ResetCover from "layouts/authentication/reset-password/cover";
-import TenantSelect from "layouts/authentication/tenant-select";
+const Calendar = lazy(() => import("layouts/applications/calendar"));
+const NewProduct = lazy(() => import("layouts/ecommerce/products/new-product"));
+const EditProduct = lazy(() => import("layouts/ecommerce/products/edit-product"));
+const ProductPage = lazy(() => import("layouts/ecommerce/products/product-page"));
+const OrderList = lazy(() => import("layouts/ecommerce/orders/order-list"));
+const OrderDetails = lazy(() => import("layouts/ecommerce/orders/order-details"));
+const SignInBasic = lazy(() => import("layouts/authentication/sign-in/basic"));
+const SignInCover = lazy(() => import("layouts/authentication/sign-in/cover"));
+const SignInIllustration = lazy(() => import("layouts/authentication/sign-in/illustration"));
+const SignUpCover = lazy(() => import("layouts/authentication/sign-up/cover"));
+const ResetCover = lazy(() => import("layouts/authentication/reset-password/cover"));
+const TenantSelect = lazy(() => import("layouts/authentication/tenant-select"));
 
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
@@ -76,58 +77,58 @@ import Icon from "@mui/material/Icon";
 // Images
 import profilePicture from "assets/images/team-3.jpg";
 import { useUser } from "layouts/pages/hooks/userName";
-import Logout from "layouts/authentication/sign-in/cover/Logout";
-import EditProject from "layouts/pages/profile/all-projects/edit-product";
-import TalepOlustur from "layouts/pages/talepYonetimi/createTicket";
-import CreateRequest from "layouts/pages/talepYonetimi/createTicket";
-import AllTickets from "layouts/pages/talepYonetimi/allTickets";
-import Departmens from "layouts/pages/users/departments";
-import CreateDepartment from "layouts/pages/users/departments/createDepartment";
-import MenuList from "layouts/pages/menuDefination/MenuList";
-import MenuDetail from "layouts/pages/menuDefination/MenuDetail";
-import ListForm from "layouts/pages/FormManagement/listForm";
-import CreateForm from "layouts/pages/FormManagement/ParamtetersDefination";
-import ParameterEdit from "layouts/pages/FormManagement/ParameterEdit";
+const Logout = lazy(() => import("layouts/authentication/sign-in/cover/Logout"));
+const EditProject = lazy(() => import("layouts/pages/profile/all-projects/edit-product"));
+const TalepOlustur = lazy(() => import("layouts/pages/talepYonetimi/createTicket"));
+const CreateRequest = lazy(() => import("layouts/pages/talepYonetimi/createTicket"));
+const AllTickets = lazy(() => import("layouts/pages/talepYonetimi/allTickets"));
+const Departmens = lazy(() => import("layouts/pages/users/departments"));
+const CreateDepartment = lazy(() => import("layouts/pages/users/departments/createDepartment"));
+const MenuList = lazy(() => import("layouts/pages/menuDefination/MenuList"));
+const MenuDetail = lazy(() => import("layouts/pages/menuDefination/MenuDetail"));
+const ListForm = lazy(() => import("layouts/pages/FormManagement/listForm"));
+const CreateForm = lazy(() => import("layouts/pages/FormManagement/ParamtetersDefination"));
+const ParameterEdit = lazy(() => import("layouts/pages/FormManagement/ParameterEdit"));
 
-import UserFormList from "layouts/pages/FormManagement/UsersForm/UserForms";
+const UserFormList = lazy(() => import("layouts/pages/FormManagement/UsersForm/UserForms"));
 
-import Teams from "layouts/pages/teams";
-import CreateTeams from "layouts/pages/teams/createTeam";
+const Teams = lazy(() => import("layouts/pages/teams"));
+const CreateTeams = lazy(() => import("layouts/pages/teams/createTeam"));
 
 
-import RolesDefination from "layouts/pages/roles/RoleList";
-import RoleScreenDefination from "layouts/pages/roles/RoleScreen";
-import RolesList from "layouts/pages/roles/RoleList";
-import NotAuthorizationPage from "layouts/pages/notAuthorizationPage";
-import DataTables from "layouts/pages/users/list-user";
-import Settings from "layouts/pages/users/userDetail/settings";
-import WorkCompanyCE from "layouts/pages/workCompany/ce";
-import WorkCompany from "layouts/pages/workCompany";
-import WorkCompanySystem from "layouts/pages/workCompanySystem";
-import WorkCompanySystemCE from "layouts/pages/workCompanySystem/ce";
-import SolveTicket from "layouts/pages/talepYonetimi/solveTicket";
-import SolveAllTicket from "layouts/pages/talepYonetimi/solveAllTicket";
+const RolesDefination = lazy(() => import("layouts/pages/roles/RoleList"));
+const RoleScreenDefination = lazy(() => import("layouts/pages/roles/RoleScreen"));
+const RolesList = lazy(() => import("layouts/pages/roles/RoleList"));
+const NotAuthorizationPage = lazy(() => import("layouts/pages/notAuthorizationPage"));
+const DataTables = lazy(() => import("layouts/pages/users/list-user"));
+const Settings = lazy(() => import("layouts/pages/users/userDetail/settings"));
+const WorkCompanyCE = lazy(() => import("layouts/pages/workCompany/ce"));
+const WorkCompany = lazy(() => import("layouts/pages/workCompany"));
+const WorkCompanySystem = lazy(() => import("layouts/pages/workCompanySystem"));
+const WorkCompanySystemCE = lazy(() => import("layouts/pages/workCompanySystem/ce"));
+const SolveTicket = lazy(() => import("layouts/pages/talepYonetimi/solveTicket"));
+const SolveAllTicket = lazy(() => import("layouts/pages/talepYonetimi/solveAllTicket"));
 
-import WorkFlowList from "layouts/pages/WorkFlow/WorkFlowList";
-import WorkFlowDetail from "layouts/pages/WorkFlow/WorkFlowDetail.jsx";
-import ApproveList from "layouts/pages/WorkFlow/ApproveList";
-import ParameterView from "layouts/pages/FormManagement/listForm/ParameterView";
-import TenantsList from "layouts/pages/tenants/index";
-import TenantDetail from "layouts/pages/tenants/detail";
-import TenantsManagement from "layouts/pages/tenants/tenantsmanagement";
-import TenantRoles from "layouts/pages/tenants/tenantsmanagement/roles";
-import TenantUsers from "layouts/pages/tenants/tenantsmanagement/users";
-import TenantPermissions from "layouts/pages/tenants/tenantsmanagement/permissions";
-import TenantRolesDetail from "layouts/pages/tenantroles/detail";
-import TenantUsersForTenant from "layouts/pages/tenants/users";
-import SuccessFactorsHome from "layouts/pages/successfactors";
-import ParametersPage from "layouts/pages/settings/ParametersPage";
-import ParametersAdminPage from "layouts/pages/settings/ParametersAdminPage";
-import LookupAdminPage from "layouts/pages/settings/LookupAdminPage";
-import MenuHubPage from "layouts/pages/menuHub/MenuHubPage";
+const WorkFlowList = lazy(() => import("layouts/pages/WorkFlow/WorkFlowList"));
+const WorkFlowDetail = lazy(() => import("layouts/pages/WorkFlow/WorkFlowDetail.jsx"));
+const ApproveList = lazy(() => import("layouts/pages/WorkFlow/ApproveList"));
+const ParameterView = lazy(() => import("layouts/pages/FormManagement/listForm/ParameterView"));
+const TenantsList = lazy(() => import("layouts/pages/tenants/index"));
+const TenantDetail = lazy(() => import("layouts/pages/tenants/detail"));
+const TenantsManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement"));
+const TenantRoles = lazy(() => import("layouts/pages/tenants/tenantsmanagement/roles"));
+const TenantUsers = lazy(() => import("layouts/pages/tenants/tenantsmanagement/users"));
+const TenantPermissions = lazy(() => import("layouts/pages/tenants/tenantsmanagement/permissions"));
+const TenantRolesDetail = lazy(() => import("layouts/pages/tenantroles/detail"));
+const TenantUsersForTenant = lazy(() => import("layouts/pages/tenants/users"));
+const SuccessFactorsHome = lazy(() => import("layouts/pages/successfactors"));
+const ParametersPage = lazy(() => import("layouts/pages/settings/ParametersPage"));
+const ParametersAdminPage = lazy(() => import("layouts/pages/settings/ParametersAdminPage"));
+const LookupAdminPage = lazy(() => import("layouts/pages/settings/LookupAdminPage"));
+const MenuHubPage = lazy(() => import("layouts/pages/menuHub/MenuHubPage"));
 // User Tenants pages (under tenantsuser)
-import UserTenantsList from "layouts/pages/tenantsuser";
-import UserTenantsDetail from "layouts/pages/tenantsuser/detail";
+const UserTenantsList = lazy(() => import("layouts/pages/tenantsuser"));
+const UserTenantsDetail = lazy(() => import("layouts/pages/tenantsuser/detail"));
 // const { userAppDto } = useUser(); // Context'ten veriyi alıyoruz
 
 

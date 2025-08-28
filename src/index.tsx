@@ -27,11 +27,24 @@ import { AlertProvider } from "layouts/pages/hooks/useAlert";
 import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { UserProvider } from "layouts/pages/hooks/userName";
-import ChatBox from "layouts/applications/chat/chatBox";
+import { Suspense, lazy } from "react";
+const ChatBox = lazy(() => import("layouts/applications/chat/chatBox"));
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 const isLocalhost = window.location.hostname === "localhost";
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 60 * 1000,
+      cacheTime: 5 * 60 * 1000,
+    },
+    mutations: {
+      retry: 0,
+    },
+  },
+});
 const msalConfig = isLocalhost
   ? {
     auth: {
@@ -55,8 +68,6 @@ const msalConfig = isLocalhost
 
 
 const msalInstance = new PublicClientApplication(msalConfig);
-console.log("msalInstance");
-console.log(msalInstance);
 root.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
@@ -67,7 +78,9 @@ root.render(
               <QueryClientProvider client={queryClient}>
                 <App />
               </QueryClientProvider>
-              <ChatBox />
+              <Suspense fallback={null}>
+                <ChatBox />
+              </Suspense>
             </MsalProvider>
           </UserProvider>
         </AlertProvider>
