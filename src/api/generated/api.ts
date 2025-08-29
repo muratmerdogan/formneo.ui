@@ -3784,6 +3784,12 @@ export interface CustomerAddressDto {
     'id'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof CustomerAddressDto
+     */
+    'customerId'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof CustomerAddressDto
      */
@@ -3864,6 +3870,188 @@ export interface CustomerAddressDto {
 /**
  * 
  * @export
+ * @interface CustomerAddressInsertDto
+ */
+export interface CustomerAddressInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerAddressInsertDto
+     */
+    'type'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'country'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'city'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'district'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'postalCode'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'line1'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressInsertDto
+     */
+    'line2'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressInsertDto
+     */
+    'isDefaultBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressInsertDto
+     */
+    'isDefaultShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressInsertDto
+     */
+    'isBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressInsertDto
+     */
+    'isShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressInsertDto
+     */
+    'isActive'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerAddressUpdateDto
+ */
+export interface CustomerAddressUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'type'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'country'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'city'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'district'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'postalCode'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'line1'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'line2'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'isDefaultBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'isDefaultShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'isBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'isShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddressUpdateDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CustomerEmailDto
  */
 export interface CustomerEmailDto {
@@ -3873,6 +4061,12 @@ export interface CustomerEmailDto {
      * @memberof CustomerEmailDto
      */
     'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailDto
+     */
+    'customerId'?: string;
     /**
      * 
      * @type {string}
@@ -3913,6 +4107,116 @@ export interface CustomerEmailDto {
      * 
      * @type {string}
      * @memberof CustomerEmailDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerEmailInsertDto
+ */
+export interface CustomerEmailInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailInsertDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailInsertDto
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailInsertDto
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailInsertDto
+     */
+    'notify'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailInsertDto
+     */
+    'bulk'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailInsertDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailInsertDto
+     */
+    'isPrimary'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerEmailUpdateDto
+ */
+export interface CustomerEmailUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'notify'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'bulk'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmailUpdateDto
      */
     'rowVersion'?: string | null;
 }
@@ -4369,6 +4673,12 @@ export interface CustomerPhoneDto {
      * @type {string}
      * @memberof CustomerPhoneDto
      */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneDto
+     */
     'label'?: string | null;
     /**
      * 
@@ -4392,6 +4702,92 @@ export interface CustomerPhoneDto {
      * 
      * @type {string}
      * @memberof CustomerPhoneDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPhoneInsertDto
+ */
+export interface CustomerPhoneInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneInsertDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneInsertDto
+     */
+    'label'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneInsertDto
+     */
+    'number'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhoneInsertDto
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhoneInsertDto
+     */
+    'isActive'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPhoneUpdateDto
+ */
+export interface CustomerPhoneUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'label'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'number'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhoneUpdateDto
      */
     'rowVersion'?: string | null;
 }
@@ -23075,6 +23471,1567 @@ export class CrmChangeLogsApi extends BaseAPI {
      */
     public apiCrmCrmChangeLogsEntityEntityNameEntityIdGet(entityName: string, entityId: string, options?: RawAxiosRequestConfig) {
         return CrmChangeLogsApiFp(this.configuration).apiCrmCrmChangeLogsEntityEntityNameEntityIdGet(entityName, entityId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CustomerAddressesApi - axios parameter creator
+ * @export
+ */
+export const CustomerAddressesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdDelete: async (customerId: string, addressId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdDelete', 'customerId', customerId)
+            // verify required parameter 'addressId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdDelete', 'addressId', addressId)
+            const localVarPath = `/api/customers/{customerId}/addresses/{addressId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"addressId"}}`, encodeURIComponent(String(addressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdGet: async (customerId: string, addressId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdGet', 'customerId', customerId)
+            // verify required parameter 'addressId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdGet', 'addressId', addressId)
+            const localVarPath = `/api/customers/{customerId}/addresses/{addressId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"addressId"}}`, encodeURIComponent(String(addressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {CustomerAddressUpdateDto} [customerAddressUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdPut: async (customerId: string, addressId: string, customerAddressUpdateDto?: CustomerAddressUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdPut', 'customerId', customerId)
+            // verify required parameter 'addressId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdPut', 'addressId', addressId)
+            const localVarPath = `/api/customers/{customerId}/addresses/{addressId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"addressId"}}`, encodeURIComponent(String(addressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerAddressUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut: async (customerId: string, addressId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut', 'customerId', customerId)
+            // verify required parameter 'addressId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut', 'addressId', addressId)
+            const localVarPath = `/api/customers/{customerId}/addresses/{addressId}/set-default-billing`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"addressId"}}`, encodeURIComponent(String(addressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut: async (customerId: string, addressId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut', 'customerId', customerId)
+            // verify required parameter 'addressId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut', 'addressId', addressId)
+            const localVarPath = `/api/customers/{customerId}/addresses/{addressId}/set-default-shipping`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"addressId"}}`, encodeURIComponent(String(addressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesGet: async (customerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesGet', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/addresses`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerAddressInsertDto} [customerAddressInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesPost: async (customerId: string, customerAddressInsertDto?: CustomerAddressInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdAddressesPost', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/addresses`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerAddressInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomerAddressesApi - functional programming interface
+ * @export
+ */
+export const CustomerAddressesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomerAddressesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesAddressIdDelete(customerId: string, addressId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesAddressIdDelete(customerId, addressId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesAddressIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesAddressIdGet(customerId: string, addressId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesAddressIdGet(customerId, addressId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesAddressIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {CustomerAddressUpdateDto} [customerAddressUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesAddressIdPut(customerId: string, addressId: string, customerAddressUpdateDto?: CustomerAddressUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesAddressIdPut(customerId, addressId, customerAddressUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesAddressIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId, addressId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, addressId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesGet(customerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesGet(customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerAddressInsertDto} [customerAddressInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdAddressesPost(customerId: string, customerAddressInsertDto?: CustomerAddressInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdAddressesPost(customerId, customerAddressInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerAddressesApi.apiCustomersCustomerIdAddressesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CustomerAddressesApi - factory interface
+ * @export
+ */
+export const CustomerAddressesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomerAddressesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdDelete(customerId: string, addressId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesAddressIdDelete(customerId, addressId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdGet(customerId: string, addressId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesAddressIdGet(customerId, addressId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {CustomerAddressUpdateDto} [customerAddressUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdPut(customerId: string, addressId: string, customerAddressUpdateDto?: CustomerAddressUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesAddressIdPut(customerId, addressId, customerAddressUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId, addressId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} addressId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, addressId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesGet(customerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesGet(customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerAddressInsertDto} [customerAddressInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdAddressesPost(customerId: string, customerAddressInsertDto?: CustomerAddressInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdAddressesPost(customerId, customerAddressInsertDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CustomerAddressesApi - object-oriented interface
+ * @export
+ * @class CustomerAddressesApi
+ * @extends {BaseAPI}
+ */
+export class CustomerAddressesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} addressId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesAddressIdDelete(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdDelete(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} addressId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesAddressIdGet(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdGet(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} addressId 
+     * @param {CustomerAddressUpdateDto} [customerAddressUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesAddressIdPut(customerId: string, addressId: string, customerAddressUpdateDto?: CustomerAddressUpdateDto, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdPut(customerId, addressId, customerAddressUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} addressId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} addressId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesGet(customerId: string, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {CustomerAddressInsertDto} [customerAddressInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerAddressesApi
+     */
+    public apiCustomersCustomerIdAddressesPost(customerId: string, customerAddressInsertDto?: CustomerAddressInsertDto, options?: RawAxiosRequestConfig) {
+        return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesPost(customerId, customerAddressInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CustomerEmailsApi - axios parameter creator
+ * @export
+ */
+export const CustomerEmailsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdDelete: async (customerId: string, emailId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdDelete', 'customerId', customerId)
+            // verify required parameter 'emailId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdDelete', 'emailId', emailId)
+            const localVarPath = `/api/customers/{customerId}/emails/{emailId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"emailId"}}`, encodeURIComponent(String(emailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdGet: async (customerId: string, emailId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdGet', 'customerId', customerId)
+            // verify required parameter 'emailId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdGet', 'emailId', emailId)
+            const localVarPath = `/api/customers/{customerId}/emails/{emailId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"emailId"}}`, encodeURIComponent(String(emailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {CustomerEmailUpdateDto} [customerEmailUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdPut: async (customerId: string, emailId: string, customerEmailUpdateDto?: CustomerEmailUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdPut', 'customerId', customerId)
+            // verify required parameter 'emailId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdPut', 'emailId', emailId)
+            const localVarPath = `/api/customers/{customerId}/emails/{emailId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"emailId"}}`, encodeURIComponent(String(emailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerEmailUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut: async (customerId: string, emailId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut', 'customerId', customerId)
+            // verify required parameter 'emailId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut', 'emailId', emailId)
+            const localVarPath = `/api/customers/{customerId}/emails/{emailId}/set-primary`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"emailId"}}`, encodeURIComponent(String(emailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsGet: async (customerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsGet', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/emails`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerEmailInsertDto} [customerEmailInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsPost: async (customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdEmailsPost', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/emails`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerEmailInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomerEmailsApi - functional programming interface
+ * @export
+ */
+export const CustomerEmailsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomerEmailsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsEmailIdDelete(customerId: string, emailId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsEmailIdDelete(customerId, emailId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsEmailIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsEmailIdGet(customerId: string, emailId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsEmailIdGet(customerId, emailId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsEmailIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {CustomerEmailUpdateDto} [customerEmailUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsEmailIdPut(customerId: string, emailId: string, customerEmailUpdateDto?: CustomerEmailUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsEmailIdPut(customerId, emailId, customerEmailUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsEmailIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId: string, emailId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, emailId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsGet(customerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsGet(customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerEmailInsertDto} [customerEmailInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdEmailsPost(customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdEmailsPost(customerId, customerEmailInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerEmailsApi.apiCustomersCustomerIdEmailsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CustomerEmailsApi - factory interface
+ * @export
+ */
+export const CustomerEmailsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomerEmailsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdDelete(customerId: string, emailId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsEmailIdDelete(customerId, emailId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdGet(customerId: string, emailId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsEmailIdGet(customerId, emailId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {CustomerEmailUpdateDto} [customerEmailUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdPut(customerId: string, emailId: string, customerEmailUpdateDto?: CustomerEmailUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsEmailIdPut(customerId, emailId, customerEmailUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} emailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId: string, emailId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, emailId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsGet(customerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsGet(customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerEmailInsertDto} [customerEmailInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdEmailsPost(customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdEmailsPost(customerId, customerEmailInsertDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CustomerEmailsApi - object-oriented interface
+ * @export
+ * @class CustomerEmailsApi
+ * @extends {BaseAPI}
+ */
+export class CustomerEmailsApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} emailId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsEmailIdDelete(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdDelete(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} emailId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsEmailIdGet(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdGet(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} emailId 
+     * @param {CustomerEmailUpdateDto} [customerEmailUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsEmailIdPut(customerId: string, emailId: string, customerEmailUpdateDto?: CustomerEmailUpdateDto, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdPut(customerId, emailId, customerEmailUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} emailId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsGet(customerId: string, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {CustomerEmailInsertDto} [customerEmailInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerEmailsApi
+     */
+    public apiCustomersCustomerIdEmailsPost(customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options?: RawAxiosRequestConfig) {
+        return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsPost(customerId, customerEmailInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CustomerPhonesApi - axios parameter creator
+ * @export
+ */
+export const CustomerPhonesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesGet: async (customerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesGet', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/phones`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdDelete: async (customerId: string, phoneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdDelete', 'customerId', customerId)
+            // verify required parameter 'phoneId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdDelete', 'phoneId', phoneId)
+            const localVarPath = `/api/customers/{customerId}/phones/{phoneId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"phoneId"}}`, encodeURIComponent(String(phoneId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdGet: async (customerId: string, phoneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdGet', 'customerId', customerId)
+            // verify required parameter 'phoneId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdGet', 'phoneId', phoneId)
+            const localVarPath = `/api/customers/{customerId}/phones/{phoneId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"phoneId"}}`, encodeURIComponent(String(phoneId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {CustomerPhoneUpdateDto} [customerPhoneUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdPut: async (customerId: string, phoneId: string, customerPhoneUpdateDto?: CustomerPhoneUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdPut', 'customerId', customerId)
+            // verify required parameter 'phoneId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdPut', 'phoneId', phoneId)
+            const localVarPath = `/api/customers/{customerId}/phones/{phoneId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"phoneId"}}`, encodeURIComponent(String(phoneId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerPhoneUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut: async (customerId: string, phoneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut', 'customerId', customerId)
+            // verify required parameter 'phoneId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut', 'phoneId', phoneId)
+            const localVarPath = `/api/customers/{customerId}/phones/{phoneId}/set-primary`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"phoneId"}}`, encodeURIComponent(String(phoneId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerPhoneInsertDto} [customerPhoneInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPost: async (customerId: string, customerPhoneInsertDto?: CustomerPhoneInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomersCustomerIdPhonesPost', 'customerId', customerId)
+            const localVarPath = `/api/customers/{customerId}/phones`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerPhoneInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomerPhonesApi - functional programming interface
+ * @export
+ */
+export const CustomerPhonesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomerPhonesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesGet(customerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesGet(customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesPhoneIdDelete(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesPhoneIdDelete(customerId, phoneId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesPhoneIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesPhoneIdGet(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesPhoneIdGet(customerId, phoneId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesPhoneIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {CustomerPhoneUpdateDto} [customerPhoneUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesPhoneIdPut(customerId: string, phoneId: string, customerPhoneUpdateDto?: CustomerPhoneUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesPhoneIdPut(customerId, phoneId, customerPhoneUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesPhoneIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId, phoneId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerPhoneInsertDto} [customerPhoneInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCustomerIdPhonesPost(customerId: string, customerPhoneInsertDto?: CustomerPhoneInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCustomerIdPhonesPost(customerId, customerPhoneInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerPhonesApi.apiCustomersCustomerIdPhonesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CustomerPhonesApi - factory interface
+ * @export
+ */
+export const CustomerPhonesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomerPhonesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesGet(customerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesGet(customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdDelete(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesPhoneIdDelete(customerId, phoneId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdGet(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesPhoneIdGet(customerId, phoneId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {CustomerPhoneUpdateDto} [customerPhoneUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdPut(customerId: string, phoneId: string, customerPhoneUpdateDto?: CustomerPhoneUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesPhoneIdPut(customerId, phoneId, customerPhoneUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} phoneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId: string, phoneId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId, phoneId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {CustomerPhoneInsertDto} [customerPhoneInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCustomerIdPhonesPost(customerId: string, customerPhoneInsertDto?: CustomerPhoneInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCustomerIdPhonesPost(customerId, customerPhoneInsertDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CustomerPhonesApi - object-oriented interface
+ * @export
+ * @class CustomerPhonesApi
+ * @extends {BaseAPI}
+ */
+export class CustomerPhonesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesGet(customerId: string, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} phoneId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesPhoneIdDelete(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdDelete(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} phoneId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesPhoneIdGet(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdGet(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} phoneId 
+     * @param {CustomerPhoneUpdateDto} [customerPhoneUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesPhoneIdPut(customerId: string, phoneId: string, customerPhoneUpdateDto?: CustomerPhoneUpdateDto, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdPut(customerId, phoneId, customerPhoneUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} phoneId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {CustomerPhoneInsertDto} [customerPhoneInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerPhonesApi
+     */
+    public apiCustomersCustomerIdPhonesPost(customerId: string, customerPhoneInsertDto?: CustomerPhoneInsertDto, options?: RawAxiosRequestConfig) {
+        return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPost(customerId, customerPhoneInsertDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

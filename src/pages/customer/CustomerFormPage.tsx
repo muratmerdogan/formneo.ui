@@ -130,7 +130,8 @@ export default function CustomerFormPage(): JSX.Element {
                         notify: !!e.notify,
                         bulk: !!e.bulk,
                         isActive: !!e.isActive,
-                        isPrimary: !!e.isPrimary
+                        isPrimary: !!e.isPrimary,
+                        rowVersion: e.rowVersion // RowVersion alanı eklendi
                     })));
                 }
 
@@ -145,7 +146,9 @@ export default function CustomerFormPage(): JSX.Element {
                         line2: a.line2 || "",
                         isBilling: !!a.isBilling,
                         isShipping: !!a.isShipping,
-                        isActive: !!a.isActive
+                        isActive: !!a.isActive,
+                        isPrimary: !!a.isPrimary,
+                        rowVersion: a.rowVersion // RowVersion alanı eklendi
                     })));
                 }
 
@@ -155,7 +158,8 @@ export default function CustomerFormPage(): JSX.Element {
                         label: p.label || "",
                         number: p.number || "",
                         isPrimary: !!p.isPrimary,
-                        isActive: !!p.isActive
+                        isActive: !!p.isActive,
+                        rowVersion: p.rowVersion // RowVersion alanı eklendi
                     })));
                 }
 
@@ -164,7 +168,8 @@ export default function CustomerFormPage(): JSX.Element {
                         id: n.id || crypto.randomUUID(),
                         date: n.date || "",
                         title: n.title || "",
-                        note: n.content || ""
+                        note: n.content || "",
+                        rowVersion: n.rowVersion // RowVersion alanı eklendi
                     })));
                 }
 
@@ -315,13 +320,31 @@ export default function CustomerFormPage(): JSX.Element {
                             />
                         </DraggableSection>
                         <DraggableSection id="emails" title="E-Postalar">
-                            <EmailsGrid label="E-Postalar" rows={emailRows} onChange={setEmailRows} />
+                            <EmailsGrid
+                                label="E-Postalar"
+                                rows={emailRows}
+                                onChange={setEmailRows}
+                                customerId={isEdit ? id : undefined}
+                                autoSave={isEdit}
+                            />
                         </DraggableSection>
                         <DraggableSection id="addresses" title="Adresler">
-                            <AddressesGrid label="Adresler" rows={addressRows} onChange={setAddressRows} />
+                            <AddressesGrid
+                                label="Adresler"
+                                rows={addressRows}
+                                onChange={setAddressRows}
+                                customerId={isEdit ? id : undefined}
+                                autoSave={isEdit}
+                            />
                         </DraggableSection>
                         <DraggableSection id="phones" title="Telefonlar">
-                            <PhonesGrid label="Telefonlar" rows={phoneRows} onChange={setPhoneRows} />
+                            <PhonesGrid
+                                label="Telefonlar"
+                                rows={phoneRows}
+                                onChange={setPhoneRows}
+                                customerId={isEdit ? id : undefined}
+                                autoSave={isEdit}
+                            />
                         </DraggableSection>
 
                     </div>
@@ -339,7 +362,14 @@ export default function CustomerFormPage(): JSX.Element {
                                 <Tab label="Sosyal Medya" />
                             </Tabs>
                             <Box sx={{ p: 2, flex: 1 }}>
-                                {activeTab === 0 && <NotesSection register={register} errors={errors} rows={noteRows} onChange={setNoteRows} />}
+                                {activeTab === 0 && <NotesSection
+                                    register={register}
+                                    errors={errors}
+                                    rows={noteRows}
+                                    onChange={setNoteRows}
+                                    customerId={isEdit ? id : undefined}
+                                    autoSave={isEdit}
+                                />}
                                 {activeTab === 1 && <SocialMediaSection register={register} errors={errors} />}
                             </Box>
                         </Box>

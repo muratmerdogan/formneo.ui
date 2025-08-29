@@ -4,6 +4,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { CustomerEmailsApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 
 export type EmailRow = {
     id: string;
@@ -13,6 +15,7 @@ export type EmailRow = {
     bulk: boolean;
     isActive: boolean;
     isPrimary: boolean;
+    rowVersion?: string; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -20,54 +23,157 @@ type Props = {
     rows: EmailRow[];
     onChange: (rows: EmailRow[]) => void;
     disabled?: boolean;
+    customerId?: string; // API calls için müşteri ID'si
+    autoSave?: boolean; // Otomatik kaydet (varsayılan: false)
 };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function EmailsGrid({ label, rows, onChange, disabled }: Props) {
+export default function EmailsGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState<{ email: string; description: string; notify: boolean; bulk: boolean; isActive: boolean; isPrimary: boolean }>({ email: "", description: "", notify: false, bulk: false, isActive: true, isPrimary: false });
     const [error, setError] = useState<string | null>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const api = useMemo(() => new CustomerEmailsApi(getConfiguration()), []);
 
     const openModal = () => { setEditingId(null); setForm({ email: "", description: "", notify: false, bulk: false, isActive: true, isPrimary: false }); setError(null); setIsModalOpen(true); };
     const openEdit = (row: EmailRow) => { setEditingId(row.id); setForm({ email: row.email, description: row.description || "", notify: !!row.notify, bulk: !!row.bulk, isActive: !!row.isActive, isPrimary: !!row.isPrimary }); setError(null); setIsModalOpen(true); };
     const closeModal = () => setIsModalOpen(false);
 
-    const removeRow = (id: string) => {
-        const updated = rows.filter(r => r.id !== id);
-        onChange(updated);
+    const removeRow = async (id: string) => {
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                await api.apiCustomersCustomerIdEmailsEmailIdDelete(customerId, id);
+                const updated = rows.filter(r => r.id !== id);
+                onChange(updated);
+            } catch (err) {
+                setError("Email silinemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            const updated = rows.filter(r => r.id !== id);
+            onChange(updated);
+        }
     };
 
-    const setPrimary = (id: string) => {
-        const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
-        onChange(updated);
+    const setPrimary = async (id: string) => {
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                const row = rows.find(r => r.id === id);
+                if (row) {
+                    await api.apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, id);
+                    const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
+                    onChange(updated);
+                }
+            } catch (err) {
+                setError("Primary email güncellenemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
+            onChange(updated);
+        }
     };
 
-    const submit = () => {
+    const submit = async () => {
         const value = (form.email || "").trim();
         if (!emailRegex.test(value)) { setError("Geçersiz e-posta"); return; }
+
         if (editingId) {
-            // update existing
-            // prevent duplicate email to another row
-            if (rows.some(r => r.id !== editingId && r.email.toLowerCase() === value.toLowerCase())) { setError("Zaten ekli"); return; }
-            let updated = rows.map(r => r.id === editingId ? { ...r, email: value, description: (form.description || "").trim(), notify: !!form.notify, bulk: !!form.bulk, isActive: !!form.isActive, isPrimary: !!form.isPrimary } : r);
+            // Update existing
+            if (rows.some(r => r.id !== editingId && r.email.toLowerCase() === value.toLowerCase())) {
+                setError("Zaten ekli"); return;
+            }
+
+            if (autoSave && customerId) {
+                setLoading(true);
+                try {
+                    const currentEmail = rows.find(r => r.id === editingId);
+                    const updatedEmail = {
+                        email: value,
+                        description: (form.description || "").trim(),
+                        notify: !!form.notify,
+                        bulk: !!form.bulk,
+                        isActive: !!form.isActive,
+                        isPrimary: !!form.isPrimary,
+                        rowVersion: currentEmail?.rowVersion // RowVersion alanı eklendi
+                    };
+                    await api.apiCustomersCustomerIdEmailsEmailIdPut(customerId, editingId, updatedEmail);
+
+                    let updated = rows.map(r => r.id === editingId ? { ...r, ...updatedEmail } : r);
+                    if (form.isPrimary) {
+                        updated = updated.map(r => ({ ...r, isPrimary: r.id === editingId }));
+                    }
+                    onChange(updated);
+                    closeModal();
+                } catch (err) {
+                    setError("Email güncellenemedi");
+                    console.error(err);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                let updated = rows.map(r => r.id === editingId ? { ...r, email: value, description: (form.description || "").trim(), notify: !!form.notify, bulk: !!form.bulk, isActive: !!form.isActive, isPrimary: !!form.isPrimary } : r);
+                if (form.isPrimary) {
+                    updated = updated.map(r => ({ ...r, isPrimary: r.id === editingId }));
+                }
+                onChange(updated);
+                closeModal();
+            }
+            return;
+        }
+
+        // Create new
+        if (rows.some(r => r.email.toLowerCase() === value.toLowerCase())) {
+            setError("Zaten ekli"); return;
+        }
+
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                const newEmail = {
+                    email: value,
+                    description: (form.description || "").trim(),
+                    notify: !!form.notify,
+                    bulk: !!form.bulk,
+                    isActive: !!form.isActive,
+                    isPrimary: !!form.isPrimary
+                };
+                const response: any = await api.apiCustomersCustomerIdEmailsPost(customerId, newEmail);
+                const newRow: EmailRow = {
+                    id: response.data?.id || crypto.randomUUID(),
+                    ...newEmail
+                };
+
+                let updated = [...rows, newRow];
+                if (form.isPrimary) {
+                    updated = updated.map(r => ({ ...r, isPrimary: r.id === newRow.id }));
+                }
+                onChange(updated);
+                closeModal();
+            } catch (err) {
+                setError("Email eklenemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            const newRow: EmailRow = { id: crypto.randomUUID(), email: value, description: (form.description || "").trim(), notify: !!form.notify, bulk: !!form.bulk, isActive: !!form.isActive, isPrimary: !!form.isPrimary };
+            let updated = [...rows, newRow];
             if (form.isPrimary) {
-                updated = updated.map(r => ({ ...r, isPrimary: r.id === editingId }));
+                updated = updated.map(r => ({ ...r, isPrimary: r.id === newRow.id }));
             }
             onChange(updated);
             closeModal();
-            return;
         }
-        // create new
-        if (rows.some(r => r.email.toLowerCase() === value.toLowerCase())) { setError("Zaten ekli"); return; }
-        const newRow: EmailRow = { id: crypto.randomUUID(), email: value, description: (form.description || "").trim(), notify: !!form.notify, bulk: !!form.bulk, isActive: !!form.isActive, isPrimary: !!form.isPrimary };
-        let updated = [...rows, newRow];
-        if (form.isPrimary) {
-            updated = updated.map(r => ({ ...r, isPrimary: r.id === newRow.id }));
-        }
-        onChange(updated);
-        closeModal();
     };
 
     return (
@@ -149,8 +255,15 @@ export default function EmailsGrid({ label, rows, onChange, disabled }: Props) {
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={form.isActive} onChange={(e) => setForm(s => ({ ...s, isActive: e.target.checked }))} /> Aktif</label>
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={form.isPrimary} onChange={(e) => setForm(s => ({ ...s, isPrimary: e.target.checked }))} /> Birincil</label>
                             <div className="flex items-center justify-end gap-2">
-                                <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={closeModal}>İptal</button>
-                                <button type="button" className="h-9 px-3 rounded-md border bg-slate-900 text-white" onClick={submit}>{editingId ? "Güncelle" : "Kaydet"}</button>
+                                <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={closeModal} disabled={loading}>İptal</button>
+                                <button
+                                    type="button"
+                                    className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50"
+                                    onClick={submit}
+                                    disabled={loading}
+                                >
+                                    {loading ? "Kaydediliyor..." : (editingId ? "Güncelle" : "Kaydet")}
+                                </button>
                             </div>
                         </div>
                     </div>

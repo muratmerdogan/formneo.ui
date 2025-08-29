@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { IconButton } from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { CustomerAddressesApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 
 export type AddressRow = {
     id: string;
@@ -11,6 +18,8 @@ export type AddressRow = {
     isBilling: boolean;
     isShipping: boolean;
     isActive: boolean;
+    isPrimary: boolean;
+    rowVersion?: string; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -18,23 +27,142 @@ type Props = {
     rows: AddressRow[];
     onChange: (rows: AddressRow[]) => void;
     disabled?: boolean;
+    customerId?: string;
+    autoSave?: boolean;
 };
 
-export default function AddressesGrid({ label, rows, onChange, disabled }: Props): JSX.Element {
+export default function AddressesGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props): JSX.Element {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [form, setForm] = useState<AddressRow>({ id: "", country: "", city: "", district: "", postalCode: "", line1: "", line2: "", isBilling: false, isShipping: false, isActive: true });
+    const [form, setForm] = useState<AddressRow>({ id: "", country: "", city: "", district: "", postalCode: "", line1: "", line2: "", isBilling: false, isShipping: false, isActive: true, isPrimary: false });
     const [error, setError] = useState<string | null>(null);
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const openModal = () => { setForm({ id: "", country: "", city: "", district: "", postalCode: "", line1: "", line2: "", isBilling: false, isShipping: false, isActive: true }); setError(null); setIsModalOpen(true); };
+    const api = useMemo(() => new CustomerAddressesApi(getConfiguration()), []);
+
+    const openModal = () => { setEditingId(null); setForm({ id: "", country: "", city: "", district: "", postalCode: "", line1: "", line2: "", isBilling: false, isShipping: false, isActive: true, isPrimary: false }); setError(null); setIsModalOpen(true); };
+    const openEdit = (row: AddressRow) => { setEditingId(row.id); setForm({ ...row }); setError(null); setIsModalOpen(true); };
     const closeModal = () => setIsModalOpen(false);
 
-    const removeRow = (id: string) => { onChange(rows.filter(r => r.id !== id)); };
+    const removeRow = async (id: string) => {
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                await api.apiCustomersCustomerIdAddressesAddressIdDelete(customerId, id);
+                onChange(rows.filter(r => r.id !== id));
+            } catch (err) {
+                setError("Adres silinemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            onChange(rows.filter(r => r.id !== id));
+        }
+    };
 
-    const submit = () => {
+    const setPrimary = async (id: string) => {
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                const row = rows.find(r => r.id === id);
+                if (row) {
+                    // Set as default billing and shipping address
+                    await api.apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId, id);
+                    await api.apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, id);
+                    const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
+                    onChange(updated);
+                }
+            } catch (err) {
+                setError("Primary adres güncellenemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
+            onChange(updated);
+        }
+    };
+
+    const submit = async () => {
         if (!(form.line1 || "").trim()) { setError("Adres satırı zorunlu"); return; }
-        const newRow: AddressRow = { ...form, id: crypto.randomUUID(), line1: (form.line1 || "").trim(), line2: (form.line2 || "").trim(), country: (form.country || "").trim(), city: (form.city || "").trim(), district: (form.district || "").trim(), postalCode: (form.postalCode || "").trim() };
-        onChange([...(rows || []), newRow]);
-        closeModal();
+
+        const addressData = {
+            country: (form.country || "").trim(),
+            city: (form.city || "").trim(),
+            district: (form.district || "").trim(),
+            postalCode: (form.postalCode || "").trim(),
+            line1: (form.line1 || "").trim(),
+            line2: (form.line2 || "").trim(),
+            isBilling: !!form.isBilling,
+            isShipping: !!form.isShipping,
+            isActive: !!form.isActive,
+            isPrimary: !!form.isPrimary,
+            rowVersion: editingId ? rows.find(r => r.id === editingId)?.rowVersion : undefined // RowVersion alanı eklendi
+        };
+
+        if (editingId) {
+            // Update existing
+            if (autoSave && customerId) {
+                setLoading(true);
+                try {
+                    await api.apiCustomersCustomerIdAddressesAddressIdPut(customerId, editingId, addressData);
+
+                    let updated = rows.map(r => r.id === editingId ? { ...r, ...addressData } : r);
+                    if (form.isPrimary) {
+                        updated = updated.map(r => ({ ...r, isPrimary: r.id === editingId }));
+                    }
+                    onChange(updated);
+                    closeModal();
+                } catch (err) {
+                    setError("Adres güncellenemedi");
+                    console.error(err);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                let updated = rows.map(r => r.id === editingId ? { ...r, ...addressData } : r);
+                if (form.isPrimary) {
+                    updated = updated.map(r => ({ ...r, isPrimary: r.id === editingId }));
+                }
+                onChange(updated);
+                closeModal();
+            }
+            return;
+        }
+
+        // Create new
+        if (autoSave && customerId) {
+            setLoading(true);
+            try {
+                const response: any = await api.apiCustomersCustomerIdAddressesPost(customerId, addressData);
+                const newRow: AddressRow = {
+                    id: response.data?.id || crypto.randomUUID(),
+                    ...addressData
+                };
+
+                let updated = [...rows, newRow];
+                if (form.isPrimary) {
+                    updated = updated.map(r => ({ ...r, isPrimary: r.id === newRow.id }));
+                }
+                onChange(updated);
+                closeModal();
+            } catch (err) {
+                setError("Adres eklenemedi");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            const newRow: AddressRow = { id: crypto.randomUUID(), ...addressData };
+            let updated = [...rows, newRow];
+            if (form.isPrimary) {
+                updated = updated.map(r => ({ ...r, isPrimary: r.id === newRow.id }));
+            }
+            onChange(updated);
+            closeModal();
+        }
     };
 
     return (
@@ -50,7 +178,8 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                             <th className="text-left px-3 py-2 border-b">İlçe</th>
                             <th className="text-left px-3 py-2 border-b">Fatura</th>
                             <th className="text-left px-3 py-2 border-b">Kargo</th>
-                            <th className="text-left px-3 py-2 border-b">Durumu</th>
+                            <th className="text-left px-3 py-2 border-b">Birincil</th>
+                            <th className="text-left px-3 py-2 border-b">Durum</th>
                             <th className="text-right px-3 py-2 border-b">İşlemler</th>
                         </tr>
                     </thead>
@@ -63,14 +192,24 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                                 <td className="px-3 py-2 border-b">{r.district}</td>
                                 <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isBilling} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isBilling: e.target.checked } : x))} disabled={disabled} /></td>
                                 <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isShipping} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isShipping: e.target.checked } : x))} disabled={disabled} /></td>
+                                <td className="px-3 py-2 border-b">
+                                    <IconButton size="small" onClick={() => setPrimary(r.id)} disabled={disabled || loading} title="Birincil Yap">
+                                        {r.isPrimary ? <StarIcon fontSize="small" className="text-yellow-500" /> : <StarBorderIcon fontSize="small" />}
+                                    </IconButton>
+                                </td>
                                 <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled} /></td>
                                 <td className="px-3 py-2 border-b text-right">
-                                    <button type="button" className="h-8 px-2 rounded-md border bg-rose-600 text-white" onClick={() => removeRow(r.id)} disabled={disabled}>Sil</button>
+                                    <IconButton size="small" onClick={() => openEdit(r)} disabled={disabled || loading} title="Düzenle">
+                                        <EditOutlinedIcon fontSize="small" />
+                                    </IconButton>
+                                    <IconButton size="small" onClick={() => removeRow(r.id)} disabled={disabled || loading} title="Sil">
+                                        <DeleteOutlineIcon fontSize="small" />
+                                    </IconButton>
                                 </td>
                             </tr>
                         ))}
                         {!rows?.length && (
-                            <tr><td colSpan={8} className="px-3 py-6 text-center text-slate-500">Henüz adres eklenmedi</td></tr>
+                            <tr><td colSpan={9} className="px-3 py-6 text-center text-slate-500">Henüz adres eklenmedi</td></tr>
                         )}
                     </tbody>
                 </table>
@@ -86,8 +225,8 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                     <div className="absolute inset-0 bg-black/30" onClick={closeModal} />
                     <div className="relative bg-white rounded-lg shadow-lg w-[92vw] max-w-2xl p-4">
                         <div className="flex items-center justify-between mb-2">
-                            <div className="text-base font-semibold">Adres Ekle</div>
-                            <button type="button" onClick={closeModal} className="h-8 px-2 rounded-md border">Kapat</button>
+                            <div className="text-base font-semibold">{editingId ? "Adres Düzenle" : "Adres Ekle"}</div>
+                            <button type="button" onClick={closeModal} className="h-8 px-2 rounded-md border" disabled={loading}>Kapat</button>
                         </div>
                         {error && <div className="mb-2 p-2 rounded border border-rose-200 bg-rose-50 text-rose-700 text-sm">{error}</div>}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -100,9 +239,17 @@ export default function AddressesGrid({ label, rows, onChange, disabled }: Props
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isBilling} onChange={(e) => setForm(s => ({ ...s, isBilling: e.target.checked }))} /> Fatura Adresi</label>
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isShipping} onChange={(e) => setForm(s => ({ ...s, isShipping: e.target.checked }))} /> Kargo Adresi</label>
                             <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isActive} onChange={(e) => setForm(s => ({ ...s, isActive: e.target.checked }))} /> Aktif</label>
+                            <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!form.isPrimary} onChange={(e) => setForm(s => ({ ...s, isPrimary: e.target.checked }))} /> Birincil</label>
                             <div className="md:col-span-2 flex items-center justify-end gap-2">
-                                <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={closeModal}>İptal</button>
-                                <button type="button" className="h-9 px-3 rounded-md border bg-slate-900 text-white" onClick={submit}>Kaydet</button>
+                                <button type="button" className="h-9 px-3 rounded-md border bg-white" onClick={closeModal} disabled={loading}>İptal</button>
+                                <button
+                                    type="button"
+                                    className="h-9 px-3 rounded-md border bg-slate-900 text-white disabled:opacity-50"
+                                    onClick={submit}
+                                    disabled={loading}
+                                >
+                                    {loading ? "Kaydediliyor..." : (editingId ? "Güncelle" : "Kaydet")}
+                                </button>
                             </div>
                         </div>
                     </div>

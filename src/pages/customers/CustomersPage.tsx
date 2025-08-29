@@ -10,12 +10,16 @@ import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
 import { useRegisterActions } from "context/ActionBarContext";
 import AddIcon from "@mui/icons-material/Add";
+import { GridView, TableChart } from "@mui/icons-material";
+import DataGrid, { ColumnDef } from "../../components/ui/DataGrid";
 
 export default function CustomersPage(): JSX.Element {
     const navigate = useNavigate();
     const [params, setParams] = useSearchParams();
     const [all, setAll] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(true);
+    const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
+    const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
 
     const q = params.get("q") ?? "";
     const sector = params.get("sector") ?? "";
@@ -79,6 +83,96 @@ export default function CustomersPage(): JSX.Element {
 
     const onClear = () => setParams(new URLSearchParams(), { replace: true });
 
+    // DataGrid sütun tanımları
+    const columns: ColumnDef<Customer>[] = [
+        {
+            key: 'name',
+            title: 'Müşteri Adı',
+            sortable: true,
+            render: (value, row) => (
+                <div className="flex items-center">
+                    <div className="h-8 w-8 flex-shrink-0">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                            <span className="text-sm font-medium text-gray-600">
+                                {row.name.charAt(0).toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="ml-3">
+                        <div className="text-sm font-medium text-gray-900">{row.name}</div>
+                        {row.email && <div className="text-sm text-gray-500">{row.email}</div>}
+                    </div>
+                </div>
+            ),
+            width: 250
+        },
+        {
+            key: 'sector',
+            title: 'Sektör',
+            sortable: true,
+            render: (value) => value || '-',
+            width: 120
+        },
+        {
+            key: 'country',
+            title: 'Ülke/Şehir',
+            render: (value, row) => {
+                const location = [row.country, row.city].filter(Boolean).join(', ');
+                return location || '-';
+            },
+            width: 150
+        },
+        {
+            key: 'phone',
+            title: 'Telefon',
+            render: (value) => value || '-',
+            width: 140
+        },
+        {
+            key: 'status',
+            title: 'Durum',
+            sortable: true,
+            render: (value) => (
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${value === 'active'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                    }`}>
+                    {value === 'active' ? 'Aktif' : 'Pasif'}
+                </span>
+            ),
+            width: 100,
+            align: 'center' as const
+        },
+        {
+            key: 'tags',
+            title: 'Etiketler',
+            render: (value: string[]) => (
+                <div className="flex flex-wrap gap-1">
+                    {(value || []).slice(0, 2).map((tag, idx) => (
+                        <span key={idx} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                            {tag}
+                        </span>
+                    ))}
+                    {(value || []).length > 2 && (
+                        <span className="text-xs text-gray-500">+{(value || []).length - 2}</span>
+                    )}
+                </div>
+            ),
+            width: 150
+        },
+        {
+            key: 'updatedAt',
+            title: 'Son Güncelleme',
+            sortable: true,
+            render: (value) => {
+                const date = new Date(value);
+                return date.toLocaleDateString('tr-TR');
+            },
+            width: 120,
+            align: 'center' as const
+        }
+    ];
+
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -86,10 +180,37 @@ export default function CustomersPage(): JSX.Element {
                 <div className="flex items-center justify-between">
                     <div>
                         <div className="text-xl font-semibold text-slate-900">Müşteriler</div>
-                        <div className="text-sm text-slate-500">Kart görünümünde grid liste</div>
+                        <div className="text-sm text-slate-500">
+                            {viewMode === 'grid' ? 'Kart görünümünde grid liste' : 'Tablo görünümünde liste'}
+                        </div>
                     </div>
-                    <div className="hidden md:flex items-center gap-3 text-sm text-slate-600">
-                        <div className="rounded-xl border bg-white shadow-sm px-3 py-2">Toplam: {total}</div>
+                    <div className="flex items-center gap-3">
+                        {/* View Mode Toggle */}
+                        <div className="flex bg-gray-100 rounded-lg p-1">
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${viewMode === 'grid'
+                                    ? 'bg-white text-gray-900 shadow-sm'
+                                    : 'text-gray-600 hover:text-gray-900'
+                                    }`}
+                            >
+                                <GridView className="h-4 w-4" />
+                                Kart
+                            </button>
+                            <button
+                                onClick={() => setViewMode('table')}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${viewMode === 'table'
+                                    ? 'bg-white text-gray-900 shadow-sm'
+                                    : 'text-gray-600 hover:text-gray-900'
+                                    }`}
+                            >
+                                <TableChart className="h-4 w-4" />
+                                Tablo
+                            </button>
+                        </div>
+                        <div className="hidden md:flex items-center gap-3 text-sm text-slate-600">
+                            <div className="rounded-xl border bg-white shadow-sm px-3 py-2">Toplam: {total}</div>
+                        </div>
                     </div>
                 </div>
 
@@ -101,19 +222,45 @@ export default function CustomersPage(): JSX.Element {
                     />
                 </div>
 
-                <CustomerGrid items={items} loading={loading} />
+                {viewMode === 'grid' ? (
+                    <>
+                        <CustomerGrid items={items} loading={loading} />
 
-                <div className="flex items-center justify-between text-sm text-slate-600">
-                    <div>Toplam: {total}</div>
-                    <div className="flex items-center gap-2">
-                        <button disabled={page <= 1} onClick={() => patch({ page: String(page - 1) })} className="h-9 px-3 rounded-md border">Geri</button>
-                        <div>Sayfa {page}</div>
-                        <button onClick={() => patch({ page: String(page + 1) })} className="h-9 px-3 rounded-md border">İleri</button>
-                        <select value={pageSize} onChange={(e) => patch({ pageSize: e.target.value })} className="h-9 px-2 rounded-md border">
-                            <option value="10">10</option><option value="20">20</option><option value="50">50</option>
-                        </select>
-                    </div>
-                </div>
+                        <div className="flex items-center justify-between text-sm text-slate-600">
+                            <div>Toplam: {total}</div>
+                            <div className="flex items-center gap-2">
+                                <button disabled={page <= 1} onClick={() => patch({ page: String(page - 1) })} className="h-9 px-3 rounded-md border">Geri</button>
+                                <div>Sayfa {page}</div>
+                                <button onClick={() => patch({ page: String(page + 1) })} className="h-9 px-3 rounded-md border">İleri</button>
+                                <select value={pageSize} onChange={(e) => patch({ pageSize: e.target.value })} className="h-9 px-2 rounded-md border">
+                                    <option value="10">10</option><option value="20">20</option><option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <DataGrid
+                        data={items}
+                        columns={columns}
+                        loading={loading}
+                        selectable={true}
+                        selectedRows={selectedCustomers}
+                        onSelectionChange={setSelectedCustomers}
+                        onRowClick={(customer) => navigate(`/customers/${customer.id}`)}
+                        onSort={(key, direction) => {
+                            patch({ sort: `${key}_${direction}` });
+                        }}
+                        pagination={{
+                            page,
+                            pageSize,
+                            total,
+                            onPageChange: (newPage) => patch({ page: String(newPage) }),
+                            onPageSizeChange: (newSize) => patch({ pageSize: String(newSize) })
+                        }}
+                        emptyMessage="Henüz müşteri eklenmemiş"
+                        rowKey="id"
+                    />
+                )}
             </div>
             <Footer />
         </DashboardLayout>
