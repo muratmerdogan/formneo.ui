@@ -287,8 +287,7 @@ export default function App() {
 
             <Route path="/customers" element={<CustomersPage />} />
             <Route path="/customers/new" element={<CustomerFormPage />} />
-            <Route path="/customers/:id" element={<CustomerDashboardPage />} />
-            <Route path="/customers/:id/edit" element={<CustomerFormPage />} />
+            <Route path="/customers/:id" element={<CustomerFormPage />} />
 
             <Route path="/formAuth" element={<FormAuth />} />
             <Route path="/formAuth/detail" element={<FormAuthDetail />} />

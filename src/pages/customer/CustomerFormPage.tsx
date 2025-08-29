@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,6 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import EmailsGrid, { EmailRow } from "components/form/EmailsGrid";
 import AddressesGrid, { AddressRow } from "components/form/AddressesGrid";
 import PhonesGrid, { PhoneRow } from "components/form/PhonesGrid";
+import { NoteRow } from "components/form/NotesGrid";
 import NotesSection from "components/customers/sections/NotesSection";
 import SocialMediaSection from "components/customers/sections/SocialMediaSection";
 import { Box, Tabs, Tab, Avatar, Chip, Menu, MenuItem } from "@mui/material";
@@ -25,52 +26,31 @@ import { DndContext, closestCenter } from "@dnd-kit/core";
 import DraggableSection from "components/customers/sections/DraggableSection";
 
 const schema = z.object({
-    // Kimlik/Temel
+    // Temel bilgiler
     name: z.string().min(2, "Zorunlu"),
     legalName: z.string().optional(),
     code: z.string().optional(),
-    customerType: z.string().optional(),
-    category: z.string().optional(),
+    customerTypeId: z.string().optional(),
+    categoryId: z.string().optional(),
     status: z.enum(["active", "inactive"]),
     lifecycleStage: z.enum(["lead", "mql", "sql", "opportunity", "customer"]).optional(),
     ownerId: z.string().optional(),
-    sectorsCsv: z.string().optional(),
+    nextActivityDate: z.string().optional(), // ISO date string
+    sectors: z.array(z.string()).optional(),
     isReferenceCustomer: z.boolean().optional(),
     // İletişim
     emailPrimary: z.string().email().optional().or(z.literal("")),
-    emailSecondaryCsv: z.string().optional(),
-    phone: z.string().optional(),
-    mobile: z.string().optional(),
-    fax: z.string().optional(),
-    preferredContact: z.string().optional(),
-    // Adres
-    country: z.string().optional(),
-    city: z.string().optional(),
-    district: z.string().optional(),
-    postalCode: z.string().optional(),
-    line1: z.string().optional(),
-    line2: z.string().optional(),
+    emailSecondary: z.array(z.string()).optional(),
     // Diğer
     website: z.string().url().optional().or(z.literal("")),
     taxOffice: z.string().optional(),
     taxNumber: z.string().optional(),
-    tagsCsv: z.string().optional(),
+    tags: z.array(z.string()).optional(),
     defaultNotificationEmail: z.string().email().optional().or(z.literal("")),
     twitterUrl: z.string().url().optional().or(z.literal("")),
     facebookUrl: z.string().url().optional().or(z.literal("")),
     linkedinUrl: z.string().url().optional().or(z.literal("")),
     instagramUrl: z.string().url().optional().or(z.literal("")),
-    // Finans
-    paymentMethod: z.string().optional(),
-    termDays: z.number().optional(),
-    currency: z.string().optional(),
-    discount: z.number().optional(),
-    creditLimit: z.number().optional(),
-    eInvoice: z.boolean().optional(),
-    iban: z.string().optional(),
-    taxExemptionCode: z.string().optional(),
-    // Notlar (çoklu grid JSON)
-    notesJson: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -84,14 +64,11 @@ export default function CustomerFormPage(): JSX.Element {
         defaultValues: { status: "active" },
     });
 
-    // Action bar sadece yeni müşteri (customers/new) ekranında
-    useRegisterActions(
-        !isEdit ? [
-            { id: "cancel", label: "Vazgeç", icon: <CloseIcon fontSize="small" />, onClick: () => navigate(-1) },
-            { id: "save", label: "Kaydet", icon: <SaveIcon fontSize="small" />, onClick: () => handleSubmit(onSubmit)(), disabled: isSubmitting },
-        ] : [],
-        [isEdit, isSubmitting]
-    );
+    // Action bar hem yeni hem edit sayfalarında
+    useRegisterActions([
+        { id: "cancel", label: "Vazgeç", icon: <CloseIcon fontSize="small" />, onClick: () => navigate(-1) },
+        { id: "save", label: isEdit ? "Güncelle" : "Kaydet", icon: <SaveIcon fontSize="small" />, onClick: () => handleSubmit(onSubmit)(), disabled: isSubmitting },
+    ], [isEdit, isSubmitting]);
 
     const [activeTab, setActiveTab] = useState(0);
     const [ownerAnchor, setOwnerAnchor] = useState<null | HTMLElement>(null);
@@ -99,85 +76,199 @@ export default function CustomerFormPage(): JSX.Element {
     const [emailRows, setEmailRows] = useState<EmailRow[]>([]);
     const [addressRows, setAddressRows] = useState<AddressRow[]>([]);
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
+    const [noteRows, setNoteRows] = useState<NoteRow[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    // Edit modunda müşteri verilerini yükle
+    useEffect(() => {
+        if (isEdit && id) {
+            loadCustomerData(id);
+        }
+    }, [isEdit, id]);
+
+    const loadCustomerData = async (customerId: string) => {
+        setLoading(true);
+        try {
+            const api = new CustomersApi(getConfiguration());
+            const response: any = await api.apiCustomersIdGet(customerId);
+            const customer = response.data;
+
+
+
+            if (customer) {
+                // Form alanlarını doldur
+                setValue("name", customer.name || "");
+                setValue("legalName", customer.legalName || "");
+                setValue("code", customer.code || "");
+                setValue("customerTypeId", customer.customerTypeId?.toString() || "");
+                setValue("categoryId", customer.categoryId?.toString() || "");
+                setValue("status", customer.status === 1 ? "active" : "inactive");
+                const lifecycleValues = ["lead", "mql", "sql", "opportunity", "customer"] as const;
+                setValue("lifecycleStage", customer.lifecycleStage !== null && customer.lifecycleStage >= 0 && customer.lifecycleStage < lifecycleValues.length ? lifecycleValues[customer.lifecycleStage] : undefined);
+                setValue("ownerId", customer.ownerId || "");
+                setValue("nextActivityDate", customer.nextActivityDate || "");
+                setValue("sectors", customer.sectors || []);
+                setValue("isReferenceCustomer", !!customer.isReferenceCustomer);
+                setValue("emailPrimary", customer.emailPrimary || "");
+                setValue("emailSecondary", customer.emailSecondary || []);
+                setValue("website", customer.website || "");
+                setValue("taxOffice", customer.taxOffice || "");
+                setValue("taxNumber", customer.taxNumber || "");
+                setValue("tags", customer.tags || []);
+                setValue("defaultNotificationEmail", customer.defaultNotificationEmail || "");
+                setValue("twitterUrl", customer.twitterUrl || "");
+                setValue("facebookUrl", customer.facebookUrl || "");
+                setValue("linkedinUrl", customer.linkedinUrl || "");
+                setValue("instagramUrl", customer.instagramUrl || "");
+
+                // Gridleri doldur
+                if (customer.emails && Array.isArray(customer.emails) && customer.emails.length > 0) {
+                    setEmailRows(customer.emails.map((e: any) => ({
+                        id: e.id || crypto.randomUUID(),
+                        email: e.email || "",
+                        description: e.description || "",
+                        notify: !!e.notify,
+                        bulk: !!e.bulk,
+                        isActive: !!e.isActive,
+                        isPrimary: !!e.isPrimary
+                    })));
+                }
+
+                if (customer.addresses && Array.isArray(customer.addresses) && customer.addresses.length > 0) {
+                    setAddressRows(customer.addresses.map((a: any) => ({
+                        id: a.id || crypto.randomUUID(),
+                        country: a.country || "",
+                        city: a.city || "",
+                        district: a.district || "",
+                        postalCode: a.postalCode || "",
+                        line1: a.line1 || "",
+                        line2: a.line2 || "",
+                        isBilling: !!a.isBilling,
+                        isShipping: !!a.isShipping,
+                        isActive: !!a.isActive
+                    })));
+                }
+
+                if (customer.phones && Array.isArray(customer.phones) && customer.phones.length > 0) {
+                    setPhoneRows(customer.phones.map((p: any) => ({
+                        id: p.id || crypto.randomUUID(),
+                        label: p.label || "",
+                        number: p.number || "",
+                        isPrimary: !!p.isPrimary,
+                        isActive: !!p.isActive
+                    })));
+                }
+
+                if (customer.notes) {
+                    setNoteRows(customer.notes.map((n: any) => ({
+                        id: n.id || crypto.randomUUID(),
+                        date: n.date || "",
+                        title: n.title || "",
+                        note: n.content || ""
+                    })));
+                }
+
+                // Owner'ı set et
+                if (customer.ownerId) {
+                    const ownerUser = mockOwners.find(u => u.id === customer.ownerId);
+                    if (ownerUser) {
+                        setOwner(ownerUser);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Müşteri verisi yüklenemedi:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const onSubmit = async (values: FormValues) => {
         const api = new CustomersApi(getConfiguration());
+        const dto: any = {
+            name: values.name,
+            legalName: values.legalName || null,
+            code: values.code || null,
+            customerTypeId: values.customerTypeId ? Number(values.customerTypeId) : null,
+            categoryId: values.categoryId ? Number(values.categoryId) : null,
+            status: values.status === "active" ? 1 : 0,
+            lifecycleStage: values.lifecycleStage ? ["lead", "mql", "sql", "opportunity", "customer"].indexOf(values.lifecycleStage) : null,
+            ownerId: values.ownerId || null,
+            nextActivityDate: values.nextActivityDate || null,
+            sectors: values.sectors || null,
+            isReferenceCustomer: !!values.isReferenceCustomer,
+            emailPrimary: values.emailPrimary || null,
+            emailSecondary: values.emailSecondary || null,
+            emails: emailRows.map(e => ({
+                id: e.id,
+                email: e.email,
+                description: e.description || null,
+                notify: e.notify,
+                bulk: e.bulk,
+                isActive: e.isActive,
+                isPrimary: e.isPrimary
+            })),
+            addresses: addressRows.map(a => ({
+                id: a.id,
+                country: a.country || null,
+                city: a.city || null,
+                district: a.district || null,
+                postalCode: a.postalCode || null,
+                line1: a.line1 || null,
+                line2: a.line2 || null,
+                isBilling: a.isBilling,
+                isShipping: a.isShipping,
+                isActive: a.isActive
+            })),
+            phones: phoneRows.map(p => ({
+                id: p.id,
+                label: p.label || null,
+                number: p.number,
+                isPrimary: p.isPrimary,
+                isActive: p.isActive
+            })),
+            notes: noteRows.map(n => ({
+                id: n.id,
+                date: n.date,
+                title: n.title,
+                content: n.note
+            })),
+            website: values.website || null,
+            taxOffice: values.taxOffice || null,
+            taxNumber: values.taxNumber || null,
+            tags: values.tags || null,
+            defaultNotificationEmail: values.defaultNotificationEmail || null,
+            twitterUrl: values.twitterUrl || null,
+            facebookUrl: values.facebookUrl || null,
+            linkedinUrl: values.linkedinUrl || null,
+            instagramUrl: values.instagramUrl || null,
+        };
+
         if (isEdit) {
-            const dto: any = {
-                id,
-                name: values.name,
-                code: values.code || null,
-                customerType: values.customerType ? Number(values.customerType) : undefined,
-                category: values.category ? Number(values.category) : undefined,
-                sectors: values.sectorsCsv ? values.sectorsCsv.split(',').map((s) => s.trim()).filter(Boolean) : null,
-                status: values.status === "active" ? 1 : 0,
-                emailPrimary: values.emailPrimary || null,
-                emailSecondary: values.emailSecondaryCsv ? values.emailSecondaryCsv.split(',').map((s) => s.trim()).filter(Boolean) : null,
-                phone: values.phone || null,
-                mobile: values.mobile || null,
-                fax: values.fax || null,
-                preferredContact: values.preferredContact || null,
-                website: values.website || null,
-                taxOffice: values.taxOffice || null,
-                taxNumber: values.taxNumber || null,
-                tags: values.tagsCsv ? values.tagsCsv.split(",").map((s) => s.trim()).filter(Boolean) : null,
-                paymentMethod: values.paymentMethod || null,
-                termDays: values.termDays ?? null,
-                currency: values.currency || null,
-                discount: values.discount ?? null,
-                creditLimit: values.creditLimit ?? null,
-                eInvoice: values.eInvoice ?? false,
-                iban: values.iban || null,
-                taxExemptionCode: values.taxExemptionCode || null,
-                // Ek bilgi: Notlar çoklu grid olarak tutuluyor (notesJson). API alanı tanımlanırsa burada dönüştürülebilir.
-            };
+            dto.id = id;
             await api.apiCustomersPut(dto);
             navigate(`/customers/${id}`);
         } else {
-            const dto: any = {
-                name: values.name,
-                legalName: values.legalName || null,
-                code: values.code || null,
-                customerType: values.customerType ? Number(values.customerType) : undefined,
-                category: values.category ? Number(values.category) : undefined,
-                sectors: values.sectorsCsv ? values.sectorsCsv.split(',').map((s) => s.trim()).filter(Boolean) : null,
-                status: values.status === "active" ? 1 : 0,
-                emailPrimary: values.emailPrimary || null,
-                emailSecondary: values.emailSecondaryCsv ? values.emailSecondaryCsv.split(',').map((s) => s.trim()).filter(Boolean) : null,
-                phone: values.phone || null,
-                mobile: values.mobile || null,
-                fax: values.fax || null,
-                preferredContact: values.preferredContact || null,
-                website: values.website || null,
-                taxOffice: values.taxOffice || null,
-                taxNumber: values.taxNumber || null,
-                isReferenceCustomer: !!values.isReferenceCustomer,
-                tags: values.tagsCsv ? values.tagsCsv.split(",").map((s) => s.trim()).filter(Boolean) : null,
-                addresses: values.country || values.city || values.line1 ? [{
-                    country: values.country || null,
-                    city: values.city || null,
-                    district: values.district || null,
-                    postalCode: values.postalCode || null,
-                    line1: values.line1 || null,
-                    line2: values.line2 || null,
-                    isDefaultBilling: true,
-                    isDefaultShipping: true,
-                }] : [],
-                paymentMethod: values.paymentMethod || null,
-                termDays: values.termDays ?? null,
-                currency: values.currency || null,
-                discount: values.discount ?? null,
-                creditLimit: values.creditLimit ?? null,
-                eInvoice: values.eInvoice ?? false,
-                iban: values.iban || null,
-                taxExemptionCode: values.taxExemptionCode || null,
-                // Ek bilgi: Notlar çoklu grid olarak tutuluyor (notesJson). API alanı tanımlanırsa burada dönüştürülebilir.
-            };
             const res: any = await api.apiCustomersPost(dto);
             const createdId = String(res?.data?.id ?? "");
             navigate(`/customers/${createdId}`);
         }
     };
+
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <DashboardNavbar />
+                <div className="px-6 lg:px-10 py-6 flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-2"></div>
+                        <div className="text-slate-600">Müşteri bilgileri yükleniyor...</div>
+                    </div>
+                </div>
+                <Footer />
+            </DashboardLayout>
+        );
+    }
 
     return (
         <DashboardLayout>
@@ -215,29 +306,22 @@ export default function CustomerFormPage(): JSX.Element {
                             <BasicInfoSection
                                 register={register}
                                 errors={errors}
-                                customerTypeValue={watch("customerType") || null}
-                                onCustomerTypeChange={(val) => setValue("customerType", val || "")}
+                                customerTypeValue={watch("customerTypeId") || null}
+                                onCustomerTypeChange={(val) => setValue("customerTypeId", val || "")}
+                                sectorTypeValue={watch("sectors")?.join(",") || null}
+                                onSectorTypeChange={(val) => setValue("sectors", val ? val.split(",").map(s => s.trim()).filter(Boolean) : [])}
+                                sectorsValue={watch("sectors")?.join(",") || null}
+                                onSectorsChange={(val) => setValue("sectors", val ? val.split(",").map(s => s.trim()).filter(Boolean) : [])}
                             />
                         </DraggableSection>
                         <DraggableSection id="emails" title="E-Postalar">
-                            <div className="space-y-2">
-                                <EmailsGrid label="E-Postalar" rows={emailRows} onChange={setEmailRows} />
-                                {/* Form saklama alanları */}
-                                <input type="hidden" value={emailRows.map(r => r.email).join(",")} {...register("emailSecondaryCsv")} />
-                                <input type="hidden" value={JSON.stringify(emailRows)} name="emailSecondaryJson" />
-                            </div>
+                            <EmailsGrid label="E-Postalar" rows={emailRows} onChange={setEmailRows} />
                         </DraggableSection>
                         <DraggableSection id="addresses" title="Adresler">
-                            <div className="space-y-2">
-                                <AddressesGrid label="Adresler" rows={addressRows} onChange={setAddressRows} />
-                                <input type="hidden" value={JSON.stringify(addressRows)} name="addressesJson" />
-                            </div>
+                            <AddressesGrid label="Adresler" rows={addressRows} onChange={setAddressRows} />
                         </DraggableSection>
                         <DraggableSection id="phones" title="Telefonlar">
-                            <div className="space-y-2">
-                                <PhonesGrid label="Telefonlar" rows={phoneRows} onChange={setPhoneRows} />
-                                <input type="hidden" value={JSON.stringify(phoneRows)} name="phonesJson" />
-                            </div>
+                            <PhonesGrid label="Telefonlar" rows={phoneRows} onChange={setPhoneRows} />
                         </DraggableSection>
 
                     </div>
@@ -255,7 +339,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 <Tab label="Sosyal Medya" />
                             </Tabs>
                             <Box sx={{ p: 2, flex: 1 }}>
-                                {activeTab === 0 && <NotesSection register={register} errors={errors} />}
+                                {activeTab === 0 && <NotesSection register={register} errors={errors} rows={noteRows} onChange={setNoteRows} />}
                                 {activeTab === 1 && <SocialMediaSection register={register} errors={errors} />}
                             </Box>
                         </Box>
