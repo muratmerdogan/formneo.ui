@@ -21,6 +21,11 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
   resources,
   defaultNS,
   compatibilityJSON: "v4",
+  detection: {
+    order: ['localStorage', 'navigator', 'htmlTag'],
+    lookupLocalStorage: 'i18nextLng',
+    caches: ['localStorage']
+  },
   interpolation: {
     escapeValue: false, 
     defaultVariables: {}, 

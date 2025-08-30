@@ -62,6 +62,8 @@ const AllDemos = lazy(() => import("layouts/pages/demos/all-projects"));
 const Logout = lazy(() => import("layouts/authentication/sign-in/cover/Logout"));
 import PrivateRoute from "layouts/authentication/sign-in/cover/PrivateRoute";
 const Cover = lazy(() => import("layouts/authentication/sign-in/cover"));
+const LandingPage = lazy(() => import("layouts/pages/landing"));
+const CompanyRegister = lazy(() => import("layouts/authentication/company-register"));
 const AllProjects = lazy(() => import("layouts/pages/profile/all-projects"));
 const MessagePage = lazy(() => import("layouts/applications/chat/MessagePage"));
 const MenuList = lazy(() => import("layouts/pages/menuDefination/MenuList"));
@@ -229,14 +231,17 @@ export default function App() {
       <ActionBarProvider>
         <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
           <Routes>
-            {/* Login Sayfası (Herkese Açık) */}
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
             <Route path="/authentication/sign-in/cover" element={<Cover />} />
+            <Route path="/authentication/company-register" element={<CompanyRegister />} />
             <Route path="/LogOut" element={<Logout />} />
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
             {/* Private Routes */}
             <Route element={<PrivateRoute />}>
               {getRoutes(routes)} {/* Tüm özel rotaları ekler */}
+              <Route path="/dashboard" element={<Navigate to="/dashboards/analytics" />} />
               <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
               <Route path="/users/detail" element={<UserDetail />} />
               <Route path="/ActivityReports" element={<ActivityReports />} />

@@ -511,5 +511,262 @@
   },
   "FormMngPage": {
     "YeniForm": "New Form"
+  },
+  "LandingPage": {
+    "Navigation": {
+      "Login": "Sign In",
+      "FreeTrial": "Free Trial"
+    },
+    "Hero": {
+      "Title": "Smart CRM Solution",
+      "Subtitle": "for Customer Relations",
+      "Description": "Manage your customers, track sales processes, grow your business. Simple yet powerful CRM system.",
+      "StartFree": "Start Free",
+      "WatchDemo": "Watch Demo",
+      "Features": {
+        "FreeTrial": "14-day free trial",
+        "NoCredit": "No credit card required",
+        "InstantSetup": "Instant setup"
+      }
+    },
+    "Features": {
+      "Title": "Our CRM Features",
+      "Subtitle": "Powerful features designed for small and medium-sized businesses to meet your essential CRM needs.",
+      "CustomerManagement": {
+        "Title": "Basic Customer Management",
+        "Description": "Customer cards, groups/tags (VIP, potential, active/passive), notes and detailed customer information management."
+      },
+      "ActivityTracking": {
+        "Title": "Activity & Tracking",
+        "Description": "Reminders, task creation (calls, meetings, proposals), simple notification system for customer tracking."
+      },
+      "SalesProcess": {
+        "Title": "Sales Process Stages",
+        "Description": "Pipeline/sales stages (Potential → Proposal → Sale). See which customer is at which stage."
+      },
+      "Reporting": {
+        "Title": "Reporting & Analytics",
+        "Description": "Basic reports and statistics like how many customers added, how many customers active, how many sales closed."
+      },
+      "UserManagement": {
+        "Title": "User Management",
+        "Description": "Access for up to 3 users within 1 company. Role-based simple authorization system (Admin/User)."
+      },
+      "DataSecurity": {
+        "Title": "Data Security & Backup",
+        "Description": "Secure cloud storage, SSL encryption and daily automatic backup to keep your data safe."
+      }
+    },
+    "AdvancedFeatures": {
+      "Title": "Advanced Features",
+      "Subtitle": "Automate your workflows with drag-and-drop management and smart approval processes.",
+      "DragDrop": {
+        "Title": "Drag-and-Drop Customer Management",
+        "Description": "Easily drag and drop your customers between sales stages. Visually manage the entire process from potential customer to sale.",
+        "Features": {
+          "VisualPipeline": "Visual pipeline management",
+          "DragDrop": "Easy movement with drag & drop",
+          "AutoUpdate": "Automatic status updates",
+          "StageReporting": "Stage-based reporting"
+        }
+      },
+      "SmartApproval": {
+        "Title": "Smart Approval Processes",
+        "Description": "Create automatic approval flows in your sales processes. Take automatic actions under certain conditions, define situations requiring manual approval.",
+        "Features": {
+          "AutoRules": "Automatic approval rules",
+          "MultiLevel": "Multi-level approval system",
+          "EmailNotifications": "Email notifications",
+          "ApprovalHistory": "Approval history tracking"
+        }
+      },
+      "CustomWorkflows": {
+        "Title": "Customizable Workflows",
+        "Description": "Create custom flows suitable for your business processes. Build powerful automation systems with triggers, conditions and actions.",
+        "Features": {
+          "CustomDesign": "Custom workflow design",
+          "ConditionalTriggers": "Conditional triggers",
+          "AutoAssignment": "Automatic task assignments",
+          "ProcessAnalysis": "Process performance analysis"
+        }
+      },
+      "DemoSoon": "Demo Coming Soon!",
+      "DemoDescription": "Follow us for interactive demo"
+    },
+    "Pricing": {
+      "Title": "Choose the Right Plan for You",
+      "Subtitle": "Flexible pricing options according to your needs. You can change your plan anytime.",
+      "Plans": {
+        "Starter": {
+          "Name": "Starter",
+          "Price": "149",
+          "Period": "month",
+          "Description": "Ideal for small businesses",
+          "Features": {
+            "Customers": "100 customer records",
+            "Users": "1 user",
+            "BasicCRM": "Basic customer management",
+            "BasicReports": "Simple reports",
+            "EmailSupport": "Email support"
+          },
+          "Button": "Get Started"
+        },
+        "Professional": {
+          "Name": "Professional",
+          "Price": "299",
+          "Period": "month",
+          "Description": "For growing businesses",
+          "Features": {
+            "Customers": "1,000 customer records",
+            "Users": "3 users",
+            "AllFeatures": "All CRM features",
+            "Pipeline": "Sales pipeline management",
+            "AdvancedReports": "Advanced reports",
+            "PrioritySupport": "Priority support",
+            "AutoBackup": "Automatic backup"
+          },
+          "Button": "Most Popular",
+          "Popular": "MOST POPULAR"
+        },
+        "Enterprise": {
+          "Name": "Enterprise",
+          "Price": "Custom",
+          "Period": "pricing",
+          "Description": "For large organizations",
+          "Features": {
+            "UnlimitedCustomers": "Unlimited customers",
+            "UnlimitedUsers": "Unlimited users",
+            "CustomIntegrations": "Custom integrations",
+            "CustomTraining": "Custom training",
+            "SLA": "SLA guarantee",
+            "CustomSecurity": "Custom security features"
+          },
+          "Button": "Contact Us"
+        }
+      }
+    },
+    "CTA": {
+      "Title": "Ready to Get Started?",
+      "Subtitle": "Thousands of companies have digitized their form processes with FormNeo. Join them and feel the difference.",
+      "CreateAccount": "Create Free Account",
+      "ContactSales": "Talk to Sales Team"
+    },
+    "Footer": {
+      "Description": "Smart CRM solution designed for small and medium-sized businesses. Strengthen your customer relationships, increase your sales.",
+      "Product": {
+        "Title": "Product",
+        "Features": "Features",
+        "Pricing": "Pricing",
+        "API": "API"
+      },
+      "Support": {
+        "Title": "Support",
+        "HelpCenter": "Help Center",
+        "Contact": "Contact",
+        "Status": "Status Page"
+      },
+      "Copyright": "© 2024 FormNeo. All rights reserved."
+    }
+  },
+  "CompanyRegister": {
+    "Title": "Welcome to FormNeo",
+    "Subtitle": "Register your company and start digital transformation",
+    "Steps": {
+      "CompanyInfo": "Company Information",
+      "AdminUser": "Admin User",
+      "PlanSelection": "Plan Selection"
+    },
+    "CompanyInfo": {
+      "CompanyName": "Company Name",
+      "CompanyNamePlaceholder": "Enter your company name",
+      "Industry": "Industry",
+      "IndustryPlaceholder": "Select industry",
+      "CompanySize": "Company Size",
+      "CompanySizePlaceholder": "Select number of employees",
+      "Country": "Country",
+      "CountryPlaceholder": "Select country",
+      "City": "City",
+      "CityPlaceholder": "Select city",
+      "Email": "Company Email",
+      "Phone": "Phone",
+      "TaxNumber": "Tax Number",
+      "Address": "Address"
+    },
+    "AdminUser": {
+      "FirstName": "First Name",
+      "FirstNamePlaceholder": "Enter your first name",
+      "LastName": "Last Name",
+      "LastNamePlaceholder": "Enter your last name",
+      "Email": "Email",
+      "EmailPlaceholder": "Enter your email address",
+      "Phone": "Phone",
+      "PhonePlaceholder": "Enter your phone number",
+      "Password": "Password",
+      "PasswordPlaceholder": "Create a strong password",
+      "ConfirmPassword": "Confirm Password",
+      "ConfirmPasswordPlaceholder": "Re-enter your password"
+    },
+    "PlanSelection": {
+      "Title": "Choose the Right Plan for You",
+      "Subtitle": "Select the plan that best fits your needs. You can change it anytime."
+    },
+    "Navigation": {
+      "Back": "Back",
+      "Next": "Next",
+      "Register": "Register"
+    },
+    "Terms": {
+      "Agreement": "I agree to the terms of service and privacy policy",
+      "TermsLink": "Terms of Service",
+      "PrivacyLink": "Privacy Policy"
+    },
+    "LoginLink": {
+      "Text": "Already have an account?",
+      "Link": "Sign In"
+    },
+    "Industries": {
+      "Technology": "Technology",
+      "Healthcare": "Healthcare",
+      "Finance": "Finance",
+      "Education": "Education",
+      "Retail": "Retail",
+      "Manufacturing": "Manufacturing",
+      "Other": "Other"
+    },
+    "CompanySizes": {
+      "Size1": "1-10 employees",
+      "Size2": "11-50 employees",
+      "Size3": "51-200 employees",
+      "Size4": "201-1000 employees",
+      "Size5": "1000+ employees"
+    },
+    "Countries": {
+      "Turkey": "Turkey",
+      "USA": "United States",
+      "Germany": "Germany",
+      "France": "France",
+      "UK": "United Kingdom"
+    },
+    "Cities": {
+      "Istanbul": "Istanbul",
+      "Ankara": "Ankara",
+      "Izmir": "Izmir",
+      "Bursa": "Bursa",
+      "Antalya": "Antalya"
+    }
+  },
+  "Login": {
+    "Title": "Sign In to FormNeo",
+    "Subtitle": "Sign in to your account",
+    "Email": "Email",
+    "EmailPlaceholder": "Enter your email address",
+    "Password": "Password",
+    "PasswordPlaceholder": "Enter your password",
+    "LoginButton": "Sign In",
+    "ForgotPassword": "Forgot Password",
+    "NoAccount": "Don't have an account yet?",
+    "CreateAccount": "Create Company Registration",
+    "OrLoginWith": "Or sign in with",
+    "MicrosoftLogin": "Sign In with Microsoft"
   }
 }

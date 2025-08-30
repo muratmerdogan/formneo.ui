@@ -512,5 +512,262 @@
   },
   "FormMngPage": {
     "YeniForm": "Yeni Form"
+  },
+  "LandingPage": {
+    "Navigation": {
+      "Login": "Giriş Yap",
+      "FreeTrial": "Ücretsiz Dene"
+    },
+    "Hero": {
+      "Title": "Müşteri İlişkilerinde",
+      "Subtitle": "Akıllı CRM Çözümü",
+      "Description": "Müşterilerinizi yönetin, satış süreçlerinizi takip edin, işinizi büyütün. Basit ama güçlü CRM sistemi.",
+      "StartFree": "Ücretsiz Başla",
+      "WatchDemo": "Demo İzle",
+      "Features": {
+        "FreeTrial": "14 gün ücretsiz deneme",
+        "NoCredit": "Kredi kartı gerektirmez",
+        "InstantSetup": "Anında kurulum"
+      }
+    },
+    "Features": {
+      "Title": "CRM Özelliklerimiz",
+      "Subtitle": "Küçük ve orta ölçekli işletmeler için tasarlanmış, temel CRM ihtiyaçlarınızı karşılayan güçlü özellikler.",
+      "CustomerManagement": {
+        "Title": "Temel Müşteri Yönetimi",
+        "Description": "Müşteri kartları, gruplar/etiketler (VIP, potansiyel, aktif/pasif), notlar ve detaylı müşteri bilgileri yönetimi."
+      },
+      "ActivityTracking": {
+        "Title": "Aktivite & Takip",
+        "Description": "Hatırlatıcılar, görev ekleme (arama, toplantı, teklif), basit bildirim sistemi ile müşteri takibi."
+      },
+      "SalesProcess": {
+        "Title": "Satış Süreci Basamakları",
+        "Description": "Pipeline/satış aşamaları (Potansiyel → Teklif → Satış). Hangi müşterinin hangi aşamada olduğunu görün."
+      },
+      "Reporting": {
+        "Title": "Raporlama & Analitik",
+        "Description": "Kaç müşteri eklendi, kaç müşteri aktif, kaç satış kapandı gibi temel raporlar ve istatistikler."
+      },
+      "UserManagement": {
+        "Title": "Kullanıcı Yönetimi",
+        "Description": "1 şirket içinde 3 kullanıcıya kadar erişim. Rol tabanlı basit yetki sistemi (Yönetici/Kullanıcı)."
+      },
+      "DataSecurity": {
+        "Title": "Veri Güvenliği & Yedekleme",
+        "Description": "Bulutta güvenli saklama, SSL şifreleme ve günlük otomatik yedekleme ile verileriniz güvende."
+      }
+    },
+    "AdvancedFeatures": {
+      "Title": "Gelişmiş Özellikler",
+      "Subtitle": "Sürükle-bırak yönetimi ve akıllı onay süreçleri ile iş akışlarınızı otomatikleştirin.",
+      "DragDrop": {
+        "Title": "Sürükle-Bırak Müşteri Yönetimi",
+        "Description": "Müşterilerinizi satış aşamaları arasında kolayca sürükleyip bırakın. Potansiyel müşteriden satışa kadar tüm süreci görsel olarak yönetin.",
+        "Features": {
+          "VisualPipeline": "Görsel pipeline yönetimi",
+          "DragDrop": "Drag & drop ile kolay taşıma",
+          "AutoUpdate": "Otomatik durum güncellemeleri",
+          "StageReporting": "Aşama bazlı raporlama"
+        }
+      },
+      "SmartApproval": {
+        "Title": "Akıllı Onay Süreçleri",
+        "Description": "Satış süreçlerinizde otomatik onay akışları oluşturun. Belirli koşullarda otomatik aksiyonlar alın, manuel onay gerektiren durumları belirleyin.",
+        "Features": {
+          "AutoRules": "Otomatik onay kuralları",
+          "MultiLevel": "Çok seviyeli onay sistemi",
+          "EmailNotifications": "E-posta bildirimleri",
+          "ApprovalHistory": "Onay geçmişi takibi"
+        }
+      },
+      "CustomWorkflows": {
+        "Title": "Özelleştirilebilir İş Akışları",
+        "Description": "Kendi iş süreçlerinize uygun özel akışlar oluşturun. Tetikleyiciler, koşullar ve aksiyonlarla güçlü otomasyon sistemleri kurun.",
+        "Features": {
+          "CustomDesign": "Özel iş akışı tasarımı",
+          "ConditionalTriggers": "Koşullu tetikleyiciler",
+          "AutoAssignment": "Otomatik görev atamaları",
+          "ProcessAnalysis": "Süreç performans analizi"
+        }
+      },
+      "DemoSoon": "Demo Yakında!",
+      "DemoDescription": "İnteraktif demo için bizi takip edin"
+    },
+    "Pricing": {
+      "Title": "Size Uygun Planı Seçin",
+      "Subtitle": "İhtiyaçlarınıza göre esnek fiyatlandırma seçenekleri. İstediğiniz zaman plan değiştirebilirsiniz.",
+      "Plans": {
+        "Starter": {
+          "Name": "Başlangıç",
+          "Price": "149",
+          "Period": "ay",
+          "Description": "Küçük işletmeler için ideal",
+          "Features": {
+            "Customers": "100 müşteri kaydı",
+            "Users": "1 kullanıcı",
+            "BasicCRM": "Temel müşteri yönetimi",
+            "BasicReports": "Basit raporlar",
+            "EmailSupport": "E-posta desteği"
+          },
+          "Button": "Başla"
+        },
+        "Professional": {
+          "Name": "Profesyonel",
+          "Price": "299",
+          "Period": "ay",
+          "Description": "Büyüyen işletmeler için",
+          "Features": {
+            "Customers": "1,000 müşteri kaydı",
+            "Users": "3 kullanıcı",
+            "AllFeatures": "Tüm CRM özellikleri",
+            "Pipeline": "Satış pipeline yönetimi",
+            "AdvancedReports": "Gelişmiş raporlar",
+            "PrioritySupport": "Öncelikli destek",
+            "AutoBackup": "Otomatik yedekleme"
+          },
+          "Button": "En Popüler",
+          "Popular": "EN POPÜLER"
+        },
+        "Enterprise": {
+          "Name": "Kurumsal",
+          "Price": "Özel",
+          "Period": "fiyat",
+          "Description": "Büyük organizasyonlar için",
+          "Features": {
+            "UnlimitedCustomers": "Sınırsız müşteri",
+            "UnlimitedUsers": "Sınırsız kullanıcı",
+            "CustomIntegrations": "Özel entegrasyonlar",
+            "CustomTraining": "Özel eğitim",
+            "SLA": "SLA garantisi",
+            "CustomSecurity": "Özel güvenlik özellikleri"
+          },
+          "Button": "İletişime Geç"
+        }
+      }
+    },
+    "CTA": {
+      "Title": "Hemen Başlamaya Hazır mısınız?",
+      "Subtitle": "Binlerce şirket FormNeo ile form süreçlerini dijitalleştirdi. Siz de katılın ve farkı hissedin.",
+      "CreateAccount": "Ücretsiz Hesap Oluştur",
+      "ContactSales": "Satış Ekibiyle Konuş"
+    },
+    "Footer": {
+      "Description": "Küçük ve orta ölçekli işletmeler için tasarlanmış akıllı CRM çözümü. Müşteri ilişkilerinizi güçlendirin, satışlarınızı artırın.",
+      "Product": {
+        "Title": "Ürün",
+        "Features": "Özellikler",
+        "Pricing": "Fiyatlandırma",
+        "API": "API"
+      },
+      "Support": {
+        "Title": "Destek",
+        "HelpCenter": "Yardım Merkezi",
+        "Contact": "İletişim",
+        "Status": "Durum Sayfası"
+      },
+      "Copyright": "© 2024 FormNeo. Tüm hakları saklıdır."
+    }
+  },
+  "CompanyRegister": {
+    "Title": "FormNeo'ya Hoş Geldiniz",
+    "Subtitle": "Şirketinizi kaydedin ve dijital dönüşümü başlatın",
+    "Steps": {
+      "CompanyInfo": "Şirket Bilgileri",
+      "AdminUser": "Yönetici Kullanıcı",
+      "PlanSelection": "Plan Seçimi"
+    },
+    "CompanyInfo": {
+      "CompanyName": "Şirket Adı",
+      "CompanyNamePlaceholder": "Şirket adınızı girin",
+      "Industry": "Sektör",
+      "IndustryPlaceholder": "Sektör seçin",
+      "CompanySize": "Şirket Büyüklüğü",
+      "CompanySizePlaceholder": "Çalışan sayısı seçin",
+      "Country": "Ülke",
+      "CountryPlaceholder": "Ülke seçin",
+      "City": "Şehir",
+      "CityPlaceholder": "Şehir seçin",
+      "Email": "Şirket E-posta",
+      "Phone": "Telefon",
+      "TaxNumber": "Vergi Numarası",
+      "Address": "Adres"
+    },
+    "AdminUser": {
+      "FirstName": "Ad",
+      "FirstNamePlaceholder": "Adınızı girin",
+      "LastName": "Soyad",
+      "LastNamePlaceholder": "Soyadınızı girin",
+      "Email": "E-posta",
+      "EmailPlaceholder": "E-posta adresinizi girin",
+      "Phone": "Telefon",
+      "PhonePlaceholder": "Telefon numaranızı girin",
+      "Password": "Şifre",
+      "PasswordPlaceholder": "Güçlü bir şifre oluşturun",
+      "ConfirmPassword": "Şifre Tekrar",
+      "ConfirmPasswordPlaceholder": "Şifrenizi tekrar girin"
+    },
+    "PlanSelection": {
+      "Title": "Size Uygun Planı Seçin",
+      "Subtitle": "İhtiyaçlarınıza en uygun planı seçin. İstediğiniz zaman değiştirebilirsiniz."
+    },
+    "Navigation": {
+      "Back": "Geri",
+      "Next": "İleri",
+      "Register": "Kayıt Ol"
+    },
+    "Terms": {
+      "Agreement": "Kullanım koşullarını ve gizlilik politikasını kabul ediyorum",
+      "TermsLink": "Kullanım Koşulları",
+      "PrivacyLink": "Gizlilik Politikası"
+    },
+    "LoginLink": {
+      "Text": "Zaten hesabınız var mı?",
+      "Link": "Giriş Yapın"
+    },
+    "Industries": {
+      "Technology": "Teknoloji",
+      "Healthcare": "Sağlık",
+      "Finance": "Finans",
+      "Education": "Eğitim",
+      "Retail": "Perakende",
+      "Manufacturing": "İmalat",
+      "Other": "Diğer"
+    },
+    "CompanySizes": {
+      "Size1": "1-10 çalışan",
+      "Size2": "11-50 çalışan",
+      "Size3": "51-200 çalışan",
+      "Size4": "201-1000 çalışan",
+      "Size5": "1000+ çalışan"
+    },
+    "Countries": {
+      "Turkey": "Türkiye",
+      "USA": "Amerika Birleşik Devletleri",
+      "Germany": "Almanya",
+      "France": "Fransa",
+      "UK": "Birleşik Krallık"
+    },
+    "Cities": {
+      "Istanbul": "İstanbul",
+      "Ankara": "Ankara",
+      "Izmir": "İzmir",
+      "Bursa": "Bursa",
+      "Antalya": "Antalya"
+    }
+  },
+  "Login": {
+    "Title": "FormNeo'ya Giriş",
+    "Subtitle": "Hesabınıza giriş yapın",
+    "Email": "E-posta",
+    "EmailPlaceholder": "E-posta adresinizi girin",
+    "Password": "Şifre",
+    "PasswordPlaceholder": "Şifrenizi girin",
+    "LoginButton": "Giriş Yap",
+    "ForgotPassword": "Şifremi Unuttum",
+    "NoAccount": "Henüz hesabınız yok mu?",
+    "CreateAccount": "Şirket Kaydı Oluşturun",
+    "OrLoginWith": "Veya şununla giriş yapın",
+    "MicrosoftLogin": "Microsoft ile Giriş Yap"
   }
 }

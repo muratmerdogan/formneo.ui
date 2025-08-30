@@ -14,9 +14,10 @@ Coded by www.creative-tim.com
 */
 
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // react-router-dom components
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -35,13 +36,17 @@ import MDButton from "components/MDButton";
 // Layout components
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
+// Images
+import formNeoLogo from "assets/images/logoson.svg";
+
 import { AuthApi, LoginDto, SAPReportsApi, UserApi } from "api/generated";
 import getConfiguration, { getConfigurationLogin } from "confiuration";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { MessageBoxType } from "@ui5/webcomponents-react";
 import { useUser } from "layouts/pages/hooks/userName";
-import { Typography } from "@mui/material";
+import { Typography, IconButton, Tooltip } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 
 // Styled components for Metronic-style layout
 const LoginContainer = styled(Box)(({ theme }) => ({
@@ -97,7 +102,14 @@ const BrandLogo = styled(Box)(({ theme }) => ({
 function Cover(): JSX.Element {
   const { instance } = useMsal();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { t, i18n } = useTranslation();
   const { setuserUserAppDto } = useUser();
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'tr' ? 'en' : 'tr';
+    i18n.changeLanguage(newLang);
+  };
   const dispatchBusy = useBusy();
   const dispatchAlert = useAlert();
   const [email, setEmail] = useState<string>("");
@@ -153,6 +165,17 @@ function Cover(): JSX.Element {
   };
 
   useEffect(() => {
+    // Kayıt başarılı mesajını göster
+    if (location.state?.message) {
+      setAlert({
+        alertType: "success",
+        message: location.state.message,
+      });
+      if (location.state?.email) {
+        setEmail(location.state.email);
+      }
+    }
+
     const interval = setInterval(() => {
       setAlert({
         alertType: "",
@@ -160,22 +183,56 @@ function Cover(): JSX.Element {
       });
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [location.state]);
 
   return (
     <PageLayout>
       <LoginContainer>
         <Container maxWidth="lg">
+          {/* Language Toggle */}
+          <Box display="flex" justifyContent="flex-end" mb={2}>
+            <Tooltip title={i18n.language === 'tr' ? 'Switch to English' : 'Türkçe\'ye Geç'}>
+              <IconButton
+                onClick={toggleLanguage}
+                sx={{
+                  color: "#1976d2",
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  "&:hover": {
+                    backgroundColor: "white",
+                  }
+                }}
+              >
+                <LanguageIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+
           <LoginCard>
             <Grid container>
               {/* Sol Bölüm - Marka ve Açıklama */}
               <Grid item xs={12} md={6}>
                 <LeftSection>
-                  <BrandLogo>
-                    <Typography variant="h4" fontWeight="bold" color="inherit">
-                      F
-                    </Typography>
-                  </BrandLogo>
+                  <MDBox
+                    mb={3}
+                    sx={{
+                      backgroundColor: "rgba(255, 255, 255, 0.95)",
+                      borderRadius: "16px",
+                      padding: "20px",
+                      display: "inline-block",
+                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                      backdropFilter: "blur(10px)"
+                    }}
+                  >
+                    <img
+                      src={formNeoLogo}
+                      alt="FormNeo Logo"
+                      style={{
+                        height: "120px",
+                        width: "auto",
+                        display: "block"
+                      }}
+                    />
+                  </MDBox>
 
                   <MDTypography variant="h3" fontWeight="bold" color="white" mb={2}>
                     FormNeo
@@ -393,8 +450,9 @@ function Cover(): JSX.Element {
                           color="info"
                           fontWeight="medium"
                           sx={{ cursor: "pointer", textDecoration: "underline" }}
+                          onClick={() => navigate("/authentication/company-register")}
                         >
-                          Destek ekibiyle iletişime geçin
+                          Şirket Kaydı Oluşturun
                         </Typography>
                       </MDTypography>
                     </MDBox>
