@@ -1,0 +1,22 @@
+name: Test SSH to VPS
+
+on:
+  workflow_dispatch:  # Manuel tetikleme
+
+jobs:
+  test-connection:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect to VPS and run simple commands
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "🎉 Bağlantı kuruldu!"
+            hostname
+            uptime
+            whoami
