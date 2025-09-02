@@ -677,12 +677,12 @@ function CompanyRegister(): JSX.Element {
                                 style={{ height: "100px", width: "auto" }}
                             />
                         </MDBox>
-                                        <MDTypography variant="h2" fontWeight="bold" color="dark" mb={3}>
-                    {t('ns1:CompanyRegister.Title')}
-                </MDTypography>
-                <MDTypography variant="h5" color="text" sx={{ opacity: 0.8 }}>
-                    {t('ns1:CompanyRegister.Subtitle')}
-                </MDTypography>
+                        <MDTypography variant="h2" fontWeight="bold" color="dark" mb={3}>
+                            {t('ns1:CompanyRegister.Title')}
+                        </MDTypography>
+                        <MDTypography variant="h5" color="text" sx={{ opacity: 0.8 }}>
+                            {t('ns1:CompanyRegister.Subtitle')}
+                        </MDTypography>
                     </MDBox>
 
                     {/* Stepper */}

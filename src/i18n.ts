@@ -27,8 +27,8 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
     caches: ['localStorage']
   },
   interpolation: {
-    escapeValue: false, 
-    defaultVariables: {}, 
+    escapeValue: false,
+    defaultVariables: {},
   },
 });
 
