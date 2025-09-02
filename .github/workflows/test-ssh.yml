@@ -1,22 +1,33 @@
-name: Test SSH to VPS
+name: Deploy React to VPS
 
 on:
-  workflow_dispatch:  # Manuel tetikleme
+  push:
+    branches: [ main ]
 
 jobs:
-  test-connection:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Connect to VPS and run simple commands
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies & build
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload to VPS
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "🎉 Bağlantı kuruldu!"
-            hostname
-            uptime
-            whoami
+          source: "build/*"
+          target: "/var/www/formneo"
