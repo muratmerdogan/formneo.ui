@@ -129,6 +129,12 @@ const MenuHubPage = lazy(() => import("layouts/pages/menuHub/MenuHubPage"));
 // User Tenants pages (under tenantsuser)
 const UserTenantsList = lazy(() => import("layouts/pages/tenantsuser"));
 const UserTenantsDetail = lazy(() => import("layouts/pages/tenantsuser/detail"));
+
+// QR Menu pages
+const QRMenuListPage = lazy(() => import("pages/qrmenu/QRMenuListPage"));
+const QRMenuFormPage = lazy(() => import("pages/qrmenu/QRMenuFormPage"));
+const QRMenuPreviewPage = lazy(() => import("pages/qrmenu/QRMenuPreviewPage"));
+
 // const { userAppDto } = useUser(); // Context'ten veriyi alıyoruz
 
 
@@ -1266,6 +1272,68 @@ const routes = [
         key: "user-tenants-detail",
         route: "/tenantsuser/detail",
         component: <UserTenantsDetail />,
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "QR Menü",
+    key: "qr-menu",
+    icon: <Icon fontSize="medium">qr_code</Icon>,
+    collapse: [
+      {
+        name: "Menü Listesi",
+        key: "qr-menu-list",
+        route: "/qrmenu",
+        component: <QRMenuListPage />,
+      },
+      {
+        name: "Yeni Menü",
+        key: "qr-menu-new",
+        route: "/qrmenu/new",
+        component: <QRMenuFormPage />,
+      },
+    ],
+  },
+  {
+    type: "hidden",
+    name: "QR Menu Edit",
+    key: "qr-menu-edit",
+    icon: <Icon fontSize="medium">qr_code</Icon>,
+    collapse: [
+      {
+        name: "Menü Düzenle",
+        key: "qr-menu-edit",
+        route: "/qrmenu/edit/:id",
+        component: <QRMenuFormPage />,
+      },
+    ],
+  },
+  {
+    type: "hidden",
+    name: "QR Menu Preview",
+    key: "qr-menu-preview",
+    icon: <Icon fontSize="medium">qr_code</Icon>,
+    collapse: [
+      {
+        name: "Menü Önizleme",
+        key: "qr-menu-preview",
+        route: "/qrmenu/preview/:id",
+        component: <QRMenuPreviewPage />,
+      },
+    ],
+  },
+  {
+    type: "hidden",
+    name: "QR Menu Public",
+    key: "qr-menu-public",
+    icon: <Icon fontSize="medium">qr_code</Icon>,
+    collapse: [
+      {
+        name: "Menü Görünümü",
+        key: "qr-menu-public",
+        route: "/menu/:id",
+        component: <QRMenuPreviewPage />,
       },
     ],
   },

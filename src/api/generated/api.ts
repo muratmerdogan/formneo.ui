@@ -108,6 +108,23 @@ export interface ActivityDto {
  * @enum {number}
  */
 
+export const AddressType = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3,
+    NUMBER_4: 4
+} as const;
+
+export type AddressType = typeof AddressType[keyof typeof AddressType];
+
+
+/**
+ * 
+ * @export
+ * @enum {number}
+ */
+
 export const AdminLevel = {
     NUMBER_1: 1,
     NUMBER_2: 2
@@ -3773,6 +3790,450 @@ export interface CustomFieldDto {
 /**
  * 
  * @export
+ * @interface Customer
+ */
+export interface Customer {
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof Customer
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof Customer
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof Customer
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Customer
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Customer
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'customerTypeId'?: string | null;
+    /**
+     * 
+     * @type {LookupItem}
+     * @memberof Customer
+     */
+    'customerTypeItem'?: LookupItem;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'categoryId'?: string | null;
+    /**
+     * 
+     * @type {LookupItem}
+     * @memberof Customer
+     */
+    'categoryItem'?: LookupItem;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'status'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'legalName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'companyType'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'code'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'taxOffice'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'taxNumber'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Customer
+     */
+    'isReferenceCustomer'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'logoFilePath'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'note'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'twitterUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'linkedinUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'instagramUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'ownerId'?: string | null;
+    /**
+     * 
+     * @type {LifecycleStage}
+     * @memberof Customer
+     */
+    'lifecycleStage'?: LifecycleStage;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'nextActivityDate'?: string | null;
+    /**
+     * 
+     * @type {Array<CustomerAddress>}
+     * @memberof Customer
+     */
+    'addresses'?: Array<CustomerAddress> | null;
+    /**
+     * 
+     * @type {Array<CustomerOfficial>}
+     * @memberof Customer
+     */
+    'officials'?: Array<CustomerOfficial> | null;
+    /**
+     * 
+     * @type {Array<CustomerEmail>}
+     * @memberof Customer
+     */
+    'secondaryEmails'?: Array<CustomerEmail> | null;
+    /**
+     * 
+     * @type {Array<CustomerTag>}
+     * @memberof Customer
+     */
+    'tags'?: Array<CustomerTag> | null;
+    /**
+     * 
+     * @type {Array<CustomerDocument>}
+     * @memberof Customer
+     */
+    'documents'?: Array<CustomerDocument> | null;
+    /**
+     * 
+     * @type {Array<CustomerSector>}
+     * @memberof Customer
+     */
+    'sectors'?: Array<CustomerSector> | null;
+    /**
+     * 
+     * @type {Array<CustomerCustomField>}
+     * @memberof Customer
+     */
+    'customFields'?: Array<CustomerCustomField> | null;
+    /**
+     * 
+     * @type {Array<CustomerPhone>}
+     * @memberof Customer
+     */
+    'phones'?: Array<CustomerPhone> | null;
+    /**
+     * 
+     * @type {Array<CustomerNote>}
+     * @memberof Customer
+     */
+    'notes'?: Array<CustomerNote> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Customer
+     */
+    'rowVersion'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CustomerAddress
+ */
+export interface CustomerAddress {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerAddress
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerAddress
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerAddress
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerAddress
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {AddressType}
+     * @memberof CustomerAddress
+     */
+    'type'?: AddressType;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'country'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'city'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'district'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'postalCode'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'line1'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'line2'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isDefaultBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isDefaultShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isBilling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isShipping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerAddress
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerAddress
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAddress
+     */
+    'rowVersion'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
  * @interface CustomerAddressDto
  */
 export interface CustomerAddressDto {
@@ -4052,6 +4513,448 @@ export interface CustomerAddressUpdateDto {
 /**
  * 
  * @export
+ * @interface CustomerCustomField
+ */
+export interface CustomerCustomField {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerCustomField
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerCustomField
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerCustomField
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerCustomField
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerCustomField
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'fieldId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'fieldType'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'label'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'valueJson'?: string | null;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerCustomField
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCustomField
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerDocument
+ */
+export interface CustomerDocument {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerDocument
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerDocument
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerDocument
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerDocument
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerDocument
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'fileName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'filePath'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'contentType'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerDocument
+     */
+    'fileSize'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'category'?: string | null;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerDocument
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocument
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerDocumentUpdateDto
+ */
+export interface CustomerDocumentUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocumentUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocumentUpdateDto
+     */
+    'fileName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocumentUpdateDto
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocumentUpdateDto
+     */
+    'category'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerDocumentUpdateDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerEmail
+ */
+export interface CustomerEmail {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerEmail
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerEmail
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerEmail
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmail
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerEmail
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmail
+     */
+    'notify'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmail
+     */
+    'bulk'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmail
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerEmail
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerEmail
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerEmail
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CustomerEmailDto
  */
 export interface CustomerEmailDto {
@@ -4231,6 +5134,12 @@ export interface CustomerInsertDto {
      * @type {string}
      * @memberof CustomerInsertDto
      */
+    'logoFilePath'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerInsertDto
+     */
     'name'?: string | null;
     /**
      * 
@@ -4246,70 +5155,16 @@ export interface CustomerInsertDto {
     'code'?: string | null;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CustomerInsertDto
      */
-    'customerTypeId'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
-    'categoryId'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
-    'status'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerInsertDto
-     */
-    'sectors'?: Array<string> | null;
+    'customerTypeId'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CustomerInsertDto
      */
-    'emailPrimary'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerInsertDto
-     */
-    'emailSecondary'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<CustomerEmailDto>}
-     * @memberof CustomerInsertDto
-     */
-    'emails'?: Array<CustomerEmailDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerAddressDto>}
-     * @memberof CustomerInsertDto
-     */
-    'addresses'?: Array<CustomerAddressDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerPhoneDto>}
-     * @memberof CustomerInsertDto
-     */
-    'phones'?: Array<CustomerPhoneDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerNoteDto>}
-     * @memberof CustomerInsertDto
-     */
-    'notes'?: Array<CustomerNoteDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'website'?: string | null;
+    'categoryId'?: string | null;
     /**
      * 
      * @type {string}
@@ -4330,16 +5185,10 @@ export interface CustomerInsertDto {
     'isReferenceCustomer'?: boolean;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof CustomerInsertDto
-     */
-    'tags'?: Array<string> | null;
-    /**
-     * 
      * @type {string}
      * @memberof CustomerInsertDto
      */
-    'defaultNotificationEmail'?: string | null;
+    'website'?: string | null;
     /**
      * 
      * @type {string}
@@ -4384,142 +5233,10 @@ export interface CustomerInsertDto {
     'nextActivityDate'?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'companyType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'logoFilePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'phone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'mobile'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'fax'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'preferredContact'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'utsInstitutionNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'connectionCode'?: string | null;
-    /**
-     * 
      * @type {Array<CustomerOfficialDto>}
      * @memberof CustomerInsertDto
      */
     'officials'?: Array<CustomerOfficialDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'paymentMethod'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
-    'termDays'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'currency'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
-    'discount'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
-    'creditLimit'?: number | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerInsertDto
-     */
-    'eInvoice'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'iban'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'taxExemptionCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'contractNo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'contractStart'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'contractEnd'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerInsertDto
-     */
-    'documents'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
-    'sectorDetailsJson'?: string | null;
     /**
      * 
      * @type {Array<CustomFieldDto>}
@@ -4528,10 +5245,34 @@ export interface CustomerInsertDto {
     'customFields'?: Array<CustomFieldDto> | null;
     /**
      * 
-     * @type {string}
+     * @type {Array<CustomerEmailDto>}
      * @memberof CustomerInsertDto
      */
-    'richNote'?: string | null;
+    'emails'?: Array<CustomerEmailDto> | null;
+    /**
+     * 
+     * @type {Array<CustomerAddressDto>}
+     * @memberof CustomerInsertDto
+     */
+    'addresses'?: Array<CustomerAddressDto> | null;
+    /**
+     * 
+     * @type {Array<CustomerPhoneDto>}
+     * @memberof CustomerInsertDto
+     */
+    'phones'?: Array<CustomerPhoneDto> | null;
+    /**
+     * 
+     * @type {Array<CustomerNoteDto>}
+     * @memberof CustomerInsertDto
+     */
+    'notes'?: Array<CustomerNoteDto> | null;
+    /**
+     * 
+     * @type {Array<CustomerDocument>}
+     * @memberof CustomerInsertDto
+     */
+    'documents'?: Array<CustomerDocument> | null;
 }
 /**
  * 
@@ -4551,6 +5292,127 @@ export interface CustomerListDto {
      * @memberof CustomerListDto
      */
     'custx'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerNote
+ */
+export interface CustomerNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerNote
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerNote
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerNote
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerNote
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerNote
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'content'?: string | null;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerNote
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNote
+     */
+    'rowVersion'?: string | null;
 }
 /**
  * 
@@ -4589,6 +5451,233 @@ export interface CustomerNoteDto {
      */
     'rowVersion'?: string | null;
 }
+/**
+ * 
+ * @export
+ * @interface CustomerNoteInsertDto
+ */
+export interface CustomerNoteInsertDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteInsertDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteInsertDto
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteInsertDto
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteInsertDto
+     */
+    'content'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerNoteUpdateDto
+ */
+export interface CustomerNoteUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'content'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerNoteUpdateDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerOfficial
+ */
+export interface CustomerOfficial {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerOfficial
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerOfficial
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerOfficial
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerOfficial
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerOfficial
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'fullName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'department'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'phone'?: string | null;
+    /**
+     * 
+     * @type {OfficialRole}
+     * @memberof CustomerOfficial
+     */
+    'role'?: OfficialRole;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerOfficial
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerOfficial
+     */
+    'kvkkConsent'?: boolean;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerOfficial
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerOfficial
+     */
+    'rowVersion'?: string | null;
+}
+
+
 /**
  * 
  * @export
@@ -4653,6 +5742,133 @@ export interface CustomerOfficialDto {
      * 
      * @type {string}
      * @memberof CustomerOfficialDto
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerPhone
+ */
+export interface CustomerPhone {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerPhone
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerPhone
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerPhone
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhone
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerPhone
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'label'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
+     */
+    'number'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhone
+     */
+    'isPrimary'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerPhone
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerPhone
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPhone
      */
     'rowVersion'?: string | null;
 }
@@ -4794,9 +6010,245 @@ export interface CustomerPhoneUpdateDto {
 /**
  * 
  * @export
+ * @interface CustomerSector
+ */
+export interface CustomerSector {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerSector
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerSector
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerSector
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerSector
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerSector
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'sector'?: string | null;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerSector
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerSector
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerTag
+ */
+export interface CustomerTag {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'mainClientId'?: string | null;
+    /**
+     * 
+     * @type {MainClient}
+     * @memberof CustomerTag
+     */
+    'mainClient'?: MainClient;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'companyId'?: string | null;
+    /**
+     * 
+     * @type {Company}
+     * @memberof CustomerTag
+     */
+    'company'?: Company;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'plantId'?: string | null;
+    /**
+     * 
+     * @type {Plant}
+     * @memberof CustomerTag
+     */
+    'plant'?: Plant;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CustomerTag
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerTag
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'customerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'tag'?: string | null;
+    /**
+     * 
+     * @type {Customer}
+     * @memberof CustomerTag
+     */
+    'customer'?: Customer;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerTag
+     */
+    'rowVersion'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CustomerUpdateDto
  */
 export interface CustomerUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'logoFilePath'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerUpdateDto
+     */
+    'rowVersion'?: string | null;
     /**
      * 
      * @type {string}
@@ -4835,48 +6287,6 @@ export interface CustomerUpdateDto {
     'status'?: number;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof CustomerUpdateDto
-     */
-    'sectors'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'emailPrimary'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerUpdateDto
-     */
-    'emailSecondary'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<CustomerEmailDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'emails'?: Array<CustomerEmailDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerAddressDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'addresses'?: Array<CustomerAddressDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerPhoneDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'phones'?: Array<CustomerPhoneDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerNoteDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'notes'?: Array<CustomerNoteDto> | null;
-    /**
-     * 
      * @type {string}
      * @memberof CustomerUpdateDto
      */
@@ -4899,12 +6309,6 @@ export interface CustomerUpdateDto {
      * @memberof CustomerUpdateDto
      */
     'isReferenceCustomer'?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerUpdateDto
-     */
-    'tags'?: Array<string> | null;
     /**
      * 
      * @type {string}
@@ -4953,168 +6357,6 @@ export interface CustomerUpdateDto {
      * @memberof CustomerUpdateDto
      */
     'nextActivityDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'companyType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'logoFilePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'phone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'mobile'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'fax'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'preferredContact'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'utsInstitutionNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'connectionCode'?: string | null;
-    /**
-     * 
-     * @type {Array<CustomerOfficialDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'officials'?: Array<CustomerOfficialDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'paymentMethod'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
-    'termDays'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'currency'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
-    'discount'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
-    'creditLimit'?: number | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerUpdateDto
-     */
-    'eInvoice'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'iban'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'taxExemptionCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'contractNo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'contractStart'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'contractEnd'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CustomerUpdateDto
-     */
-    'documents'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'sectorDetailsJson'?: string | null;
-    /**
-     * 
-     * @type {Array<CustomFieldDto>}
-     * @memberof CustomerUpdateDto
-     */
-    'customFields'?: Array<CustomFieldDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'richNote'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
-    'rowVersion'?: string | null;
 }
 /**
  * 
@@ -8152,6 +9394,23 @@ export type LicenseStatus = typeof LicenseStatus[keyof typeof LicenseStatus];
 /**
  * 
  * @export
+ * @enum {number}
+ */
+
+export const LifecycleStage = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3,
+    NUMBER_4: 4
+} as const;
+
+export type LifecycleStage = typeof LifecycleStage[keyof typeof LifecycleStage];
+
+
+/**
+ * 
+ * @export
  * @interface LoginDto
  */
 export interface LoginDto {
@@ -8196,6 +9455,97 @@ export interface LoginUserDto {
 /**
  * 
  * @export
+ * @interface LookupCategory
+ */
+export interface LookupCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupCategory
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof LookupCategory
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupCategory
+     */
+    'isTenantScoped'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupCategory
+     */
+    'isReadOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'tenantId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupCategory
+     */
+    'moduleId'?: string | null;
+    /**
+     * 
+     * @type {LookupModule}
+     * @memberof LookupCategory
+     */
+    'module'?: LookupModule;
+}
+/**
+ * 
+ * @export
  * @interface LookupCategoryDto
  */
 export interface LookupCategoryDto {
@@ -8235,6 +9585,109 @@ export interface LookupCategoryDto {
      * @memberof LookupCategoryDto
      */
     'moduleId'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface LookupItem
+ */
+export interface LookupItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupItem
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof LookupItem
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'categoryId'?: string;
+    /**
+     * 
+     * @type {LookupCategory}
+     * @memberof LookupItem
+     */
+    'category'?: LookupCategory;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'tenantId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'code'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'nameLocalizedJson'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof LookupItem
+     */
+    'orderNo'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupItem
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupItem
+     */
+    'externalKey'?: string | null;
 }
 /**
  * 
@@ -8290,6 +9743,79 @@ export interface LookupItemDto {
      * @memberof LookupItemDto
      */
     'externalKey'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface LookupModule
+ */
+export interface LookupModule {
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'createdBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'updatedBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'updatedDate'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupModule
+     */
+    'isDelete'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof LookupModule
+     */
+    'uniqNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LookupModule
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupModule
+     */
+    'isTenantScoped'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LookupModule
+     */
+    'isReadOnly'?: boolean;
 }
 /**
  * 
@@ -9247,6 +10773,23 @@ export const OfficeLocation = {
 } as const;
 
 export type OfficeLocation = typeof OfficeLocation[keyof typeof OfficeLocation];
+
+
+/**
+ * 
+ * @export
+ * @enum {number}
+ */
+
+export const OfficialRole = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3,
+    NUMBER_4: 4
+} as const;
+
+export type OfficialRole = typeof OfficialRole[keyof typeof OfficialRole];
 
 
 /**
@@ -24048,6 +25591,874 @@ export class CustomerAddressesApi extends BaseAPI {
 
 
 /**
+ * CustomerDocumentsApi - axios parameter creator
+ * @export
+ */
+export const CustomerDocumentsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCategoriesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerDocuments/categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCategoryCategoryGet: async (category: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'category' is not null or undefined
+            assertParamExists('apiCustomerDocumentsCategoryCategoryGet', 'category', category)
+            const localVarPath = `/api/CustomerDocuments/category/{category}`
+                .replace(`{${"category"}}`, encodeURIComponent(String(category)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet: async (customerId: string, category: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet', 'customerId', customerId)
+            // verify required parameter 'category' is not null or undefined
+            assertParamExists('apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet', 'category', category)
+            const localVarPath = `/api/CustomerDocuments/customer/{customerId}/category/{category}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)))
+                .replace(`{${"category"}}`, encodeURIComponent(String(category)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCustomerCustomerIdGet: async (customerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomerDocumentsCustomerCustomerIdGet', 'customerId', customerId)
+            const localVarPath = `/api/CustomerDocuments/customer/{customerId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerDocuments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerDocumentsIdDelete', 'id', id)
+            const localVarPath = `/api/CustomerDocuments/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDownloadGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerDocumentsIdDownloadGet', 'id', id)
+            const localVarPath = `/api/CustomerDocuments/{id}/download`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [expiryInSeconds] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDownloadUrlGet: async (id: string, expiryInSeconds?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerDocumentsIdDownloadUrlGet', 'id', id)
+            const localVarPath = `/api/CustomerDocuments/{id}/download-url`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (expiryInSeconds !== undefined) {
+                localVarQueryParameter['expiryInSeconds'] = expiryInSeconds;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerDocumentsIdGet', 'id', id)
+            const localVarPath = `/api/CustomerDocuments/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CustomerDocumentUpdateDto} [customerDocumentUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsPut: async (customerDocumentUpdateDto?: CustomerDocumentUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerDocuments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerDocumentUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [contentType] 
+         * @param {string} [contentDisposition] 
+         * @param {{ [key: string]: Array<string>; }} [headers] 
+         * @param {number} [length] 
+         * @param {string} [name] 
+         * @param {string} [fileName] 
+         * @param {string} [customerId] 
+         * @param {string} [description] 
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsUploadPost: async (contentType?: string, contentDisposition?: string, headers?: { [key: string]: Array<string>; }, length?: number, name?: string, fileName?: string, customerId?: string, description?: string, category?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerDocuments/upload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (contentType !== undefined) { 
+                localVarFormParams.append('ContentType', contentType as any);
+            }
+    
+            if (contentDisposition !== undefined) { 
+                localVarFormParams.append('ContentDisposition', contentDisposition as any);
+            }
+    
+            if (headers !== undefined) { 
+                localVarFormParams.append('Headers', new Blob([JSON.stringify(headers)], { type: "application/json", }));
+            }
+    
+            if (length !== undefined) { 
+                localVarFormParams.append('Length', length as any);
+            }
+    
+            if (name !== undefined) { 
+                localVarFormParams.append('Name', name as any);
+            }
+    
+            if (fileName !== undefined) { 
+                localVarFormParams.append('FileName', fileName as any);
+            }
+    
+            if (customerId !== undefined) { 
+                localVarFormParams.append('CustomerId', customerId as any);
+            }
+    
+            if (description !== undefined) { 
+                localVarFormParams.append('Description', description as any);
+            }
+    
+            if (category !== undefined) { 
+                localVarFormParams.append('Category', category as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomerDocumentsApi - functional programming interface
+ * @export
+ */
+export const CustomerDocumentsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomerDocumentsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsCategoriesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsCategoriesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsCategoriesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsCategoryCategoryGet(category: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsCategoryCategoryGet(category, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsCategoryCategoryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId: string, category: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId, category, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsCustomerCustomerIdGet(customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsCustomerCustomerIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsIdDownloadGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsIdDownloadGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsIdDownloadGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [expiryInSeconds] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsIdDownloadUrlGet(id: string, expiryInSeconds?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsIdDownloadUrlGet(id, expiryInSeconds, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsIdDownloadUrlGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CustomerDocumentUpdateDto} [customerDocumentUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsPut(customerDocumentUpdateDto?: CustomerDocumentUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsPut(customerDocumentUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [contentType] 
+         * @param {string} [contentDisposition] 
+         * @param {{ [key: string]: Array<string>; }} [headers] 
+         * @param {number} [length] 
+         * @param {string} [name] 
+         * @param {string} [fileName] 
+         * @param {string} [customerId] 
+         * @param {string} [description] 
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerDocumentsUploadPost(contentType?: string, contentDisposition?: string, headers?: { [key: string]: Array<string>; }, length?: number, name?: string, fileName?: string, customerId?: string, description?: string, category?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerDocumentsUploadPost(contentType, contentDisposition, headers, length, name, fileName, customerId, description, category, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerDocumentsApi.apiCustomerDocumentsUploadPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CustomerDocumentsApi - factory interface
+ * @export
+ */
+export const CustomerDocumentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomerDocumentsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCategoriesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsCategoriesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCategoryCategoryGet(category: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsCategoryCategoryGet(category, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {string} category 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId: string, category: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId, category, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsCustomerCustomerIdGet(customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDownloadGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsIdDownloadGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [expiryInSeconds] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdDownloadUrlGet(id: string, expiryInSeconds?: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsIdDownloadUrlGet(id, expiryInSeconds, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CustomerDocumentUpdateDto} [customerDocumentUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsPut(customerDocumentUpdateDto?: CustomerDocumentUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsPut(customerDocumentUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [contentType] 
+         * @param {string} [contentDisposition] 
+         * @param {{ [key: string]: Array<string>; }} [headers] 
+         * @param {number} [length] 
+         * @param {string} [name] 
+         * @param {string} [fileName] 
+         * @param {string} [customerId] 
+         * @param {string} [description] 
+         * @param {string} [category] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerDocumentsUploadPost(contentType?: string, contentDisposition?: string, headers?: { [key: string]: Array<string>; }, length?: number, name?: string, fileName?: string, customerId?: string, description?: string, category?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerDocumentsUploadPost(contentType, contentDisposition, headers, length, name, fileName, customerId, description, category, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CustomerDocumentsApi - object-oriented interface
+ * @export
+ * @class CustomerDocumentsApi
+ * @extends {BaseAPI}
+ */
+export class CustomerDocumentsApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsCategoriesGet(options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} category 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsCategoryCategoryGet(category: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCategoryCategoryGet(category, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {string} category 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId: string, category: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId, category, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsGet(options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsIdDownloadGet(id: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDownloadGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {number} [expiryInSeconds] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsIdDownloadUrlGet(id: string, expiryInSeconds?: number, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDownloadUrlGet(id, expiryInSeconds, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CustomerDocumentUpdateDto} [customerDocumentUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsPut(customerDocumentUpdateDto?: CustomerDocumentUpdateDto, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsPut(customerDocumentUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [contentType] 
+     * @param {string} [contentDisposition] 
+     * @param {{ [key: string]: Array<string>; }} [headers] 
+     * @param {number} [length] 
+     * @param {string} [name] 
+     * @param {string} [fileName] 
+     * @param {string} [customerId] 
+     * @param {string} [description] 
+     * @param {string} [category] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerDocumentsApi
+     */
+    public apiCustomerDocumentsUploadPost(contentType?: string, contentDisposition?: string, headers?: { [key: string]: Array<string>; }, length?: number, name?: string, fileName?: string, customerId?: string, description?: string, category?: string, options?: RawAxiosRequestConfig) {
+        return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsUploadPost(contentType, contentDisposition, headers, length, name, fileName, customerId, description, category, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * CustomerEmailsApi - axios parameter creator
  * @export
  */
@@ -24537,6 +26948,452 @@ export class CustomerEmailsApi extends BaseAPI {
      */
     public apiCustomersCustomerIdEmailsPost(customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsPost(customerId, customerEmailInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CustomerNotesApi - axios parameter creator
+ * @export
+ */
+export const CustomerNotesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesCustomerCustomerIdGet: async (customerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'customerId' is not null or undefined
+            assertParamExists('apiCustomerNotesCustomerCustomerIdGet', 'customerId', customerId)
+            const localVarPath = `/api/CustomerNotes/customer/{customerId}`
+                .replace(`{${"customerId"}}`, encodeURIComponent(String(customerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerNotes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerNotesIdDelete', 'id', id)
+            const localVarPath = `/api/CustomerNotes/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCustomerNotesIdGet', 'id', id)
+            const localVarPath = `/api/CustomerNotes/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CustomerNoteInsertDto} [customerNoteInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesPost: async (customerNoteInsertDto?: CustomerNoteInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerNotes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerNoteInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CustomerNoteUpdateDto} [customerNoteUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesPut: async (customerNoteUpdateDto?: CustomerNoteUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/CustomerNotes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerNoteUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomerNotesApi - functional programming interface
+ * @export
+ */
+export const CustomerNotesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomerNotesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesCustomerCustomerIdGet(customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesCustomerCustomerIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CustomerNoteInsertDto} [customerNoteInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesPost(customerNoteInsertDto?: CustomerNoteInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesPost(customerNoteInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CustomerNoteUpdateDto} [customerNoteUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomerNotesPut(customerNoteUpdateDto?: CustomerNoteUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomerNotesPut(customerNoteUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerNotesApi.apiCustomerNotesPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CustomerNotesApi - factory interface
+ * @export
+ */
+export const CustomerNotesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomerNotesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} customerId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesCustomerCustomerIdGet(customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CustomerNoteInsertDto} [customerNoteInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesPost(customerNoteInsertDto?: CustomerNoteInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesPost(customerNoteInsertDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CustomerNoteUpdateDto} [customerNoteUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomerNotesPut(customerNoteUpdateDto?: CustomerNoteUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomerNotesPut(customerNoteUpdateDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CustomerNotesApi - object-oriented interface
+ * @export
+ * @class CustomerNotesApi
+ * @extends {BaseAPI}
+ */
+export class CustomerNotesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} customerId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesGet(options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CustomerNoteInsertDto} [customerNoteInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesPost(customerNoteInsertDto?: CustomerNoteInsertDto, options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesPost(customerNoteInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CustomerNoteUpdateDto} [customerNoteUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomerNotesApi
+     */
+    public apiCustomerNotesPut(customerNoteUpdateDto?: CustomerNoteUpdateDto, options?: RawAxiosRequestConfig) {
+        return CustomerNotesApiFp(this.configuration).apiCustomerNotesPut(customerNoteUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
