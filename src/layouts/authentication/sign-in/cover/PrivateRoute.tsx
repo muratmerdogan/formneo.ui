@@ -35,13 +35,22 @@ const PrivateRoute: React.FC = () => {
 
   const { data: permissions = [], isLoading, error } = useRoleMenuPermissions();
 
-  const normalizeUrl = (url: string) => "/" + url.split("/").slice(1, 2).join("/");
+  const normalizeUrl = (url?: string | null) => {
+    if (!url || typeof url !== "string") return "";
+    return "/" + url.split("/").slice(1, 2).join("/");
+  };
 
   // MenuHub sayfası /menu/:id için yetki kontrolü: üst seviye menüler yetki kapsamındadır
   const isMenuHub = normalizedPath === "/menu";
   const hasAccess = isMenuHub
     ? true
-    : menuAuth!.some((permission) => normalizeUrl(permission.href) === normalizedPath);
+    : Array.isArray(menuAuth)
+      ? menuAuth.some((permission) => {
+        const href = (permission as any)?.href as string | undefined;
+        if (!href) return false;
+        return normalizeUrl(href) === normalizedPath;
+      })
+      : false;
 
 
 
