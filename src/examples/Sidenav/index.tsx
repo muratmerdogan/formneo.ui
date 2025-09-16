@@ -156,6 +156,51 @@ const hexToRgba = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+// Ikonları PrimeIcons veya Material Icons olarak esnek biçimde render eder
+const renderMenuIcon = (rawIconName: string | null | undefined, color: string): React.ReactNode => {
+  const iconName = String(rawIconName || "").trim();
+  if (!iconName) {
+    return <Icon sx={{ color }}>menu</Icon>;
+  }
+
+  const lower = iconName.toLowerCase();
+  // Prefiks ile açık seçim: mi:xyz => Material, pi:xyz => PrimeIcons
+  if (lower.startsWith("mi:") || lower.startsWith("material:")) {
+    const name = iconName.split(":")[1] || "";
+    return <Icon sx={{ color }}>{name}</Icon>;
+  }
+  if (lower.startsWith("pi:") || lower.startsWith("prime:")) {
+    const name = iconName.split(":")[1] || "";
+    return <i className={`pi pi-${name} menu-item-icon`} style={{ color }}></i>;
+  }
+
+  // Heuristik: alt çizgi içerenler çoğu zaman Material Icons adlarıdır (ör. qr_code, shopping_basket)
+  const materialLikely = iconName.includes("_") || [
+    "home",
+    "dashboard",
+    "menu",
+    "menu_open",
+    "business",
+    "group",
+    "apps",
+    "shopping_basket",
+    "qr_code",
+    "settings",
+    "light_mode",
+    "dark_mode",
+    "edit",
+    "translate",
+    "airplay",
+  ].includes(lower);
+
+  if (materialLikely) {
+    return <Icon sx={{ color }}>{iconName}</Icon>;
+  }
+
+  // Varsayılan: PrimeIcons
+  return <i className={`pi pi-${iconName} menu-item-icon`} style={{ color }}></i>;
+};
+
 interface CollapsedSubmenuProps {
   item: MenuListDto;
   theme: Theme;
@@ -315,10 +360,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
               },
             }}
           >
-            <i
-              className={`pi pi-${item.icon} menu-item-icon`}
-              style={{ color: themes[theme].menu.icon }}
-            ></i>
+            {renderMenuIcon(item.icon as any, themes[theme].menu.icon)}
           </Box>
         </Tooltip>
       </Box>
@@ -418,12 +460,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
             className="submenu"
             key={item.id}
             label={menuAPIController(item.name)}
-            icon={
-              <i
-                className={`pi pi-${item.icon} menu-item-icon`}
-                style={{ color: themes[theme].menu.icon }}
-              ></i>
-            }
+            icon={renderMenuIcon(item.icon as any, themes[theme].menu.icon)}
             defaultOpen={isAnyChildActive || openSubMenus.has(item.id.toString())}
             onOpenChange={(open) => handleSubMenuToggle(item.id.toString(), open)}
           >
@@ -437,14 +474,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
                 }}
                 active={isActiveRoute(subItem.href || "#")}
                 onClick={() => navigate(subItem.href || "#")}
-                icon={
-                  subItem.icon && (
-                    <i
-                      className={`pi pi-${subItem.icon} menu-item-icon`}
-                      style={{ color: themes[theme].menu.icon }}
-                    ></i>
-                  )
-                }
+                icon={subItem.icon ? renderMenuIcon(subItem.icon as any, themes[theme].menu.icon) : undefined}
               >
                 {menuAPIController(subItem.name)}
               </MenuItem>
@@ -458,12 +488,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
           key={item.id}
           active={isActiveRoute(item.href || "#")}
           onClick={() => navigate(item.href || "#")}
-          icon={
-            <i
-              className={`pi pi-${item.icon} menu-item-icon`}
-              style={{ color: themes[theme].menu.icon }}
-            ></i>
-          }
+          icon={renderMenuIcon(item.icon as any, themes[theme].menu.icon)}
         >
           {item.name}
         </MenuItem>
@@ -507,10 +532,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
               },
             }}
           >
-            <i
-              className={`pi pi-${item.icon} menu-item-icon`}
-              style={{ color: themes[theme].menu.icon }}
-            ></i>
+            {renderMenuIcon(item.icon as any, themes[theme].menu.icon)}
           </Box>
         </Tooltip>
       );
