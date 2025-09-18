@@ -81,7 +81,7 @@ function TenantRolesDetail(): JSX.Element {
     useEffect(() => {
         const load = async () => {
             try {
-                const res = await roleApi.apiRoleMenuAllOnlyHeadGet();
+                const res = await roleApi.apiRoleMenuAllOnlyHeadWithoutGlobalGet();
                 const payload: any[] = (res as any)?.data || [];
                 const mapped: Option[] = (payload || []).map((r: any) => ({ id: String(r.id || r.roleId || ""), label: r.name || r.title || "-" }));
                 setAllRoles(mapped);
@@ -121,7 +121,9 @@ function TenantRolesDetail(): JSX.Element {
                     const menuApi = new MenuApi(getConfiguration());
                     const menusRes = await menuApi.apiMenuAllPlainGet();
                     const menus: any[] = (menusRes as any)?.data || [];
-                    setAllMenus(menus);
+                    // Sadece tenant bazlı atanabilir menüler
+                    const tenantOnlyMenus = (menus || []).filter((m: any) => m?.isTenantOnly === true);
+                    setAllMenus(tenantOnlyMenus);
                 } catch {
                     setAllMenus([]);
                 }
@@ -141,11 +143,16 @@ function TenantRolesDetail(): JSX.Element {
             try {
                 // 1) Roller için global menülerini çek (roleApi üzerinden tek tek)
                 const globalByRole = new Map<string, Set<string>>();
+                const allowedMenuIds = new Set<string>((allMenus || []).map((m: any) => String(m.id)));
                 for (const r of allRoles) {
                     try {
                         const details = await roleApi.apiRoleMenuGetByIdRoleIdGet(r.id);
                         const mp: any[] = (details as any)?.data?.menuPermissions || [];
-                        globalByRole.set(r.id, new Set(mp.map((m: any) => String(m.menuId))));
+                        const ids = new Set<string>(mp
+                            .map((m: any) => String(m.menuId))
+                            .filter((id: string) => allowedMenuIds.has(id))
+                        );
+                        globalByRole.set(r.id, ids);
                     } catch {
                         globalByRole.set(r.id, new Set());
                     }
@@ -506,7 +513,9 @@ function TenantRolesDetail(): JSX.Element {
                                         const items = (allRoles || []).map((r) => {
                                             const roleKey = `role:${r.id}`;
                                             const isSelected = Boolean((menuSelectionKeys || {})[roleKey]?.checked);
-                                            const menuIdsForRole = Array.from(roleSelectionMenuIdsMap.get(r.id) || new Set<string>());
+                                            const menuIdsForRole = Array.from(roleSelectionMenuIdsMap.get(r.id) || new Set<string>()).filter((mid) =>
+                                                (allMenus || []).some((m: any) => String(m.id) === String(mid) && m?.isTenantOnly === true)
+                                            );
                                             return {
                                                 roleId: String(r.id),
                                                 roleName: String(r.label || r.id),

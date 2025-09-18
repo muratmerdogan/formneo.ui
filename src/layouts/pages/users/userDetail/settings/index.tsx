@@ -25,6 +25,7 @@ import "@ui5/webcomponents-icons/dist/contacts.js";
 import "@ui5/webcomponents-icons/dist/task.js";
 import "@ui5/webcomponents-icons/dist/shield.js";
 import "@ui5/webcomponents-icons/dist/delete.js";
+import "@ui5/webcomponents-icons/dist/group.js";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -48,6 +49,7 @@ import Header from "./components/Header";
 import getConfiguration from "confiuration";
 import { CreateUserDto, UpdateUserDto, UserApi, WorkCompanyApi, WorkCompanyDto } from "api/generated";
 import UserTenantRoles from "./components/UserTenantRoles";
+import UserTenantAdmin from "./components/UserTenantAdmin";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useNavigate } from "react-router-dom";
 import { MessageBoxType } from "@ui5/webcomponents-react";
@@ -126,11 +128,12 @@ function Settings(): JSX.Element {
   const [activeStep, setActiveStep] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("profile");
   const isTenantMode = Boolean(localStorage.getItem("selectedTenantId"));
-  const isGlobalAdmin = localStorage.getItem("isGlobalAdmin") === "true";
+  const [isGlobalAdmin, setIsGlobalAdmin] = useState<boolean>(localStorage.getItem("isGlobalAdmin") === "true");
   const items = [
     { label: "Profil", icon: "pi pi-user", key: "profile" },
     { label: "Şifre", icon: "pi pi-lock", key: "password" },
     ...(isGlobalAdmin ? [{ label: "Hesaplar", icon: "pi pi-id-card", key: "accounts" }] : []),
+    ...(isGlobalAdmin ? [{ label: "Tenantlar", icon: "pi pi-users", key: "userTenants" }] : []),
     ...(isTenantMode ? [{ label: "Ticket Yetkileri", icon: "pi pi-ticket", key: "ticket" }] : []),
     ...(isTenantMode && !isGlobalAdmin ? [{ label: "Tenant Rolleri", icon: "pi pi-users", key: "tenantRoles" }] : []),
     { label: "Hesabı Sil", icon: "pi pi-trash", key: "danger" },
@@ -178,6 +181,31 @@ function Settings(): JSX.Element {
     };
     if (isGlobalAdmin) fetchCompanies();
   }, [isGlobalAdmin]);
+
+  // Global admin kontrolü (güvenilir sekme görünürlüğü için)
+  useEffect(() => {
+    const checkGlobalAdmin = async () => {
+      try {
+        const conf = getConfiguration();
+        const api = new UserApi(conf);
+        const me = await api.apiUserGetLoginUserDetailGet();
+        const userId = String((me as any)?.data?.id || (me as any)?.data?.userId || "");
+        if (!userId) {
+          setIsGlobalAdmin(false);
+          localStorage.removeItem("isGlobalAdmin");
+          return;
+        }
+        const res = await api.apiUserIsGlobalAdminGet(userId);
+        const val = Boolean((res as any)?.data);
+        setIsGlobalAdmin(val);
+        if (val) localStorage.setItem("isGlobalAdmin", "true"); else localStorage.removeItem("isGlobalAdmin");
+      } catch {
+        setIsGlobalAdmin(false);
+        localStorage.removeItem("isGlobalAdmin");
+      }
+    };
+    checkGlobalAdmin();
+  }, []);
 
   const fetchDetail = async (id: any) => {
     dispatchBusy({ isBusy: true });
@@ -273,6 +301,7 @@ function Settings(): JSX.Element {
                           password: 'sap-icon://key',
                           accounts: 'sap-icon://contacts',
                           ticket: 'sap-icon://task',
+                          userTenants: 'sap-icon://group',
                           tenantRoles: 'sap-icon://shield',
                           danger: 'sap-icon://delete',
                         } as any)[it.key];
@@ -310,6 +339,16 @@ function Settings(): JSX.Element {
                                 <Grid container spacing={3}>
                                   <Grid item xs={12}>
                                     {/* Accounts içeriği burada eklenebilir */}
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
+
+                            {it.key === "userTenants" && isGlobalAdmin && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <UserTenantAdmin userId={formGudid || undefined} />
                                   </Grid>
                                 </Grid>
                               </MDBox>

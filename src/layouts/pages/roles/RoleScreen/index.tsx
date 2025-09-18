@@ -39,10 +39,10 @@ function RoleScreenDefination() {
     try {
       var conf = getConfiguration();
       var api = new MenuApi(conf);
-      var response = await api.apiMenuAllPlainGet();
+      var response = await api.apiMenuTenantOnlyGet();
       var data = response.data;
 
-
+      // Sadece atanabilir alt menüler: parent'ı olanlar
       const filteredData = data.filter((item: any) => item.parentMenuId !== null);
 
       if (id) {
@@ -51,7 +51,7 @@ function RoleScreenDefination() {
         var dataRole = await apiRole.apiRoleMenuGetByIdRoleIdGet(id);
         console.log("dataRole", dataRole.data);
 
-        // Get the selected menus for target
+        // Get the selected menus for target (yalnızca isTenantOnly olanlar dahil edilir)
         const selectedMenus = filteredData.filter((item: any) =>
           dataRole.data.menuPermissions.some((roleItem: any) => roleItem.menuId === item.id)
         );
@@ -62,7 +62,6 @@ function RoleScreenDefination() {
         setRoleDescription(dataRole.data.description);
       } else {
 
-        alert(filteredData.length);
         setSource(filteredData);
       }
     } catch (error) {
@@ -116,15 +115,18 @@ function RoleScreenDefination() {
           roleId: id,
           roleName: roleName,
           description: roleDescription,
-          menuPermissions: target?.map((item: any) => {
-            return {
-              menuId: item.id,
-              canView: true,
-              canAdd: true,
-              canEdit: true,
-              canDelete: true,
-            };
-          }),
+          // Güvenlik: yalnızca isTenantOnly === true öğeleri kaydet
+          menuPermissions: target
+            ?.filter((item: any) => item?.isTenantOnly === true)
+            .map((item: any) => {
+              return {
+                menuId: item.id,
+                canView: true,
+                canAdd: true,
+                canEdit: true,
+                canDelete: true,
+              };
+            }),
         });
         dispatchAlert({
           message: t("ns1:RolePage.RoleScreen.RolOlusturuldu"),
@@ -146,15 +148,18 @@ function RoleScreenDefination() {
         await api.apiRoleMenuPost({
           roleName: roleName,
           description: roleDescription,
-          menuPermissions: target?.map((item: any) => {
-            return {
-              menuId: item.id,
-              canView: true,
-              canAdd: true,
-              canEdit: true,
-              canDelete: true,
-            };
-          }),
+          // Güvenlik: yalnızca isTenantOnly === true öğeleri kaydet
+          menuPermissions: target
+            ?.filter((item: any) => item?.isTenantOnly === true)
+            .map((item: any) => {
+              return {
+                menuId: item.id,
+                canView: true,
+                canAdd: true,
+                canEdit: true,
+                canDelete: true,
+              };
+            }),
         });
 
         dispatchAlert({
@@ -178,27 +183,16 @@ function RoleScreenDefination() {
   const itemTemplate = (item: any) => {
     return (
       <div className="flex align-items-center p-3 w-full">
-        <div className="flex flex-column">
-          <Grid container>
-            <Grid item xs={12} lg={0.7}>
-              <i
-                className="pi pi-box"
-                style={{ marginTop: "0.7rem", marginRight: "0.5rem", fontSize: "1.5rem" }}
-              ></i>
-            </Grid>
-
-            <Grid container lg={11.3}>
-              <Grid item xs={12}>
-                <span className="font-bold text-lg mb-2">{item.name}</span>
-
-                <div className="flex align-items-center gap-2">
-                  <MDTypography variant="subtitle2" color="text" className="text-sm">
-                    {item.menuCode}
-                  </MDTypography>
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
+        <div className="flex" style={{ alignItems: "center", gap: 12, width: "100%" }}>
+          <i className="pi pi-box" style={{ fontSize: "1.5rem" }}></i>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span className="font-bold text-lg mb-2">{item.name}</span>
+            <div className="flex align-items-center gap-2">
+              <MDTypography variant="subtitle2" color="text" className="text-sm">
+                {item.menuCode}
+              </MDTypography>
+            </div>
+          </div>
         </div>
       </div>
     );

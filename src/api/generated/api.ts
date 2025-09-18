@@ -10287,6 +10287,25 @@ export interface MainClientUpdateDto {
 /**
  * 
  * @export
+ * @interface MakeTenantAdminRequest
+ */
+export interface MakeTenantAdminRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MakeTenantAdminRequest
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MakeTenantAdminRequest
+     */
+    'tenantIds'?: Array<string> | null;
+}
+/**
+ * 
+ * @export
  * @interface MeetingDto
  */
 export interface MeetingDto {
@@ -10477,6 +10496,12 @@ export interface Menu {
      * @memberof Menu
      */
     'showMenu'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Menu
+     */
+    'isTenantOnly'?: boolean;
 }
 /**
  * 
@@ -10635,6 +10660,12 @@ export interface MenuListDto {
      * @memberof MenuListDto
      */
     'showMenu'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MenuListDto
+     */
+    'isTenantOnly'?: boolean;
 }
 /**
  * 
@@ -18389,61 +18420,6 @@ export interface UserTenantByTenantDto {
      * @memberof UserTenantByTenantDto
      */
     'tenantName'?: string | null;
-}
-/**
- * 
- * @export
- * @interface UserTenantFullDto
- */
-export interface UserTenantFullDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'tenantId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantFullDto
-     */
-    'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'userFullName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'userEmail'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'tenantName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantFullDto
-     */
-    'tenantSlug'?: string | null;
 }
 /**
  * 
@@ -36715,10 +36691,11 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {boolean} [tenantOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMenuAllPlainGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiMenuAllPlainGet: async (tenantOnly?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Menu/all-plain`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -36734,6 +36711,53 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication Bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (tenantOnly !== undefined) {
+                localVarQueryParameter['tenantOnly'] = tenantOnly;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [tenantId] 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuEffectivePreviewGet: async (tenantId?: string, userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Menu/effective-preview`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
+            }
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
 
 
     
@@ -36960,6 +36984,39 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuTenantOnlyGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Menu/tenant-only`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -36983,13 +37040,27 @@ export const MenuApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {boolean} [tenantOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiMenuAllPlainGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MenuListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuAllPlainGet(options);
+        async apiMenuAllPlainGet(tenantOnly?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MenuListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuAllPlainGet(tenantOnly, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuAllPlainGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [tenantId] 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMenuEffectivePreviewGet(tenantId?: string, userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Menu>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuEffectivePreviewGet(tenantId, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuEffectivePreviewGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -37062,6 +37133,17 @@ export const MenuApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuPut']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMenuTenantOnlyGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MenuListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuTenantOnlyGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuTenantOnlyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -37082,11 +37164,22 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {boolean} [tenantOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMenuAllPlainGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<MenuListDto>> {
-            return localVarFp.apiMenuAllPlainGet(options).then((request) => request(axios, basePath));
+        apiMenuAllPlainGet(tenantOnly?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<Array<MenuListDto>> {
+            return localVarFp.apiMenuAllPlainGet(tenantOnly, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [tenantId] 
+         * @param {string} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuEffectivePreviewGet(tenantId?: string, userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<Menu>> {
+            return localVarFp.apiMenuEffectivePreviewGet(tenantId, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -37140,6 +37233,14 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
         apiMenuPut(menuUpdateDto?: MenuUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiMenuPut(menuUpdateDto, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuTenantOnlyGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<MenuListDto>> {
+            return localVarFp.apiMenuTenantOnlyGet(options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -37162,12 +37263,25 @@ export class MenuApi extends BaseAPI {
 
     /**
      * 
+     * @param {boolean} [tenantOnly] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MenuApi
      */
-    public apiMenuAllPlainGet(options?: RawAxiosRequestConfig) {
-        return MenuApiFp(this.configuration).apiMenuAllPlainGet(options).then((request) => request(this.axios, this.basePath));
+    public apiMenuAllPlainGet(tenantOnly?: boolean, options?: RawAxiosRequestConfig) {
+        return MenuApiFp(this.configuration).apiMenuAllPlainGet(tenantOnly, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [tenantId] 
+     * @param {string} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MenuApi
+     */
+    public apiMenuEffectivePreviewGet(tenantId?: string, userId?: string, options?: RawAxiosRequestConfig) {
+        return MenuApiFp(this.configuration).apiMenuEffectivePreviewGet(tenantId, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37232,6 +37346,16 @@ export class MenuApi extends BaseAPI {
      */
     public apiMenuPut(menuUpdateDto?: MenuUpdateDto, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuPut(menuUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MenuApi
+     */
+    public apiMenuTenantOnlyGet(options?: RawAxiosRequestConfig) {
+        return MenuApiFp(this.configuration).apiMenuTenantOnlyGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -40833,6 +40957,39 @@ export const RoleMenuApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        apiRoleMenuAllOnlyHeadWithoutGlobalGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleMenu/AllOnlyHeadWithoutGlobal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         apiRoleMenuGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/RoleMenu`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -41106,6 +41263,17 @@ export const RoleMenuApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async apiRoleMenuAllOnlyHeadWithoutGlobalGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentityRole>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleMenuAllOnlyHeadWithoutGlobalGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleMenuApi.apiRoleMenuAllOnlyHeadWithoutGlobalGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async apiRoleMenuGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleMenuListDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleMenuGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -41206,6 +41374,14 @@ export const RoleMenuApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        apiRoleMenuAllOnlyHeadWithoutGlobalGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<IdentityRole>> {
+            return localVarFp.apiRoleMenuAllOnlyHeadWithoutGlobalGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         apiRoleMenuGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleMenuListDto>> {
             return localVarFp.apiRoleMenuGet(options).then((request) => request(axios, basePath));
         },
@@ -41280,6 +41456,16 @@ export class RoleMenuApi extends BaseAPI {
      */
     public apiRoleMenuAllOnlyHeadGet(options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuAllOnlyHeadGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleMenuApi
+     */
+    public apiRoleMenuAllOnlyHeadWithoutGlobalGet(options?: RawAxiosRequestConfig) {
+        return RoleMenuApiFp(this.configuration).apiRoleMenuAllOnlyHeadWithoutGlobalGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -41405,6 +41591,43 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @param {MakeTenantAdminRequest} [makeTenantAdminRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuMakeTenantAdminPost: async (makeTenantAdminRequest?: MakeTenantAdminRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantMenu/make-tenant-admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(makeTenantAdminRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} roleId 
          * @param {string} tenantId 
          * @param {*} [options] Override http request option.
@@ -41488,10 +41711,11 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesByUserGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiRoleTenantMenuRolesByUserGet: async (userId?: string, tenantId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/RoleTenantMenu/roles-by-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -41512,6 +41736,10 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
                 localVarQueryParameter['userId'] = userId;
             }
 
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -41526,10 +41754,11 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesByUserGet_1: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiRoleTenantMenuRolesByUserGet_1: async (userId?: string, tenantId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/RoleTenantMenu/roles/by-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -41550,6 +41779,10 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
                 localVarQueryParameter['userId'] = userId;
             }
 
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -41564,10 +41797,11 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesWithMenusByUserGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiRoleTenantMenuRolesWithMenusByUserGet: async (userId?: string, tenantId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/RoleTenantMenu/roles-with-menus/by-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -41588,6 +41822,10 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
                 localVarQueryParameter['userId'] = userId;
             }
 
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -41602,10 +41840,11 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuUserRoleAssignmentsGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiRoleTenantMenuUserRoleAssignmentsGet: async (userId?: string, tenantId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/RoleTenantMenu/user-role-assignments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -41624,6 +41863,10 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
 
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
+            }
+
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
             }
 
 
@@ -41698,6 +41941,18 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {MakeTenantAdminRequest} [makeTenantAdminRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest?: MakeTenantAdminRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuMakeTenantAdminPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} roleId 
          * @param {string} tenantId 
          * @param {*} [options] Override http request option.
@@ -41725,11 +41980,12 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantMenuListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet(userId, options);
+        async apiRoleTenantMenuRolesByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantMenuListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet(userId, tenantId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesByUserGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41737,11 +41993,12 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet_1(userId, options);
+        async apiRoleTenantMenuRolesByUserGet_1(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesByUserGet_1(userId, tenantId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesByUserGet_1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41749,11 +42006,12 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleTenantWithMenusGetDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesWithMenusByUserGet(userId, options);
+        async apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleTenantWithMenusGetDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuRolesWithMenusByUserGet(userId, tenantId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuRolesWithMenusByUserGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41761,11 +42019,12 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserRoleAssignmentGetDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuUserRoleAssignmentsGet(userId, options);
+        async apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserRoleAssignmentGetDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantMenuUserRoleAssignmentsGet(userId, tenantId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantMenuApi.apiRoleTenantMenuUserRoleAssignmentsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41803,6 +42062,15 @@ export const RoleTenantMenuApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @param {MakeTenantAdminRequest} [makeTenantAdminRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest?: MakeTenantAdminRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} roleId 
          * @param {string} tenantId 
          * @param {*} [options] Override http request option.
@@ -41824,38 +42092,42 @@ export const RoleTenantMenuApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantMenuListDto>> {
-            return localVarFp.apiRoleTenantMenuRolesByUserGet(userId, options).then((request) => request(axios, basePath));
+        apiRoleTenantMenuRolesByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantMenuListDto>> {
+            return localVarFp.apiRoleTenantMenuRolesByUserGet(userId, tenantId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
-            return localVarFp.apiRoleTenantMenuRolesByUserGet_1(userId, options).then((request) => request(axios, basePath));
+        apiRoleTenantMenuRolesByUserGet_1(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.apiRoleTenantMenuRolesByUserGet_1(userId, tenantId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<RoleTenantWithMenusGetDto> {
-            return localVarFp.apiRoleTenantMenuRolesWithMenusByUserGet(userId, options).then((request) => request(axios, basePath));
+        apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): AxiosPromise<RoleTenantWithMenusGetDto> {
+            return localVarFp.apiRoleTenantMenuRolesWithMenusByUserGet(userId, tenantId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [userId] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<UserRoleAssignmentGetDto> {
-            return localVarFp.apiRoleTenantMenuUserRoleAssignmentsGet(userId, options).then((request) => request(axios, basePath));
+        apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig): AxiosPromise<UserRoleAssignmentGetDto> {
+            return localVarFp.apiRoleTenantMenuUserRoleAssignmentsGet(userId, tenantId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41889,6 +42161,17 @@ export class RoleTenantMenuApi extends BaseAPI {
 
     /**
      * 
+     * @param {MakeTenantAdminRequest} [makeTenantAdminRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTenantMenuApi
+     */
+    public apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest?: MakeTenantAdminRequest, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} roleId 
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
@@ -41914,45 +42197,49 @@ export class RoleTenantMenuApi extends BaseAPI {
     /**
      * 
      * @param {string} [userId] 
+     * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoleTenantMenuApi
      */
-    public apiRoleTenantMenuRolesByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
-        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
+    public apiRoleTenantMenuRolesByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {string} [userId] 
+     * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoleTenantMenuApi
      */
-    public apiRoleTenantMenuRolesByUserGet_1(userId?: string, options?: RawAxiosRequestConfig) {
-        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet_1(userId, options).then((request) => request(this.axios, this.basePath));
+    public apiRoleTenantMenuRolesByUserGet_1(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet_1(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {string} [userId] 
+     * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoleTenantMenuApi
      */
-    public apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
-        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesWithMenusByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
+    public apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesWithMenusByUserGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {string} [userId] 
+     * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoleTenantMenuApi
      */
-    public apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, options?: RawAxiosRequestConfig) {
-        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsGet(userId, options).then((request) => request(this.axios, this.basePath));
+    public apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -55349,7 +55636,7 @@ export const UserTenantsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserTenantFullDto>>> {
+        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByUserUserIdGet(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByUserUserIdGet']?.[localVarOperationServerIndex]?.url;
@@ -55457,7 +55744,7 @@ export const UserTenantsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserTenantFullDto>> {
+        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
