@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Card, Checkbox, Icon, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Card, Checkbox, Icon, List, ListItem, ListItemIcon, ListItemText, Typography, Chip } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import getConfiguration from "confiuration";
-import { RoleTenantMenuApi, UserApi, UserTenantsApi } from "api/generated";
+import { RoleTenantMenuApi, UserTenantsApi, UserTenantWithAdminFlagDto } from "api/generated";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { MessageBoxType } from "@ui5/webcomponents-react";
@@ -14,22 +14,9 @@ type TenantRow = {
     id: string;
     name: string;
     isAdmin: boolean;
+    isActive?: boolean;
 };
 
-// Heuristics: try to detect a role labeled like Tenant Admin. Fallback to first role if exactly one exists.
-function findTenantAdminRoleId(roleList: any[]): string | null {
-    if (!Array.isArray(roleList)) return null;
-    const candidates = roleList.map((r: any) => ({
-        id: String(r.RoleId || r.roleId || r.Id || r.id || r?.role?.id || ""),
-        name: String(r.RoleName || r.roleName || r?.role?.name || r.Name || r.name || "").toLowerCase(),
-    }));
-    const match = candidates.find((c) => c.name.includes("tenant") && c.name.includes("admin"))
-        || candidates.find((c) => c.name.includes("şirket") && c.name.includes("admin"))
-        || candidates.find((c) => c.name.includes("company") && c.name.includes("admin"));
-    if (match?.id) return match.id;
-    if (candidates.length === 1 && candidates[0].id) return candidates[0].id;
-    return null;
-}
 
 export default function UserTenantAdmin({ userId }: Props): JSX.Element {
     const dispatchBusy = useBusy();
@@ -50,40 +37,39 @@ export default function UserTenantAdmin({ userId }: Props): JSX.Element {
 
     useEffect(() => {
         const load = async () => {
-            if (!userId) return;
+            if (!userId || userId === "") {
+                return;
+            }
+            console.log("UserTenantAdmin useEffect çalışıyor - userId:", userId);
             try {
                 dispatchBusy({ isBusy: true });
                 const conf = getConfiguration();
-                const userApi = new UserApi(conf);
                 const utApi = new UserTenantsApi(conf);
-                const roleApi = new RoleTenantMenuApi(conf);
 
-                // 1) Kullanıcının tenantları
+                // Kullanıcının tenant bilgilerini ve admin durumunu getir
                 const meTenantsRes = await utApi.apiUserTenantsByUserUserIdGet(String(userId));
-                const list: any[] = (meTenantsRes as any)?.data || [];
-                const mapped: TenantRow[] = (list || []).map((x: any) => ({
-                    id: String(x.tenantId || x.id || ""),
-                    name: String(x.tenantName || x.tenantSlug || x.name || "-"),
-                    isAdmin: false,
-                }));
+                const list: UserTenantWithAdminFlagDto[] = (meTenantsRes as any)?.data || [];
+                
+                // Backend'den gelen tenantName alanını kullan
+                const mapped: TenantRow[] = (list || []).map((x: UserTenantWithAdminFlagDto) => {
+                    const tenantId = String(x.tenantId || x.id || "");
+                    const tenantName = x.tenantName || x.pCname || `Tenant-${tenantId.slice(-8)}`;
+                    
+                    return {
+                        id: tenantId,
+                        name: tenantName,
+                        isAdmin: Boolean(x.isTenantAdmin),
+                        isActive: Boolean(x.isActive),
+                    };
+                });
                 setTenants(mapped);
 
-                // 2) Kullanıcının atanmış tenant rollerini getir (global görünüm)
-                const rolesRes = await roleApi.apiRoleTenantMenuUserRoleAssignmentsGet(String(userId));
-                const raw = (rolesRes as any)?.data;
-                const roleAssignments: any[] = Array.isArray(raw) ? raw : (raw?.items || raw?.roles || raw?.roleAssignments || []);
-
-                // Tenant Admin rol ID'sini bul
-                const tenantAdminRoleId = findTenantAdminRoleId(roleAssignments);
-
-                // Seçim haritasını üret: ilgili rolde işaretli olan tenantlar admin kabul edilir
+                // Admin durumunu haritaya çevir
                 const map: Record<string, boolean> = {};
-                (roleAssignments || []).forEach((r: any) => {
-                    const rid = String(r.RoleId || r.roleId || r.Id || r.id || r?.role?.id || "");
-                    const selected = Boolean(r.isAssignedToUser || r.assigned || r.selected || r.isAssigned || r.shouldAssign);
-                    if (tenantAdminRoleId && rid === tenantAdminRoleId) {
-                        const tid = String(r.TenantId || r.tenantId || localStorage.getItem("selectedTenantId") || "");
-                        if (tid) map[tid] = selected;
+                (list || []).forEach((x: UserTenantWithAdminFlagDto) => {
+                    const tid = String(x.tenantId || x.id || "");
+                    if (tid) {
+                        map[tid] = Boolean(x.isTenantAdmin);
                     }
                 });
                 setAdminMap(map);
@@ -152,7 +138,31 @@ export default function UserTenantAdmin({ userId }: Props): JSX.Element {
                         <ListItemIcon>
                             <Icon>business</Icon>
                         </ListItemIcon>
-                        <ListItemText primary={t.name} />
+                        <ListItemText 
+                            primary={
+                                <MDBox display="flex" alignItems="center" gap={1}>
+                                    <Typography variant="body1" fontWeight={500}>
+                                        {t.name}
+                                    </Typography>
+                                    {t.isActive === false && (
+                                        <Chip 
+                                            label="Pasif" 
+                                            size="small" 
+                                            color="warning" 
+                                            variant="outlined"
+                                        />
+                                    )}
+                                    {Boolean(adminMap[t.id]) && (
+                                        <Chip 
+                                            label="Admin" 
+                                            size="small" 
+                                            color="success" 
+                                            variant="filled"
+                                        />
+                                    )}
+                                </MDBox>
+                            }
+                        />
                     </ListItem>
                 ))}
                 {(!tenants || tenants.length === 0) && (

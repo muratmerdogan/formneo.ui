@@ -216,6 +216,7 @@ function Settings(): JSX.Element {
     var data = await api.apiUserGet(id);
     var resultData = data.data;
     setFormId(resultData.id);
+    console.log("formGudid set edildi:", resultData.id);
     console.log(data.data);
     setFormValues((prevValues) => ({
       ...prevValues,

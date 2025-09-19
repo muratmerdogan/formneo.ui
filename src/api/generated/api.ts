@@ -23,90 +23,20 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface ActivityDto
- */
 export interface ActivityDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'opportunityId'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ActivityDto
-     */
     'type'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ActivityDto
-     */
     'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'dueDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'subject'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'assignedToUserId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'startTime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'endTime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const AddressType = {
     NUMBER_0: 0,
@@ -119,11 +49,6 @@ export const AddressType = {
 export type AddressType = typeof AddressType[keyof typeof AddressType];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const AdminLevel = {
     NUMBER_1: 1,
@@ -133,350 +58,70 @@ export const AdminLevel = {
 export type AdminLevel = typeof AdminLevel[keyof typeof AdminLevel];
 
 
-/**
- * 
- * @export
- * @interface AllList
- */
 export interface AllList {
-    /**
-     * 
-     * @type {number}
-     * @memberof AllList
-     */
     'id'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AllList
-     */
     'list_id'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AllList
-     */
     'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof AllList
-     */
     'value'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ApproveHeadInfo
- */
 export interface ApproveHeadInfo {
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveHeadInfo
-     */
     'pendingCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveHeadInfo
-     */
     'rejectCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveHeadInfo
-     */
     'approveCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveHeadInfo
-     */
     'sendCount'?: number;
-    /**
-     * 
-     * @type {Array<ApproveItemsDto>}
-     * @memberof ApproveHeadInfo
-     */
     'items'?: Array<ApproveItemsDto> | null;
 }
-/**
- * 
- * @export
- * @interface ApproveItems
- */
 export interface ApproveItems {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof ApproveItems
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof ApproveItems
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof ApproveItems
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ApproveItems
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveItems
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'workflowItemId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approveUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approveUserNameSurname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approvedUser_Runtime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approvedUser_RuntimeNameSurname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approvedUser_RuntimeNote'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'approvedUser_RuntimeNumberManDay'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItems
-     */
     'workFlowDescription'?: string | null;
-    /**
-     * 
-     * @type {ApproverStatus}
-     * @memberof ApproveItems
-     */
     'approverStatus'?: ApproverStatus;
-    /**
-     * 
-     * @type {WorkflowItem}
-     * @memberof ApproveItems
-     */
     'workflowItem'?: WorkflowItem;
 }
 
 
-/**
- * 
- * @export
- * @interface ApproveItemsDto
- */
 export interface ApproveItemsDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'workflowItemId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'shortId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'shortWorkflowItemId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approveUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approvedUser_Runtime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approvedUser_RuntimeNote'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approvedUser_RuntimeNumberManDay'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approveUserNameSurname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'approvedUser_RuntimeNameSurname'?: string | null;
-    /**
-     * 
-     * @type {ApproverStatus}
-     * @memberof ApproveItemsDto
-     */
     'approverStatus'?: ApproverStatus;
-    /**
-     * 
-     * @type {WorkFlowItemDto}
-     * @memberof ApproveItemsDto
-     */
     'workFlowItem'?: WorkFlowItemDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApproveItemsDto
-     */
     'updatedDate'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveItemsDto
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {WorkFlowHeadDto}
-     * @memberof ApproveItemsDto
-     */
     'workFlowHead'?: WorkFlowHeadDto;
 }
 
 
-/**
- * 
- * @export
- * @interface ApproveItemsDtoResult
- */
 export interface ApproveItemsDtoResult {
-    /**
-     * 
-     * @type {number}
-     * @memberof ApproveItemsDtoResult
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<ApproveItemsDto>}
-     * @memberof ApproveItemsDtoResult
-     */
     'approveItemsDtoList'?: Array<ApproveItemsDto> | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const ApproveStatus = {
     NUMBER_0: 0,
@@ -488,11 +133,6 @@ export const ApproveStatus = {
 export type ApproveStatus = typeof ApproveStatus[keyof typeof ApproveStatus];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const ApproveWorkDesign = {
     NUMBER_0: 0,
@@ -502,11 +142,6 @@ export const ApproveWorkDesign = {
 export type ApproveWorkDesign = typeof ApproveWorkDesign[keyof typeof ApproveWorkDesign];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const ApproverStatus = {
     NUMBER_0: 0,
@@ -518,2685 +153,485 @@ export const ApproverStatus = {
 export type ApproverStatus = typeof ApproverStatus[keyof typeof ApproverStatus];
 
 
-/**
- * 
- * @export
- * @interface BudgetAdminUserInsertDto
- */
 export interface BudgetAdminUserInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'mail'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'isAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'isDoProxy'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'proxyUser'?: string | null;
-    /**
-     * 
-     * @type {AdminLevel}
-     * @memberof BudgetAdminUserInsertDto
-     */
     'adminLevel'?: AdminLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetAdminUserListDto
- */
 export interface BudgetAdminUserListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'mail'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserListDto
-     */
     'isAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserListDto
-     */
     'isDoProxy'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'proxyUser'?: string | null;
-    /**
-     * 
-     * @type {AdminLevel}
-     * @memberof BudgetAdminUserListDto
-     */
     'adminLevel'?: AdminLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'adminLevelText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserListDto
-     */
     'updatedDate'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetAdminUserUpdateDto
- */
 export interface BudgetAdminUserUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'mail'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'isAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'isDoProxy'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'proxyUser'?: string | null;
-    /**
-     * 
-     * @type {AdminLevel}
-     * @memberof BudgetAdminUserUpdateDto
-     */
     'adminLevel'?: AdminLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetJobCodeRequestInsertDto
- */
 export interface BudgetJobCodeRequestInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'jobCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name_En': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'requestReason': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name_Ru_RU': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name_Tr_TR': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'name_En_US': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'description_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'description_En_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'description_Ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'description_Tr_TR'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'isFullTime'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'regularTemporary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'defaultEmployeeClass': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'isFulltimeEmployee'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'grade': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'jobFunction': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'positionLevel': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Joblevelgroup': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Metin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Jobcode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_AdinesStatus'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_EmploymentType': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_GorevBirimTipi': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_IsManager'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Bolum': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Ronesanskademe': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestInsertDto
-     */
     'cust_Haykademe': string;
 }
-/**
- * 
- * @export
- * @interface BudgetJobCodeRequestListDto
- */
 export interface BudgetJobCodeRequestListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'jobCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name_En'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'requestReason'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'workflowHeadId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name_Ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name_Tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'name_En_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'description_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'description_En_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'description_Ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'description_Tr_TR'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'isFullTime'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'regularTemporary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'defaultEmployeeClass'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'isFulltimeEmployee'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'grade'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'jobFunction'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'positionLevel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Joblevelgroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Metin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Jobcode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_AdinesStatus'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_EmploymentType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_GorevBirimTipi'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_IsManager'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Bolum'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Ronesanskademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'cust_Haykademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestListDto
-     */
     'updatedDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetJobCodeRequestListDtoResult
- */
 export interface BudgetJobCodeRequestListDtoResult {
-    /**
-     * 
-     * @type {Array<BudgetJobCodeRequestListDto>}
-     * @memberof BudgetJobCodeRequestListDtoResult
-     */
     'budgetJobCodeRequestListDtoList'?: Array<BudgetJobCodeRequestListDto> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BudgetJobCodeRequestListDtoResult
-     */
     'count'?: number;
 }
-/**
- * 
- * @export
- * @interface BudgetJobCodeRequestUpdateDto
- */
 export interface BudgetJobCodeRequestUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'jobCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name_En': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'requestReason': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name_Ru_RU': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name_Tr_TR': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'name_En_US': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'description_En_Debug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'description_En_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'description_Ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'description_Tr_TR'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'isFullTime'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'regularTemporary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'defaultEmployeeClass': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'isFulltimeEmployee'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'grade': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'jobFunction': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'positionLevel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Joblevelgroup': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Metin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Jobcode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_AdinesStatus'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_EmploymentType': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_GorevBirimTipi'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_IsManager'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Bolum'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Ronesanskademe': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetJobCodeRequestUpdateDto
-     */
     'cust_Haykademe': string;
 }
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestInsertDto
- */
 export interface BudgetNormCodeRequestInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'effectiveStartDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_IseBaslamaTarihi'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_PlanlananIseGiris'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_plannedEndDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_actualhiredate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'effectiveStatus'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'vacant'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'changeReason'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_GeoZone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'externalName_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'externalName_defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'externalName_en_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'externalName_en_DEBUG'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'externalName_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'multipleIncumbentsAllowed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'targetFTE'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'standardHours'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'jobCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_jobfunction'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_ronesansjoblevel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_ronesansKademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'payGrade'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'jobTitle'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'employeeClass'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_empSubGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_EmpGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_companyGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_customlegalEntity'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'businessUnit'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_sub_division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_parentDepartment2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_parentDepartment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'costCenter'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_locationGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_calismaYeriTuru'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'comment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_payGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_isAlani'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_phisicalLocation'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_ticket'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_HayKademe'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'cust_ChiefPosition'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'parentPosition'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'processType'?: ProcessType;
-    /**
-     * 
-     * @type {InternalEmploymentType}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'internalEmploymentType'?: InternalEmploymentType;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'isInternalSource'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'relationManager'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'relationEmployess'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'hardware'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'licence'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'internalSourceEmp'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'jobCodeDescription'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'isDeleted'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'promotionPeriod'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'promotionPeriodTxt'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'propotionReasonTxt'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestInsertDto
-     */
     'isTransferred'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestListDto
- */
 export interface BudgetNormCodeRequestListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'effectiveStartDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_IseBaslamaTarihi'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_PlanlananIseGiris'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_plannedEndDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_actualhiredate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'effectiveStatus'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'vacant'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'changeReason'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_GeoZone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'externalName_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'externalName_defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'externalName_en_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'externalName_en_DEBUG'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'externalName_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'multipleIncumbentsAllowed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'targetFTE'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'standardHours'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'jobCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_jobfunction'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_ronesansjoblevel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_ronesansKademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'payGrade'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'jobTitle'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'employeeClass'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_empSubGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_EmpGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_companyGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_customlegalEntity'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'businessUnit'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_sub_division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_parentDepartment2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_parentDepartment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'costCenter'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_locationGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_calismaYeriTuru'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'comment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_payGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_isAlani'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_phisicalLocation'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_ticket'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_HayKademe'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'cust_ChiefPosition'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'parentPosition'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'processType'?: ProcessType;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'processTypeText'?: string | null;
-    /**
-     * 
-     * @type {InternalEmploymentType}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'internalEmploymentType'?: InternalEmploymentType;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'internalEmploymentTypeText'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'isInternalSource'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'relationManager'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'relationEmployess'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'hardware'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'licence'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'internalSourceEmp'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'jobCodeDescription'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'promotionPeriod'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'isDeleted'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'promotionPeriodTxt'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'propotionReasonTxt'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestListDto
-     */
     'isTransferred'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestListDtoOnlyCodeResult
- */
 export interface BudgetNormCodeRequestListDtoOnlyCodeResult {
-    /**
-     * 
-     * @type {Array<BudgetNormCodeRequestListOnlyCodeDto>}
-     * @memberof BudgetNormCodeRequestListDtoOnlyCodeResult
-     */
     'budgetNormCodeRequestListDtoList'?: Array<BudgetNormCodeRequestListOnlyCodeDto> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BudgetNormCodeRequestListDtoOnlyCodeResult
-     */
     'count'?: number;
 }
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestListDtoResult
- */
 export interface BudgetNormCodeRequestListDtoResult {
-    /**
-     * 
-     * @type {Array<BudgetNormCodeRequestListDto>}
-     * @memberof BudgetNormCodeRequestListDtoResult
-     */
     'budgetNormCodeRequestListDtoList'?: Array<BudgetNormCodeRequestListDto> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BudgetNormCodeRequestListDtoResult
-     */
     'count'?: number;
 }
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestListOnlyCodeDto
- */
 export interface BudgetNormCodeRequestListOnlyCodeDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListOnlyCodeDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestListOnlyCodeDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof BudgetNormCodeRequestListOnlyCodeDto
-     */
     'workflowHead'?: WorkflowHead;
 }
-/**
- * 
- * @export
- * @interface BudgetNormCodeRequestUpdateDto
- */
 export interface BudgetNormCodeRequestUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'effectiveStartDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_IseBaslamaTarihi'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_PlanlananIseGiris'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_plannedEndDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_actualhiredate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'effectiveStatus'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'vacant'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'changeReason'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_GeoZone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'externalName_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'externalName_defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'externalName_en_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'externalName_en_DEBUG'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'externalName_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'multipleIncumbentsAllowed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'targetFTE'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'standardHours'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'jobCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_jobfunction'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_ronesansjoblevel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_ronesansKademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'payGrade'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'jobTitle'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'employeeClass'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_empSubGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_EmpGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_companyGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_customlegalEntity'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'businessUnit'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_sub_division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_parentDepartment2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_parentDepartment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'costCenter'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_locationGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_calismaYeriTuru'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'comment'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_payGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_isAlani'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_phisicalLocation'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_ticket'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_HayKademe'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'cust_ChiefPosition'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'parentPosition'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'processType'?: ProcessType;
-    /**
-     * 
-     * @type {InternalEmploymentType}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'internalEmploymentType'?: InternalEmploymentType;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'isInternalSource'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'relationManager'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'relationEmployess'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'hardware'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'licence'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'internalSourceEmp'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'jobCodeDescription'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'promotionPeriod'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'isDeleted'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'promotionPeriodTxt'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'propotionReasonTxt'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetNormCodeRequestUpdateDto
-     */
     'isTransferred'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetPeriodInsertDto
- */
 export interface BudgetPeriodInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodInsertDto
-     */
     'periodCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodInsertDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodInsertDto
-     */
     'enDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodInsertDto
-     */
     'note'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetPeriodListDto
- */
 export interface BudgetPeriodListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'periodCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'enDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodListDto
-     */
     'updatedDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetPeriodUpdateDto
- */
 export interface BudgetPeriodUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'periodCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'enDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUpdateDto
-     */
     'note'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetPeriodUserInsertDto
- */
 export interface BudgetPeriodUserInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'budgetPeriodCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {RequestType}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'requestType'?: RequestType;
-    /**
-     * 
-     * @type {Permission}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'permission'?: Permission;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'processType'?: ProcessType;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserInsertDto
-     */
     'nameSurname'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetPeriodUserListDto
- */
 export interface BudgetPeriodUserListDto {
-    /**
-     * 
-     * @type {BudgetPeriodListDto}
-     * @memberof BudgetPeriodUserListDto
-     */
     'budgetPeriod'?: BudgetPeriodListDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'budgetPeriodCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {RequestType}
-     * @memberof BudgetPeriodUserListDto
-     */
     'requestType'?: RequestType;
-    /**
-     * 
-     * @type {Permission}
-     * @memberof BudgetPeriodUserListDto
-     */
     'permission'?: Permission;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetPeriodUserListDto
-     */
     'processType'?: ProcessType;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'requestTypeText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'permissiontypeText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'processtypeText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserListDto
-     */
     'nameSurname'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetPeriodUserUpdateDto
- */
 export interface BudgetPeriodUserUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'budgetPeriodCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {RequestType}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'requestType'?: RequestType;
-    /**
-     * 
-     * @type {Permission}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'permission'?: Permission;
-    /**
-     * 
-     * @type {ProcessType}
-     * @memberof BudgetPeriodUserUpdateDto
-     */
     'processType'?: ProcessType;
 }
 
 
-/**
- * 
- * @export
- * @interface BudgetPromotionRequestInsertDto
- */
 export interface BudgetPromotionRequestInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'empCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'positionCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'promotionDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'managerUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestInsertDto
-     */
     'teamUsers'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetPromotionRequestListDto
- */
 export interface BudgetPromotionRequestListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'empCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'positionCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'promotionDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'managerUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestListDto
-     */
     'teamUsers'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BudgetPromotionRequestUpdateDto
- */
 export interface BudgetPromotionRequestUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'empCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'positionCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'promotionDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'managerUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetPromotionRequestUpdateDto
-     */
     'teamUsers'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const Category = {
     NUMBER_0: 0,
@@ -3208,3364 +643,609 @@ export const Category = {
 export type Category = typeof Category[keyof typeof Category];
 
 
-/**
- * 
- * @export
- * @interface ChangedTaskListDto
- */
 export interface ChangedTaskListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'taskId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'taskName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChangedTaskListDto
-     */
     'progress'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'projectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'companyName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'managerName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'changeType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangedTaskListDto
-     */
     'dateOfChange'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ChangedTaskListDto
-     */
     'assignUserIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<UserAppDtoOnlyNameId>}
-     * @memberof ChangedTaskListDto
-     */
     'assignUsers'?: Array<UserAppDtoOnlyNameId> | null;
 }
-/**
- * 
- * @export
- * @interface ClientLoginDto
- */
 export interface ClientLoginDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClientLoginDto
-     */
     'clientId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClientLoginDto
-     */
     'clientSecret'?: string | null;
 }
-/**
- * 
- * @export
- * @interface Company
- */
 export interface Company {
-    /**
-     * 
-     * @type {string}
-     * @memberof Company
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Company
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Company
-     */
     'clientId': string;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Company
-     */
     'client'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Company
-     */
     'createdDate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Company
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {Array<Plant>}
-     * @memberof Company
-     */
     'plant'?: Array<Plant> | null;
 }
-/**
- * 
- * @export
- * @interface CreatePositionDto
- */
 export interface CreatePositionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePositionDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePositionDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePositionDto
-     */
     'customerRefId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CreateProjectDto
- */
 export interface CreateProjectDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateProjectDto
-     */
     'categoryId'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'projectGain'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'projectLearn'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProjectDto
-     */
     'projectTags'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CreateUserDto
- */
 export interface CreateUserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'profileInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'password'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
     'isSystemAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
     'isBlocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
     'isTestData'?: boolean | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
     'vacationMode'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'lastLoginDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'lastLoginIp'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateUserDto
-     */
     'canSsoLogin'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'sapDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'sapPositionText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'departmentsId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {Array<UserRoleDto>}
-     * @memberof CreateUserDto
-     */
     'roleIds'?: Array<UserRoleDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {UserLevel}
-     * @memberof CreateUserDto
-     */
     'userLevel'?: UserLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface CustCompanyGroupDto
- */
 export interface CustCompanyGroupDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof CustCompanyGroupDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustCompanyGroupDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<CustCompanyGroupList>}
-     * @memberof CustCompanyGroupDto
-     */
     'cust_companyGroupList'?: Array<CustCompanyGroupList> | null;
 }
-/**
- * 
- * @export
- * @interface CustCompanyGroupList
- */
 export interface CustCompanyGroupList {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustCompanyGroupList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustCompanyGroupList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustLegalEntityDto
- */
 export interface CustLegalEntityDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof CustLegalEntityDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustLegalEntityDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<CustLegalEntityList>}
-     * @memberof CustLegalEntityDto
-     */
     'cust_legalEntityList'?: Array<CustLegalEntityList> | null;
 }
-/**
- * 
- * @export
- * @interface CustLegalEntityList
- */
 export interface CustLegalEntityList {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustLegalEntityList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustLegalEntityList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustSubDivisioList
- */
 export interface CustSubDivisioList {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustSubDivisioList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustSubDivisioList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustSubDivisionDto
- */
 export interface CustSubDivisionDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof CustSubDivisionDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustSubDivisionDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<CustSubDivisioList>}
-     * @memberof CustSubDivisionDto
-     */
     'cust_sub_divisioList'?: Array<CustSubDivisioList> | null;
 }
-/**
- * 
- * @export
- * @interface CustomFieldDto
- */
 export interface CustomFieldDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldDto
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomFieldDto
-     */
     'valueJson'?: string | null;
 }
-/**
- * 
- * @export
- * @interface Customer
- */
 export interface Customer {
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Customer
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Customer
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof Customer
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Customer
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Customer
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'customerTypeId'?: string | null;
-    /**
-     * 
-     * @type {LookupItem}
-     * @memberof Customer
-     */
     'customerTypeItem'?: LookupItem;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'categoryId'?: string | null;
-    /**
-     * 
-     * @type {LookupItem}
-     * @memberof Customer
-     */
     'categoryItem'?: LookupItem;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'legalName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'companyType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'taxOffice'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'taxNumber'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Customer
-     */
     'isReferenceCustomer'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'logoFilePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'ownerId'?: string | null;
-    /**
-     * 
-     * @type {LifecycleStage}
-     * @memberof Customer
-     */
     'lifecycleStage'?: LifecycleStage;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'nextActivityDate'?: string | null;
-    /**
-     * 
-     * @type {Array<CustomerAddress>}
-     * @memberof Customer
-     */
     'addresses'?: Array<CustomerAddress> | null;
-    /**
-     * 
-     * @type {Array<CustomerOfficial>}
-     * @memberof Customer
-     */
     'officials'?: Array<CustomerOfficial> | null;
-    /**
-     * 
-     * @type {Array<CustomerEmail>}
-     * @memberof Customer
-     */
     'secondaryEmails'?: Array<CustomerEmail> | null;
-    /**
-     * 
-     * @type {Array<CustomerTag>}
-     * @memberof Customer
-     */
     'tags'?: Array<CustomerTag> | null;
-    /**
-     * 
-     * @type {Array<CustomerDocument>}
-     * @memberof Customer
-     */
     'documents'?: Array<CustomerDocument> | null;
-    /**
-     * 
-     * @type {Array<CustomerSector>}
-     * @memberof Customer
-     */
     'sectors'?: Array<CustomerSector> | null;
-    /**
-     * 
-     * @type {Array<CustomerCustomField>}
-     * @memberof Customer
-     */
     'customFields'?: Array<CustomerCustomField> | null;
-    /**
-     * 
-     * @type {Array<CustomerPhone>}
-     * @memberof Customer
-     */
     'phones'?: Array<CustomerPhone> | null;
-    /**
-     * 
-     * @type {Array<CustomerNote>}
-     * @memberof Customer
-     */
     'notes'?: Array<CustomerNote> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Customer
-     */
     'rowVersion'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface CustomerAddress
- */
 export interface CustomerAddress {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerAddress
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerAddress
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerAddress
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerAddress
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {AddressType}
-     * @memberof CustomerAddress
-     */
     'type'?: AddressType;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'country'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'city'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'district'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'postalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'line1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'line2'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isDefaultBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isDefaultShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddress
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerAddress
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddress
-     */
     'rowVersion'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface CustomerAddressDto
- */
 export interface CustomerAddressDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerAddressDto
-     */
     'type'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'country'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'city'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'district'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'postalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'line1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'line2'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressDto
-     */
     'isDefaultBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressDto
-     */
     'isDefaultShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressDto
-     */
     'isBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressDto
-     */
     'isShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerAddressInsertDto
- */
 export interface CustomerAddressInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerAddressInsertDto
-     */
     'type'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'country'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'city'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'district'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'postalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'line1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressInsertDto
-     */
     'line2'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressInsertDto
-     */
     'isDefaultBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressInsertDto
-     */
     'isDefaultShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressInsertDto
-     */
     'isBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressInsertDto
-     */
     'isShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressInsertDto
-     */
     'isActive'?: boolean;
 }
-/**
- * 
- * @export
- * @interface CustomerAddressUpdateDto
- */
 export interface CustomerAddressUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerAddressUpdateDto
-     */
     'type'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'country'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'city'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'district'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'postalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'line1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'line2'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressUpdateDto
-     */
     'isDefaultBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressUpdateDto
-     */
     'isDefaultShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressUpdateDto
-     */
     'isBilling'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressUpdateDto
-     */
     'isShipping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerAddressUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerAddressUpdateDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerCustomField
- */
 export interface CustomerCustomField {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerCustomField
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerCustomField
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerCustomField
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerCustomField
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerCustomField
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'fieldId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'fieldType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'valueJson'?: string | null;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerCustomField
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerCustomField
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerDocument
- */
 export interface CustomerDocument {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerDocument
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerDocument
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerDocument
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerDocument
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerDocument
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'fileName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'filePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'contentType'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerDocument
-     */
     'fileSize'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'category'?: string | null;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerDocument
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocument
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerDocumentUpdateDto
- */
 export interface CustomerDocumentUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocumentUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocumentUpdateDto
-     */
     'fileName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocumentUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocumentUpdateDto
-     */
     'category'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerDocumentUpdateDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerEmail
- */
 export interface CustomerEmail {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerEmail
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerEmail
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerEmail
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmail
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerEmail
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmail
-     */
     'notify'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmail
-     */
     'bulk'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmail
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmail
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerEmail
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmail
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerEmailDto
- */
 export interface CustomerEmailDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailDto
-     */
     'notify'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailDto
-     */
     'bulk'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerEmailInsertDto
- */
 export interface CustomerEmailInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailInsertDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailInsertDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailInsertDto
-     */
     'notify'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailInsertDto
-     */
     'bulk'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailInsertDto
-     */
     'isPrimary'?: boolean;
 }
-/**
- * 
- * @export
- * @interface CustomerEmailUpdateDto
- */
 export interface CustomerEmailUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailUpdateDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailUpdateDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailUpdateDto
-     */
     'notify'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailUpdateDto
-     */
     'bulk'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerEmailUpdateDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerEmailUpdateDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerInsertDto
- */
 export interface CustomerInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'logoFilePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'legalName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'customerTypeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'categoryId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'taxOffice'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'taxNumber'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerInsertDto
-     */
     'isReferenceCustomer'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'website'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'ownerId'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerInsertDto
-     */
     'lifecycleStage'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerInsertDto
-     */
     'nextActivityDate'?: string | null;
-    /**
-     * 
-     * @type {Array<CustomerOfficialDto>}
-     * @memberof CustomerInsertDto
-     */
     'officials'?: Array<CustomerOfficialDto> | null;
-    /**
-     * 
-     * @type {Array<CustomFieldDto>}
-     * @memberof CustomerInsertDto
-     */
     'customFields'?: Array<CustomFieldDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerEmailDto>}
-     * @memberof CustomerInsertDto
-     */
     'emails'?: Array<CustomerEmailDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerAddressDto>}
-     * @memberof CustomerInsertDto
-     */
     'addresses'?: Array<CustomerAddressDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerPhoneDto>}
-     * @memberof CustomerInsertDto
-     */
     'phones'?: Array<CustomerPhoneDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerNoteDto>}
-     * @memberof CustomerInsertDto
-     */
     'notes'?: Array<CustomerNoteDto> | null;
-    /**
-     * 
-     * @type {Array<CustomerDocument>}
-     * @memberof CustomerInsertDto
-     */
     'documents'?: Array<CustomerDocument> | null;
 }
-/**
- * 
- * @export
- * @interface CustomerListDto
- */
 export interface CustomerListDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerListDto
-     */
     'cusid'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerListDto
-     */
     'custx'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerNote
- */
 export interface CustomerNote {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerNote
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerNote
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerNote
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerNote
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerNote
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'date'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'content'?: string | null;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerNote
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNote
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerNoteDto
- */
 export interface CustomerNoteDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteDto
-     */
     'date'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteDto
-     */
     'content'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerNoteInsertDto
- */
 export interface CustomerNoteInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteInsertDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteInsertDto
-     */
     'date'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteInsertDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteInsertDto
-     */
     'content'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerNoteUpdateDto
- */
 export interface CustomerNoteUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'date'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'content'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerNoteUpdateDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerOfficial
- */
 export interface CustomerOfficial {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerOfficial
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerOfficial
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerOfficial
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerOfficial
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerOfficial
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'fullName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'phone'?: string | null;
-    /**
-     * 
-     * @type {OfficialRole}
-     * @memberof CustomerOfficial
-     */
     'role'?: OfficialRole;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerOfficial
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerOfficial
-     */
     'kvkkConsent'?: boolean;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerOfficial
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficial
-     */
     'rowVersion'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface CustomerOfficialDto
- */
 export interface CustomerOfficialDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'fullName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'phone'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerOfficialDto
-     */
     'role'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerOfficialDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerOfficialDto
-     */
     'kvkkConsent'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerOfficialDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerPhone
- */
 export interface CustomerPhone {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerPhone
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerPhone
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerPhone
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhone
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerPhone
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'number'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhone
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhone
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerPhone
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhone
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerPhoneDto
- */
 export interface CustomerPhoneDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneDto
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneDto
-     */
     'number'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerPhoneInsertDto
- */
 export interface CustomerPhoneInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneInsertDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneInsertDto
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneInsertDto
-     */
     'number'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneInsertDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneInsertDto
-     */
     'isActive'?: boolean;
 }
-/**
- * 
- * @export
- * @interface CustomerPhoneUpdateDto
- */
 export interface CustomerPhoneUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'number'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'isPrimary'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPhoneUpdateDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerSector
- */
 export interface CustomerSector {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerSector
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerSector
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerSector
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerSector
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerSector
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'sector'?: string | null;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerSector
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerSector
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerTag
- */
 export interface CustomerTag {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof CustomerTag
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof CustomerTag
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof CustomerTag
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerTag
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerTag
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'tag'?: string | null;
-    /**
-     * 
-     * @type {Customer}
-     * @memberof CustomerTag
-     */
     'customer'?: Customer;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerTag
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface CustomerUpdateDto
- */
 export interface CustomerUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'logoFilePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'rowVersion'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'legalName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
     'customerTypeId'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
     'categoryId'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
     'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'website'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'taxOffice'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'taxNumber'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerUpdateDto
-     */
     'isReferenceCustomer'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'defaultNotificationEmail'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'ownerId'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerUpdateDto
-     */
     'lifecycleStage'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerUpdateDto
-     */
     'nextActivityDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface DepartmentUser
- */
 export interface DepartmentUser {
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof DepartmentUser
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof DepartmentUser
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof DepartmentUser
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DepartmentUser
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof DepartmentUser
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'ticketDepartmentId'?: string;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof DepartmentUser
-     */
     'ticketDepartment'?: TicketDepartment;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUser
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof DepartmentUser
-     */
     'user'?: UserApp;
 }
-/**
- * 
- * @export
- * @interface DepartmentUserInsertDto
- */
 export interface DepartmentUserInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUserInsertDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUserInsertDto
-     */
     'userId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface DepartmentUserListDto
- */
 export interface DepartmentUserListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUserListDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUserListDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentUserListDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {UserAppDto}
-     * @memberof DepartmentUserListDto
-     */
     'user'?: UserAppDto;
 }
-/**
- * 
- * @export
- * @interface DepartmentsInsertDto
- */
 export interface DepartmentsInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentsInsertDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentsInsertDto
-     */
     'departmentText'?: string | null;
 }
-/**
- * 
- * @export
- * @interface DepartmentsUpdateDto
- */
 export interface DepartmentsUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentsUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentsUpdateDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DepartmentsUpdateDto
-     */
     'departmentText'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const DeviceStatus = {
     NUMBER_0: 0,
@@ -6577,11 +1257,6 @@ export const DeviceStatus = {
 export type DeviceStatus = typeof DeviceStatus[keyof typeof DeviceStatus];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const DeviceType = {
     NUMBER_0: 0,
@@ -6593,11 +1268,6 @@ export const DeviceType = {
 export type DeviceType = typeof DeviceType[keyof typeof DeviceType];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const DiskType = {
     NUMBER_0: 0,
@@ -6608,1056 +1278,211 @@ export const DiskType = {
 export type DiskType = typeof DiskType[keyof typeof DiskType];
 
 
-/**
- * 
- * @export
- * @interface EmployeeDto
- */
 export interface EmployeeDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof EmployeeDto
-     */
     'ename'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof EmployeeDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof EmployeeDto
-     */
     'pernr'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof EmployeeDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof EmployeeDto
-     */
     'stext'?: string | null;
 }
-/**
- * 
- * @export
- * @interface EnumDto
- */
 export interface EnumDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnumDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnumDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnumDto
-     */
     'number'?: number | null;
 }
-/**
- * 
- * @export
- * @interface EnumListDto
- */
 export interface EnumListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnumListDto
-     */
     'enumClass'?: string | null;
-    /**
-     * 
-     * @type {Array<EnumDto>}
-     * @memberof EnumListDto
-     */
     'enums'?: Array<EnumDto> | null;
 }
-/**
- * 
- * @export
- * @interface ExcelAndGraphicData
- */
 export interface ExcelAndGraphicData {
-    /**
-     * 
-     * @type {File}
-     * @memberof ExcelAndGraphicData
-     */
     'excelData'?: File | null;
-    /**
-     * 
-     * @type {Array<TicketListDto>}
-     * @memberof ExcelAndGraphicData
-     */
     'graphicData'?: Array<TicketListDto> | null;
 }
-/**
- * 
- * @export
- * @interface ExcelList
- */
 export interface ExcelList {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'team'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'project'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'consultant'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'customer'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'task'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'completion'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExcelList
-     */
     'note'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExcelList
-     */
     'duration'?: number;
 }
-/**
- * 
- * @export
- * @interface FOBusinessUnitDto
- */
 export interface FOBusinessUnitDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOBusinessUnitDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOBusinessUnitDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOBusinessUnitList>}
-     * @memberof FOBusinessUnitDto
-     */
     'foBusinessUnitList'?: Array<FOBusinessUnitList> | null;
 }
-/**
- * 
- * @export
- * @interface FOBusinessUnitList
- */
 export interface FOBusinessUnitList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOBusinessUnitList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOBusinessUnitList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOCompanyDto
- */
 export interface FOCompanyDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOCompanyDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOCompanyDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOCompanyDtoList>}
-     * @memberof FOCompanyDto
-     */
     'foCompanyDtoList'?: Array<FOCompanyDtoList> | null;
 }
-/**
- * 
- * @export
- * @interface FOCompanyDtoList
- */
 export interface FOCompanyDtoList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOCompanyDtoList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOCompanyDtoList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FODepartmentList
- */
 export interface FODepartmentList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FODepartmentList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FODepartmentList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FODepartmentSFDto
- */
 export interface FODepartmentSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FODepartmentSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FODepartmentSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FODepartmentList>}
-     * @memberof FODepartmentSFDto
-     */
     'foDepartmentList'?: Array<FODepartmentList> | null;
 }
-/**
- * 
- * @export
- * @interface FODivisionDto
- */
 export interface FODivisionDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FODivisionDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FODivisionDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FODivisionList>}
-     * @memberof FODivisionDto
-     */
     'foDivisionList'?: Array<FODivisionList> | null;
 }
-/**
- * 
- * @export
- * @interface FODivisionList
- */
 export interface FODivisionList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FODivisionList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FODivisionList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOGeozoneDto
- */
 export interface FOGeozoneDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOGeozoneDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOGeozoneDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOGeozoneDtoList>}
-     * @memberof FOGeozoneDto
-     */
     'foGeozoneDtoList'?: Array<FOGeozoneDtoList> | null;
 }
-/**
- * 
- * @export
- * @interface FOGeozoneDtoList
- */
 export interface FOGeozoneDtoList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOGeozoneDtoList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOGeozoneDtoList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOJobCodeDto
- */
 export interface FOJobCodeDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOJobCodeDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOJobCodeDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOJobCodeList>}
-     * @memberof FOJobCodeDto
-     */
     'foJobCodeList'?: Array<FOJobCodeList> | null;
 }
-/**
- * 
- * @export
- * @interface FOJobCodeList
- */
 export interface FOJobCodeList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'externalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'cust_ronesanskademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'cust_joblevelgroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'grade'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'name_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'name_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'name_en_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'cust_haykademe'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'employeeClass'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'jobFunction'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobCodeList
-     */
     'endDate'?: string;
 }
-/**
- * 
- * @export
- * @interface FOJobFunctionList
- */
 export interface FOJobFunctionList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobFunctionList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOJobFunctionList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOJobFunctionSFDto
- */
 export interface FOJobFunctionSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOJobFunctionSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOJobFunctionSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOJobFunctionList>}
-     * @memberof FOJobFunctionSFDto
-     */
     'foJobFunctionList'?: Array<FOJobFunctionList> | null;
 }
-/**
- * 
- * @export
- * @interface FOLocationGroupList
- */
 export interface FOLocationGroupList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOLocationGroupList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOLocationGroupList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOLocationGroupSFDTO
- */
 export interface FOLocationGroupSFDTO {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOLocationGroupSFDTO
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOLocationGroupSFDTO
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOLocationGroupList>}
-     * @memberof FOLocationGroupSFDTO
-     */
     'foLocationGroupList'?: Array<FOLocationGroupList> | null;
 }
-/**
- * 
- * @export
- * @interface FOLocationList
- */
 export interface FOLocationList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOLocationList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOLocationList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOLocationSFDto
- */
 export interface FOLocationSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOLocationSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOLocationSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOLocationList>}
-     * @memberof FOLocationSFDto
-     */
     'foLocationList'?: Array<FOLocationList> | null;
 }
-/**
- * 
- * @export
- * @interface FOPayGradeList
- */
 export interface FOPayGradeList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOPayGradeList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOPayGradeList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FOPayGradeSFDto
- */
 export interface FOPayGradeSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOPayGradeSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOPayGradeSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOPayGradeList>}
-     * @memberof FOPayGradeSFDto
-     */
     'foPayGradeList'?: Array<FOPayGradeList> | null;
 }
-/**
- * 
- * @export
- * @interface FOPayGroupSFDto
- */
 export interface FOPayGroupSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof FOPayGroupSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FOPayGroupSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<FOPayGroupSFList>}
-     * @memberof FOPayGroupSFDto
-     */
     'foPayGroupSFList'?: Array<FOPayGroupSFList> | null;
 }
-/**
- * 
- * @export
- * @interface FOPayGroupSFList
- */
 export interface FOPayGroupSFList {
-    /**
-     * 
-     * @type {string}
-     * @memberof FOPayGroupSFList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FOPayGroupSFList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FieldInfoDto
- */
 export interface FieldInfoDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoDto
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldInfoDto
-     */
     'type'?: string | null;
 }
-/**
- * 
- * @export
- * @interface Form
- */
 export interface Form {
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Form
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Form
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof Form
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Form
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Form
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'formName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'formDescription'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Form
-     */
     'revision'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'formDesign'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Form
-     */
     'isActive'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'javaScriptCode'?: string | null;
-    /**
-     * 
-     * @type {FormType}
-     * @memberof Form
-     */
     'formType': FormType;
-    /**
-     * 
-     * @type {FormCategory}
-     * @memberof Form
-     */
     'formCategory': FormCategory;
-    /**
-     * 
-     * @type {FormPriority}
-     * @memberof Form
-     */
     'formPriority': FormPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof Form
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {string}
-     * @memberof Form
-     */
     'parentFormId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Form
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Form
-     */
     'showInMenu'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @interface FormAssignDto
- */
 export interface FormAssignDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'formId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'formName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {FormStatus}
-     * @memberof FormAssignDto
-     */
     'status'?: FormStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'statusText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'createdDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAssignDto
-     */
     'formRunTimeId'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface FormAuthDto
- */
 export interface FormAuthDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAuthDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAuthDto
-     */
     'formId'?: string;
-    /**
-     * 
-     * @type {Form}
-     * @memberof FormAuthDto
-     */
     'form'?: Form;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof FormAuthDto
-     */
     'userIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<UserAppDto>}
-     * @memberof FormAuthDto
-     */
     'users'?: Array<UserAppDto> | null;
 }
-/**
- * 
- * @export
- * @interface FormAuthInsertDto
- */
 export interface FormAuthInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAuthInsertDto
-     */
     'formId'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof FormAuthInsertDto
-     */
     'userIds'?: Array<string> | null;
 }
-/**
- * 
- * @export
- * @interface FormAuthUpdateDto
- */
 export interface FormAuthUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormAuthUpdateDto
-     */
     'formId'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof FormAuthUpdateDto
-     */
     'userIds'?: Array<string> | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const FormCategory = {
     NUMBER_1: 1,
@@ -7669,351 +1494,71 @@ export const FormCategory = {
 export type FormCategory = typeof FormCategory[keyof typeof FormCategory];
 
 
-/**
- * 
- * @export
- * @interface FormColumnDto
- */
 export interface FormColumnDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormColumnDto
-     */
     'columnName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormColumnDto
-     */
     'columnLabel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormColumnDto
-     */
     'key'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FormDataInsertDto
- */
 export interface FormDataInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'formName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'formDescription'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataInsertDto
-     */
     'revision'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'formDesign'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataInsertDto
-     */
     'isActive'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'javaScriptCode'?: string | null;
-    /**
-     * 
-     * @type {FormType}
-     * @memberof FormDataInsertDto
-     */
     'formType'?: FormType;
-    /**
-     * 
-     * @type {FormCategory}
-     * @memberof FormDataInsertDto
-     */
     'formCategory'?: FormCategory;
-    /**
-     * 
-     * @type {FormPriority}
-     * @memberof FormDataInsertDto
-     */
     'formPriority'?: FormPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataInsertDto
-     */
     'parentFormId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataInsertDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataInsertDto
-     */
     'showInMenu'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @interface FormDataListDto
- */
 export interface FormDataListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formDescription'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataListDto
-     */
     'revision'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formDesign'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataListDto
-     */
     'isActive'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'javaScriptCode'?: string | null;
-    /**
-     * 
-     * @type {FormType}
-     * @memberof FormDataListDto
-     */
     'formType'?: FormType;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formTypeText'?: string | null;
-    /**
-     * 
-     * @type {FormCategory}
-     * @memberof FormDataListDto
-     */
     'formCategory'?: FormCategory;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formCategoryText'?: string | null;
-    /**
-     * 
-     * @type {FormPriority}
-     * @memberof FormDataListDto
-     */
     'formPriority'?: FormPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'formPriorityText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'workFlowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataListDto
-     */
     'parentFormId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataListDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataListDto
-     */
     'showInMenu'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @interface FormDataUpdateDto
- */
 export interface FormDataUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'formName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'formDescription'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataUpdateDto
-     */
     'revision'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'formDesign'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataUpdateDto
-     */
     'isActive'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'javaScriptCode'?: string | null;
-    /**
-     * 
-     * @type {FormType}
-     * @memberof FormDataUpdateDto
-     */
     'formType'?: FormType;
-    /**
-     * 
-     * @type {FormCategory}
-     * @memberof FormDataUpdateDto
-     */
     'formCategory'?: FormCategory;
-    /**
-     * 
-     * @type {FormPriority}
-     * @memberof FormDataUpdateDto
-     */
     'formPriority'?: FormPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataUpdateDto
-     */
     'parentFormId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataUpdateDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataUpdateDto
-     */
     'showInMenu'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const FormPriority = {
     NUMBER_1: 1,
@@ -8024,85 +1569,20 @@ export const FormPriority = {
 export type FormPriority = typeof FormPriority[keyof typeof FormPriority];
 
 
-/**
- * 
- * @export
- * @interface FormRuleEngineDto
- */
 export interface FormRuleEngineDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuleEngineDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuleEngineDto
-     */
     'workFlowDefinationId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuleEngineDto
-     */
     'nodeId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuleEngineDto
-     */
     'rulejson'?: string | null;
 }
-/**
- * 
- * @export
- * @interface FormRuntimeDto
- */
 export interface FormRuntimeDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuntimeDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuntimeDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuntimeDto
-     */
     'formId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuntimeDto
-     */
     'valuesJson'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormRuntimeDto
-     */
     'valuesJsonData'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormRuntimeDto
-     */
     'isActive'?: boolean;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const FormStatus = {
     NUMBER_1: 1,
@@ -8114,11 +1594,6 @@ export const FormStatus = {
 export type FormStatus = typeof FormStatus[keyof typeof FormStatus];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const FormType = {
     NUMBER_1: 1,
@@ -8129,11 +1604,6 @@ export const FormType = {
 export type FormType = typeof FormType[keyof typeof FormType];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const GenericList = {
     NUMBER_1: 1,
@@ -8160,408 +1630,83 @@ export const GenericList = {
 export type GenericList = typeof GenericList[keyof typeof GenericList];
 
 
-/**
- * 
- * @export
- * @interface GetCompanyTicketDto
- */
 export interface GetCompanyTicketDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetCompanyTicketDto
-     */
     'companyName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetCompanyTicketDto
-     */
     'ticketCount'?: number;
 }
-/**
- * 
- * @export
- * @interface GetCompanyTicketInfoDto
- */
 export interface GetCompanyTicketInfoDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetCompanyTicketInfoDto
-     */
     'companyName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetCompanyTicketInfoDto
-     */
     'ticketCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetCompanyTicketInfoDto
-     */
     'resolvedCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetCompanyTicketInfoDto
-     */
     'openCount'?: number;
 }
-/**
- * 
- * @export
- * @interface GetSumTicketDto
- */
 export interface GetSumTicketDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'draftCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'openCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'assignedCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'consultantWaitingCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'inProgressCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'internalTestingCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'customerTestingCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'waitingForCustomerCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'resolvedCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'canceledCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'closedCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'inApproveCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'zeroCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetSumTicketDto
-     */
     'sumCount'?: number;
 }
-/**
- * 
- * @export
- * @interface GetTicketCustomerAssignGroupGroup
- */
 export interface GetTicketCustomerAssignGroupGroup {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetTicketCustomerAssignGroupGroup
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketCustomerAssignGroupGroup
-     */
     'totalCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketCustomerAssignGroupGroup
-     */
     'openCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketCustomerAssignGroupGroup
-     */
     'unitTest'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketCustomerAssignGroupGroup
-     */
     'customerTest'?: number;
 }
-/**
- * 
- * @export
- * @interface GetTicketCustomerOpenCloseDto
- */
 export interface GetTicketCustomerOpenCloseDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetTicketCustomerOpenCloseDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketCustomerOpenCloseDto
-     */
     'count'?: number;
 }
-/**
- * 
- * @export
- * @interface GetTicketStatusDto
- */
 export interface GetTicketStatusDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketStatusDto
-     */
     'openCount'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketStatusDto
-     */
     'closedCount'?: number;
 }
-/**
- * 
- * @export
- * @interface GetTicketSubjectInfoDto
- */
 export interface GetTicketSubjectInfoDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetTicketSubjectInfoDto
-     */
     'subjectName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTicketSubjectInfoDto
-     */
     'ticketCount'?: number;
 }
-/**
- * 
- * @export
- * @interface HardwareList
- */
 export interface HardwareList {
-    /**
-     * 
-     * @type {string}
-     * @memberof HardwareList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HardwareList
-     */
     'value'?: string | null;
 }
-/**
- * 
- * @export
- * @interface HareketDto
- */
 export interface HareketDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'sicilNo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'adi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'soyadi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'cihazNo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'cihazAdi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'hareketZamani'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof HareketDto
-     */
     'girisCikis'?: string | null;
 }
-/**
- * 
- * @export
- * @interface HolidayResponseDto
- */
 export interface HolidayResponseDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof HolidayResponseDto
-     */
     'tarih'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HolidayResponseDto
-     */
     'resmi_Tatil'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof HolidayResponseDto
-     */
     'dayOfWeek'?: string | null;
 }
-/**
- * 
- * @export
- * @interface HolidaysAndLeavesDto
- */
 export interface HolidaysAndLeavesDto {
-    /**
-     * 
-     * @type {Array<LeaveResponseDto>}
-     * @memberof HolidaysAndLeavesDto
-     */
     'leaves'?: Array<LeaveResponseDto> | null;
-    /**
-     * 
-     * @type {Array<HolidayResponseDto>}
-     * @memberof HolidaysAndLeavesDto
-     */
     'holidays'?: Array<HolidayResponseDto> | null;
 }
-/**
- * 
- * @export
- * @interface IGenericListDto
- */
 export interface IGenericListDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof IGenericListDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof IGenericListDto
-     */
     'list'?: Array<any> | null;
 }
-/**
- * 
- * @export
- * @interface IdentityRole
- */
 export interface IdentityRole {
-    /**
-     * 
-     * @type {string}
-     * @memberof IdentityRole
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof IdentityRole
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof IdentityRole
-     */
     'normalizedName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof IdentityRole
-     */
     'concurrencyStamp'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const InternalEmploymentType = {
     NUMBER_1: 1,
@@ -8571,817 +1716,152 @@ export const InternalEmploymentType = {
 export type InternalEmploymentType = typeof InternalEmploymentType[keyof typeof InternalEmploymentType];
 
 
-/**
- * 
- * @export
- * @interface InventoryInsertDto
- */
 export interface InventoryInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'assetTag'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'deviceName'?: string | null;
-    /**
-     * 
-     * @type {DeviceType}
-     * @memberof InventoryInsertDto
-     */
     'type'?: DeviceType;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'brand'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'model'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'serialNumber'?: string | null;
-    /**
-     * 
-     * @type {DeviceStatus}
-     * @memberof InventoryInsertDto
-     */
     'status'?: DeviceStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'cpu'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryInsertDto
-     */
     'ram'?: number | null;
-    /**
-     * 
-     * @type {DiskType}
-     * @memberof InventoryInsertDto
-     */
     'diskType'?: DiskType;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryInsertDto
-     */
     'diskSize'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'gpu'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'macAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'staticIPAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'operatingSystem'?: string | null;
-    /**
-     * 
-     * @type {LicenseStatus}
-     * @memberof InventoryInsertDto
-     */
     'oS_LicenseStatus'?: LicenseStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'officeLicense'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {OfficeLocation}
-     * @memberof InventoryInsertDto
-     */
     'officeLocation'?: OfficeLocation;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'purchaseDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'invoiceOrVendor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'warrantyEndDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'assetNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'lastMaintenanceDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryInsertDto
-     */
     'qRorBarcode'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface InventoryListDto
- */
 export interface InventoryListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'assetTag'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'deviceName'?: string | null;
-    /**
-     * 
-     * @type {DeviceType}
-     * @memberof InventoryListDto
-     */
     'type'?: DeviceType;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'brand'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'model'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'serialNumber'?: string | null;
-    /**
-     * 
-     * @type {DeviceStatus}
-     * @memberof InventoryListDto
-     */
     'status'?: DeviceStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'cpu'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryListDto
-     */
     'ram'?: number | null;
-    /**
-     * 
-     * @type {DiskType}
-     * @memberof InventoryListDto
-     */
     'diskType'?: DiskType;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryListDto
-     */
     'diskSize'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'gpu'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'macAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'staticIPAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'operatingSystem'?: string | null;
-    /**
-     * 
-     * @type {LicenseStatus}
-     * @memberof InventoryListDto
-     */
     'oS_LicenseStatus'?: LicenseStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'officeLicense'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserAppDto}
-     * @memberof InventoryListDto
-     */
     'userApp'?: UserAppDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {TicketDepartmensListDto}
-     * @memberof InventoryListDto
-     */
     'ticketDepartment'?: TicketDepartmensListDto;
-    /**
-     * 
-     * @type {OfficeLocation}
-     * @memberof InventoryListDto
-     */
     'officeLocation'?: OfficeLocation;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'purchaseDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'invoiceOrVendor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'warrantyEndDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'assetNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'lastMaintenanceDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryListDto
-     */
     'qRorBarcode'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface InventoryUpdateDto
- */
 export interface InventoryUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'assetTag'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'deviceName'?: string | null;
-    /**
-     * 
-     * @type {DeviceType}
-     * @memberof InventoryUpdateDto
-     */
     'type'?: DeviceType;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'brand'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'model'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'serialNumber'?: string | null;
-    /**
-     * 
-     * @type {DeviceStatus}
-     * @memberof InventoryUpdateDto
-     */
     'status'?: DeviceStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'cpu'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryUpdateDto
-     */
     'ram'?: number | null;
-    /**
-     * 
-     * @type {DiskType}
-     * @memberof InventoryUpdateDto
-     */
     'diskType'?: DiskType;
-    /**
-     * 
-     * @type {number}
-     * @memberof InventoryUpdateDto
-     */
     'diskSize'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'gpu'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'macAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'staticIPAddress'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'operatingSystem'?: string | null;
-    /**
-     * 
-     * @type {LicenseStatus}
-     * @memberof InventoryUpdateDto
-     */
     'oS_LicenseStatus'?: LicenseStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'officeLicense'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {OfficeLocation}
-     * @memberof InventoryUpdateDto
-     */
     'officeLocation'?: OfficeLocation;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'purchaseDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'invoiceOrVendor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'warrantyEndDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'assetNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'lastMaintenanceDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InventoryUpdateDto
-     */
     'qRorBarcode'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface KanbanTasksInsertDto
- */
 export interface KanbanTasksInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'priority'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'rankId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'summary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'tags'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksInsertDto
-     */
     'assigneId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface KanbanTasksListDto
- */
 export interface KanbanTasksListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'priority'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'rankId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'summary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'tags'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksListDto
-     */
     'assigneId'?: string | null;
-    /**
-     * 
-     * @type {UserAppDtoOnlyNameId}
-     * @memberof KanbanTasksListDto
-     */
     'assignee'?: UserAppDtoOnlyNameId;
 }
-/**
- * 
- * @export
- * @interface KanbanTasksUpdateDto
- */
 export interface KanbanTasksUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'priority'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'rankId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'summary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'tags'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof KanbanTasksUpdateDto
-     */
     'assigneId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LeaveResponseDto
- */
 export interface LeaveResponseDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'mail'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'pernr'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'vorna'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'nachn'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'begda'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'endda'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'atext'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'abwtg'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LeaveResponseDto
-     */
     'dayOfWeek'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LicenceList
- */
 export interface LicenceList {
-    /**
-     * 
-     * @type {string}
-     * @memberof LicenceList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LicenceList
-     */
     'value'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const LicenseStatus = {
     NUMBER_0: 0,
@@ -9391,11 +1871,6 @@ export const LicenseStatus = {
 export type LicenseStatus = typeof LicenseStatus[keyof typeof LicenseStatus];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const LifecycleStage = {
     NUMBER_0: 0,
@@ -9408,721 +1883,136 @@ export const LifecycleStage = {
 export type LifecycleStage = typeof LifecycleStage[keyof typeof LifecycleStage];
 
 
-/**
- * 
- * @export
- * @interface LoginDto
- */
 export interface LoginDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginDto
-     */
     'password'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LoginUserDto
- */
 export interface LoginUserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginUserDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginUserDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginUserDto
-     */
     'password'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LookupCategory
- */
 export interface LookupCategory {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupCategory
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof LookupCategory
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'key': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupCategory
-     */
     'isTenantScoped'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupCategory
-     */
     'isReadOnly'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'tenantId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategory
-     */
     'moduleId'?: string | null;
-    /**
-     * 
-     * @type {LookupModule}
-     * @memberof LookupCategory
-     */
     'module'?: LookupModule;
 }
-/**
- * 
- * @export
- * @interface LookupCategoryDto
- */
 export interface LookupCategoryDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategoryDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategoryDto
-     */
     'key'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategoryDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupCategoryDto
-     */
     'isTenantScoped'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupCategoryDto
-     */
     'isReadOnly'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupCategoryDto
-     */
     'moduleId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LookupItem
- */
 export interface LookupItem {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupItem
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof LookupItem
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'categoryId'?: string;
-    /**
-     * 
-     * @type {LookupCategory}
-     * @memberof LookupItem
-     */
     'category'?: LookupCategory;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'tenantId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'nameLocalizedJson'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof LookupItem
-     */
     'orderNo'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupItem
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItem
-     */
     'externalKey'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LookupItemDto
- */
 export interface LookupItemDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'categoryId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'nameLocalizedJson'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof LookupItemDto
-     */
     'orderNo'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupItemDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupItemDto
-     */
     'externalKey'?: string | null;
 }
-/**
- * 
- * @export
- * @interface LookupModule
- */
 export interface LookupModule {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupModule
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof LookupModule
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'key': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModule
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupModule
-     */
     'isTenantScoped'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupModule
-     */
     'isReadOnly'?: boolean;
 }
-/**
- * 
- * @export
- * @interface LookupModuleDto
- */
 export interface LookupModuleDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModuleDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModuleDto
-     */
     'key'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof LookupModuleDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupModuleDto
-     */
     'isTenantScoped'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LookupModuleDto
-     */
     'isReadOnly'?: boolean;
 }
-/**
- * 
- * @export
- * @interface MainClient
- */
 export interface MainClient {
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'slug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {MainClientStatus}
-     * @memberof MainClient
-     */
     'status': MainClientStatus;
-    /**
-     * 
-     * @type {MainClientPlan}
-     * @memberof MainClient
-     */
     'plan': MainClientPlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'timezone': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'ownerUserId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof MainClient
-     */
     'ownerUser'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'logoUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'customDomain'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MainClient
-     */
     'domainVerified'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'featureFlags': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'quotas': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'billingCustomerId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'billingEmail'?: string | null;
-    /**
-     * 
-     * @type {SsoType}
-     * @memberof MainClient
-     */
     'ssoType'?: SsoType;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'ssoMetadataUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'createdDate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClient
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MainClient
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {Array<Company>}
-     * @memberof MainClient
-     */
     'companies'?: Array<Company> | null;
 }
 
 
-/**
- * 
- * @export
- * @interface MainClientInsertDto
- */
 export interface MainClientInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'slug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {MainClientStatus}
-     * @memberof MainClientInsertDto
-     */
     'status'?: MainClientStatus;
-    /**
-     * 
-     * @type {MainClientPlan}
-     * @memberof MainClientInsertDto
-     */
     'plan'?: MainClientPlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'timezone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'ownerUserId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'logoUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'subdomain'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'customDomain'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MainClientInsertDto
-     */
     'domainVerified'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'featureFlags'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'quotas'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'billingCustomerId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'billingEmail'?: string | null;
-    /**
-     * 
-     * @type {SsoType}
-     * @memberof MainClientInsertDto
-     */
     'ssoType'?: SsoType;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientInsertDto
-     */
     'ssoMetadataUrl'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const MainClientPlan = {
     NUMBER_0: 0,
@@ -10133,11 +2023,6 @@ export const MainClientPlan = {
 export type MainClientPlan = typeof MainClientPlan[keyof typeof MainClientPlan];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const MainClientStatus = {
     NUMBER_0: 0,
@@ -10149,652 +2034,122 @@ export const MainClientStatus = {
 export type MainClientStatus = typeof MainClientStatus[keyof typeof MainClientStatus];
 
 
-/**
- * 
- * @export
- * @interface MainClientUpdateDto
- */
 export interface MainClientUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'slug'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {MainClientStatus}
-     * @memberof MainClientUpdateDto
-     */
     'status'?: MainClientStatus;
-    /**
-     * 
-     * @type {MainClientPlan}
-     * @memberof MainClientUpdateDto
-     */
     'plan'?: MainClientPlan;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'timezone'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'ownerUserId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'logoUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'subdomain'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'customDomain'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MainClientUpdateDto
-     */
     'domainVerified'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'featureFlags'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'quotas'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'billingCustomerId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'billingEmail'?: string | null;
-    /**
-     * 
-     * @type {SsoType}
-     * @memberof MainClientUpdateDto
-     */
     'ssoType'?: SsoType;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'ssoMetadataUrl'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MainClientUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MainClientUpdateDto
-     */
     'updatedDate'?: string;
 }
 
 
-/**
- * 
- * @export
- * @interface MakeTenantAdminRequest
- */
 export interface MakeTenantAdminRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof MakeTenantAdminRequest
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MakeTenantAdminRequest
-     */
     'tenantIds'?: Array<string> | null;
 }
-/**
- * 
- * @export
- * @interface MeetingDto
- */
 export interface MeetingDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'opportunityId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'startTime'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'endTime'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'subject'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'organizerUserId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'attendeesJson'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeetingDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface Menu
- */
 export interface Menu {
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Menu
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Menu
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'menuCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'parentMenuId'?: string | null;
-    /**
-     * 
-     * @type {Menu}
-     * @memberof Menu
-     */
     'parentMenu'?: Menu;
-    /**
-     * 
-     * @type {Array<Menu>}
-     * @memberof Menu
-     */
     'subMenus'?: Array<Menu> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'route'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'href'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'icon'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Menu
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Menu
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Menu
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Menu
-     */
     'showMenu'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Menu
-     */
     'isTenantOnly'?: boolean;
 }
-/**
- * 
- * @export
- * @interface MenuInsertDto
- */
 export interface MenuInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'menuCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'parentMenuId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'route'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'href'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'icon'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof MenuInsertDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuInsertDto
-     */
     'showMenu'?: boolean;
 }
-/**
- * 
- * @export
- * @interface MenuListDto
- */
 export interface MenuListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'menuCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'parentMenuId'?: string | null;
-    /**
-     * 
-     * @type {Array<MenuListDto>}
-     * @memberof MenuListDto
-     */
     'subMenus'?: Array<MenuListDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'route'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'href'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'icon'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuListDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof MenuListDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'createdAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'updatedAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuListDto
-     */
     'showMenu'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuListDto
-     */
     'isTenantOnly'?: boolean;
 }
-/**
- * 
- * @export
- * @interface MenuPermissionDto
- */
 export interface MenuPermissionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuPermissionDto
-     */
     'menuId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuPermissionDto
-     */
     'canView'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuPermissionDto
-     */
     'canAdd'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuPermissionDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuPermissionDto
-     */
     'canDelete'?: boolean;
 }
-/**
- * 
- * @export
- * @interface MenuUpdateDto
- */
 export interface MenuUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'menuCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'parentMenuId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'route'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'href'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'icon'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof MenuUpdateDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MenuUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MenuUpdateDto
-     */
     'showMenu'?: boolean;
 }
-/**
- * 
- * @export
- * @interface Metadata
- */
 export interface Metadata {
-    /**
-     * 
-     * @type {string}
-     * @memberof Metadata
-     */
     'uri'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const OfficeLocation = {
     NUMBER_0: 0,
@@ -10806,11 +2161,6 @@ export const OfficeLocation = {
 export type OfficeLocation = typeof OfficeLocation[keyof typeof OfficeLocation];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const OfficialRole = {
     NUMBER_0: 0,
@@ -10823,151 +2173,31 @@ export const OfficialRole = {
 export type OfficialRole = typeof OfficialRole[keyof typeof OfficialRole];
 
 
-/**
- * 
- * @export
- * @interface OpportunityDto
- */
 export interface OpportunityDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof OpportunityDto
-     */
     'stage'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OpportunityDto
-     */
     'amount'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'currency'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof OpportunityDto
-     */
     'probability'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'expectedCloseDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'ownerUserId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OpportunityDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface OrganizationDto
- */
 export interface OrganizationDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'className'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OrganizationDto
-     */
     'expanded'?: boolean;
-    /**
-     * 
-     * @type {Array<OrganizationDto>}
-     * @memberof OrganizationDto
-     */
     'children'?: Array<OrganizationDto> | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const Permission = {
     NUMBER_1: 1,
@@ -10977,11 +2207,6 @@ export const Permission = {
 export type Permission = typeof Permission[keyof typeof Permission];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const PickList = {
     NUMBER_1: 1,
@@ -11004,256 +2229,51 @@ export const PickList = {
 export type PickList = typeof PickList[keyof typeof PickList];
 
 
-/**
- * 
- * @export
- * @interface PickListDto
- */
 export interface PickListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PickListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PickListDto
-     */
     'externalCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PickListDto
-     */
     'label_tr_TR'?: string | null;
 }
-/**
- * 
- * @export
- * @interface Plant
- */
 export interface Plant {
-    /**
-     * 
-     * @type {string}
-     * @memberof Plant
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plant
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plant
-     */
     'companyId': string;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Plant
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plant
-     */
     'createdDate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Plant
-     */
     'updatedDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface PositionListDto
- */
 export interface PositionListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PositionListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PositionListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PositionListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PositionListDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PositionListDto
-     */
     'customerName'?: string | null;
 }
-/**
- * 
- * @export
- * @interface PositionSFDto
- */
 export interface PositionSFDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof PositionSFDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PositionSFDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<SFPositionList>}
-     * @memberof PositionSFDto
-     */
     'sfPositionList'?: Array<SFPositionList> | null;
 }
-/**
- * 
- * @export
- * @interface Positions
- */
 export interface Positions {
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Positions
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Positions
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof Positions
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Positions
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Positions
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Positions
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof Positions
-     */
     'customerRef'?: WorkCompany;
-    /**
-     * 
-     * @type {Array<UserApp>}
-     * @memberof Positions
-     */
     'userApps'?: Array<UserApp> | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const ProcessType = {
     NUMBER_1: 1,
@@ -11263,885 +2283,165 @@ export const ProcessType = {
 export type ProcessType = typeof ProcessType[keyof typeof ProcessType];
 
 
-/**
- * 
- * @export
- * @interface Project
- */
 export interface Project {
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Project
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Project
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof Project
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Project
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Project
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof Project
-     */
     'userApp'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Project
-     */
     'categoryId'?: number;
-    /**
-     * 
-     * @type {Category}
-     * @memberof Project
-     */
     'category'?: Category;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'projectGain'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'projectLearn'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Project
-     */
     'projectTags'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface ProjectCategories
- */
 export interface ProjectCategories {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof ProjectCategories
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof ProjectCategories
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof ProjectCategories
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectCategories
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectCategories
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategories
-     */
     'name'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ProjectCategoriesInsertDto
- */
 export interface ProjectCategoriesInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategoriesInsertDto
-     */
     'name'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ProjectCategoriesListDto
- */
 export interface ProjectCategoriesListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategoriesListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectCategoriesListDto
-     */
     'name'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ProjectInfoDto
- */
 export interface ProjectInfoDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'companyName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'projectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'taskName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'notes'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectInfoDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectInfoDto
-     */
     'duration'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectInfoDto
-     */
     'progress'?: number | null;
 }
-/**
- * 
- * @export
- * @interface ProjectLastYearInvoiceList
- */
 export interface ProjectLastYearInvoiceList {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectLastYearInvoiceList
-     */
     'month'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectLastYearInvoiceList
-     */
     'act'?: number;
 }
-/**
- * 
- * @export
- * @interface ProjectListDto
- */
 export interface ProjectListDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectListDto
-     */
     'vprid'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectListDto
-     */
     'vprtx'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectListDto
-     */
     'cusid'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectListDto
-     */
     'custx'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ProjectTasksInsertDto
- */
 export interface ProjectTasksInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksInsertDto
-     */
     'taskId'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'projectId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksInsertDto
-     */
     'duration'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksInsertDto
-     */
     'progress'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'predecessor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'parentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksInsertDto
-     */
     'milestone'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksInsertDto
-     */
     'notes'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksInsertDto
-     */
     'isManual'?: boolean | null;
-    /**
-     * 
-     * @type {Array<TaskUsersDto>}
-     * @memberof ProjectTasksInsertDto
-     */
     'users'?: Array<TaskUsersDto> | null;
 }
-/**
- * 
- * @export
- * @interface ProjectTasksListDto
- */
 export interface ProjectTasksListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksListDto
-     */
     'taskId'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'projectId'?: string;
-    /**
-     * 
-     * @type {TicketProjectsListDto}
-     * @memberof ProjectTasksListDto
-     */
     'ticketProjects'?: TicketProjectsListDto;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksListDto
-     */
     'duration'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksListDto
-     */
     'progress'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'predecessor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'parentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksListDto
-     */
     'milestone'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksListDto
-     */
     'notes'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksListDto
-     */
     'isManual'?: boolean | null;
-    /**
-     * 
-     * @type {Array<UserAppDtoOnlyNameId>}
-     * @memberof ProjectTasksListDto
-     */
     'users'?: Array<UserAppDtoOnlyNameId> | null;
 }
-/**
- * 
- * @export
- * @interface ProjectTasksUpdateDto
- */
 export interface ProjectTasksUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksUpdateDto
-     */
     'taskId'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'projectId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksUpdateDto
-     */
     'duration'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProjectTasksUpdateDto
-     */
     'progress'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'predecessor'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'parentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksUpdateDto
-     */
     'milestone'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectTasksUpdateDto
-     */
     'notes'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectTasksUpdateDto
-     */
     'isManual'?: boolean | null;
-    /**
-     * 
-     * @type {Array<TaskUsersDto>}
-     * @memberof ProjectTasksUpdateDto
-     */
     'users'?: Array<TaskUsersDto> | null;
 }
-/**
- * 
- * @export
- * @interface QuoteDto
- */
 export interface QuoteDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'opportunityId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'quoteNo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'quoteDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'validUntil'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteDto
-     */
     'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'currency'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteDto
-     */
     'subtotal'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteDto
-     */
     'discountTotal'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteDto
-     */
     'taxTotal'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteDto
-     */
     'grandTotal'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'notes'?: string | null;
-    /**
-     * 
-     * @type {Array<QuoteLineDto>}
-     * @memberof QuoteDto
-     */
     'lines'?: Array<QuoteLineDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface QuoteLineDto
- */
 export interface QuoteLineDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteLineDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteLineDto
-     */
     'itemCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteLineDto
-     */
     'itemName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteLineDto
-     */
     'unit'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteLineDto
-     */
     'quantity'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteLineDto
-     */
     'unitPrice'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteLineDto
-     */
     'discountRate'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteLineDto
-     */
     'taxRate'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuoteLineDto
-     */
     'lineTotal'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof QuoteLineDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @interface RefreshTokenDto
- */
 export interface RefreshTokenDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RefreshTokenDto
-     */
     'token'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ReminderDto
- */
 export interface ReminderDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'activityId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'remindAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'message'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'channel'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ReminderDto
-     */
     'isSent'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReminderDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const RequestType = {
     NUMBER_1: 1,
@@ -12154,1455 +2454,265 @@ export const RequestType = {
 export type RequestType = typeof RequestType[keyof typeof RequestType];
 
 
-/**
- * 
- * @export
- * @interface RoleMenuInsertDto
- */
 export interface RoleMenuInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuInsertDto
-     */
     'roleName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {Array<MenuPermissionDto>}
-     * @memberof RoleMenuInsertDto
-     */
     'menuPermissions'?: Array<MenuPermissionDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleMenuListDto
- */
 export interface RoleMenuListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'menuId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleMenuListDto
-     */
     'canView'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleMenuListDto
-     */
     'canAdd'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleMenuListDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleMenuListDto
-     */
     'canDelete'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'createdAt'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuListDto
-     */
     'status'?: string | null;
 }
-/**
- * 
- * @export
- * @interface RoleMenuResuResultDto
- */
 export interface RoleMenuResuResultDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuResuResultDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuResuResultDto
-     */
     'roleName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuResuResultDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {Array<MenuPermissionDto>}
-     * @memberof RoleMenuResuResultDto
-     */
     'menuPermissions'?: Array<MenuPermissionDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleMenuUpdateDto
- */
 export interface RoleMenuUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuUpdateDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuUpdateDto
-     */
     'roleName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleMenuUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {Array<MenuPermissionDto>}
-     * @memberof RoleMenuUpdateDto
-     */
     'menuPermissions'?: Array<MenuPermissionDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantBulkItemDto
- */
 export interface RoleTenantBulkItemDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantBulkItemDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantBulkItemDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantBulkItemDto
-     */
     'isLocked'?: boolean;
 }
-/**
- * 
- * @export
- * @interface RoleTenantBulkSaveDto
- */
 export interface RoleTenantBulkSaveDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantBulkSaveDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {Array<RoleTenantBulkItemDto>}
-     * @memberof RoleTenantBulkSaveDto
-     */
     'items'?: Array<RoleTenantBulkItemDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantInsertDto
- */
 export interface RoleTenantInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantInsertDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantInsertDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantInsertDto
-     */
     'isLocked'?: boolean;
 }
-/**
- * 
- * @export
- * @interface RoleTenantListDto
- */
 export interface RoleTenantListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantListDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantListDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantListDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantListDto
-     */
     'isLocked'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantListDto
-     */
     'updatedDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantMenuBulkSaveDto
- */
 export interface RoleTenantMenuBulkSaveDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuBulkSaveDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuBulkSaveDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<MenuPermissionDto>}
-     * @memberof RoleTenantMenuBulkSaveDto
-     */
     'menuPermissions'?: Array<MenuPermissionDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantMenuListDto
- */
 export interface RoleTenantMenuListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'menuId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantMenuListDto
-     */
     'canView'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantMenuListDto
-     */
     'canAdd'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantMenuListDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantMenuListDto
-     */
     'canDelete'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantMenuListDto
-     */
     'updatedDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantUpdateDto
- */
 export interface RoleTenantUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleTenantUpdateDto
-     */
     'isLocked'?: boolean;
 }
-/**
- * 
- * @export
- * @interface RoleTenantWithMenusBulkSaveDto
- */
 export interface RoleTenantWithMenusBulkSaveDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantWithMenusBulkSaveDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<RoleWithMenusItemDto>}
-     * @memberof RoleTenantWithMenusBulkSaveDto
-     */
     'items'?: Array<RoleWithMenusItemDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleTenantWithMenusGetDto
- */
 export interface RoleTenantWithMenusGetDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleTenantWithMenusGetDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<RoleWithMenusItemDto>}
-     * @memberof RoleTenantWithMenusGetDto
-     */
     'items'?: Array<RoleWithMenusItemDto> | null;
 }
-/**
- * 
- * @export
- * @interface RoleWithMenusItemDto
- */
 export interface RoleWithMenusItemDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleWithMenusItemDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoleWithMenusItemDto
-     */
     'roleName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleWithMenusItemDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleWithMenusItemDto
-     */
     'isLocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RoleWithMenusItemDto
-     */
     'selected'?: boolean;
-    /**
-     * 
-     * @type {Array<MenuPermissionDto>}
-     * @memberof RoleWithMenusItemDto
-     */
     'menuPermissions'?: Array<MenuPermissionDto> | null;
 }
-/**
- * 
- * @export
- * @interface SFEmpJobDto
- */
 export interface SFEmpJobDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof SFEmpJobDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFEmpJobDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFEmpJobDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFEmpJobDto
-     */
     'managerId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SFFOCostCenterDto
- */
 export interface SFFOCostCenterDto {
-    /**
-     * 
-     * @type {Array<any>}
-     * @memberof SFFOCostCenterDto
-     */
     'list'?: Array<any> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof SFFOCostCenterDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<SFFOCostCenterList>}
-     * @memberof SFFOCostCenterDto
-     */
     'sffoCostCenterList'?: Array<SFFOCostCenterList> | null;
 }
-/**
- * 
- * @export
- * @interface SFFOCostCenterList
- */
 export interface SFFOCostCenterList {
-    /**
-     * 
-     * @type {string}
-     * @memberof SFFOCostCenterList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFFOCostCenterList
-     */
     'externalCode'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SFPositionAllPropertyDto
- */
 export interface SFPositionAllPropertyDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionAllPropertyDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionAllPropertyDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionAllPropertyDto
-     */
     'effectiveStartDate'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SFPositionDto
- */
 export interface SFPositionDto {
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof SFPositionDto
-     */
     '__metadata'?: Metadata;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'effectiveStartDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_jobfunction'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_calismaYeriTuru'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customlegalEntity'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_integrationCheck'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'createdDateTime'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'jobCode'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'mdfSystemVersionId'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'type'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_EmpGroup'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_plannedEndDate'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'costCenter'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'legacyPositionId'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'externalName_localized'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'mdfSystemRecordStatus'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_CompanyGroup8'?: any | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SFPositionDto
-     */
     'vacant'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_locationGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'externalName_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_IseBaslamaTarihi'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'positionTitle'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_legalEntityOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'externalName_defaultValue'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_incumbent'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'payGrade'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_ticket'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_orgChartNameText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'mdfSystemObjectType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'creationSource'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_actualhiredate'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_tr_TR'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'targetFTE'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'externalName_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_hasChildPosition'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'jobLevel'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'createdDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'mdfSystemRecordId'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_CompanyGroup6Org'?: any | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SFPositionDto
-     */
     'multipleIncumbentsAllowed'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'businessUnit'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_parentDepartment'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'lastModifiedDateTime'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_businessUnitOrg'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'jobTitle'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'criticality'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_en_DEBUG'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_ronesansjoblevel'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'incumbent'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_subDivisionOrg'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_phisicalLocation'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'mdfSystemEntityId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_companyGroup'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'payRange'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_DivisionOrg'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'regularTemporary'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORG'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_legalEntityOrg'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_sub_division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'standardHours'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_departmentOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_businessUnitOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'effectiveStatus'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_sidebenefit'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'technicalParameters'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_incumbentName'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_PlanlananIseGiris'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_ChiefPosition'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_CompanyGroup4Org'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_empSubGroup'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_en_US'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_ru_RU'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_payGroup'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'effectiveEndDate'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'positionCriticality'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_positionstartdate'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'description'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_parentDepartment2'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'positionControlled'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_parentDepartmentOrg'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_GeoZone'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_HayKademe'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'company'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_departmentOrg'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_ronesansKademe'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'employeeClass'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_isAlani'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_parentDepartmentOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_subDivisionOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'changeReason'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_workArea'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'lastModifiedDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'lastModifiedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'lastModifiedDateWithTZ'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'transactionSequence'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_customORGLabel_localized'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'cust_divisonOrgCount'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'mdfSystemOptimisticLockUUID'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'comment'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'location'?: any | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'cust_jobFamily'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'externalName_en_US'?: string | null;
-    /**
-     * 
-     * @type {any}
-     * @memberof SFPositionDto
-     */
     'externalName_en_DEBUG'?: any | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'parentPositionTxt'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionDto
-     */
     'parentPositionValue'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SFPositionList
- */
 export interface SFPositionList {
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'externalCode'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SFPositionList
-     */
     'vacant'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'cust_plannedEndDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'cust_IseBaslamaTarihi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'businessUnit'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'cust_customlegalEntity'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'cust_sub_division'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFPositionList
-     */
     'department'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SFUSerList
- */
 export interface SFUSerList {
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'defaultFullName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SFUSerList
-     */
     'username'?: string | null;
 }
-/**
- * 
- * @export
- * @interface SpecialDayDto
- */
 export interface SpecialDayDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'customerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'date'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SpecialDayDto
-     */
     'isAnnual'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof SpecialDayDto
-     */
     'advanceNotifyDays'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'channel'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'messageTemplate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SpecialDayDto
-     */
     'rowVersion'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const SsoType = {
     NUMBER_0: 0,
@@ -13614,1711 +2724,316 @@ export const SsoType = {
 export type SsoType = typeof SsoType[keyof typeof SsoType];
 
 
-/**
- * 
- * @export
- * @interface TaskUsersDto
- */
 export interface TaskUsersDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskUsersDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskUsersDto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskUsersDto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskUsersDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof TaskUsersDto
-     */
     'unit'?: number | null;
 }
-/**
- * 
- * @export
- * @interface TicketApprove
- */
 export interface TicketApprove {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketApprove
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketApprove
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketApprove
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketApprove
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketApprove
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'ticketsId': string;
-    /**
-     * 
-     * @type {Tickets}
-     * @memberof TicketApprove
-     */
     'tickets'?: Tickets;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketApprove
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketApprove
-     */
     'userApp'?: UserApp;
 }
-/**
- * 
- * @export
- * @interface TicketAssigne
- */
 export interface TicketAssigne {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketAssigne
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketAssigne
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketAssigne
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketAssigne
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketAssigne
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'ticketsId': string;
-    /**
-     * 
-     * @type {Tickets}
-     * @memberof TicketAssigne
-     */
     'tickets'?: Tickets;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketAssigne
-     */
     'userApp'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'ticketTeamID'?: string | null;
-    /**
-     * 
-     * @type {TicketTeam}
-     * @memberof TicketAssigne
-     */
     'ticketTeam'?: TicketTeam;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketAssigne
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof TicketAssigne
-     */
     'status'?: TicketStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigne
-     */
     'description'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface TicketAssigneDto
- */
 export interface TicketAssigneDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneDto
-     */
     'ticketsId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneDto
-     */
     'ticketTeamID'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketAssigneDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof TicketAssigneDto
-     */
     'status'?: TicketStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneDto
-     */
     'description'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface TicketAssigneListDto
- */
 export interface TicketAssigneListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'ticketsId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof TicketAssigneListDto
-     */
     'statusId'?: TicketStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'status'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'createDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketAssigneListDto
-     */
     'createdBy'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface TicketComment
- */
 export interface TicketComment {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketComment
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketComment
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketComment
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketComment
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketComment
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'ticketId': string;
-    /**
-     * 
-     * @type {Tickets}
-     * @memberof TicketComment
-     */
     'ticket'?: Tickets;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'body'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketFile>}
-     * @memberof TicketComment
-     */
     'files'?: Array<TicketFile> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketComment
-     */
     'filePath'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketCommentDto
- */
 export interface TicketCommentDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'ticketId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'body'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketFileDto>}
-     * @memberof TicketCommentDto
-     */
     'files'?: Array<TicketFileDto> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketCommentDto
-     */
     'isNew'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentDto
-     */
     'filePath'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketCommentInsertDto
- */
 export interface TicketCommentInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentInsertDto
-     */
     'body'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketCommentInsertDto
-     */
     'filePath'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketFileInsertDto>}
-     * @memberof TicketCommentInsertDto
-     */
     'files'?: Array<TicketFileInsertDto> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketCommentInsertDto
-     */
     'isNew'?: boolean;
 }
-/**
- * 
- * @export
- * @interface TicketDepartmensInsertDto
- */
 export interface TicketDepartmensInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensInsertDto
-     */
     'deparmentCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensInsertDto
-     */
     'departmentText'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensInsertDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensInsertDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {Array<DepartmentUserInsertDto>}
-     * @memberof TicketDepartmensInsertDto
-     */
     'departmentUsers'?: Array<DepartmentUserInsertDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensInsertDto
-     */
     'parentDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensInsertDto
-     */
     'isVisibleInList'?: boolean;
 }
-/**
- * 
- * @export
- * @interface TicketDepartmensListDto
- */
 export interface TicketDepartmensListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'deparmentCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'departmentText'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensListDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketDepartmensListDto
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketDepartmensListDto
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {Array<DepartmentUserListDto>}
-     * @memberof TicketDepartmensListDto
-     */
     'departmentUsers'?: Array<DepartmentUserListDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensListDto
-     */
     'parentDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketDepartment>}
-     * @memberof TicketDepartmensListDto
-     */
     'subDepartments'?: Array<TicketDepartment> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensListDto
-     */
     'isVisibleInList'?: boolean;
 }
-/**
- * 
- * @export
- * @interface TicketDepartmensUpdateDto
- */
 export interface TicketDepartmensUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'deparmentCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'departmentText'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {Array<DepartmentUserInsertDto>}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'departmentUsers'?: Array<DepartmentUserInsertDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'parentDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartmensUpdateDto
-     */
     'isVisibleInList'?: boolean;
 }
-/**
- * 
- * @export
- * @interface TicketDepartment
- */
 export interface TicketDepartment {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketDepartment
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketDepartment
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketDepartment
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartment
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketDepartment
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'deparmentCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'departmentText'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartment
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketDepartment
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {Array<UserApp>}
-     * @memberof TicketDepartment
-     */
     'employess'?: Array<UserApp> | null;
-    /**
-     * 
-     * @type {Array<Tickets>}
-     * @memberof TicketDepartment
-     */
     'tickets'?: Array<Tickets> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketDepartment
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {Array<DepartmentUser>}
-     * @memberof TicketDepartment
-     */
     'departmentUsers'?: Array<DepartmentUser> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketDepartment
-     */
     'parentDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof TicketDepartment
-     */
     'parentDepartment'?: TicketDepartment;
-    /**
-     * 
-     * @type {Array<TicketDepartment>}
-     * @memberof TicketDepartment
-     */
     'subDepartments'?: Array<TicketDepartment> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketDepartment
-     */
     'isVisibleInList'?: boolean;
 }
-/**
- * 
- * @export
- * @interface TicketDtoResult
- */
 export interface TicketDtoResult {
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketDtoResult
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<TicketListDto>}
-     * @memberof TicketDtoResult
-     */
     'ticketList'?: Array<TicketListDto> | null;
 }
-/**
- * 
- * @export
- * @interface TicketFile
- */
 export interface TicketFile {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketFile
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketFile
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketFile
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketFile
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketFile
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'ticketCommentId': string;
-    /**
-     * 
-     * @type {TicketComment}
-     * @memberof TicketFile
-     */
     'ticketComment'?: TicketComment;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'base64'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'fileType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'fileName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFile
-     */
     'filePath'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketFileDto
- */
 export interface TicketFileDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'ticketCommentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'base64'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'fileType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'fileName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileDto
-     */
     'filePath'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketFileInsertDto
- */
 export interface TicketFileInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileInsertDto
-     */
     'base64'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileInsertDto
-     */
     'fileType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileInsertDto
-     */
     'fileName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketFileInsertDto
-     */
     'filePath'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketInsertDto
- */
 export interface TicketInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'ticketCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'workCompanySystemInfoId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {TicketType}
-     * @memberof TicketInsertDto
-     */
     'type'?: TicketType;
-    /**
-     * 
-     * @type {TicketSLA}
-     * @memberof TicketInsertDto
-     */
     'ticketSLA'?: TicketSLA;
-    /**
-     * 
-     * @type {TicketSubject}
-     * @memberof TicketInsertDto
-     */
     'ticketSubject'?: TicketSubject;
-    /**
-     * 
-     * @type {TicketPriority}
-     * @memberof TicketInsertDto
-     */
     'priority'?: TicketPriority;
-    /**
-     * 
-     * @type {Array<TicketCommentInsertDto>}
-     * @memberof TicketInsertDto
-     */
     'ticketComment'?: Array<TicketCommentInsertDto> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketInsertDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketInsertDto
-     */
     'isFromEmail'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'mailConversationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'addedMailAddresses'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketInsertDto
-     */
     'isFilePath'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketInsertDto
-     */
     'filePath'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface TicketListDto
- */
 export interface TicketListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'workCompanyId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'workCompanyName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'workCompanySystemInfoId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'workCompanySystemName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'userAppName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'userAppUserName'?: string | null;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof TicketListDto
-     */
     'status'?: TicketStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'statusText'?: string | null;
-    /**
-     * 
-     * @type {TicketType}
-     * @memberof TicketListDto
-     */
     'type'?: TicketType;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'typeText'?: string | null;
-    /**
-     * 
-     * @type {TicketPriority}
-     * @memberof TicketListDto
-     */
     'priority'?: TicketPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'priorityText'?: string | null;
-    /**
-     * 
-     * @type {TicketSubject}
-     * @memberof TicketListDto
-     */
     'ticketSubject'?: TicketSubject;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketSubjectText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'actualStartDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'actualEndDate'?: string | null;
-    /**
-     * 
-     * @type {ApproveStatus}
-     * @memberof TicketListDto
-     */
     'approveStatus'?: ApproveStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'approveStatusText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'createdDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {TicketSLA}
-     * @memberof TicketListDto
-     */
     'ticketSLA'?: TicketSLA;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketSLAText'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketCommentDto>}
-     * @memberof TicketListDto
-     */
     'ticketComment'?: Array<TicketCommentDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketAssigneText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketAssigneId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketListDto
-     */
     'isTeam'?: boolean;
-    /**
-     * 
-     * @type {TicketAssigneDto}
-     * @memberof TicketListDto
-     */
     'ticketAssigne'?: TicketAssigneDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'workFlowHeadId'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketListDto
-     */
     'ticketNumber'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketListDto
-     */
     'canEdit'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'assigneDescription'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'customerRefName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketListDto
-     */
     'isFromEmail'?: boolean;
-    /**
-     * 
-     * @type {Array<TicketNotificationsListDto>}
-     * @memberof TicketListDto
-     */
     'ticketNotificationsListDto'?: Array<TicketNotificationsListDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'mailConversationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'addedMailAddresses'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketListDto
-     */
     'isFilePath'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'filePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'estimatedDeadline'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketProjectId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketListDto
-     */
     'ticketprojectName'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface TicketManagerUpdateDto
- */
 export interface TicketManagerUpdateDto {
-    /**
-     * 
-     * @type {TicketUpdateDto}
-     * @memberof TicketManagerUpdateDto
-     */
     'managerDto'?: TicketUpdateDto;
-    /**
-     * 
-     * @type {TicketAssigneDto}
-     * @memberof TicketManagerUpdateDto
-     */
     'assigngDto'?: TicketAssigneDto;
-    /**
-     * 
-     * @type {Array<TicketNotificationsInsertDto>}
-     * @memberof TicketManagerUpdateDto
-     */
     'notificationsInsertDtos'?: Array<TicketNotificationsInsertDto> | null;
 }
-/**
- * 
- * @export
- * @interface TicketNotificationsInsertDto
- */
 export interface TicketNotificationsInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketNotificationsInsertDto
-     */
     'ticketId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketNotificationsInsertDto
-     */
     'userAppId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketNotificationsListDto
- */
 export interface TicketNotificationsListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketNotificationsListDto
-     */
     'ticketId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketNotificationsListDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketNotificationsListDto
-     */
     'user'?: UserApp;
 }
-/**
- * 
- * @export
- * @interface TicketPermDto
- */
 export interface TicketPermDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketPermDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketPermDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketPermDto
-     */
     'perm'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketPermDto
-     */
     'canEditTicket'?: boolean;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const TicketPriority = {
     NUMBER_1: 1,
@@ -15329,660 +3044,120 @@ export const TicketPriority = {
 export type TicketPriority = typeof TicketPriority[keyof typeof TicketPriority];
 
 
-/**
- * 
- * @export
- * @interface TicketProjects
- */
 export interface TicketProjects {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketProjects
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketProjects
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketProjects
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjects
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketProjects
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'subProjectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'risks'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'reportsUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketProjects
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketProjects
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'userIds'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjects
-     */
     'isActive'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjects
-     */
     'projectCategoryId'?: string | null;
-    /**
-     * 
-     * @type {ProjectCategories}
-     * @memberof TicketProjects
-     */
     'projectCategory'?: ProjectCategories;
 }
-/**
- * 
- * @export
- * @interface TicketProjectsInsertDto
- */
 export interface TicketProjectsInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'subProjectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'risks'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'reportsUrl'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjectsInsertDto
-     */
     'isActive'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketProjectsInsertDto
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TicketProjectsInsertDto
-     */
     'userIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'userIdsJoin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'projectCategoryId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsInsertDto
-     */
     'copiedProjectId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjectsInsertDto
-     */
     'isUserCopied'?: boolean | null;
 }
-/**
- * 
- * @export
- * @interface TicketProjectsListDto
- */
 export interface TicketProjectsListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'subProjectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'risks'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'reportsUrl'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjectsListDto
-     */
     'isActive'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketProjectsListDto
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketProjectsListDto
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {Array<UserAppDto>}
-     * @memberof TicketProjectsListDto
-     */
     'users'?: Array<UserAppDto> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TicketProjectsListDto
-     */
     'userIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'userIdsJoin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'createdDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'projectCategoryId'?: string | null;
-    /**
-     * 
-     * @type {ProjectCategoriesListDto}
-     * @memberof TicketProjectsListDto
-     */
     'projectCategory'?: ProjectCategoriesListDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsListDto
-     */
     'copiedProjectId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjectsListDto
-     */
     'isUserCopied'?: boolean | null;
 }
-/**
- * 
- * @export
- * @interface TicketProjectsUpdateDto
- */
 export interface TicketProjectsUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'subProjectName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'risks'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'reportsUrl'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketProjectsUpdateDto
-     */
     'isActive'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TicketProjectsUpdateDto
-     */
     'userIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'userIdsJoin'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketProjectsUpdateDto
-     */
     'projectCategoryId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketRuleEngineInsertDto
- */
 export interface TicketRuleEngineInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'ruleName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'ruleJson'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'assignedUserId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'assignedTeamId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'assignedDepartmentId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'workflowId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineInsertDto
-     */
     'createEnvironment'?: number;
 }
-/**
- * 
- * @export
- * @interface TicketRuleEngineListDto
- */
 export interface TicketRuleEngineListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'ruleName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineListDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'ruleJson'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'assignedUserId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'assignedTeamId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'assignedDepartmentId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineListDto
-     */
     'workflowId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketRuleEngineListDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineListDto
-     */
     'createEnvironment'?: number;
 }
-/**
- * 
- * @export
- * @interface TicketRuleEngineUpdateDto
- */
 export interface TicketRuleEngineUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'ruleName'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'order'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'ruleJson'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'assignedUserId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'assignedTeamId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'assignedDepartmentId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'workflowId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketRuleEngineUpdateDto
-     */
     'createEnvironment'?: number;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const TicketSLA = {
     NUMBER_1: 1,
@@ -15992,11 +3167,6 @@ export const TicketSLA = {
 export type TicketSLA = typeof TicketSLA[keyof typeof TicketSLA];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const TicketStatus = {
     NUMBER_1: 1,
@@ -16016,11 +3186,6 @@ export const TicketStatus = {
 export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const TicketSubject = {
     NUMBER_1: 1,
@@ -16036,426 +3201,81 @@ export const TicketSubject = {
 export type TicketSubject = typeof TicketSubject[keyof typeof TicketSubject];
 
 
-/**
- * 
- * @export
- * @interface TicketTeam
- */
 export interface TicketTeam {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketTeam
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketTeam
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketTeam
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketTeam
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketTeam
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof TicketTeam
-     */
     'department'?: TicketDepartment;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketTeam
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {Array<TicketTeamUserApp>}
-     * @memberof TicketTeam
-     */
     'teamList'?: Array<TicketTeamUserApp> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeam
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketTeam
-     */
     'workCompany'?: WorkCompany;
 }
-/**
- * 
- * @export
- * @interface TicketTeamInsertDto
- */
 export interface TicketTeamInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamInsertDto
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamInsertDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketTeamUserAppInsertDto>}
-     * @memberof TicketTeamInsertDto
-     */
     'teamList'?: Array<TicketTeamUserAppInsertDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamInsertDto
-     */
     'workCompanyId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketTeamListDto
- */
 export interface TicketTeamListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamListDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamListDto
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamListDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketTeamUserAppInsertDto>}
-     * @memberof TicketTeamListDto
-     */
     'teamList'?: Array<TicketTeamUserAppInsertDto> | null;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof TicketTeamListDto
-     */
     'department'?: TicketDepartment;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketTeamListDto
-     */
     'manager'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamListDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof TicketTeamListDto
-     */
     'workCompany'?: WorkCompany;
 }
-/**
- * 
- * @export
- * @interface TicketTeamUpdateDto
- */
 export interface TicketTeamUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUpdateDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUpdateDto
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUpdateDto
-     */
     'managerId'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketTeamUserAppUpdateDto>}
-     * @memberof TicketTeamUpdateDto
-     */
     'teamList'?: Array<TicketTeamUserAppUpdateDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUpdateDto
-     */
     'workCompanyId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TicketTeamUserApp
- */
 export interface TicketTeamUserApp {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof TicketTeamUserApp
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof TicketTeamUserApp
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof TicketTeamUserApp
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketTeamUserApp
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TicketTeamUserApp
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'ticketTeamId'?: string;
-    /**
-     * 
-     * @type {TicketTeam}
-     * @memberof TicketTeamUserApp
-     */
     'ticketTeam'?: TicketTeam;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserApp
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketTeamUserApp
-     */
     'userApp'?: UserApp;
 }
-/**
- * 
- * @export
- * @interface TicketTeamUserAppInsertDto
- */
 export interface TicketTeamUserAppInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserAppInsertDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof TicketTeamUserAppInsertDto
-     */
     'userApp'?: UserApp;
 }
-/**
- * 
- * @export
- * @interface TicketTeamUserAppUpdateDto
- */
 export interface TicketTeamUserAppUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketTeamUserAppUpdateDto
-     */
     'userAppId'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const TicketType = {
     NUMBER_1: 1,
@@ -16465,1752 +3285,322 @@ export const TicketType = {
 export type TicketType = typeof TicketType[keyof typeof TicketType];
 
 
-/**
- * 
- * @export
- * @interface TicketUpdateDto
- */
 export interface TicketUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'ticketCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'workCompanySystemInfoId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {TicketType}
-     * @memberof TicketUpdateDto
-     */
     'type'?: TicketType;
-    /**
-     * 
-     * @type {TicketSLA}
-     * @memberof TicketUpdateDto
-     */
     'ticketSLA'?: TicketSLA;
-    /**
-     * 
-     * @type {TicketSubject}
-     * @memberof TicketUpdateDto
-     */
     'ticketSubject'?: TicketSubject;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof TicketUpdateDto
-     */
     'status'?: TicketStatus;
-    /**
-     * 
-     * @type {TicketPriority}
-     * @memberof TicketUpdateDto
-     */
     'priority'?: TicketPriority;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TicketUpdateDto
-     */
     'isSend'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'addedMailAddresses'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'estimatedDeadline'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TicketUpdateDto
-     */
     'ticketProjectId'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface Tickets
- */
 export interface Tickets {
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof Tickets
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof Tickets
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof Tickets
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Tickets
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof Tickets
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'ticketCode': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'workCompanyId': string;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof Tickets
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof Tickets
-     */
     'ticketDepartment'?: TicketDepartment;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'workCompanySystemInfoId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompanySystemInfo}
-     * @memberof Tickets
-     */
     'workCompanySystemInfo'?: WorkCompanySystemInfo;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'userAppId': string;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof Tickets
-     */
     'userApp'?: UserApp;
-    /**
-     * 
-     * @type {TicketStatus}
-     * @memberof Tickets
-     */
     'status': TicketStatus;
-    /**
-     * 
-     * @type {TicketType}
-     * @memberof Tickets
-     */
     'type': TicketType;
-    /**
-     * 
-     * @type {TicketPriority}
-     * @memberof Tickets
-     */
     'priority': TicketPriority;
-    /**
-     * 
-     * @type {TicketSubject}
-     * @memberof Tickets
-     */
     'ticketSubject': TicketSubject;
-    /**
-     * 
-     * @type {TicketSLA}
-     * @memberof Tickets
-     */
     'ticketSLA': TicketSLA;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'actualStartDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'actualEndDate'?: string | null;
-    /**
-     * 
-     * @type {Array<TicketComment>}
-     * @memberof Tickets
-     */
     'ticketComment'?: Array<TicketComment> | null;
-    /**
-     * 
-     * @type {ApproveStatus}
-     * @memberof Tickets
-     */
     'approveStatus': ApproveStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'ticketAssigneId'?: string | null;
-    /**
-     * 
-     * @type {TicketAssigne}
-     * @memberof Tickets
-     */
     'ticketAssigne'?: TicketAssigne;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'ticketApproveId'?: string | null;
-    /**
-     * 
-     * @type {TicketApprove}
-     * @memberof Tickets
-     */
     'ticketApprove'?: TicketApprove;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Tickets
-     */
     'isTeam'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Tickets
-     */
     'isApprove'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'workflowHeadId'?: string | null;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof Tickets
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof Tickets
-     */
     'customerRef'?: WorkCompany;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Tickets
-     */
     'isFromEmail'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'mailConversationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'addedMailAddresses'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Tickets
-     */
     'isFilePath'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'filePath'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'estimatedDeadline'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tickets
-     */
     'ticketProjectId'?: string | null;
-    /**
-     * 
-     * @type {TicketProjects}
-     * @memberof Tickets
-     */
     'ticketProject'?: TicketProjects;
 }
 
 
-/**
- * 
- * @export
- * @interface TokenDto
- */
 export interface TokenDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof TokenDto
-     */
     'accessToken'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TokenDto
-     */
     'accessTokenExpiration'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TokenDto
-     */
     'refreshToken'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TokenDto
-     */
     'refreshTokenExpiration'?: string;
 }
-/**
- * 
- * @export
- * @interface UpdatePositionDto
- */
 export interface UpdatePositionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePositionDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePositionDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePositionDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePositionDto
-     */
     'customerRefId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UpdateProjectDto
- */
 export interface UpdateProjectDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateProjectDto
-     */
     'categoryId'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'startDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'endDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'projectGain'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'projectLearn'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateProjectDto
-     */
     'projectTags'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UpdateUserDto
- */
 export interface UpdateUserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'profileInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'password'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
     'isSystemAdmin'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'lastLoginDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'lastLoginIp'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
     'canSsoLogin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
     'isBlocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
     'isTestData'?: boolean | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateUserDto
-     */
     'vacationMode'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'sapDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'sapPositionText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'departmentsId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {Array<UserRoleDto>}
-     * @memberof UpdateUserDto
-     */
     'roleIds'?: Array<UserRoleDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {UserLevel}
-     * @memberof UpdateUserDto
-     */
     'userLevel'?: UserLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'resetPasswordCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
     'resetCodeExpiry'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface UserApp
- */
 export interface UserApp {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'normalizedUserName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'normalizedEmail'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'emailConfirmed'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'passwordHash'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'securityStamp'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'concurrencyStamp'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'phoneNumberConfirmed'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'twoFactorEnabled'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'lockoutEnd'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'lockoutEnabled'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserApp
-     */
     'accessFailedCount'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'isSystemAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'canSsoLogin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'isBlocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'isTestData'?: boolean | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserApp
-     */
     'vacationMode'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'lastLoginDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'lastLoginIp'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'profileInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'department'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'sapDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'sapPositionText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {TicketDepartment}
-     * @memberof UserApp
-     */
     'ticketDepartment'?: TicketDepartment;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof UserApp
-     */
     'workCompany'?: WorkCompany;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'resetPasswordCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'resetCodeExpiry'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApp
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {Positions}
-     * @memberof UserApp
-     */
     'positions'?: Positions;
-    /**
-     * 
-     * @type {Array<DepartmentUser>}
-     * @memberof UserApp
-     */
     'departmentUsers'?: Array<DepartmentUser> | null;
-    /**
-     * 
-     * @type {UserLevel}
-     * @memberof UserApp
-     */
     'userLevel'?: UserLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface UserAppDto
- */
 export interface UserAppDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'password'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
     'isSystemAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
     'isBlocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
     'isTestData'?: boolean | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
     'vacationMode'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'lastLoginDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'lastLoginIp'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDto
-     */
     'canSsoLogin'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'profileInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'photo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'manager2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'sapDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'sapPositionText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {Array<UserRoleDto>}
-     * @memberof UserAppDto
-     */
     'roles'?: Array<UserRoleDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'resetPasswordCode'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'resetCodeExpiry'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDto
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {UserLevel}
-     * @memberof UserAppDto
-     */
     'userLevel'?: UserLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface UserAppDtoOnlyNameId
- */
 export interface UserAppDtoOnlyNameId {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoOnlyNameId
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoOnlyNameId
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoOnlyNameId
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoOnlyNameId
-     */
     'userName'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserAppDtoWithoutPhoto
- */
 export interface UserAppDtoWithoutPhoto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'company'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'password'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'isSystemAdmin'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'isBlocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'vacationMode'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'lastLoginDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'lastLoginIp'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'canSsoLogin'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'profileInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'phoneNumber'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'location'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'facebookUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'instagramUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'twitterUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'linkedinUrl'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'manager2'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'title'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'sapDepartmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'sapPositionText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'departmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {Array<UserRoleDto>}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'roles'?: Array<UserRoleDto> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'departmentText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'workCompanyText'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {UserLevel}
-     * @memberof UserAppDtoWithoutPhoto
-     */
     'userLevel'?: UserLevel;
 }
 
 
-/**
- * 
- * @export
- * @interface UserCalendarInsertDto
- */
 export interface UserCalendarInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'startDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'endDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarInsertDto
-     */
     'percentage'?: string | null;
-    /**
-     * 
-     * @type {WorkLocation}
-     * @memberof UserCalendarInsertDto
-     */
     'workLocation'?: WorkLocation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserCalendarInsertDto
-     */
     'isAvailable'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @interface UserCalendarListDto
- */
 export interface UserCalendarListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'startDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'endDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof UserCalendarListDto
-     */
     'customerRef'?: WorkCompany;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserAppDtoWithoutPhoto}
-     * @memberof UserCalendarListDto
-     */
     'userAppDtoWithoutPhoto'?: UserAppDtoWithoutPhoto;
-    /**
-     * 
-     * @type {UserAppDto}
-     * @memberof UserCalendarListDto
-     */
     'userAppDto'?: UserAppDto;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'color'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarListDto
-     */
     'percentage'?: string | null;
-    /**
-     * 
-     * @type {WorkLocation}
-     * @memberof UserCalendarListDto
-     */
     'workLocation'?: WorkLocation;
-    /**
-     * 
-     * @type {Array<boolean>}
-     * @memberof UserCalendarListDto
-     */
     'daysOfWeek'?: Array<boolean> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserCalendarListDto
-     */
     'isAvailable'?: boolean;
 }
 
 
-/**
- * 
- * @export
- * @interface UserCalendarUpdateDto
- */
 export interface UserCalendarUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'startDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'endDate'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'customerRefId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'percentage'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCalendarUpdateDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {WorkLocation}
-     * @memberof UserCalendarUpdateDto
-     */
     'workLocation'?: WorkLocation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserCalendarUpdateDto
-     */
     'isAvailable'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const UserLevel = {
     NUMBER_1: 1,
@@ -18221,1500 +3611,316 @@ export const UserLevel = {
 export type UserLevel = typeof UserLevel[keyof typeof UserLevel];
 
 
-/**
- * 
- * @export
- * @interface UserRoleAssignmentGetDto
- */
 export interface UserRoleAssignmentGetDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentGetDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentGetDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<UserRoleAssignmentItemDto>}
-     * @memberof UserRoleAssignmentGetDto
-     */
     'roles'?: Array<UserRoleAssignmentItemDto> | null;
 }
-/**
- * 
- * @export
- * @interface UserRoleAssignmentItemDto
- */
 export interface UserRoleAssignmentItemDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'roleName'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'isLocked'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'isAssignedToUser'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentItemDto
-     */
     'userTenantRoleId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserRoleAssignmentSaveDto
- */
 export interface UserRoleAssignmentSaveDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentSaveDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentSaveDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<UserRoleAssignmentSaveItemDto>}
-     * @memberof UserRoleAssignmentSaveDto
-     */
     'roleAssignments'?: Array<UserRoleAssignmentSaveItemDto> | null;
 }
-/**
- * 
- * @export
- * @interface UserRoleAssignmentSaveItemDto
- */
 export interface UserRoleAssignmentSaveItemDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleAssignmentSaveItemDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserRoleAssignmentSaveItemDto
-     */
     'shouldAssign'?: boolean;
 }
-/**
- * 
- * @export
- * @interface UserRoleDto
- */
 export interface UserRoleDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleDto
-     */
     'roleId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRoleDto
-     */
     'roleName'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserSFListDto
- */
 export interface UserSFListDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserSFListDto
-     */
     'count'?: number;
-    /**
-     * 
-     * @type {Array<SFUSerList>}
-     * @memberof UserSFListDto
-     */
     'sfuSerList'?: Array<SFUSerList> | null;
 }
-/**
- * 
- * @export
- * @interface UserTenantBulkAssignUsersDto
- */
 export interface UserTenantBulkAssignUsersDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantBulkAssignUsersDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof UserTenantBulkAssignUsersDto
-     */
     'userIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantBulkAssignUsersDto
-     */
     'isActive'?: boolean;
 }
-/**
- * 
- * @export
- * @interface UserTenantByTenantDto
- */
 export interface UserTenantByTenantDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantByTenantDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantByTenantDto
-     */
     'userFullName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantByTenantDto
-     */
     'tenantName'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserTenantInsertDto
- */
 export interface UserTenantInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'userId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'tenantId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantInsertDto
-     */
     'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'pCname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantInsertDto
-     */
     'manager2'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserTenantUpdateDto
- */
 export interface UserTenantUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'hasTicketPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'hasDepartmentPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'hasOtherCompanyPermission'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'hasOtherDeptCalendarPerm'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'canEditTicket'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserTenantUpdateDto
-     */
     'dontApplyDefaultFilters'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantUpdateDto
-     */
     'mainManagerUserAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantUpdateDto
-     */
     'pCname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantUpdateDto
-     */
     'manager1'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTenantUpdateDto
-     */
     'manager2'?: string | null;
 }
-/**
- * 
- * @export
- * @interface UserWeeklyTasksDto
- */
+export interface UserTenantWithAdminFlagDto {
+    'id'?: string;
+    'userId'?: string | null;
+    'tenantId'?: string;
+    'isActive'?: boolean;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+    'tenantName'?: string | null;
+    'tenantSlug'?: string | null;
+    'hasTicketPermission'?: boolean;
+    'hasDepartmentPermission'?: boolean;
+    'hasOtherCompanyPermission'?: boolean;
+    'hasOtherDeptCalendarPerm'?: boolean;
+    'canEditTicket'?: boolean;
+    'dontApplyDefaultFilters'?: boolean;
+    'mainManagerUserAppId'?: string | null;
+    'pCname'?: string | null;
+    'manager1'?: string | null;
+    'manager2'?: string | null;
+    'isTenantAdmin'?: boolean;
+}
 export interface UserWeeklyTasksDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'userId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'firstName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'lastName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'email'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'ticketDepartmentId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserWeeklyTasksDto
-     */
     'positionId'?: string | null;
-    /**
-     * 
-     * @type {Array<UserCalendarListDto>}
-     * @memberof UserWeeklyTasksDto
-     */
     'tasks'?: Array<UserCalendarListDto> | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompany
- */
 export interface WorkCompany {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof WorkCompany
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof WorkCompany
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof WorkCompany
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompany
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkCompany
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {ApproveWorkDesign}
-     * @memberof WorkCompany
-     */
     'approveWorkDesign'?: ApproveWorkDesign;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserApp}
-     * @memberof WorkCompany
-     */
     'userApp'?: UserApp;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompany
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof WorkCompany
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompany
-     */
     'isActive'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkCompanyDto
- */
 export interface WorkCompanyDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {ApproveWorkDesign}
-     * @memberof WorkCompanyDto
-     */
     'approveWorkDesign'?: ApproveWorkDesign;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {UserAppDto}
-     * @memberof WorkCompanyDto
-     */
     'userApp'?: UserAppDto;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof WorkCompanyDto
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompanyDto
-     */
     'isActive'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkCompanyInsertDto
- */
 export interface WorkCompanyInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {ApproveWorkDesign}
-     * @memberof WorkCompanyInsertDto
-     */
     'approveWorkDesign'?: ApproveWorkDesign;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyInsertDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyInsertDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompanyInsertDto
-     */
     'isActive'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkCompanySystemInfo
- */
 export interface WorkCompanySystemInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof WorkCompanySystemInfo
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof WorkCompanySystemInfo
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof WorkCompanySystemInfo
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompanySystemInfo
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkCompanySystemInfo
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfo
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof WorkCompanySystemInfo
-     */
     'workCompany'?: WorkCompany;
 }
-/**
- * 
- * @export
- * @interface WorkCompanySystemInfoInsertDto
- */
 export interface WorkCompanySystemInfoInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoInsertDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoInsertDto
-     */
     'workCompanyId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompanySystemInfoListDto
- */
 export interface WorkCompanySystemInfoListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoListDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoListDto
-     */
     'workCompanyId'?: string | null;
-    /**
-     * 
-     * @type {WorkCompany}
-     * @memberof WorkCompanySystemInfoListDto
-     */
     'workCompany'?: WorkCompany;
 }
-/**
- * 
- * @export
- * @interface WorkCompanySystemInfoUpdateDto
- */
 export interface WorkCompanySystemInfoUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoUpdateDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanySystemInfoUpdateDto
-     */
     'workCompanyId'?: string | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompanyTicketMatrisInsertDto
- */
 export interface WorkCompanyTicketMatrisInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyTicketMatrisInsertDto
-     */
     'fromCompanyId'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof WorkCompanyTicketMatrisInsertDto
-     */
     'toCompaniesIds'?: Array<string> | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompanyTicketMatrisListDto
- */
 export interface WorkCompanyTicketMatrisListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyTicketMatrisListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyTicketMatrisListDto
-     */
     'fromCompanyId'?: string;
-    /**
-     * 
-     * @type {WorkCompanyDto}
-     * @memberof WorkCompanyTicketMatrisListDto
-     */
     'fromCompany'?: WorkCompanyDto;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof WorkCompanyTicketMatrisListDto
-     */
     'toCompaniesIds'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<WorkCompanyDto>}
-     * @memberof WorkCompanyTicketMatrisListDto
-     */
     'toCompanies'?: Array<WorkCompanyDto> | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompanyTicketMatrisUpdateDto
- */
 export interface WorkCompanyTicketMatrisUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyTicketMatrisUpdateDto
-     */
     'fromCompanyId'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof WorkCompanyTicketMatrisUpdateDto
-     */
     'toCompaniesIds'?: Array<string> | null;
 }
-/**
- * 
- * @export
- * @interface WorkCompanyUpdateDto
- */
 export interface WorkCompanyUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyUpdateDto
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyUpdateDto
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {ApproveWorkDesign}
-     * @memberof WorkCompanyUpdateDto
-     */
     'approveWorkDesign'?: ApproveWorkDesign;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyUpdateDto
-     */
     'userAppId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkCompanyUpdateDto
-     */
     'workFlowDefinationId'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkCompanyUpdateDto
-     */
     'isActive'?: boolean | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkFlowContiuneApiDto
- */
 export interface WorkFlowContiuneApiDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'approveItem'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'workFlowItemId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'userName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'input'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'numberManDay'?: string | null;
 }
-/**
- * 
- * @export
- * @interface WorkFlowDefination
- */
 export interface WorkFlowDefination {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof WorkFlowDefination
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof WorkFlowDefination
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof WorkFlowDefination
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkFlowDefination
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowDefination
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'defination'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkFlowDefination
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowDefination
-     */
     'revision'?: number;
-    /**
-     * 
-     * @type {Array<WorkflowHead>}
-     * @memberof WorkFlowDefination
-     */
     'workflows'?: Array<WorkflowHead> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefination
-     */
     'formId'?: string | null;
-    /**
-     * 
-     * @type {Form}
-     * @memberof WorkFlowDefination
-     */
     'form'?: Form;
 }
-/**
- * 
- * @export
- * @interface WorkFlowDefinationInsertDto
- */
 export interface WorkFlowDefinationInsertDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationInsertDto
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationInsertDto
-     */
     'defination'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkFlowDefinationInsertDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowDefinationInsertDto
-     */
     'revision'?: number;
 }
-/**
- * 
- * @export
- * @interface WorkFlowDefinationListDto
- */
 export interface WorkFlowDefinationListDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationListDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationListDto
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationListDto
-     */
     'defination'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkFlowDefinationListDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowDefinationListDto
-     */
     'revision'?: number;
 }
-/**
- * 
- * @export
- * @interface WorkFlowDefinationUpdateDto
- */
 export interface WorkFlowDefinationUpdateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationUpdateDto
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationUpdateDto
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowDefinationUpdateDto
-     */
     'defination'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkFlowDefinationUpdateDto
-     */
     'isActive'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowDefinationUpdateDto
-     */
     'revision'?: number;
 }
-/**
- * 
- * @export
- * @interface WorkFlowHeadDto
- */
 export interface WorkFlowHeadDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'currentNodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'currentNodeName'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkFlowHeadDto
-     */
     'workFlowStatus'?: WorkflowStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'createUser'?: string | null;
-    /**
-     * 
-     * @type {Array<WorkflowItem>}
-     * @memberof WorkFlowHeadDto
-     */
     'workflowItems'?: Array<WorkflowItem> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'workFlowDefinationId'?: string;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof WorkFlowHeadDto
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDto
-     */
     'workFlowInfo'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowHeadDto
-     */
     'uniqNumber'?: number;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkFlowHeadDtoResultStartOrContinue
- */
 export interface WorkFlowHeadDtoResultStartOrContinue {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoResultStartOrContinue
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoResultStartOrContinue
-     */
     'workFlowInfo'?: string | null;
 }
-/**
- * 
- * @export
- * @interface WorkFlowHeadDtoWithoutItems
- */
 export interface WorkFlowHeadDtoWithoutItems {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'currentNodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'currentNodeName'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'workFlowStatus'?: WorkflowStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'createUser'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'workFlowDefinationId'?: string;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'workFlowInfo'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkFlowHeadDtoWithoutItems
-     */
     'uniqNumber'?: number;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkFlowItemDto
- */
 export interface WorkFlowItemDto {
-    /**
-     * 
-     * @type {WorkFlowHeadDtoWithoutItems}
-     * @memberof WorkFlowItemDto
-     */
     'workflowHead'?: WorkFlowHeadDtoWithoutItems;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDto
-     */
     'nodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDto
-     */
     'nodeName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDto
-     */
     'nodeType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDto
-     */
     'nodeDescription'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkFlowItemDto
-     */
     'workFlowNodeStatus'?: WorkflowStatus;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkFlowItemDtoWithApproveItems
- */
 export interface WorkFlowItemDtoWithApproveItems {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'nodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'nodeName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'nodeType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'nodeDescription'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'workFlowNodeStatus'?: WorkflowStatus;
-    /**
-     * 
-     * @type {Array<ApproveItemsDto>}
-     * @memberof WorkFlowItemDtoWithApproveItems
-     */
     'approveItems'?: Array<ApproveItemsDto> | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkFlowStartApiDto
- */
 export interface WorkFlowStartApiDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowStartApiDto
-     */
     'workFlowInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowStartApiDto
-     */
     'definationId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowStartApiDto
-     */
     'userName'?: string | null;
 }
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const WorkLocation = {
     NUMBER_1: 1,
@@ -19726,293 +3932,58 @@ export const WorkLocation = {
 export type WorkLocation = typeof WorkLocation[keyof typeof WorkLocation];
 
 
-/**
- * 
- * @export
- * @interface WorkflowHead
- */
 export interface WorkflowHead {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof WorkflowHead
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof WorkflowHead
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof WorkflowHead
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkflowHead
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkflowHead
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'workflowName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'currentNodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'currentNodeName'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkflowHead
-     */
     'workFlowStatus'?: WorkflowStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'workFlowInfo'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'createUser'?: string | null;
-    /**
-     * 
-     * @type {Array<WorkflowItem>}
-     * @memberof WorkflowHead
-     */
     'workflowItems'?: Array<WorkflowItem> | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'workFlowDefinationId'?: string;
-    /**
-     * 
-     * @type {WorkFlowDefination}
-     * @memberof WorkflowHead
-     */
     'workFlowDefination'?: WorkFlowDefination;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowHead
-     */
     'workFlowDefinationJson'?: string | null;
 }
 
 
-/**
- * 
- * @export
- * @interface WorkflowItem
- */
 export interface WorkflowItem {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'mainClientId'?: string | null;
-    /**
-     * 
-     * @type {MainClient}
-     * @memberof WorkflowItem
-     */
     'mainClient'?: MainClient;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'companyId'?: string | null;
-    /**
-     * 
-     * @type {Company}
-     * @memberof WorkflowItem
-     */
     'company'?: Company;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'plantId'?: string | null;
-    /**
-     * 
-     * @type {Plant}
-     * @memberof WorkflowItem
-     */
     'plant'?: Plant;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'createdBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'updatedBy'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'updatedDate'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WorkflowItem
-     */
     'isDelete'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof WorkflowItem
-     */
     'uniqNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'workflowHeadId'?: string;
-    /**
-     * 
-     * @type {WorkflowHead}
-     * @memberof WorkflowItem
-     */
     'workflowHead'?: WorkflowHead;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'nodeId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'nodeName'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'nodeType'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkflowItem
-     */
     'nodeDescription'?: string | null;
-    /**
-     * 
-     * @type {WorkflowStatus}
-     * @memberof WorkflowItem
-     */
     'workFlowNodeStatus'?: WorkflowStatus;
-    /**
-     * 
-     * @type {Array<ApproveItems>}
-     * @memberof WorkflowItem
-     */
     'approveItems'?: Array<ApproveItems> | null;
 }
 
 
-/**
- * 
- * @export
- * @enum {number}
- */
 
 export const WorkflowStatus = {
     NUMBER_0: 0,
@@ -20028,7 +3999,6 @@ export type WorkflowStatus = typeof WorkflowStatus[keyof typeof WorkflowStatus];
 
 /**
  * ActivitiesApi - axios parameter creator
- * @export
  */
 export const ActivitiesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -20222,7 +4192,6 @@ export const ActivitiesApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * ActivitiesApi - functional programming interface
- * @export
  */
 export const ActivitiesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ActivitiesApiAxiosParamCreator(configuration)
@@ -20292,7 +4261,6 @@ export const ActivitiesApiFp = function(configuration?: Configuration) {
 
 /**
  * ActivitiesApi - factory interface
- * @export
  */
 export const ActivitiesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ActivitiesApiFp(configuration)
@@ -20347,9 +4315,6 @@ export const ActivitiesApiFactory = function (configuration?: Configuration, bas
 
 /**
  * ActivitiesApi - object-oriented interface
- * @export
- * @class ActivitiesApi
- * @extends {BaseAPI}
  */
 export class ActivitiesApi extends BaseAPI {
     /**
@@ -20357,7 +4322,6 @@ export class ActivitiesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActivitiesApi
      */
     public apiCrmActivitiesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return ActivitiesApiFp(this.configuration).apiCrmActivitiesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -20368,7 +4332,6 @@ export class ActivitiesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActivitiesApi
      */
     public apiCrmActivitiesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return ActivitiesApiFp(this.configuration).apiCrmActivitiesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -20379,7 +4342,6 @@ export class ActivitiesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActivitiesApi
      */
     public apiCrmActivitiesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ActivitiesApiFp(this.configuration).apiCrmActivitiesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -20390,7 +4352,6 @@ export class ActivitiesApi extends BaseAPI {
      * @param {ActivityDto} [activityDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActivitiesApi
      */
     public apiCrmActivitiesPost(activityDto?: ActivityDto, options?: RawAxiosRequestConfig) {
         return ActivitiesApiFp(this.configuration).apiCrmActivitiesPost(activityDto, options).then((request) => request(this.axios, this.basePath));
@@ -20401,7 +4362,6 @@ export class ActivitiesApi extends BaseAPI {
      * @param {ActivityDto} [activityDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActivitiesApi
      */
     public apiCrmActivitiesPut(activityDto?: ActivityDto, options?: RawAxiosRequestConfig) {
         return ActivitiesApiFp(this.configuration).apiCrmActivitiesPut(activityDto, options).then((request) => request(this.axios, this.basePath));
@@ -20412,7 +4372,6 @@ export class ActivitiesApi extends BaseAPI {
 
 /**
  * ApproveItemsApi - axios parameter creator
- * @export
  */
 export const ApproveItemsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -20737,7 +4696,6 @@ export const ApproveItemsApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * ApproveItemsApi - functional programming interface
- * @export
  */
 export const ApproveItemsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ApproveItemsApiAxiosParamCreator(configuration)
@@ -20846,7 +4804,6 @@ export const ApproveItemsApiFp = function(configuration?: Configuration) {
 
 /**
  * ApproveItemsApi - factory interface
- * @export
  */
 export const ApproveItemsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ApproveItemsApiFp(configuration)
@@ -20931,16 +4888,12 @@ export const ApproveItemsApiFactory = function (configuration?: Configuration, b
 
 /**
  * ApproveItemsApi - object-oriented interface
- * @export
- * @class ApproveItemsApi
- * @extends {BaseAPI}
  */
 export class ApproveItemsApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsAllGet(options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -20952,7 +4905,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {ApproverStatus} [type] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetAdminApprovesUserNameGet(userName: string, type?: ApproverStatus, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetAdminApprovesUserNameGet(userName, type, options).then((request) => request(this.axios, this.basePath));
@@ -20967,7 +4919,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {string} [createUser] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetApprovesGet(type?: ApproverStatus, skip?: number, top?: number, workFlowDefinationId?: string, createUser?: string, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetApprovesGet(type, skip, top, workFlowDefinationId, createUser, options).then((request) => request(this.axios, this.basePath));
@@ -20978,7 +4929,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetByIdIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetByIdIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -20989,7 +4939,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {string} userName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetOpenApprovesUserNameGet(userName: string, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetOpenApprovesUserNameGet(userName, options).then((request) => request(this.axios, this.basePath));
@@ -21000,7 +4949,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {string} [workFlowId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetOpenDetailGetOpenDetailGet(workFlowId?: string, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetOpenDetailGetOpenDetailGet(workFlowId, options).then((request) => request(this.axios, this.basePath));
@@ -21010,7 +4958,6 @@ export class ApproveItemsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetPendingCountGetPendingCountGet(options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetPendingCountGetPendingCountGet(options).then((request) => request(this.axios, this.basePath));
@@ -21021,7 +4968,6 @@ export class ApproveItemsApi extends BaseAPI {
      * @param {string} [workflowHeadId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApproveItemsApi
      */
     public apiApproveItemsGetTicketIdGetTicketIdGet(workflowHeadId?: string, options?: RawAxiosRequestConfig) {
         return ApproveItemsApiFp(this.configuration).apiApproveItemsGetTicketIdGetTicketIdGet(workflowHeadId, options).then((request) => request(this.axios, this.basePath));
@@ -21032,7 +4978,6 @@ export class ApproveItemsApi extends BaseAPI {
 
 /**
  * AuthApi - axios parameter creator
- * @export
  */
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -21259,7 +5204,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * AuthApi - functional programming interface
- * @export
  */
 export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
@@ -21340,7 +5284,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
 
 /**
  * AuthApi - factory interface
- * @export
  */
 export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AuthApiFp(configuration)
@@ -21403,9 +5346,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * AuthApi - object-oriented interface
- * @export
- * @class AuthApi
- * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
     /**
@@ -21413,7 +5353,6 @@ export class AuthApi extends BaseAPI {
      * @param {ClientLoginDto} [clientLoginDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthCreateTokenByClientPost(clientLoginDto?: ClientLoginDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthCreateTokenByClientPost(clientLoginDto, options).then((request) => request(this.axios, this.basePath));
@@ -21424,7 +5363,6 @@ export class AuthApi extends BaseAPI {
      * @param {RefreshTokenDto} [refreshTokenDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthCreateTokenByRefreshTokenPost(refreshTokenDto?: RefreshTokenDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthCreateTokenByRefreshTokenPost(refreshTokenDto, options).then((request) => request(this.axios, this.basePath));
@@ -21435,7 +5373,6 @@ export class AuthApi extends BaseAPI {
      * @param {LoginDto} [loginDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthCreateTokenPost(loginDto?: LoginDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthCreateTokenPost(loginDto, options).then((request) => request(this.axios, this.basePath));
@@ -21446,7 +5383,6 @@ export class AuthApi extends BaseAPI {
      * @param {LoginDto} [loginDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthCreateTokenPostCreateTokenPostPost(loginDto?: LoginDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthCreateTokenPostCreateTokenPostPost(loginDto, options).then((request) => request(this.axios, this.basePath));
@@ -21456,7 +5392,6 @@ export class AuthApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthGetDatabaseNameGetDatabaseNameGet(options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthGetDatabaseNameGetDatabaseNameGet(options).then((request) => request(this.axios, this.basePath));
@@ -21467,7 +5402,6 @@ export class AuthApi extends BaseAPI {
      * @param {RefreshTokenDto} [refreshTokenDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public apiAuthRevokeRefreshTokenPost(refreshTokenDto?: RefreshTokenDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiAuthRevokeRefreshTokenPost(refreshTokenDto, options).then((request) => request(this.axios, this.basePath));
@@ -21478,7 +5412,6 @@ export class AuthApi extends BaseAPI {
 
 /**
  * BudgetAdminUserApi - axios parameter creator
- * @export
  */
 export const BudgetAdminUserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -21746,7 +5679,6 @@ export const BudgetAdminUserApiAxiosParamCreator = function (configuration?: Con
 
 /**
  * BudgetAdminUserApi - functional programming interface
- * @export
  */
 export const BudgetAdminUserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetAdminUserApiAxiosParamCreator(configuration)
@@ -21840,7 +5772,6 @@ export const BudgetAdminUserApiFp = function(configuration?: Configuration) {
 
 /**
  * BudgetAdminUserApi - factory interface
- * @export
  */
 export const BudgetAdminUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetAdminUserApiFp(configuration)
@@ -21913,9 +5844,6 @@ export const BudgetAdminUserApiFactory = function (configuration?: Configuration
 
 /**
  * BudgetAdminUserApi - object-oriented interface
- * @export
- * @class BudgetAdminUserApi
- * @extends {BaseAPI}
  */
 export class BudgetAdminUserApi extends BaseAPI {
     /**
@@ -21924,7 +5852,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {string} proxyUser 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserCheckProxyUserUseridproxyUserGet(userid: string, proxyUser: string, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserCheckProxyUserUseridproxyUserGet(userid, proxyUser, options).then((request) => request(this.axios, this.basePath));
@@ -21934,7 +5861,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserGet(options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -21945,7 +5871,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {string} userName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserGetUsernNameUserNameGet(userName: string, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserGetUsernNameUserNameGet(userName, options).then((request) => request(this.axios, this.basePath));
@@ -21956,7 +5881,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -21967,7 +5891,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -21978,7 +5901,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {BudgetAdminUserInsertDto} [budgetAdminUserInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserPost(budgetAdminUserInsertDto?: BudgetAdminUserInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserPost(budgetAdminUserInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -21989,7 +5911,6 @@ export class BudgetAdminUserApi extends BaseAPI {
      * @param {BudgetAdminUserUpdateDto} [budgetAdminUserUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetAdminUserApi
      */
     public apiBudgetAdminUserPut(budgetAdminUserUpdateDto?: BudgetAdminUserUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetAdminUserApiFp(this.configuration).apiBudgetAdminUserPut(budgetAdminUserUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -22000,7 +5921,6 @@ export class BudgetAdminUserApi extends BaseAPI {
 
 /**
  * BudgetJobCodeRequestApi - axios parameter creator
- * @export
  */
 export const BudgetJobCodeRequestApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -22200,7 +6120,6 @@ export const BudgetJobCodeRequestApiAxiosParamCreator = function (configuration?
 
 /**
  * BudgetJobCodeRequestApi - functional programming interface
- * @export
  */
 export const BudgetJobCodeRequestApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetJobCodeRequestApiAxiosParamCreator(configuration)
@@ -22271,7 +6190,6 @@ export const BudgetJobCodeRequestApiFp = function(configuration?: Configuration)
 
 /**
  * BudgetJobCodeRequestApi - factory interface
- * @export
  */
 export const BudgetJobCodeRequestApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetJobCodeRequestApiFp(configuration)
@@ -22327,9 +6245,6 @@ export const BudgetJobCodeRequestApiFactory = function (configuration?: Configur
 
 /**
  * BudgetJobCodeRequestApi - object-oriented interface
- * @export
- * @class BudgetJobCodeRequestApi
- * @extends {BaseAPI}
  */
 export class BudgetJobCodeRequestApi extends BaseAPI {
     /**
@@ -22338,7 +6253,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
      * @param {number} [top] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetJobCodeRequestApi
      */
     public apiBudgetJobCodeRequestGet(skip?: number, top?: number, options?: RawAxiosRequestConfig) {
         return BudgetJobCodeRequestApiFp(this.configuration).apiBudgetJobCodeRequestGet(skip, top, options).then((request) => request(this.axios, this.basePath));
@@ -22349,7 +6263,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetJobCodeRequestApi
      */
     public apiBudgetJobCodeRequestIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetJobCodeRequestApiFp(this.configuration).apiBudgetJobCodeRequestIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -22360,7 +6273,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetJobCodeRequestApi
      */
     public apiBudgetJobCodeRequestIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetJobCodeRequestApiFp(this.configuration).apiBudgetJobCodeRequestIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -22371,7 +6283,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
      * @param {BudgetJobCodeRequestInsertDto} [budgetJobCodeRequestInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetJobCodeRequestApi
      */
     public apiBudgetJobCodeRequestPost(budgetJobCodeRequestInsertDto?: BudgetJobCodeRequestInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetJobCodeRequestApiFp(this.configuration).apiBudgetJobCodeRequestPost(budgetJobCodeRequestInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -22382,7 +6293,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
      * @param {BudgetJobCodeRequestUpdateDto} [budgetJobCodeRequestUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetJobCodeRequestApi
      */
     public apiBudgetJobCodeRequestPut(budgetJobCodeRequestUpdateDto?: BudgetJobCodeRequestUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetJobCodeRequestApiFp(this.configuration).apiBudgetJobCodeRequestPut(budgetJobCodeRequestUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -22393,7 +6303,6 @@ export class BudgetJobCodeRequestApi extends BaseAPI {
 
 /**
  * BudgetNormCodeRequestApi - axios parameter creator
- * @export
  */
 export const BudgetNormCodeRequestApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -22739,7 +6648,6 @@ export const BudgetNormCodeRequestApiAxiosParamCreator = function (configuration
 
 /**
  * BudgetNormCodeRequestApi - functional programming interface
- * @export
  */
 export const BudgetNormCodeRequestApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetNormCodeRequestApiAxiosParamCreator(configuration)
@@ -22857,7 +6765,6 @@ export const BudgetNormCodeRequestApiFp = function(configuration?: Configuration
 
 /**
  * BudgetNormCodeRequestApi - factory interface
- * @export
  */
 export const BudgetNormCodeRequestApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetNormCodeRequestApiFp(configuration)
@@ -22948,16 +6855,12 @@ export const BudgetNormCodeRequestApiFactory = function (configuration?: Configu
 
 /**
  * BudgetNormCodeRequestApi - object-oriented interface
- * @export
- * @class BudgetNormCodeRequestApi
- * @extends {BaseAPI}
  */
 export class BudgetNormCodeRequestApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestAllGet(options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -22967,7 +6870,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestAllWaitingApproveCountGet(options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestAllWaitingApproveCountGet(options).then((request) => request(this.axios, this.basePath));
@@ -22978,7 +6880,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestByCodeCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestByCodeCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -22989,7 +6890,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {string} [code] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestCheckPositionHasJobPostGet(code?: string, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestCheckPositionHasJobPostGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -23002,7 +6902,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {string} [createdBy] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestGet(skip?: number, top?: number, createdBy?: string, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestGet(skip, top, createdBy, options).then((request) => request(this.axios, this.basePath));
@@ -23013,7 +6912,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -23024,7 +6922,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -23035,7 +6932,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {BudgetNormCodeRequestInsertDto} [budgetNormCodeRequestInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestPost(budgetNormCodeRequestInsertDto?: BudgetNormCodeRequestInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestPost(budgetNormCodeRequestInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -23046,7 +6942,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
      * @param {BudgetNormCodeRequestUpdateDto} [budgetNormCodeRequestUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetNormCodeRequestApi
      */
     public apiBudgetNormCodeRequestPut(budgetNormCodeRequestUpdateDto?: BudgetNormCodeRequestUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetNormCodeRequestApiFp(this.configuration).apiBudgetNormCodeRequestPut(budgetNormCodeRequestUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -23057,7 +6952,6 @@ export class BudgetNormCodeRequestApi extends BaseAPI {
 
 /**
  * BudgetPeriodApi - axios parameter creator
- * @export
  */
 export const BudgetPeriodApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -23247,7 +7141,6 @@ export const BudgetPeriodApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * BudgetPeriodApi - functional programming interface
- * @export
  */
 export const BudgetPeriodApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetPeriodApiAxiosParamCreator(configuration)
@@ -23316,7 +7209,6 @@ export const BudgetPeriodApiFp = function(configuration?: Configuration) {
 
 /**
  * BudgetPeriodApi - factory interface
- * @export
  */
 export const BudgetPeriodApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetPeriodApiFp(configuration)
@@ -23370,16 +7262,12 @@ export const BudgetPeriodApiFactory = function (configuration?: Configuration, b
 
 /**
  * BudgetPeriodApi - object-oriented interface
- * @export
- * @class BudgetPeriodApi
- * @extends {BaseAPI}
  */
 export class BudgetPeriodApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodApi
      */
     public apiBudgetPeriodGet(options?: RawAxiosRequestConfig) {
         return BudgetPeriodApiFp(this.configuration).apiBudgetPeriodGet(options).then((request) => request(this.axios, this.basePath));
@@ -23390,7 +7278,6 @@ export class BudgetPeriodApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodApi
      */
     public apiBudgetPeriodIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPeriodApiFp(this.configuration).apiBudgetPeriodIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -23401,7 +7288,6 @@ export class BudgetPeriodApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodApi
      */
     public apiBudgetPeriodIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPeriodApiFp(this.configuration).apiBudgetPeriodIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -23412,7 +7298,6 @@ export class BudgetPeriodApi extends BaseAPI {
      * @param {BudgetPeriodInsertDto} [budgetPeriodInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodApi
      */
     public apiBudgetPeriodPost(budgetPeriodInsertDto?: BudgetPeriodInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetPeriodApiFp(this.configuration).apiBudgetPeriodPost(budgetPeriodInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -23423,7 +7308,6 @@ export class BudgetPeriodApi extends BaseAPI {
      * @param {BudgetPeriodUpdateDto} [budgetPeriodUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodApi
      */
     public apiBudgetPeriodPut(budgetPeriodUpdateDto?: BudgetPeriodUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetPeriodApiFp(this.configuration).apiBudgetPeriodPut(budgetPeriodUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -23434,7 +7318,6 @@ export class BudgetPeriodApi extends BaseAPI {
 
 /**
  * BudgetPeriodUserApi - axios parameter creator
- * @export
  */
 export const BudgetPeriodUserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -23666,7 +7549,6 @@ export const BudgetPeriodUserApiAxiosParamCreator = function (configuration?: Co
 
 /**
  * BudgetPeriodUserApi - functional programming interface
- * @export
  */
 export const BudgetPeriodUserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetPeriodUserApiAxiosParamCreator(configuration)
@@ -23748,7 +7630,6 @@ export const BudgetPeriodUserApiFp = function(configuration?: Configuration) {
 
 /**
  * BudgetPeriodUserApi - factory interface
- * @export
  */
 export const BudgetPeriodUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetPeriodUserApiFp(configuration)
@@ -23812,16 +7693,12 @@ export const BudgetPeriodUserApiFactory = function (configuration?: Configuratio
 
 /**
  * BudgetPeriodUserApi - object-oriented interface
- * @export
- * @class BudgetPeriodUserApi
- * @extends {BaseAPI}
  */
 export class BudgetPeriodUserApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserGet(options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -23833,7 +7710,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
      * @param {RequestType} [screenType] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserGetActivePeriodUseridGet(userid: string, screenType?: RequestType, options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserGetActivePeriodUseridGet(userid, screenType, options).then((request) => request(this.axios, this.basePath));
@@ -23844,7 +7720,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -23855,7 +7730,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -23866,7 +7740,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
      * @param {BudgetPeriodUserInsertDto} [budgetPeriodUserInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserPost(budgetPeriodUserInsertDto?: BudgetPeriodUserInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserPost(budgetPeriodUserInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -23877,7 +7750,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
      * @param {BudgetPeriodUserUpdateDto} [budgetPeriodUserUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPeriodUserApi
      */
     public apiBudgetPeriodUserPut(budgetPeriodUserUpdateDto?: BudgetPeriodUserUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetPeriodUserApiFp(this.configuration).apiBudgetPeriodUserPut(budgetPeriodUserUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -23888,7 +7760,6 @@ export class BudgetPeriodUserApi extends BaseAPI {
 
 /**
  * BudgetPromotionRequestApi - axios parameter creator
- * @export
  */
 export const BudgetPromotionRequestApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -24078,7 +7949,6 @@ export const BudgetPromotionRequestApiAxiosParamCreator = function (configuratio
 
 /**
  * BudgetPromotionRequestApi - functional programming interface
- * @export
  */
 export const BudgetPromotionRequestApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BudgetPromotionRequestApiAxiosParamCreator(configuration)
@@ -24147,7 +8017,6 @@ export const BudgetPromotionRequestApiFp = function(configuration?: Configuratio
 
 /**
  * BudgetPromotionRequestApi - factory interface
- * @export
  */
 export const BudgetPromotionRequestApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BudgetPromotionRequestApiFp(configuration)
@@ -24201,16 +8070,12 @@ export const BudgetPromotionRequestApiFactory = function (configuration?: Config
 
 /**
  * BudgetPromotionRequestApi - object-oriented interface
- * @export
- * @class BudgetPromotionRequestApi
- * @extends {BaseAPI}
  */
 export class BudgetPromotionRequestApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPromotionRequestApi
      */
     public apiBudgetPromotionRequestGet(options?: RawAxiosRequestConfig) {
         return BudgetPromotionRequestApiFp(this.configuration).apiBudgetPromotionRequestGet(options).then((request) => request(this.axios, this.basePath));
@@ -24221,7 +8086,6 @@ export class BudgetPromotionRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPromotionRequestApi
      */
     public apiBudgetPromotionRequestIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPromotionRequestApiFp(this.configuration).apiBudgetPromotionRequestIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -24232,7 +8096,6 @@ export class BudgetPromotionRequestApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPromotionRequestApi
      */
     public apiBudgetPromotionRequestIdGet(id: string, options?: RawAxiosRequestConfig) {
         return BudgetPromotionRequestApiFp(this.configuration).apiBudgetPromotionRequestIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -24243,7 +8106,6 @@ export class BudgetPromotionRequestApi extends BaseAPI {
      * @param {BudgetPromotionRequestInsertDto} [budgetPromotionRequestInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPromotionRequestApi
      */
     public apiBudgetPromotionRequestPost(budgetPromotionRequestInsertDto?: BudgetPromotionRequestInsertDto, options?: RawAxiosRequestConfig) {
         return BudgetPromotionRequestApiFp(this.configuration).apiBudgetPromotionRequestPost(budgetPromotionRequestInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -24254,7 +8116,6 @@ export class BudgetPromotionRequestApi extends BaseAPI {
      * @param {BudgetPromotionRequestUpdateDto} [budgetPromotionRequestUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BudgetPromotionRequestApi
      */
     public apiBudgetPromotionRequestPut(budgetPromotionRequestUpdateDto?: BudgetPromotionRequestUpdateDto, options?: RawAxiosRequestConfig) {
         return BudgetPromotionRequestApiFp(this.configuration).apiBudgetPromotionRequestPut(budgetPromotionRequestUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -24265,7 +8126,6 @@ export class BudgetPromotionRequestApi extends BaseAPI {
 
 /**
  * CacheApi - axios parameter creator
- * @export
  */
 export const CacheApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -24312,7 +8172,6 @@ export const CacheApiAxiosParamCreator = function (configuration?: Configuration
 
 /**
  * CacheApi - functional programming interface
- * @export
  */
 export const CacheApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CacheApiAxiosParamCreator(configuration)
@@ -24334,7 +8193,6 @@ export const CacheApiFp = function(configuration?: Configuration) {
 
 /**
  * CacheApi - factory interface
- * @export
  */
 export const CacheApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CacheApiFp(configuration)
@@ -24353,9 +8211,6 @@ export const CacheApiFactory = function (configuration?: Configuration, basePath
 
 /**
  * CacheApi - object-oriented interface
- * @export
- * @class CacheApi
- * @extends {BaseAPI}
  */
 export class CacheApi extends BaseAPI {
     /**
@@ -24363,7 +8218,6 @@ export class CacheApi extends BaseAPI {
      * @param {string} [userName] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CacheApi
      */
     public apiCacheDeleteAllCacheGet(userName?: string, options?: RawAxiosRequestConfig) {
         return CacheApiFp(this.configuration).apiCacheDeleteAllCacheGet(userName, options).then((request) => request(this.axios, this.basePath));
@@ -24374,7 +8228,6 @@ export class CacheApi extends BaseAPI {
 
 /**
  * ClientApi - axios parameter creator
- * @export
  */
 export const ClientApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -24597,7 +8450,6 @@ export const ClientApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * ClientApi - functional programming interface
- * @export
  */
 export const ClientApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ClientApiAxiosParamCreator(configuration)
@@ -24677,7 +8529,6 @@ export const ClientApiFp = function(configuration?: Configuration) {
 
 /**
  * ClientApi - factory interface
- * @export
  */
 export const ClientApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ClientApiFp(configuration)
@@ -24739,16 +8590,12 @@ export const ClientApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * ClientApi - object-oriented interface
- * @export
- * @class ClientApi
- * @extends {BaseAPI}
  */
 export class ClientApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientActiveGet(options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientActiveGet(options).then((request) => request(this.axios, this.basePath));
@@ -24758,7 +8605,6 @@ export class ClientApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientGet(options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientGet(options).then((request) => request(this.axios, this.basePath));
@@ -24769,7 +8615,6 @@ export class ClientApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -24780,7 +8625,6 @@ export class ClientApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -24791,7 +8635,6 @@ export class ClientApi extends BaseAPI {
      * @param {MainClientInsertDto} [mainClientInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientPost(mainClientInsertDto?: MainClientInsertDto, options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientPost(mainClientInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -24802,7 +8645,6 @@ export class ClientApi extends BaseAPI {
      * @param {MainClientUpdateDto} [mainClientUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ClientApi
      */
     public apiClientPut(mainClientUpdateDto?: MainClientUpdateDto, options?: RawAxiosRequestConfig) {
         return ClientApiFp(this.configuration).apiClientPut(mainClientUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -24813,7 +8655,6 @@ export class ClientApi extends BaseAPI {
 
 /**
  * CrmChangeLogsApi - axios parameter creator
- * @export
  */
 export const CrmChangeLogsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -24900,7 +8741,6 @@ export const CrmChangeLogsApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * CrmChangeLogsApi - functional programming interface
- * @export
  */
 export const CrmChangeLogsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CrmChangeLogsApiAxiosParamCreator(configuration)
@@ -24935,7 +8775,6 @@ export const CrmChangeLogsApiFp = function(configuration?: Configuration) {
 
 /**
  * CrmChangeLogsApi - factory interface
- * @export
  */
 export const CrmChangeLogsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CrmChangeLogsApiFp(configuration)
@@ -24964,9 +8803,6 @@ export const CrmChangeLogsApiFactory = function (configuration?: Configuration, 
 
 /**
  * CrmChangeLogsApi - object-oriented interface
- * @export
- * @class CrmChangeLogsApi
- * @extends {BaseAPI}
  */
 export class CrmChangeLogsApi extends BaseAPI {
     /**
@@ -24974,7 +8810,6 @@ export class CrmChangeLogsApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CrmChangeLogsApi
      */
     public apiCrmCrmChangeLogsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CrmChangeLogsApiFp(this.configuration).apiCrmCrmChangeLogsCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -24986,7 +8821,6 @@ export class CrmChangeLogsApi extends BaseAPI {
      * @param {string} entityId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CrmChangeLogsApi
      */
     public apiCrmCrmChangeLogsEntityEntityNameEntityIdGet(entityName: string, entityId: string, options?: RawAxiosRequestConfig) {
         return CrmChangeLogsApiFp(this.configuration).apiCrmCrmChangeLogsEntityEntityNameEntityIdGet(entityName, entityId, options).then((request) => request(this.axios, this.basePath));
@@ -24997,7 +8831,6 @@ export class CrmChangeLogsApi extends BaseAPI {
 
 /**
  * CustomerAddressesApi - axios parameter creator
- * @export
  */
 export const CustomerAddressesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -25293,7 +9126,6 @@ export const CustomerAddressesApiAxiosParamCreator = function (configuration?: C
 
 /**
  * CustomerAddressesApi - functional programming interface
- * @export
  */
 export const CustomerAddressesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomerAddressesApiAxiosParamCreator(configuration)
@@ -25394,7 +9226,6 @@ export const CustomerAddressesApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomerAddressesApi - factory interface
- * @export
  */
 export const CustomerAddressesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomerAddressesApiFp(configuration)
@@ -25474,9 +9305,6 @@ export const CustomerAddressesApiFactory = function (configuration?: Configurati
 
 /**
  * CustomerAddressesApi - object-oriented interface
- * @export
- * @class CustomerAddressesApi
- * @extends {BaseAPI}
  */
 export class CustomerAddressesApi extends BaseAPI {
     /**
@@ -25485,7 +9313,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {string} addressId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesAddressIdDelete(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdDelete(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
@@ -25497,7 +9324,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {string} addressId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesAddressIdGet(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdGet(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
@@ -25510,7 +9336,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {CustomerAddressUpdateDto} [customerAddressUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesAddressIdPut(customerId: string, addressId: string, customerAddressUpdateDto?: CustomerAddressUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdPut(customerId, addressId, customerAddressUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -25522,7 +9347,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {string} addressId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdSetDefaultBillingPut(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
@@ -25534,7 +9358,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {string} addressId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId: string, addressId: string, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, addressId, options).then((request) => request(this.axios, this.basePath));
@@ -25545,7 +9368,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -25557,7 +9379,6 @@ export class CustomerAddressesApi extends BaseAPI {
      * @param {CustomerAddressInsertDto} [customerAddressInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerAddressesApi
      */
     public apiCustomersCustomerIdAddressesPost(customerId: string, customerAddressInsertDto?: CustomerAddressInsertDto, options?: RawAxiosRequestConfig) {
         return CustomerAddressesApiFp(this.configuration).apiCustomersCustomerIdAddressesPost(customerId, customerAddressInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -25568,7 +9389,6 @@ export class CustomerAddressesApi extends BaseAPI {
 
 /**
  * CustomerDocumentsApi - axios parameter creator
- * @export
  */
 export const CustomerDocumentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -26030,7 +9850,6 @@ export const CustomerDocumentsApiAxiosParamCreator = function (configuration?: C
 
 /**
  * CustomerDocumentsApi - functional programming interface
- * @export
  */
 export const CustomerDocumentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomerDocumentsApiAxiosParamCreator(configuration)
@@ -26180,7 +9999,6 @@ export const CustomerDocumentsApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomerDocumentsApi - factory interface
- * @export
  */
 export const CustomerDocumentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomerDocumentsApiFp(configuration)
@@ -26297,16 +10115,12 @@ export const CustomerDocumentsApiFactory = function (configuration?: Configurati
 
 /**
  * CustomerDocumentsApi - object-oriented interface
- * @export
- * @class CustomerDocumentsApi
- * @extends {BaseAPI}
  */
 export class CustomerDocumentsApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsCategoriesGet(options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCategoriesGet(options).then((request) => request(this.axios, this.basePath));
@@ -26317,7 +10131,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} category 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsCategoryCategoryGet(category: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCategoryCategoryGet(category, options).then((request) => request(this.axios, this.basePath));
@@ -26329,7 +10142,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} category 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId: string, category: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCustomerCustomerIdCategoryCategoryGet(customerId, category, options).then((request) => request(this.axios, this.basePath));
@@ -26340,7 +10152,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -26350,7 +10161,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsGet(options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsGet(options).then((request) => request(this.axios, this.basePath));
@@ -26361,7 +10171,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -26372,7 +10181,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsIdDownloadGet(id: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDownloadGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -26384,7 +10192,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {number} [expiryInSeconds] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsIdDownloadUrlGet(id: string, expiryInSeconds?: number, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdDownloadUrlGet(id, expiryInSeconds, options).then((request) => request(this.axios, this.basePath));
@@ -26395,7 +10202,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -26406,7 +10212,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {CustomerDocumentUpdateDto} [customerDocumentUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsPut(customerDocumentUpdateDto?: CustomerDocumentUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsPut(customerDocumentUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -26425,7 +10230,6 @@ export class CustomerDocumentsApi extends BaseAPI {
      * @param {string} [category] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerDocumentsApi
      */
     public apiCustomerDocumentsUploadPost(contentType?: string, contentDisposition?: string, headers?: { [key: string]: Array<string>; }, length?: number, name?: string, fileName?: string, customerId?: string, description?: string, category?: string, options?: RawAxiosRequestConfig) {
         return CustomerDocumentsApiFp(this.configuration).apiCustomerDocumentsUploadPost(contentType, contentDisposition, headers, length, name, fileName, customerId, description, category, options).then((request) => request(this.axios, this.basePath));
@@ -26436,7 +10240,6 @@ export class CustomerDocumentsApi extends BaseAPI {
 
 /**
  * CustomerEmailsApi - axios parameter creator
- * @export
  */
 export const CustomerEmailsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -26691,7 +10494,6 @@ export const CustomerEmailsApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * CustomerEmailsApi - functional programming interface
- * @export
  */
 export const CustomerEmailsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomerEmailsApiAxiosParamCreator(configuration)
@@ -26779,7 +10581,6 @@ export const CustomerEmailsApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomerEmailsApi - factory interface
- * @export
  */
 export const CustomerEmailsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomerEmailsApiFp(configuration)
@@ -26849,9 +10650,6 @@ export const CustomerEmailsApiFactory = function (configuration?: Configuration,
 
 /**
  * CustomerEmailsApi - object-oriented interface
- * @export
- * @class CustomerEmailsApi
- * @extends {BaseAPI}
  */
 export class CustomerEmailsApi extends BaseAPI {
     /**
@@ -26860,7 +10658,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {string} emailId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsEmailIdDelete(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdDelete(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
@@ -26872,7 +10669,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {string} emailId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsEmailIdGet(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdGet(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
@@ -26885,7 +10681,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {CustomerEmailUpdateDto} [customerEmailUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsEmailIdPut(customerId: string, emailId: string, customerEmailUpdateDto?: CustomerEmailUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdPut(customerId, emailId, customerEmailUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -26897,7 +10692,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {string} emailId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId: string, emailId: string, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, emailId, options).then((request) => request(this.axios, this.basePath));
@@ -26908,7 +10702,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -26920,7 +10713,6 @@ export class CustomerEmailsApi extends BaseAPI {
      * @param {CustomerEmailInsertDto} [customerEmailInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerEmailsApi
      */
     public apiCustomersCustomerIdEmailsPost(customerId: string, customerEmailInsertDto?: CustomerEmailInsertDto, options?: RawAxiosRequestConfig) {
         return CustomerEmailsApiFp(this.configuration).apiCustomersCustomerIdEmailsPost(customerId, customerEmailInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -26931,7 +10723,6 @@ export class CustomerEmailsApi extends BaseAPI {
 
 /**
  * CustomerNotesApi - axios parameter creator
- * @export
  */
 export const CustomerNotesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -27158,7 +10949,6 @@ export const CustomerNotesApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * CustomerNotesApi - functional programming interface
- * @export
  */
 export const CustomerNotesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomerNotesApiAxiosParamCreator(configuration)
@@ -27239,7 +11029,6 @@ export const CustomerNotesApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomerNotesApi - factory interface
- * @export
  */
 export const CustomerNotesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomerNotesApiFp(configuration)
@@ -27302,9 +11091,6 @@ export const CustomerNotesApiFactory = function (configuration?: Configuration, 
 
 /**
  * CustomerNotesApi - object-oriented interface
- * @export
- * @class CustomerNotesApi
- * @extends {BaseAPI}
  */
 export class CustomerNotesApi extends BaseAPI {
     /**
@@ -27312,7 +11098,6 @@ export class CustomerNotesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -27322,7 +11107,6 @@ export class CustomerNotesApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesGet(options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesGet(options).then((request) => request(this.axios, this.basePath));
@@ -27333,7 +11117,6 @@ export class CustomerNotesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -27344,7 +11127,6 @@ export class CustomerNotesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -27355,7 +11137,6 @@ export class CustomerNotesApi extends BaseAPI {
      * @param {CustomerNoteInsertDto} [customerNoteInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesPost(customerNoteInsertDto?: CustomerNoteInsertDto, options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesPost(customerNoteInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -27366,7 +11147,6 @@ export class CustomerNotesApi extends BaseAPI {
      * @param {CustomerNoteUpdateDto} [customerNoteUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerNotesApi
      */
     public apiCustomerNotesPut(customerNoteUpdateDto?: CustomerNoteUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomerNotesApiFp(this.configuration).apiCustomerNotesPut(customerNoteUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -27377,7 +11157,6 @@ export class CustomerNotesApi extends BaseAPI {
 
 /**
  * CustomerPhonesApi - axios parameter creator
- * @export
  */
 export const CustomerPhonesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -27632,7 +11411,6 @@ export const CustomerPhonesApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * CustomerPhonesApi - functional programming interface
- * @export
  */
 export const CustomerPhonesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomerPhonesApiAxiosParamCreator(configuration)
@@ -27720,7 +11498,6 @@ export const CustomerPhonesApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomerPhonesApi - factory interface
- * @export
  */
 export const CustomerPhonesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomerPhonesApiFp(configuration)
@@ -27790,9 +11567,6 @@ export const CustomerPhonesApiFactory = function (configuration?: Configuration,
 
 /**
  * CustomerPhonesApi - object-oriented interface
- * @export
- * @class CustomerPhonesApi
- * @extends {BaseAPI}
  */
 export class CustomerPhonesApi extends BaseAPI {
     /**
@@ -27800,7 +11574,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesGet(customerId: string, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -27812,7 +11585,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {string} phoneId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesPhoneIdDelete(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdDelete(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
@@ -27824,7 +11596,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {string} phoneId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesPhoneIdGet(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdGet(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
@@ -27837,7 +11608,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {CustomerPhoneUpdateDto} [customerPhoneUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesPhoneIdPut(customerId: string, phoneId: string, customerPhoneUpdateDto?: CustomerPhoneUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdPut(customerId, phoneId, customerPhoneUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -27849,7 +11619,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {string} phoneId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId: string, phoneId: string, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId, phoneId, options).then((request) => request(this.axios, this.basePath));
@@ -27861,7 +11630,6 @@ export class CustomerPhonesApi extends BaseAPI {
      * @param {CustomerPhoneInsertDto} [customerPhoneInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomerPhonesApi
      */
     public apiCustomersCustomerIdPhonesPost(customerId: string, customerPhoneInsertDto?: CustomerPhoneInsertDto, options?: RawAxiosRequestConfig) {
         return CustomerPhonesApiFp(this.configuration).apiCustomersCustomerIdPhonesPost(customerId, customerPhoneInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -27872,7 +11640,6 @@ export class CustomerPhonesApi extends BaseAPI {
 
 /**
  * CustomersApi - axios parameter creator
- * @export
  */
 export const CustomersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -28062,7 +11829,6 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * CustomersApi - functional programming interface
- * @export
  */
 export const CustomersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomersApiAxiosParamCreator(configuration)
@@ -28131,7 +11897,6 @@ export const CustomersApiFp = function(configuration?: Configuration) {
 
 /**
  * CustomersApi - factory interface
- * @export
  */
 export const CustomersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CustomersApiFp(configuration)
@@ -28185,16 +11950,12 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
 
 /**
  * CustomersApi - object-oriented interface
- * @export
- * @class CustomersApi
- * @extends {BaseAPI}
  */
 export class CustomersApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomersApi
      */
     public apiCustomersGet(options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersGet(options).then((request) => request(this.axios, this.basePath));
@@ -28205,7 +11966,6 @@ export class CustomersApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomersApi
      */
     public apiCustomersIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -28216,7 +11976,6 @@ export class CustomersApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomersApi
      */
     public apiCustomersIdGet(id: string, options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -28227,7 +11986,6 @@ export class CustomersApi extends BaseAPI {
      * @param {CustomerInsertDto} [customerInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomersApi
      */
     public apiCustomersPost(customerInsertDto?: CustomerInsertDto, options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersPost(customerInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -28238,7 +11996,6 @@ export class CustomersApi extends BaseAPI {
      * @param {CustomerUpdateDto} [customerUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomersApi
      */
     public apiCustomersPut(customerUpdateDto?: CustomerUpdateDto, options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersPut(customerUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -28249,7 +12006,6 @@ export class CustomersApi extends BaseAPI {
 
 /**
  * DashboardsApi - axios parameter creator
- * @export
  */
 export const DashboardsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -28778,7 +12534,6 @@ export const DashboardsApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * DashboardsApi - functional programming interface
- * @export
  */
 export const DashboardsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DashboardsApiAxiosParamCreator(configuration)
@@ -28928,7 +12683,6 @@ export const DashboardsApiFp = function(configuration?: Configuration) {
 
 /**
  * DashboardsApi - factory interface
- * @export
  */
 export const DashboardsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DashboardsApiFp(configuration)
@@ -29048,9 +12802,6 @@ export const DashboardsApiFactory = function (configuration?: Configuration, bas
 
 /**
  * DashboardsApi - object-oriented interface
- * @export
- * @class DashboardsApi
- * @extends {BaseAPI}
  */
 export class DashboardsApi extends BaseAPI {
     /**
@@ -29060,7 +12811,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsCustomerAssignTeamInfoGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsCustomerAssignTeamInfoGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29073,7 +12823,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetCustomerOpenCloseeGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetCustomerOpenCloseeGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29086,7 +12835,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetTicketAsyncGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetTicketAsyncGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29099,7 +12847,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetTicketStatusAsyncGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetTicketStatusAsyncGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29112,7 +12859,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetTicketSubjectCountAsyncGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetTicketSubjectCountAsyncGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29125,7 +12871,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetUserCompanyAllTicketCountGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetUserCompanyAllTicketCountGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29138,7 +12883,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetUserCompanyOpenTicketCountGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetUserCompanyOpenTicketCountGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29151,7 +12895,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetUserCompanyTicketCountGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetUserCompanyTicketCountGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29164,7 +12907,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsGetUserCompanyTicketInfoCountGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsGetUserCompanyTicketInfoCountGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29177,7 +12919,6 @@ export class DashboardsApi extends BaseAPI {
      * @param {string} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DashboardsApi
      */
     public apiDashboardsUserOpenFormCountGet(userId?: string, startDate?: string, endDate?: string, options?: RawAxiosRequestConfig) {
         return DashboardsApiFp(this.configuration).apiDashboardsUserOpenFormCountGet(userId, startDate, endDate, options).then((request) => request(this.axios, this.basePath));
@@ -29188,7 +12929,6 @@ export class DashboardsApi extends BaseAPI {
 
 /**
  * DepartmentUsersApi - axios parameter creator
- * @export
  */
 export const DepartmentUsersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -29309,7 +13049,6 @@ export const DepartmentUsersApiAxiosParamCreator = function (configuration?: Con
 
 /**
  * DepartmentUsersApi - functional programming interface
- * @export
  */
 export const DepartmentUsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DepartmentUsersApiAxiosParamCreator(configuration)
@@ -29355,7 +13094,6 @@ export const DepartmentUsersApiFp = function(configuration?: Configuration) {
 
 /**
  * DepartmentUsersApi - factory interface
- * @export
  */
 export const DepartmentUsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DepartmentUsersApiFp(configuration)
@@ -29392,9 +13130,6 @@ export const DepartmentUsersApiFactory = function (configuration?: Configuration
 
 /**
  * DepartmentUsersApi - object-oriented interface
- * @export
- * @class DepartmentUsersApi
- * @extends {BaseAPI}
  */
 export class DepartmentUsersApi extends BaseAPI {
     /**
@@ -29402,7 +13137,6 @@ export class DepartmentUsersApi extends BaseAPI {
      * @param {string} [ticketDepartmentId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentUsersApi
      */
     public apiDepartmentUsersGet(ticketDepartmentId?: string, options?: RawAxiosRequestConfig) {
         return DepartmentUsersApiFp(this.configuration).apiDepartmentUsersGet(ticketDepartmentId, options).then((request) => request(this.axios, this.basePath));
@@ -29413,7 +13147,6 @@ export class DepartmentUsersApi extends BaseAPI {
      * @param {DepartmentUserInsertDto} [departmentUserInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentUsersApi
      */
     public apiDepartmentUsersPost(departmentUserInsertDto?: DepartmentUserInsertDto, options?: RawAxiosRequestConfig) {
         return DepartmentUsersApiFp(this.configuration).apiDepartmentUsersPost(departmentUserInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -29424,7 +13157,6 @@ export class DepartmentUsersApi extends BaseAPI {
      * @param {string} ticketDepartmentId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentUsersApi
      */
     public apiDepartmentUsersTicketDepartmentIdDelete(ticketDepartmentId: string, options?: RawAxiosRequestConfig) {
         return DepartmentUsersApiFp(this.configuration).apiDepartmentUsersTicketDepartmentIdDelete(ticketDepartmentId, options).then((request) => request(this.axios, this.basePath));
@@ -29435,7 +13167,6 @@ export class DepartmentUsersApi extends BaseAPI {
 
 /**
  * DepartmentsApi - axios parameter creator
- * @export
  */
 export const DepartmentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -29626,7 +13357,6 @@ export const DepartmentsApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * DepartmentsApi - functional programming interface
- * @export
  */
 export const DepartmentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DepartmentsApiAxiosParamCreator(configuration)
@@ -29695,7 +13425,6 @@ export const DepartmentsApiFp = function(configuration?: Configuration) {
 
 /**
  * DepartmentsApi - factory interface
- * @export
  */
 export const DepartmentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DepartmentsApiFp(configuration)
@@ -29749,9 +13478,6 @@ export const DepartmentsApiFactory = function (configuration?: Configuration, ba
 
 /**
  * DepartmentsApi - object-oriented interface
- * @export
- * @class DepartmentsApi
- * @extends {BaseAPI}
  */
 export class DepartmentsApi extends BaseAPI {
     /**
@@ -29759,7 +13485,6 @@ export class DepartmentsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentsApi
      */
     public apiDepartmentsDelete(id?: string, options?: RawAxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).apiDepartmentsDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -29769,7 +13494,6 @@ export class DepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentsApi
      */
     public apiDepartmentsGet(options?: RawAxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).apiDepartmentsGet(options).then((request) => request(this.axios, this.basePath));
@@ -29780,7 +13504,6 @@ export class DepartmentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentsApi
      */
     public apiDepartmentsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).apiDepartmentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -29791,7 +13514,6 @@ export class DepartmentsApi extends BaseAPI {
      * @param {DepartmentsInsertDto} [departmentsInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentsApi
      */
     public apiDepartmentsPost(departmentsInsertDto?: DepartmentsInsertDto, options?: RawAxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).apiDepartmentsPost(departmentsInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -29802,7 +13524,6 @@ export class DepartmentsApi extends BaseAPI {
      * @param {DepartmentsUpdateDto} [departmentsUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepartmentsApi
      */
     public apiDepartmentsPut(departmentsUpdateDto?: DepartmentsUpdateDto, options?: RawAxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).apiDepartmentsPut(departmentsUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -29813,7 +13534,6 @@ export class DepartmentsApi extends BaseAPI {
 
 /**
  * ForgotPasswordApi - axios parameter creator
- * @export
  */
 export const ForgotPasswordApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -29951,7 +13671,6 @@ export const ForgotPasswordApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * ForgotPasswordApi - functional programming interface
- * @export
  */
 export const ForgotPasswordApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ForgotPasswordApiAxiosParamCreator(configuration)
@@ -30000,7 +13719,6 @@ export const ForgotPasswordApiFp = function(configuration?: Configuration) {
 
 /**
  * ForgotPasswordApi - factory interface
- * @export
  */
 export const ForgotPasswordApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ForgotPasswordApiFp(configuration)
@@ -30040,9 +13758,6 @@ export const ForgotPasswordApiFactory = function (configuration?: Configuration,
 
 /**
  * ForgotPasswordApi - object-oriented interface
- * @export
- * @class ForgotPasswordApi
- * @extends {BaseAPI}
  */
 export class ForgotPasswordApi extends BaseAPI {
     /**
@@ -30052,7 +13767,6 @@ export class ForgotPasswordApi extends BaseAPI {
      * @param {string} [password] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ForgotPasswordApi
      */
     public apiForgotPasswordChangePwPost(mail?: string, code?: string, password?: string, options?: RawAxiosRequestConfig) {
         return ForgotPasswordApiFp(this.configuration).apiForgotPasswordChangePwPost(mail, code, password, options).then((request) => request(this.axios, this.basePath));
@@ -30063,7 +13777,6 @@ export class ForgotPasswordApi extends BaseAPI {
      * @param {string} [mail] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ForgotPasswordApi
      */
     public apiForgotPasswordForgotPasswordPost(mail?: string, options?: RawAxiosRequestConfig) {
         return ForgotPasswordApiFp(this.configuration).apiForgotPasswordForgotPasswordPost(mail, options).then((request) => request(this.axios, this.basePath));
@@ -30075,7 +13788,6 @@ export class ForgotPasswordApi extends BaseAPI {
      * @param {string} [code] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ForgotPasswordApi
      */
     public apiForgotPasswordVerifyResetCodePost(mail?: string, code?: string, options?: RawAxiosRequestConfig) {
         return ForgotPasswordApiFp(this.configuration).apiForgotPasswordVerifyResetCodePost(mail, code, options).then((request) => request(this.axios, this.basePath));
@@ -30086,7 +13798,6 @@ export class ForgotPasswordApi extends BaseAPI {
 
 /**
  * FormApi - axios parameter creator
- * @export
  */
 export const FormApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -30237,7 +13948,6 @@ export const FormApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * FormApi - functional programming interface
- * @export
  */
 export const FormApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormApiAxiosParamCreator(configuration)
@@ -30289,7 +13999,6 @@ export const FormApiFp = function(configuration?: Configuration) {
 
 /**
  * FormApi - factory interface
- * @export
  */
 export const FormApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormApiFp(configuration)
@@ -30332,9 +14041,6 @@ export const FormApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * FormApi - object-oriented interface
- * @export
- * @class FormApi
- * @extends {BaseAPI}
  */
 export class FormApi extends BaseAPI {
     /**
@@ -30344,7 +14050,6 @@ export class FormApi extends BaseAPI {
      * @param {number} [skip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormApi
      */
     public apiFormFormIdSubmissionGet(formId: string, limit?: number, skip?: number, options?: RawAxiosRequestConfig) {
         return FormApiFp(this.configuration).apiFormFormIdSubmissionGet(formId, limit, skip, options).then((request) => request(this.axios, this.basePath));
@@ -30357,7 +14062,6 @@ export class FormApi extends BaseAPI {
      * @param {number} [skip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormApi
      */
     public apiFormGet(type?: string, limit?: number, skip?: number, options?: RawAxiosRequestConfig) {
         return FormApiFp(this.configuration).apiFormGet(type, limit, skip, options).then((request) => request(this.axios, this.basePath));
@@ -30370,7 +14074,6 @@ export class FormApi extends BaseAPI {
      * @param {number} [skip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormApi
      */
     public apiFormIdGet(id: string, limit?: number, skip?: number, options?: RawAxiosRequestConfig) {
         return FormApiFp(this.configuration).apiFormIdGet(id, limit, skip, options).then((request) => request(this.axios, this.basePath));
@@ -30381,7 +14084,6 @@ export class FormApi extends BaseAPI {
 
 /**
  * FormAssignApi - axios parameter creator
- * @export
  */
 export const FormAssignApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -30715,7 +14417,6 @@ export const FormAssignApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * FormAssignApi - functional programming interface
- * @export
  */
 export const FormAssignApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormAssignApiAxiosParamCreator(configuration)
@@ -30830,7 +14531,6 @@ export const FormAssignApiFp = function(configuration?: Configuration) {
 
 /**
  * FormAssignApi - factory interface
- * @export
  */
 export const FormAssignApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormAssignApiFp(configuration)
@@ -30918,9 +14618,6 @@ export const FormAssignApiFactory = function (configuration?: Configuration, bas
 
 /**
  * FormAssignApi - object-oriented interface
- * @export
- * @class FormAssignApi
- * @extends {BaseAPI}
  */
 export class FormAssignApi extends BaseAPI {
     /**
@@ -30929,7 +14626,6 @@ export class FormAssignApi extends BaseAPI {
      * @param {string} [formId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignAssignFormByMailPost(username?: string, formId?: string, options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignAssignFormByMailPost(username, formId, options).then((request) => request(this.axios, this.basePath));
@@ -30939,7 +14635,6 @@ export class FormAssignApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignCreateFormAssignGet(options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignCreateFormAssignGet(options).then((request) => request(this.axios, this.basePath));
@@ -30949,7 +14644,6 @@ export class FormAssignApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignFormStatusGet(options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignFormStatusGet(options).then((request) => request(this.axios, this.basePath));
@@ -30959,7 +14653,6 @@ export class FormAssignApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignGet(options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignGet(options).then((request) => request(this.axios, this.basePath));
@@ -30970,7 +14663,6 @@ export class FormAssignApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignGetByIdGet(id?: string, options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignGetByIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -30981,7 +14673,6 @@ export class FormAssignApi extends BaseAPI {
      * @param {FormAssignDto} [formAssignDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignPost(formAssignDto?: FormAssignDto, options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignPost(formAssignDto, options).then((request) => request(this.axios, this.basePath));
@@ -30992,7 +14683,6 @@ export class FormAssignApi extends BaseAPI {
      * @param {FormAssignDto} [formAssignDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignPut(formAssignDto?: FormAssignDto, options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignPut(formAssignDto, options).then((request) => request(this.axios, this.basePath));
@@ -31002,7 +14692,6 @@ export class FormAssignApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignUpdateExpiredFormsPut(options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignUpdateExpiredFormsPut(options).then((request) => request(this.axios, this.basePath));
@@ -31013,7 +14702,6 @@ export class FormAssignApi extends BaseAPI {
      * @param {Array<string>} [statues] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAssignApi
      */
     public apiFormAssignUserFormsGet(statues?: Array<string>, options?: RawAxiosRequestConfig) {
         return FormAssignApiFp(this.configuration).apiFormAssignUserFormsGet(statues, options).then((request) => request(this.axios, this.basePath));
@@ -31024,7 +14712,6 @@ export class FormAssignApi extends BaseAPI {
 
 /**
  * FormAuthApi - axios parameter creator
- * @export
  */
 export const FormAuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -31215,7 +14902,6 @@ export const FormAuthApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * FormAuthApi - functional programming interface
- * @export
  */
 export const FormAuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormAuthApiAxiosParamCreator(configuration)
@@ -31284,7 +14970,6 @@ export const FormAuthApiFp = function(configuration?: Configuration) {
 
 /**
  * FormAuthApi - factory interface
- * @export
  */
 export const FormAuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormAuthApiFp(configuration)
@@ -31338,16 +15023,12 @@ export const FormAuthApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * FormAuthApi - object-oriented interface
- * @export
- * @class FormAuthApi
- * @extends {BaseAPI}
  */
 export class FormAuthApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAuthApi
      */
     public apiFormAuthGet(options?: RawAxiosRequestConfig) {
         return FormAuthApiFp(this.configuration).apiFormAuthGet(options).then((request) => request(this.axios, this.basePath));
@@ -31358,7 +15039,6 @@ export class FormAuthApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAuthApi
      */
     public apiFormAuthIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return FormAuthApiFp(this.configuration).apiFormAuthIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -31369,7 +15049,6 @@ export class FormAuthApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAuthApi
      */
     public apiFormAuthIdGet(id?: string, options?: RawAxiosRequestConfig) {
         return FormAuthApiFp(this.configuration).apiFormAuthIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -31380,7 +15059,6 @@ export class FormAuthApi extends BaseAPI {
      * @param {FormAuthInsertDto} [formAuthInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAuthApi
      */
     public apiFormAuthPost(formAuthInsertDto?: FormAuthInsertDto, options?: RawAxiosRequestConfig) {
         return FormAuthApiFp(this.configuration).apiFormAuthPost(formAuthInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -31391,7 +15069,6 @@ export class FormAuthApi extends BaseAPI {
      * @param {FormAuthUpdateDto} [formAuthUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormAuthApi
      */
     public apiFormAuthPut(formAuthUpdateDto?: FormAuthUpdateDto, options?: RawAxiosRequestConfig) {
         return FormAuthApiFp(this.configuration).apiFormAuthPut(formAuthUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -31402,7 +15079,6 @@ export class FormAuthApi extends BaseAPI {
 
 /**
  * FormDataApi - axios parameter creator
- * @export
  */
 export const FormDataApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -31835,7 +15511,6 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * FormDataApi - functional programming interface
- * @export
  */
 export const FormDataApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormDataApiAxiosParamCreator(configuration)
@@ -31984,7 +15659,6 @@ export const FormDataApiFp = function(configuration?: Configuration) {
 
 /**
  * FormDataApi - factory interface
- * @export
  */
 export const FormDataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormDataApiFp(configuration)
@@ -32097,9 +15771,6 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * FormDataApi - object-oriented interface
- * @export
- * @class FormDataApi
- * @extends {BaseAPI}
  */
 export class FormDataApi extends BaseAPI {
     /**
@@ -32107,7 +15778,6 @@ export class FormDataApi extends BaseAPI {
      * @param {FormRuleEngineDto} [formRuleEngineDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataAddFormRuleEnginePost(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataAddFormRuleEnginePost(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
@@ -32117,7 +15787,6 @@ export class FormDataApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGet(options).then((request) => request(this.axios, this.basePath));
@@ -32128,7 +15797,6 @@ export class FormDataApi extends BaseAPI {
      * @param {string} guid 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGetFieldByFormGuidGet(guid: string, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGetFieldByFormGuidGet(guid, options).then((request) => request(this.axios, this.basePath));
@@ -32138,7 +15806,6 @@ export class FormDataApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGetFormCategoriesEnumGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGetFormCategoriesEnumGet(options).then((request) => request(this.axios, this.basePath));
@@ -32148,7 +15815,6 @@ export class FormDataApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGetFormListByMenuGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGetFormListByMenuGet(options).then((request) => request(this.axios, this.basePath));
@@ -32158,7 +15824,6 @@ export class FormDataApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGetFormPrioritiesEnumGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGetFormPrioritiesEnumGet(options).then((request) => request(this.axios, this.basePath));
@@ -32168,7 +15833,6 @@ export class FormDataApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataGetFormTypesEnumGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataGetFormTypesEnumGet(options).then((request) => request(this.axios, this.basePath));
@@ -32179,7 +15843,6 @@ export class FormDataApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -32190,7 +15853,6 @@ export class FormDataApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataIdGet(id: string, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -32201,7 +15863,6 @@ export class FormDataApi extends BaseAPI {
      * @param {FormDataInsertDto} [formDataInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataPost(formDataInsertDto?: FormDataInsertDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataPost(formDataInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -32212,7 +15873,6 @@ export class FormDataApi extends BaseAPI {
      * @param {FormDataUpdateDto} [formDataUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataPut(formDataUpdateDto?: FormDataUpdateDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataPut(formDataUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -32223,7 +15883,6 @@ export class FormDataApi extends BaseAPI {
      * @param {FormRuleEngineDto} [formRuleEngineDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormDataApi
      */
     public apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
@@ -32234,7 +15893,6 @@ export class FormDataApi extends BaseAPI {
 
 /**
  * FormRuleEngineApi - axios parameter creator
- * @export
  */
 export const FormRuleEngineApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -32461,7 +16119,6 @@ export const FormRuleEngineApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * FormRuleEngineApi - functional programming interface
- * @export
  */
 export const FormRuleEngineApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormRuleEngineApiAxiosParamCreator(configuration)
@@ -32542,7 +16199,6 @@ export const FormRuleEngineApiFp = function(configuration?: Configuration) {
 
 /**
  * FormRuleEngineApi - factory interface
- * @export
  */
 export const FormRuleEngineApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormRuleEngineApiFp(configuration)
@@ -32605,16 +16261,12 @@ export const FormRuleEngineApiFactory = function (configuration?: Configuration,
 
 /**
  * FormRuleEngineApi - object-oriented interface
- * @export
- * @class FormRuleEngineApi
- * @extends {BaseAPI}
  */
 export class FormRuleEngineApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEngineGet(options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEngineGet(options).then((request) => request(this.axios, this.basePath));
@@ -32625,7 +16277,6 @@ export class FormRuleEngineApi extends BaseAPI {
      * @param {string} nodeId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEngineGetRuleByNodeIdNodeIdGet(nodeId: string, options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEngineGetRuleByNodeIdNodeIdGet(nodeId, options).then((request) => request(this.axios, this.basePath));
@@ -32636,7 +16287,6 @@ export class FormRuleEngineApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEngineIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEngineIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -32647,7 +16297,6 @@ export class FormRuleEngineApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEngineIdGet(id: string, options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEngineIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -32658,7 +16307,6 @@ export class FormRuleEngineApi extends BaseAPI {
      * @param {FormRuleEngineDto} [formRuleEngineDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEnginePost(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEnginePost(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
@@ -32669,7 +16317,6 @@ export class FormRuleEngineApi extends BaseAPI {
      * @param {FormRuleEngineDto} [formRuleEngineDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuleEngineApi
      */
     public apiFormRuleEnginePut(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormRuleEngineApiFp(this.configuration).apiFormRuleEnginePut(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
@@ -32680,7 +16327,6 @@ export class FormRuleEngineApi extends BaseAPI {
 
 /**
  * FormRuntimeApi - axios parameter creator
- * @export
  */
 export const FormRuntimeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -33023,7 +16669,6 @@ export const FormRuntimeApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * FormRuntimeApi - functional programming interface
- * @export
  */
 export const FormRuntimeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FormRuntimeApiAxiosParamCreator(configuration)
@@ -33141,7 +16786,6 @@ export const FormRuntimeApiFp = function(configuration?: Configuration) {
 
 /**
  * FormRuntimeApi - factory interface
- * @export
  */
 export const FormRuntimeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = FormRuntimeApiFp(configuration)
@@ -33232,16 +16876,12 @@ export const FormRuntimeApiFactory = function (configuration?: Configuration, ba
 
 /**
  * FormRuntimeApi - object-oriented interface
- * @export
- * @class FormRuntimeApi
- * @extends {BaseAPI}
  */
 export class FormRuntimeApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeGet(options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGet(options).then((request) => request(this.axios, this.basePath));
@@ -33252,7 +16892,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} formId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeGetColumnListFormIdGet(formId: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetColumnListFormIdGet(formId, options).then((request) => request(this.axios, this.basePath));
@@ -33263,7 +16902,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeGetDetailIdGet(id: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetDetailIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -33274,7 +16912,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} formId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeGetFormDataByIdFormIdGet(formId: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetFormDataByIdFormIdGet(formId, options).then((request) => request(this.axios, this.basePath));
@@ -33285,7 +16922,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} formId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeGetListFormIdGet(formId: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetListFormIdGet(formId, options).then((request) => request(this.axios, this.basePath));
@@ -33296,7 +16932,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -33307,7 +16942,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimeIdGet(id: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -33319,7 +16953,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {FormRuntimeDto} [formRuntimeDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimePost(formAssignId?: string, formRuntimeDto?: FormRuntimeDto, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimePost(formAssignId, formRuntimeDto, options).then((request) => request(this.axios, this.basePath));
@@ -33330,7 +16963,6 @@ export class FormRuntimeApi extends BaseAPI {
      * @param {FormRuntimeDto} [formRuntimeDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FormRuntimeApi
      */
     public apiFormRuntimePut(formRuntimeDto?: FormRuntimeDto, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimePut(formRuntimeDto, options).then((request) => request(this.axios, this.basePath));
@@ -33341,7 +16973,6 @@ export class FormRuntimeApi extends BaseAPI {
 
 /**
  * GenericListApi - axios parameter creator
- * @export
  */
 export const GenericListApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -33676,7 +17307,6 @@ export const GenericListApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * GenericListApi - functional programming interface
- * @export
  */
 export const GenericListApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GenericListApiAxiosParamCreator(configuration)
@@ -33782,7 +17412,6 @@ export const GenericListApiFp = function(configuration?: Configuration) {
 
 /**
  * GenericListApi - factory interface
- * @export
  */
 export const GenericListApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = GenericListApiFp(configuration)
@@ -33867,9 +17496,6 @@ export const GenericListApiFactory = function (configuration?: Configuration, ba
 
 /**
  * GenericListApi - object-oriented interface
- * @export
- * @class GenericListApi
- * @extends {BaseAPI}
  */
 export class GenericListApi extends BaseAPI {
     /**
@@ -33880,7 +17506,6 @@ export class GenericListApi extends BaseAPI {
      * @param {string} [company] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListByBolgeFonksiyonGetBolumProjeByBolgeFonksiyonGet(skip?: number, top?: number, name?: string, company?: string, options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListByBolgeFonksiyonGetBolumProjeByBolgeFonksiyonGet(skip, top, name, company, options).then((request) => request(this.axios, this.basePath));
@@ -33894,7 +17519,6 @@ export class GenericListApi extends BaseAPI {
      * @param {string} [company] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListByCompanyGetBolgeFonksiyonByCompanyGet(skip?: number, top?: number, name?: string, company?: string, options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListByCompanyGetBolgeFonksiyonByCompanyGet(skip, top, name, company, options).then((request) => request(this.axios, this.basePath));
@@ -33908,7 +17532,6 @@ export class GenericListApi extends BaseAPI {
      * @param {string} [grupBaskanlik] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListBygrupBaskanlikGetCompanyByGrupBaskanlikGet(skip?: number, top?: number, name?: string, grupBaskanlik?: string, options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListBygrupBaskanlikGetCompanyByGrupBaskanlikGet(skip, top, name, grupBaskanlik, options).then((request) => request(this.axios, this.basePath));
@@ -33923,7 +17546,6 @@ export class GenericListApi extends BaseAPI {
      * @param {string} [parentId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListGet(pc?: GenericList, skip?: number, top?: number, name?: string, parentId?: string, options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListGet(pc, skip, top, name, parentId, options).then((request) => request(this.axios, this.basePath));
@@ -33935,7 +17557,6 @@ export class GenericListApi extends BaseAPI {
      * @param {string} [value] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListGetFilteredDataAsyncGet(pc?: GenericList, value?: string, options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListGetFilteredDataAsyncGet(pc, value, options).then((request) => request(this.axios, this.basePath));
@@ -33945,7 +17566,6 @@ export class GenericListApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListGetHardwareListGet(options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListGetHardwareListGet(options).then((request) => request(this.axios, this.basePath));
@@ -33955,7 +17575,6 @@ export class GenericListApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GenericListApi
      */
     public apiGenericListGetLicenceListGet(options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListGetLicenceListGet(options).then((request) => request(this.axios, this.basePath));
@@ -33966,7 +17585,6 @@ export class GenericListApi extends BaseAPI {
 
 /**
  * InventoryApi - axios parameter creator
- * @export
  */
 export const InventoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -34271,7 +17889,6 @@ export const InventoryApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * InventoryApi - functional programming interface
- * @export
  */
 export const InventoryApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = InventoryApiAxiosParamCreator(configuration)
@@ -34376,7 +17993,6 @@ export const InventoryApiFp = function(configuration?: Configuration) {
 
 /**
  * InventoryApi - factory interface
- * @export
  */
 export const InventoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = InventoryApiFp(configuration)
@@ -34457,9 +18073,6 @@ export const InventoryApiFactory = function (configuration?: Configuration, base
 
 /**
  * InventoryApi - object-oriented interface
- * @export
- * @class InventoryApi
- * @extends {BaseAPI}
  */
 export class InventoryApi extends BaseAPI {
     /**
@@ -34468,7 +18081,6 @@ export class InventoryApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryAssignPut(inventoryId?: string, userId?: string, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryAssignPut(inventoryId, userId, options).then((request) => request(this.axios, this.basePath));
@@ -34479,7 +18091,6 @@ export class InventoryApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryDelete(id?: string, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -34489,7 +18100,6 @@ export class InventoryApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryGet(options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryGet(options).then((request) => request(this.axios, this.basePath));
@@ -34500,7 +18110,6 @@ export class InventoryApi extends BaseAPI {
      * @param {string} [inventoryId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryGetAssignUserGet(inventoryId?: string, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryGetAssignUserGet(inventoryId, options).then((request) => request(this.axios, this.basePath));
@@ -34510,7 +18119,6 @@ export class InventoryApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryGetEnumsGet(options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryGetEnumsGet(options).then((request) => request(this.axios, this.basePath));
@@ -34521,7 +18129,6 @@ export class InventoryApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryIdGet(id: string, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -34532,7 +18139,6 @@ export class InventoryApi extends BaseAPI {
      * @param {InventoryInsertDto} [inventoryInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryPost(inventoryInsertDto?: InventoryInsertDto, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryPost(inventoryInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -34543,7 +18149,6 @@ export class InventoryApi extends BaseAPI {
      * @param {InventoryUpdateDto} [inventoryUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof InventoryApi
      */
     public apiInventoryPut(inventoryUpdateDto?: InventoryUpdateDto, options?: RawAxiosRequestConfig) {
         return InventoryApiFp(this.configuration).apiInventoryPut(inventoryUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -34554,7 +18159,6 @@ export class InventoryApi extends BaseAPI {
 
 /**
  * KanbanApi - axios parameter creator
- * @export
  */
 export const KanbanApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -34745,7 +18349,6 @@ export const KanbanApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * KanbanApi - functional programming interface
- * @export
  */
 export const KanbanApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = KanbanApiAxiosParamCreator(configuration)
@@ -34814,7 +18417,6 @@ export const KanbanApiFp = function(configuration?: Configuration) {
 
 /**
  * KanbanApi - factory interface
- * @export
  */
 export const KanbanApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = KanbanApiFp(configuration)
@@ -34868,9 +18470,6 @@ export const KanbanApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * KanbanApi - object-oriented interface
- * @export
- * @class KanbanApi
- * @extends {BaseAPI}
  */
 export class KanbanApi extends BaseAPI {
     /**
@@ -34878,7 +18477,6 @@ export class KanbanApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KanbanApi
      */
     public apiKanbanDelete(id?: string, options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -34888,7 +18486,6 @@ export class KanbanApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KanbanApi
      */
     public apiKanbanGet(options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanGet(options).then((request) => request(this.axios, this.basePath));
@@ -34899,7 +18496,6 @@ export class KanbanApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KanbanApi
      */
     public apiKanbanIdGet(id: string, options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -34910,7 +18506,6 @@ export class KanbanApi extends BaseAPI {
      * @param {KanbanTasksInsertDto} [kanbanTasksInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KanbanApi
      */
     public apiKanbanPost(kanbanTasksInsertDto?: KanbanTasksInsertDto, options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanPost(kanbanTasksInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -34921,7 +18516,6 @@ export class KanbanApi extends BaseAPI {
      * @param {KanbanTasksUpdateDto} [kanbanTasksUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KanbanApi
      */
     public apiKanbanPut(kanbanTasksUpdateDto?: KanbanTasksUpdateDto, options?: RawAxiosRequestConfig) {
         return KanbanApiFp(this.configuration).apiKanbanPut(kanbanTasksUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -34932,7 +18526,6 @@ export class KanbanApi extends BaseAPI {
 
 /**
  * LookupApi - axios parameter creator
- * @export
  */
 export const LookupApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -35432,7 +19025,6 @@ export const LookupApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * LookupApi - functional programming interface
- * @export
  */
 export const LookupApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LookupApiAxiosParamCreator(configuration)
@@ -35600,7 +19192,6 @@ export const LookupApiFp = function(configuration?: Configuration) {
 
 /**
  * LookupApi - factory interface
- * @export
  */
 export const LookupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = LookupApiFp(configuration)
@@ -35729,9 +19320,6 @@ export const LookupApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * LookupApi - object-oriented interface
- * @export
- * @class LookupApi
- * @extends {BaseAPI}
  */
 export class LookupApi extends BaseAPI {
     /**
@@ -35739,7 +19327,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} [moduleKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupCategoriesGet(moduleKey?: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupCategoriesGet(moduleKey, options).then((request) => request(this.axios, this.basePath));
@@ -35750,7 +19337,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupCategoriesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupCategoriesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -35762,7 +19348,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupCategoryDto} [lookupCategoryDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupCategoriesIdPut(id: string, lookupCategoryDto?: LookupCategoryDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupCategoriesIdPut(id, lookupCategoryDto, options).then((request) => request(this.axios, this.basePath));
@@ -35773,7 +19358,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupCategoryDto} [lookupCategoryDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupCategoriesPost(lookupCategoryDto?: LookupCategoryDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupCategoriesPost(lookupCategoryDto, options).then((request) => request(this.axios, this.basePath));
@@ -35784,7 +19368,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupItemsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupItemsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -35796,7 +19379,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupItemDto} [lookupItemDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupItemsIdPut(id: string, lookupItemDto?: LookupItemDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupItemsIdPut(id, lookupItemDto, options).then((request) => request(this.axios, this.basePath));
@@ -35807,7 +19389,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} key 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupItemsKeyGet(key: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupItemsKeyGet(key, options).then((request) => request(this.axios, this.basePath));
@@ -35818,7 +19399,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupItemDto} [lookupItemDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupItemsPost(lookupItemDto?: LookupItemDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupItemsPost(lookupItemDto, options).then((request) => request(this.axios, this.basePath));
@@ -35828,7 +19408,6 @@ export class LookupApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupModulesGet(options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupModulesGet(options).then((request) => request(this.axios, this.basePath));
@@ -35839,7 +19418,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupModulesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupModulesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -35851,7 +19429,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupModuleDto} [lookupModuleDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupModulesIdPut(id: string, lookupModuleDto?: LookupModuleDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupModulesIdPut(id, lookupModuleDto, options).then((request) => request(this.axios, this.basePath));
@@ -35862,7 +19439,6 @@ export class LookupApi extends BaseAPI {
      * @param {LookupModuleDto} [lookupModuleDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupModulesPost(lookupModuleDto?: LookupModuleDto, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupModulesPost(lookupModuleDto, options).then((request) => request(this.axios, this.basePath));
@@ -35873,7 +19449,6 @@ export class LookupApi extends BaseAPI {
      * @param {string} [moduleKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupApi
      */
     public apiLookupTreeGet(moduleKey?: string, options?: RawAxiosRequestConfig) {
         return LookupApiFp(this.configuration).apiLookupTreeGet(moduleKey, options).then((request) => request(this.axios, this.basePath));
@@ -35884,7 +19459,6 @@ export class LookupApi extends BaseAPI {
 
 /**
  * LookupModuleApi - axios parameter creator
- * @export
  */
 export const LookupModuleApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -36078,7 +19652,6 @@ export const LookupModuleApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * LookupModuleApi - functional programming interface
- * @export
  */
 export const LookupModuleApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LookupModuleApiAxiosParamCreator(configuration)
@@ -36148,7 +19721,6 @@ export const LookupModuleApiFp = function(configuration?: Configuration) {
 
 /**
  * LookupModuleApi - factory interface
- * @export
  */
 export const LookupModuleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = LookupModuleApiFp(configuration)
@@ -36203,16 +19775,12 @@ export const LookupModuleApiFactory = function (configuration?: Configuration, b
 
 /**
  * LookupModuleApi - object-oriented interface
- * @export
- * @class LookupModuleApi
- * @extends {BaseAPI}
  */
 export class LookupModuleApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupModuleApi
      */
     public apiLookupModuleGet(options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModuleGet(options).then((request) => request(this.axios, this.basePath));
@@ -36223,7 +19791,6 @@ export class LookupModuleApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupModuleApi
      */
     public apiLookupModuleIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModuleIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -36234,7 +19801,6 @@ export class LookupModuleApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupModuleApi
      */
     public apiLookupModuleIdGet(id: string, options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModuleIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -36246,7 +19812,6 @@ export class LookupModuleApi extends BaseAPI {
      * @param {LookupModuleDto} [lookupModuleDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupModuleApi
      */
     public apiLookupModuleIdPut(id: string, lookupModuleDto?: LookupModuleDto, options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModuleIdPut(id, lookupModuleDto, options).then((request) => request(this.axios, this.basePath));
@@ -36257,7 +19822,6 @@ export class LookupModuleApi extends BaseAPI {
      * @param {LookupModuleDto} [lookupModuleDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LookupModuleApi
      */
     public apiLookupModulePost(lookupModuleDto?: LookupModuleDto, options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModulePost(lookupModuleDto, options).then((request) => request(this.axios, this.basePath));
@@ -36268,7 +19832,6 @@ export class LookupModuleApi extends BaseAPI {
 
 /**
  * MeetingsApi - axios parameter creator
- * @export
  */
 export const MeetingsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -36462,7 +20025,6 @@ export const MeetingsApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * MeetingsApi - functional programming interface
- * @export
  */
 export const MeetingsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MeetingsApiAxiosParamCreator(configuration)
@@ -36532,7 +20094,6 @@ export const MeetingsApiFp = function(configuration?: Configuration) {
 
 /**
  * MeetingsApi - factory interface
- * @export
  */
 export const MeetingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MeetingsApiFp(configuration)
@@ -36587,9 +20148,6 @@ export const MeetingsApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * MeetingsApi - object-oriented interface
- * @export
- * @class MeetingsApi
- * @extends {BaseAPI}
  */
 export class MeetingsApi extends BaseAPI {
     /**
@@ -36597,7 +20155,6 @@ export class MeetingsApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeetingsApi
      */
     public apiCrmMeetingsCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return MeetingsApiFp(this.configuration).apiCrmMeetingsCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -36608,7 +20165,6 @@ export class MeetingsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeetingsApi
      */
     public apiCrmMeetingsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return MeetingsApiFp(this.configuration).apiCrmMeetingsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -36619,7 +20175,6 @@ export class MeetingsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeetingsApi
      */
     public apiCrmMeetingsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return MeetingsApiFp(this.configuration).apiCrmMeetingsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -36630,7 +20185,6 @@ export class MeetingsApi extends BaseAPI {
      * @param {MeetingDto} [meetingDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeetingsApi
      */
     public apiCrmMeetingsPost(meetingDto?: MeetingDto, options?: RawAxiosRequestConfig) {
         return MeetingsApiFp(this.configuration).apiCrmMeetingsPost(meetingDto, options).then((request) => request(this.axios, this.basePath));
@@ -36641,7 +20195,6 @@ export class MeetingsApi extends BaseAPI {
      * @param {MeetingDto} [meetingDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeetingsApi
      */
     public apiCrmMeetingsPut(meetingDto?: MeetingDto, options?: RawAxiosRequestConfig) {
         return MeetingsApiFp(this.configuration).apiCrmMeetingsPut(meetingDto, options).then((request) => request(this.axios, this.basePath));
@@ -36652,7 +20205,6 @@ export class MeetingsApi extends BaseAPI {
 
 /**
  * MenuApi - axios parameter creator
- * @export
  */
 export const MenuApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -37022,7 +20574,6 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * MenuApi - functional programming interface
- * @export
  */
 export const MenuApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MenuApiAxiosParamCreator(configuration)
@@ -37149,7 +20700,6 @@ export const MenuApiFp = function(configuration?: Configuration) {
 
 /**
  * MenuApi - factory interface
- * @export
  */
 export const MenuApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MenuApiFp(configuration)
@@ -37246,16 +20796,12 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * MenuApi - object-oriented interface
- * @export
- * @class MenuApi
- * @extends {BaseAPI}
  */
 export class MenuApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuAllListDataGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuAllListDataGet(options).then((request) => request(this.axios, this.basePath));
@@ -37266,7 +20812,6 @@ export class MenuApi extends BaseAPI {
      * @param {boolean} [tenantOnly] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuAllPlainGet(tenantOnly?: boolean, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuAllPlainGet(tenantOnly, options).then((request) => request(this.axios, this.basePath));
@@ -37278,7 +20823,6 @@ export class MenuApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuEffectivePreviewGet(tenantId?: string, userId?: string, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuEffectivePreviewGet(tenantId, userId, options).then((request) => request(this.axios, this.basePath));
@@ -37288,7 +20832,6 @@ export class MenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuGet(options).then((request) => request(this.axios, this.basePath));
@@ -37298,7 +20841,6 @@ export class MenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuGetAuthByUserGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuGetAuthByUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -37309,7 +20851,6 @@ export class MenuApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -37320,7 +20861,6 @@ export class MenuApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuIdGet(id: string, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -37331,7 +20871,6 @@ export class MenuApi extends BaseAPI {
      * @param {MenuInsertDto} [menuInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuPost(menuInsertDto?: MenuInsertDto, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuPost(menuInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -37342,7 +20881,6 @@ export class MenuApi extends BaseAPI {
      * @param {MenuUpdateDto} [menuUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuPut(menuUpdateDto?: MenuUpdateDto, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuPut(menuUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -37352,7 +20890,6 @@ export class MenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MenuApi
      */
     public apiMenuTenantOnlyGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuTenantOnlyGet(options).then((request) => request(this.axios, this.basePath));
@@ -37363,7 +20900,6 @@ export class MenuApi extends BaseAPI {
 
 /**
  * OpportunitiesApi - axios parameter creator
- * @export
  */
 export const OpportunitiesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -37557,7 +21093,6 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * OpportunitiesApi - functional programming interface
- * @export
  */
 export const OpportunitiesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OpportunitiesApiAxiosParamCreator(configuration)
@@ -37627,7 +21162,6 @@ export const OpportunitiesApiFp = function(configuration?: Configuration) {
 
 /**
  * OpportunitiesApi - factory interface
- * @export
  */
 export const OpportunitiesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = OpportunitiesApiFp(configuration)
@@ -37682,9 +21216,6 @@ export const OpportunitiesApiFactory = function (configuration?: Configuration, 
 
 /**
  * OpportunitiesApi - object-oriented interface
- * @export
- * @class OpportunitiesApi
- * @extends {BaseAPI}
  */
 export class OpportunitiesApi extends BaseAPI {
     /**
@@ -37692,7 +21223,6 @@ export class OpportunitiesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OpportunitiesApi
      */
     public apiCrmOpportunitiesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -37703,7 +21233,6 @@ export class OpportunitiesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OpportunitiesApi
      */
     public apiCrmOpportunitiesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -37714,7 +21243,6 @@ export class OpportunitiesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OpportunitiesApi
      */
     public apiCrmOpportunitiesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -37725,7 +21253,6 @@ export class OpportunitiesApi extends BaseAPI {
      * @param {OpportunityDto} [opportunityDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OpportunitiesApi
      */
     public apiCrmOpportunitiesPost(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPost(opportunityDto, options).then((request) => request(this.axios, this.basePath));
@@ -37736,7 +21263,6 @@ export class OpportunitiesApi extends BaseAPI {
      * @param {OpportunityDto} [opportunityDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OpportunitiesApi
      */
     public apiCrmOpportunitiesPut(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPut(opportunityDto, options).then((request) => request(this.axios, this.basePath));
@@ -37747,7 +21273,6 @@ export class OpportunitiesApi extends BaseAPI {
 
 /**
  * OrganizationApi - axios parameter creator
- * @export
  */
 export const OrganizationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -37827,7 +21352,6 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * OrganizationApi - functional programming interface
- * @export
  */
 export const OrganizationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OrganizationApiAxiosParamCreator(configuration)
@@ -37860,7 +21384,6 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
 
 /**
  * OrganizationApi - factory interface
- * @export
  */
 export const OrganizationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = OrganizationApiFp(configuration)
@@ -37887,16 +21410,12 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
 
 /**
  * OrganizationApi - object-oriented interface
- * @export
- * @class OrganizationApi
- * @extends {BaseAPI}
  */
 export class OrganizationApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OrganizationApi
      */
     public apiOrganizationGet(options?: RawAxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).apiOrganizationGet(options).then((request) => request(this.axios, this.basePath));
@@ -37907,7 +21426,6 @@ export class OrganizationApi extends BaseAPI {
      * @param {string} [dptId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof OrganizationApi
      */
     public apiOrganizationGetByDepartmentGet(dptId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).apiOrganizationGetByDepartmentGet(dptId, options).then((request) => request(this.axios, this.basePath));
@@ -37918,7 +21436,6 @@ export class OrganizationApi extends BaseAPI {
 
 /**
  * PdksApi - axios parameter creator
- * @export
  */
 export const PdksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -37970,7 +21487,6 @@ export const PdksApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * PdksApi - functional programming interface
- * @export
  */
 export const PdksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PdksApiAxiosParamCreator(configuration)
@@ -37993,7 +21509,6 @@ export const PdksApiFp = function(configuration?: Configuration) {
 
 /**
  * PdksApi - factory interface
- * @export
  */
 export const PdksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PdksApiFp(configuration)
@@ -38013,9 +21528,6 @@ export const PdksApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * PdksApi - object-oriented interface
- * @export
- * @class PdksApi
- * @extends {BaseAPI}
  */
 export class PdksApi extends BaseAPI {
     /**
@@ -38024,7 +21536,6 @@ export class PdksApi extends BaseAPI {
      * @param {string} [passKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PdksApi
      */
     public apiPdksGet(fileName?: string, passKey?: string, options?: RawAxiosRequestConfig) {
         return PdksApiFp(this.configuration).apiPdksGet(fileName, passKey, options).then((request) => request(this.axios, this.basePath));
@@ -38035,7 +21546,6 @@ export class PdksApi extends BaseAPI {
 
 /**
  * PickListApi - axios parameter creator
- * @export
  */
 export const PickListApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -38082,7 +21592,6 @@ export const PickListApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * PickListApi - functional programming interface
- * @export
  */
 export const PickListApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PickListApiAxiosParamCreator(configuration)
@@ -38104,7 +21613,6 @@ export const PickListApiFp = function(configuration?: Configuration) {
 
 /**
  * PickListApi - factory interface
- * @export
  */
 export const PickListApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PickListApiFp(configuration)
@@ -38123,9 +21631,6 @@ export const PickListApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * PickListApi - object-oriented interface
- * @export
- * @class PickListApi
- * @extends {BaseAPI}
  */
 export class PickListApi extends BaseAPI {
     /**
@@ -38133,7 +21638,6 @@ export class PickListApi extends BaseAPI {
      * @param {PickList} [pc] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PickListApi
      */
     public apiPickListGet(pc?: PickList, options?: RawAxiosRequestConfig) {
         return PickListApiFp(this.configuration).apiPickListGet(pc, options).then((request) => request(this.axios, this.basePath));
@@ -38144,7 +21648,6 @@ export class PickListApi extends BaseAPI {
 
 /**
  * PositionsApi - axios parameter creator
- * @export
  */
 export const PositionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -38373,7 +21876,6 @@ export const PositionsApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * PositionsApi - functional programming interface
- * @export
  */
 export const PositionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PositionsApiAxiosParamCreator(configuration)
@@ -38454,7 +21956,6 @@ export const PositionsApiFp = function(configuration?: Configuration) {
 
 /**
  * PositionsApi - factory interface
- * @export
  */
 export const PositionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PositionsApiFp(configuration)
@@ -38517,9 +22018,6 @@ export const PositionsApiFactory = function (configuration?: Configuration, base
 
 /**
  * PositionsApi - object-oriented interface
- * @export
- * @class PositionsApi
- * @extends {BaseAPI}
  */
 export class PositionsApi extends BaseAPI {
     /**
@@ -38527,7 +22025,6 @@ export class PositionsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsDelete(id?: string, options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -38537,7 +22034,6 @@ export class PositionsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsGet(options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsGet(options).then((request) => request(this.axios, this.basePath));
@@ -38548,7 +22044,6 @@ export class PositionsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsGetPositionsByCompanyGet(id?: string, options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsGetPositionsByCompanyGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -38559,7 +22054,6 @@ export class PositionsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -38570,7 +22064,6 @@ export class PositionsApi extends BaseAPI {
      * @param {CreatePositionDto} [createPositionDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsPost(createPositionDto?: CreatePositionDto, options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsPost(createPositionDto, options).then((request) => request(this.axios, this.basePath));
@@ -38581,7 +22074,6 @@ export class PositionsApi extends BaseAPI {
      * @param {UpdatePositionDto} [updatePositionDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PositionsApi
      */
     public apiPositionsPut(updatePositionDto?: UpdatePositionDto, options?: RawAxiosRequestConfig) {
         return PositionsApiFp(this.configuration).apiPositionsPut(updatePositionDto, options).then((request) => request(this.axios, this.basePath));
@@ -38592,7 +22084,6 @@ export class PositionsApi extends BaseAPI {
 
 /**
  * ProjectCategoriesApi - axios parameter creator
- * @export
  */
 export const ProjectCategoriesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -38671,7 +22162,6 @@ export const ProjectCategoriesApiAxiosParamCreator = function (configuration?: C
 
 /**
  * ProjectCategoriesApi - functional programming interface
- * @export
  */
 export const ProjectCategoriesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProjectCategoriesApiAxiosParamCreator(configuration)
@@ -38704,7 +22194,6 @@ export const ProjectCategoriesApiFp = function(configuration?: Configuration) {
 
 /**
  * ProjectCategoriesApi - factory interface
- * @export
  */
 export const ProjectCategoriesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProjectCategoriesApiFp(configuration)
@@ -38731,16 +22220,12 @@ export const ProjectCategoriesApiFactory = function (configuration?: Configurati
 
 /**
  * ProjectCategoriesApi - object-oriented interface
- * @export
- * @class ProjectCategoriesApi
- * @extends {BaseAPI}
  */
 export class ProjectCategoriesApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectCategoriesApi
      */
     public apiProjectCategoriesGet(options?: RawAxiosRequestConfig) {
         return ProjectCategoriesApiFp(this.configuration).apiProjectCategoriesGet(options).then((request) => request(this.axios, this.basePath));
@@ -38751,7 +22236,6 @@ export class ProjectCategoriesApi extends BaseAPI {
      * @param {ProjectCategoriesInsertDto} [projectCategoriesInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectCategoriesApi
      */
     public apiProjectCategoriesPost(projectCategoriesInsertDto?: ProjectCategoriesInsertDto, options?: RawAxiosRequestConfig) {
         return ProjectCategoriesApiFp(this.configuration).apiProjectCategoriesPost(projectCategoriesInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -38762,7 +22246,6 @@ export class ProjectCategoriesApi extends BaseAPI {
 
 /**
  * ProjectTasksApi - axios parameter creator
- * @export
  */
 export const ProjectTasksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -39152,7 +22635,6 @@ export const ProjectTasksApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * ProjectTasksApi - functional programming interface
- * @export
  */
 export const ProjectTasksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProjectTasksApiAxiosParamCreator(configuration)
@@ -39283,7 +22765,6 @@ export const ProjectTasksApiFp = function(configuration?: Configuration) {
 
 /**
  * ProjectTasksApi - factory interface
- * @export
  */
 export const ProjectTasksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProjectTasksApiFp(configuration)
@@ -39384,9 +22865,6 @@ export const ProjectTasksApiFactory = function (configuration?: Configuration, b
 
 /**
  * ProjectTasksApi - object-oriented interface
- * @export
- * @class ProjectTasksApi
- * @extends {BaseAPI}
  */
 export class ProjectTasksApi extends BaseAPI {
     /**
@@ -39394,7 +22872,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {Array<string>} [requestBody] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksDelete(requestBody?: Array<string>, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksDelete(requestBody, options).then((request) => request(this.axios, this.basePath));
@@ -39405,7 +22882,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {string} [projectId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksGet(projectId?: string, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksGet(projectId, options).then((request) => request(this.axios, this.basePath));
@@ -39416,7 +22892,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {string} [projectId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksGetProjectUsersGet(projectId?: string, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksGetProjectUsersGet(projectId, options).then((request) => request(this.axios, this.basePath));
@@ -39428,7 +22903,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {number} [page] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksGetProjectUsersWithPhotoGet(projectId?: string, page?: number, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksGetProjectUsersWithPhotoGet(projectId, page, options).then((request) => request(this.axios, this.basePath));
@@ -39440,7 +22914,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {string} [projectId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksGetTasksByUserGet(userId?: string, projectId?: string, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksGetTasksByUserGet(userId, projectId, options).then((request) => request(this.axios, this.basePath));
@@ -39451,7 +22924,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksGetUserTasksGet(userId?: string, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksGetUserTasksGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -39461,7 +22933,6 @@ export class ProjectTasksApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksHasPermGet(options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksHasPermGet(options).then((request) => request(this.axios, this.basePath));
@@ -39472,7 +22943,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -39483,7 +22953,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {ProjectTasksInsertDto} [projectTasksInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksPost(projectTasksInsertDto?: ProjectTasksInsertDto, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksPost(projectTasksInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -39494,7 +22963,6 @@ export class ProjectTasksApi extends BaseAPI {
      * @param {ProjectTasksUpdateDto} [projectTasksUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectTasksApi
      */
     public apiProjectTasksPut(projectTasksUpdateDto?: ProjectTasksUpdateDto, options?: RawAxiosRequestConfig) {
         return ProjectTasksApiFp(this.configuration).apiProjectTasksPut(projectTasksUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -39505,7 +22973,6 @@ export class ProjectTasksApi extends BaseAPI {
 
 /**
  * ProjectsApi - axios parameter creator
- * @export
  */
 export const ProjectsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -39838,7 +23305,6 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * ProjectsApi - functional programming interface
- * @export
  */
 export const ProjectsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProjectsApiAxiosParamCreator(configuration)
@@ -39953,7 +23419,6 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
 
 /**
  * ProjectsApi - factory interface
- * @export
  */
 export const ProjectsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProjectsApiFp(configuration)
@@ -40041,9 +23506,6 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * ProjectsApi - object-oriented interface
- * @export
- * @class ProjectsApi
- * @extends {BaseAPI}
  */
 export class ProjectsApi extends BaseAPI {
     /**
@@ -40051,7 +23513,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsDelete(id?: string, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -40061,7 +23522,6 @@ export class ProjectsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsGet(options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsGet(options).then((request) => request(this.axios, this.basePath));
@@ -40072,7 +23532,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsGetByProjectIdProjectListGet(id?: string, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsGetByProjectIdProjectListGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -40083,7 +23542,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsGetByUserIdProjectListGet(userId?: string, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsGetByUserIdProjectListGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -40093,7 +23551,6 @@ export class ProjectsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsGetCategoryGet(options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsGetCategoryGet(options).then((request) => request(this.axios, this.basePath));
@@ -40103,7 +23560,6 @@ export class ProjectsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsGetUserProjectGet(options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsGetUserProjectGet(options).then((request) => request(this.axios, this.basePath));
@@ -40114,7 +23570,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -40125,7 +23580,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {CreateProjectDto} [createProjectDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsPost(createProjectDto?: CreateProjectDto, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsPost(createProjectDto, options).then((request) => request(this.axios, this.basePath));
@@ -40136,7 +23590,6 @@ export class ProjectsApi extends BaseAPI {
      * @param {UpdateProjectDto} [updateProjectDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectsApi
      */
     public apiProjectsPut(updateProjectDto?: UpdateProjectDto, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).apiProjectsPut(updateProjectDto, options).then((request) => request(this.axios, this.basePath));
@@ -40147,7 +23600,6 @@ export class ProjectsApi extends BaseAPI {
 
 /**
  * QuotesApi - axios parameter creator
- * @export
  */
 export const QuotesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -40341,7 +23793,6 @@ export const QuotesApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * QuotesApi - functional programming interface
- * @export
  */
 export const QuotesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = QuotesApiAxiosParamCreator(configuration)
@@ -40411,7 +23862,6 @@ export const QuotesApiFp = function(configuration?: Configuration) {
 
 /**
  * QuotesApi - factory interface
- * @export
  */
 export const QuotesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = QuotesApiFp(configuration)
@@ -40466,9 +23916,6 @@ export const QuotesApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * QuotesApi - object-oriented interface
- * @export
- * @class QuotesApi
- * @extends {BaseAPI}
  */
 export class QuotesApi extends BaseAPI {
     /**
@@ -40476,7 +23923,6 @@ export class QuotesApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QuotesApi
      */
     public apiCrmQuotesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return QuotesApiFp(this.configuration).apiCrmQuotesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -40487,7 +23933,6 @@ export class QuotesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QuotesApi
      */
     public apiCrmQuotesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return QuotesApiFp(this.configuration).apiCrmQuotesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -40498,7 +23943,6 @@ export class QuotesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QuotesApi
      */
     public apiCrmQuotesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return QuotesApiFp(this.configuration).apiCrmQuotesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -40509,7 +23953,6 @@ export class QuotesApi extends BaseAPI {
      * @param {QuoteDto} [quoteDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QuotesApi
      */
     public apiCrmQuotesPost(quoteDto?: QuoteDto, options?: RawAxiosRequestConfig) {
         return QuotesApiFp(this.configuration).apiCrmQuotesPost(quoteDto, options).then((request) => request(this.axios, this.basePath));
@@ -40520,7 +23963,6 @@ export class QuotesApi extends BaseAPI {
      * @param {QuoteDto} [quoteDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QuotesApi
      */
     public apiCrmQuotesPut(quoteDto?: QuoteDto, options?: RawAxiosRequestConfig) {
         return QuotesApiFp(this.configuration).apiCrmQuotesPut(quoteDto, options).then((request) => request(this.axios, this.basePath));
@@ -40531,7 +23973,6 @@ export class QuotesApi extends BaseAPI {
 
 /**
  * RemindersApi - axios parameter creator
- * @export
  */
 export const RemindersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -40725,7 +24166,6 @@ export const RemindersApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * RemindersApi - functional programming interface
- * @export
  */
 export const RemindersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RemindersApiAxiosParamCreator(configuration)
@@ -40795,7 +24235,6 @@ export const RemindersApiFp = function(configuration?: Configuration) {
 
 /**
  * RemindersApi - factory interface
- * @export
  */
 export const RemindersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = RemindersApiFp(configuration)
@@ -40850,9 +24289,6 @@ export const RemindersApiFactory = function (configuration?: Configuration, base
 
 /**
  * RemindersApi - object-oriented interface
- * @export
- * @class RemindersApi
- * @extends {BaseAPI}
  */
 export class RemindersApi extends BaseAPI {
     /**
@@ -40860,7 +24296,6 @@ export class RemindersApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RemindersApi
      */
     public apiCrmRemindersCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return RemindersApiFp(this.configuration).apiCrmRemindersCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -40871,7 +24306,6 @@ export class RemindersApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RemindersApi
      */
     public apiCrmRemindersIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return RemindersApiFp(this.configuration).apiCrmRemindersIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -40882,7 +24316,6 @@ export class RemindersApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RemindersApi
      */
     public apiCrmRemindersIdGet(id: string, options?: RawAxiosRequestConfig) {
         return RemindersApiFp(this.configuration).apiCrmRemindersIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -40893,7 +24326,6 @@ export class RemindersApi extends BaseAPI {
      * @param {ReminderDto} [reminderDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RemindersApi
      */
     public apiCrmRemindersPost(reminderDto?: ReminderDto, options?: RawAxiosRequestConfig) {
         return RemindersApiFp(this.configuration).apiCrmRemindersPost(reminderDto, options).then((request) => request(this.axios, this.basePath));
@@ -40904,7 +24336,6 @@ export class RemindersApi extends BaseAPI {
      * @param {ReminderDto} [reminderDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RemindersApi
      */
     public apiCrmRemindersPut(reminderDto?: ReminderDto, options?: RawAxiosRequestConfig) {
         return RemindersApiFp(this.configuration).apiCrmRemindersPut(reminderDto, options).then((request) => request(this.axios, this.basePath));
@@ -40915,7 +24346,6 @@ export class RemindersApi extends BaseAPI {
 
 /**
  * RoleMenuApi - axios parameter creator
- * @export
  */
 export const RoleMenuApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -41242,7 +24672,6 @@ export const RoleMenuApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * RoleMenuApi - functional programming interface
- * @export
  */
 export const RoleMenuApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RoleMenuApiAxiosParamCreator(configuration)
@@ -41356,7 +24785,6 @@ export const RoleMenuApiFp = function(configuration?: Configuration) {
 
 /**
  * RoleMenuApi - factory interface
- * @export
  */
 export const RoleMenuApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = RoleMenuApiFp(configuration)
@@ -41443,16 +24871,12 @@ export const RoleMenuApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * RoleMenuApi - object-oriented interface
- * @export
- * @class RoleMenuApi
- * @extends {BaseAPI}
  */
 export class RoleMenuApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuAllOnlyHeadGet(options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuAllOnlyHeadGet(options).then((request) => request(this.axios, this.basePath));
@@ -41462,7 +24886,6 @@ export class RoleMenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuAllOnlyHeadWithoutGlobalGet(options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuAllOnlyHeadWithoutGlobalGet(options).then((request) => request(this.axios, this.basePath));
@@ -41472,7 +24895,6 @@ export class RoleMenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuGet(options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuGet(options).then((request) => request(this.axios, this.basePath));
@@ -41482,7 +24904,6 @@ export class RoleMenuApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuGetAuthByUserGet(options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuGetAuthByUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -41493,7 +24914,6 @@ export class RoleMenuApi extends BaseAPI {
      * @param {string} [href] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuGetAuthByUserWithHrefGet(href?: string, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuGetAuthByUserWithHrefGet(href, options).then((request) => request(this.axios, this.basePath));
@@ -41504,7 +24924,6 @@ export class RoleMenuApi extends BaseAPI {
      * @param {string} roleId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuGetByIdRoleIdGet(roleId: string, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuGetByIdRoleIdGet(roleId, options).then((request) => request(this.axios, this.basePath));
@@ -41515,7 +24934,6 @@ export class RoleMenuApi extends BaseAPI {
      * @param {RoleMenuInsertDto} [roleMenuInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuPost(roleMenuInsertDto?: RoleMenuInsertDto, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuPost(roleMenuInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -41526,7 +24944,6 @@ export class RoleMenuApi extends BaseAPI {
      * @param {RoleMenuUpdateDto} [roleMenuUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuPut(roleMenuUpdateDto?: RoleMenuUpdateDto, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuPut(roleMenuUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -41537,7 +24954,6 @@ export class RoleMenuApi extends BaseAPI {
      * @param {string} roleId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleMenuApi
      */
     public apiRoleMenuRoleIdDelete(roleId: string, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuRoleIdDelete(roleId, options).then((request) => request(this.axios, this.basePath));
@@ -41548,7 +24964,6 @@ export class RoleMenuApi extends BaseAPI {
 
 /**
  * RoleTenantMenuApi - axios parameter creator
- * @export
  */
 export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -41922,7 +25337,6 @@ export const RoleTenantMenuApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * RoleTenantMenuApi - functional programming interface
- * @export
  */
 export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RoleTenantMenuApiAxiosParamCreator(configuration)
@@ -42046,7 +25460,6 @@ export const RoleTenantMenuApiFp = function(configuration?: Configuration) {
 
 /**
  * RoleTenantMenuApi - factory interface
- * @export
  */
 export const RoleTenantMenuApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = RoleTenantMenuApiFp(configuration)
@@ -42143,9 +25556,6 @@ export const RoleTenantMenuApiFactory = function (configuration?: Configuration,
 
 /**
  * RoleTenantMenuApi - object-oriented interface
- * @export
- * @class RoleTenantMenuApi
- * @extends {BaseAPI}
  */
 export class RoleTenantMenuApi extends BaseAPI {
     /**
@@ -42153,7 +25563,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {RoleTenantMenuBulkSaveDto} [roleTenantMenuBulkSaveDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuBulkSavePost(roleTenantMenuBulkSaveDto?: RoleTenantMenuBulkSaveDto, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuBulkSavePost(roleTenantMenuBulkSaveDto, options).then((request) => request(this.axios, this.basePath));
@@ -42164,7 +25573,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {MakeTenantAdminRequest} [makeTenantAdminRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest?: MakeTenantAdminRequest, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuMakeTenantAdminPost(makeTenantAdminRequest, options).then((request) => request(this.axios, this.basePath));
@@ -42176,7 +25584,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuRoleIdTenantIdDelete(roleId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRoleIdTenantIdDelete(roleId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42188,7 +25595,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuRoleIdTenantIdGet(roleId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRoleIdTenantIdGet(roleId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42200,7 +25606,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuRolesByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42212,7 +25617,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuRolesByUserGet_1(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesByUserGet_1(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42224,7 +25628,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuRolesWithMenusByUserGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuRolesWithMenusByUserGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42236,7 +25639,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuUserRoleAssignmentsGet(userId?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42247,7 +25649,6 @@ export class RoleTenantMenuApi extends BaseAPI {
      * @param {UserRoleAssignmentSaveDto} [userRoleAssignmentSaveDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTenantMenuApi
      */
     public apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto?: UserRoleAssignmentSaveDto, options?: RawAxiosRequestConfig) {
         return RoleTenantMenuApiFp(this.configuration).apiRoleTenantMenuUserRoleAssignmentsPost(userRoleAssignmentSaveDto, options).then((request) => request(this.axios, this.basePath));
@@ -42258,7 +25659,6 @@ export class RoleTenantMenuApi extends BaseAPI {
 
 /**
  * RolesTenantsApi - axios parameter creator
- * @export
  */
 export const RolesTenantsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -42637,7 +26037,6 @@ export const RolesTenantsApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * RolesTenantsApi - functional programming interface
- * @export
  */
 export const RolesTenantsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RolesTenantsApiAxiosParamCreator(configuration)
@@ -42767,7 +26166,6 @@ export const RolesTenantsApiFp = function(configuration?: Configuration) {
 
 /**
  * RolesTenantsApi - factory interface
- * @export
  */
 export const RolesTenantsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = RolesTenantsApiFp(configuration)
@@ -42867,9 +26265,6 @@ export const RolesTenantsApiFactory = function (configuration?: Configuration, b
 
 /**
  * RolesTenantsApi - object-oriented interface
- * @export
- * @class RolesTenantsApi
- * @extends {BaseAPI}
  */
 export class RolesTenantsApi extends BaseAPI {
     /**
@@ -42877,7 +26272,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {RoleTenantBulkSaveDto} [roleTenantBulkSaveDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsBulkSavePost(roleTenantBulkSaveDto?: RoleTenantBulkSaveDto, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsBulkSavePost(roleTenantBulkSaveDto, options).then((request) => request(this.axios, this.basePath));
@@ -42888,7 +26282,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {RoleTenantWithMenusBulkSaveDto} [roleTenantWithMenusBulkSaveDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsBulkSaveWithMenusPost(roleTenantWithMenusBulkSaveDto?: RoleTenantWithMenusBulkSaveDto, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsBulkSaveWithMenusPost(roleTenantWithMenusBulkSaveDto, options).then((request) => request(this.axios, this.basePath));
@@ -42900,7 +26293,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsByRoleIdTenantIdGet(roleId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsByRoleIdTenantIdGet(roleId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42911,7 +26303,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {string} roleId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsByRoleRoleIdGet(roleId: string, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsByRoleRoleIdGet(roleId, options).then((request) => request(this.axios, this.basePath));
@@ -42922,7 +26313,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsByTenantTenantIdGet(tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42932,7 +26322,6 @@ export class RolesTenantsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsGet(options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsGet(options).then((request) => request(this.axios, this.basePath));
@@ -42943,7 +26332,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -42954,7 +26342,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {RoleTenantInsertDto} [roleTenantInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsPost(roleTenantInsertDto?: RoleTenantInsertDto, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsPost(roleTenantInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -42965,7 +26352,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {RoleTenantUpdateDto} [roleTenantUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsPut(roleTenantUpdateDto?: RoleTenantUpdateDto, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsPut(roleTenantUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -42976,7 +26362,6 @@ export class RolesTenantsApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RolesTenantsApi
      */
     public apiRolesTenantsWithMenusByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig) {
         return RolesTenantsApiFp(this.configuration).apiRolesTenantsWithMenusByTenantTenantIdGet(tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -42987,7 +26372,6 @@ export class RolesTenantsApi extends BaseAPI {
 
 /**
  * SAPReportsApi - axios parameter creator
- * @export
  */
 export const SAPReportsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -43502,7 +26886,6 @@ export const SAPReportsApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * SAPReportsApi - functional programming interface
- * @export
  */
 export const SAPReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SAPReportsApiAxiosParamCreator(configuration)
@@ -43670,7 +27053,6 @@ export const SAPReportsApiFp = function(configuration?: Configuration) {
 
 /**
  * SAPReportsApi - factory interface
- * @export
  */
 export const SAPReportsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SAPReportsApiFp(configuration)
@@ -43799,9 +27181,6 @@ export const SAPReportsApiFactory = function (configuration?: Configuration, bas
 
 /**
  * SAPReportsApi - object-oriented interface
- * @export
- * @class SAPReportsApi
- * @extends {BaseAPI}
  */
 export class SAPReportsApi extends BaseAPI {
     /**
@@ -43809,7 +27188,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [cusId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId, options).then((request) => request(this.axios, this.basePath));
@@ -43821,7 +27199,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [employeId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId?: string, employeId?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId, employeId, options).then((request) => request(this.axios, this.basePath));
@@ -43831,7 +27208,6 @@ export class SAPReportsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetCustomerListGet(options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetCustomerListGet(options).then((request) => request(this.axios, this.basePath));
@@ -43841,7 +27217,6 @@ export class SAPReportsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetDepartmentListGet(options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetDepartmentListGet(options).then((request) => request(this.axios, this.basePath));
@@ -43851,7 +27226,6 @@ export class SAPReportsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetEmployeeListGet(options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeeListGet(options).then((request) => request(this.axios, this.basePath));
@@ -43862,7 +27236,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -43873,7 +27246,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [email] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetEmployeePictureAsBase64Get(email?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeePictureAsBase64Get(email, options).then((request) => request(this.axios, this.basePath));
@@ -43884,7 +27256,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {number} [custId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetProjectListGet(custId?: number, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetProjectListGet(custId, options).then((request) => request(this.axios, this.basePath));
@@ -43895,7 +27266,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [email] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsGetSapInfoGet(email?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsGetSapInfoGet(email, options).then((request) => request(this.axios, this.basePath));
@@ -43907,7 +27277,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [custId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsProjectLast12MonthInvoicePost(projectId?: string, custId?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsProjectLast12MonthInvoicePost(projectId, custId, options).then((request) => request(this.axios, this.basePath));
@@ -43918,7 +27287,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} orgeh 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsTeamActivityOrgehPost(orgeh: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsTeamActivityOrgehPost(orgeh, options).then((request) => request(this.axios, this.basePath));
@@ -43929,7 +27297,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} orgeh 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh, options).then((request) => request(this.axios, this.basePath));
@@ -43943,7 +27310,6 @@ export class SAPReportsApi extends BaseAPI {
      * @param {string} [cusid] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SAPReportsApi
      */
     public apiSAPReportsTopManagementActivityReportPost(pernr?: string, begda?: string, endda?: string, cusid?: string, options?: RawAxiosRequestConfig) {
         return SAPReportsApiFp(this.configuration).apiSAPReportsTopManagementActivityReportPost(pernr, begda, endda, cusid, options).then((request) => request(this.axios, this.basePath));
@@ -43954,7 +27320,6 @@ export class SAPReportsApi extends BaseAPI {
 
 /**
  * SFCustCompanyGroupApi - axios parameter creator
- * @export
  */
 export const SFCustCompanyGroupApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44011,7 +27376,6 @@ export const SFCustCompanyGroupApiAxiosParamCreator = function (configuration?: 
 
 /**
  * SFCustCompanyGroupApi - functional programming interface
- * @export
  */
 export const SFCustCompanyGroupApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFCustCompanyGroupApiAxiosParamCreator(configuration)
@@ -44035,7 +27399,6 @@ export const SFCustCompanyGroupApiFp = function(configuration?: Configuration) {
 
 /**
  * SFCustCompanyGroupApi - factory interface
- * @export
  */
 export const SFCustCompanyGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFCustCompanyGroupApiFp(configuration)
@@ -44056,9 +27419,6 @@ export const SFCustCompanyGroupApiFactory = function (configuration?: Configurat
 
 /**
  * SFCustCompanyGroupApi - object-oriented interface
- * @export
- * @class SFCustCompanyGroupApi
- * @extends {BaseAPI}
  */
 export class SFCustCompanyGroupApi extends BaseAPI {
     /**
@@ -44068,7 +27428,6 @@ export class SFCustCompanyGroupApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFCustCompanyGroupApi
      */
     public apiSFCustCompanyGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFCustCompanyGroupApiFp(this.configuration).apiSFCustCompanyGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44079,7 +27438,6 @@ export class SFCustCompanyGroupApi extends BaseAPI {
 
 /**
  * SFCustLegalEntityApi - axios parameter creator
- * @export
  */
 export const SFCustLegalEntityApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44136,7 +27494,6 @@ export const SFCustLegalEntityApiAxiosParamCreator = function (configuration?: C
 
 /**
  * SFCustLegalEntityApi - functional programming interface
- * @export
  */
 export const SFCustLegalEntityApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFCustLegalEntityApiAxiosParamCreator(configuration)
@@ -44160,7 +27517,6 @@ export const SFCustLegalEntityApiFp = function(configuration?: Configuration) {
 
 /**
  * SFCustLegalEntityApi - factory interface
- * @export
  */
 export const SFCustLegalEntityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFCustLegalEntityApiFp(configuration)
@@ -44181,9 +27537,6 @@ export const SFCustLegalEntityApiFactory = function (configuration?: Configurati
 
 /**
  * SFCustLegalEntityApi - object-oriented interface
- * @export
- * @class SFCustLegalEntityApi
- * @extends {BaseAPI}
  */
 export class SFCustLegalEntityApi extends BaseAPI {
     /**
@@ -44193,7 +27546,6 @@ export class SFCustLegalEntityApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFCustLegalEntityApi
      */
     public apiSFCustLegalEntityGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFCustLegalEntityApiFp(this.configuration).apiSFCustLegalEntityGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44204,7 +27556,6 @@ export class SFCustLegalEntityApi extends BaseAPI {
 
 /**
  * SFFOBusinessUnitApi - axios parameter creator
- * @export
  */
 export const SFFOBusinessUnitApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44314,7 +27665,6 @@ export const SFFOBusinessUnitApiAxiosParamCreator = function (configuration?: Co
 
 /**
  * SFFOBusinessUnitApi - functional programming interface
- * @export
  */
 export const SFFOBusinessUnitApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOBusinessUnitApiAxiosParamCreator(configuration)
@@ -44353,7 +27703,6 @@ export const SFFOBusinessUnitApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOBusinessUnitApi - factory interface
- * @export
  */
 export const SFFOBusinessUnitApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOBusinessUnitApiFp(configuration)
@@ -44386,9 +27735,6 @@ export const SFFOBusinessUnitApiFactory = function (configuration?: Configuratio
 
 /**
  * SFFOBusinessUnitApi - object-oriented interface
- * @export
- * @class SFFOBusinessUnitApi
- * @extends {BaseAPI}
  */
 export class SFFOBusinessUnitApi extends BaseAPI {
     /**
@@ -44399,7 +27745,6 @@ export class SFFOBusinessUnitApi extends BaseAPI {
      * @param {string} [grupBaskanlik] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOBusinessUnitApi
      */
     public apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip?: number, top?: number, name?: string, grupBaskanlik?: string, options?: RawAxiosRequestConfig) {
         return SFFOBusinessUnitApiFp(this.configuration).apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip, top, name, grupBaskanlik, options).then((request) => request(this.axios, this.basePath));
@@ -44412,7 +27757,6 @@ export class SFFOBusinessUnitApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOBusinessUnitApi
      */
     public apiSFFOBusinessUnitGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOBusinessUnitApiFp(this.configuration).apiSFFOBusinessUnitGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44423,7 +27767,6 @@ export class SFFOBusinessUnitApi extends BaseAPI {
 
 /**
  * SFFOCompanyApi - axios parameter creator
- * @export
  */
 export const SFFOCompanyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44480,7 +27823,6 @@ export const SFFOCompanyApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * SFFOCompanyApi - functional programming interface
- * @export
  */
 export const SFFOCompanyApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOCompanyApiAxiosParamCreator(configuration)
@@ -44504,7 +27846,6 @@ export const SFFOCompanyApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOCompanyApi - factory interface
- * @export
  */
 export const SFFOCompanyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOCompanyApiFp(configuration)
@@ -44525,9 +27866,6 @@ export const SFFOCompanyApiFactory = function (configuration?: Configuration, ba
 
 /**
  * SFFOCompanyApi - object-oriented interface
- * @export
- * @class SFFOCompanyApi
- * @extends {BaseAPI}
  */
 export class SFFOCompanyApi extends BaseAPI {
     /**
@@ -44537,7 +27875,6 @@ export class SFFOCompanyApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOCompanyApi
      */
     public apiSFFOCompanyGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOCompanyApiFp(this.configuration).apiSFFOCompanyGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44548,7 +27885,6 @@ export class SFFOCompanyApi extends BaseAPI {
 
 /**
  * SFFOCostCenterApi - axios parameter creator
- * @export
  */
 export const SFFOCostCenterApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44605,7 +27941,6 @@ export const SFFOCostCenterApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * SFFOCostCenterApi - functional programming interface
- * @export
  */
 export const SFFOCostCenterApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOCostCenterApiAxiosParamCreator(configuration)
@@ -44629,7 +27964,6 @@ export const SFFOCostCenterApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOCostCenterApi - factory interface
- * @export
  */
 export const SFFOCostCenterApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOCostCenterApiFp(configuration)
@@ -44650,9 +27984,6 @@ export const SFFOCostCenterApiFactory = function (configuration?: Configuration,
 
 /**
  * SFFOCostCenterApi - object-oriented interface
- * @export
- * @class SFFOCostCenterApi
- * @extends {BaseAPI}
  */
 export class SFFOCostCenterApi extends BaseAPI {
     /**
@@ -44662,7 +27993,6 @@ export class SFFOCostCenterApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOCostCenterApi
      */
     public apiSFFOCostCenterGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOCostCenterApiFp(this.configuration).apiSFFOCostCenterGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44673,7 +28003,6 @@ export class SFFOCostCenterApi extends BaseAPI {
 
 /**
  * SFFODepartmentApi - axios parameter creator
- * @export
  */
 export const SFFODepartmentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44730,7 +28059,6 @@ export const SFFODepartmentApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * SFFODepartmentApi - functional programming interface
- * @export
  */
 export const SFFODepartmentApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFODepartmentApiAxiosParamCreator(configuration)
@@ -44754,7 +28082,6 @@ export const SFFODepartmentApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFODepartmentApi - factory interface
- * @export
  */
 export const SFFODepartmentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFODepartmentApiFp(configuration)
@@ -44775,9 +28102,6 @@ export const SFFODepartmentApiFactory = function (configuration?: Configuration,
 
 /**
  * SFFODepartmentApi - object-oriented interface
- * @export
- * @class SFFODepartmentApi
- * @extends {BaseAPI}
  */
 export class SFFODepartmentApi extends BaseAPI {
     /**
@@ -44787,7 +28111,6 @@ export class SFFODepartmentApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFODepartmentApi
      */
     public apiSFFODepartmentGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFODepartmentApiFp(this.configuration).apiSFFODepartmentGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -44798,7 +28121,6 @@ export class SFFODepartmentApi extends BaseAPI {
 
 /**
  * SFFODivisionApi - axios parameter creator
- * @export
  */
 export const SFFODivisionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -44908,7 +28230,6 @@ export const SFFODivisionApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * SFFODivisionApi - functional programming interface
- * @export
  */
 export const SFFODivisionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFODivisionApiAxiosParamCreator(configuration)
@@ -44947,7 +28268,6 @@ export const SFFODivisionApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFODivisionApi - factory interface
- * @export
  */
 export const SFFODivisionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFODivisionApiFp(configuration)
@@ -44980,9 +28300,6 @@ export const SFFODivisionApiFactory = function (configuration?: Configuration, b
 
 /**
  * SFFODivisionApi - object-oriented interface
- * @export
- * @class SFFODivisionApi
- * @extends {BaseAPI}
  */
 export class SFFODivisionApi extends BaseAPI {
     /**
@@ -44993,7 +28310,6 @@ export class SFFODivisionApi extends BaseAPI {
      * @param {string} [businessUnit] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFODivisionApi
      */
     public apiSFFODivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, businessUnit?: string, options?: RawAxiosRequestConfig) {
         return SFFODivisionApiFp(this.configuration).apiSFFODivisionAllByBusinessUnitGet(skip, top, name, businessUnit, options).then((request) => request(this.axios, this.basePath));
@@ -45006,7 +28322,6 @@ export class SFFODivisionApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFODivisionApi
      */
     public apiSFFODivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFODivisionApiFp(this.configuration).apiSFFODivisionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45017,7 +28332,6 @@ export class SFFODivisionApi extends BaseAPI {
 
 /**
  * SFFOFOPayGroupApi - axios parameter creator
- * @export
  */
 export const SFFOFOPayGroupApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45074,7 +28388,6 @@ export const SFFOFOPayGroupApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * SFFOFOPayGroupApi - functional programming interface
- * @export
  */
 export const SFFOFOPayGroupApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOFOPayGroupApiAxiosParamCreator(configuration)
@@ -45098,7 +28411,6 @@ export const SFFOFOPayGroupApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOFOPayGroupApi - factory interface
- * @export
  */
 export const SFFOFOPayGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOFOPayGroupApiFp(configuration)
@@ -45119,9 +28431,6 @@ export const SFFOFOPayGroupApiFactory = function (configuration?: Configuration,
 
 /**
  * SFFOFOPayGroupApi - object-oriented interface
- * @export
- * @class SFFOFOPayGroupApi
- * @extends {BaseAPI}
  */
 export class SFFOFOPayGroupApi extends BaseAPI {
     /**
@@ -45131,7 +28440,6 @@ export class SFFOFOPayGroupApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOFOPayGroupApi
      */
     public apiSFFOFOPayGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOFOPayGroupApiFp(this.configuration).apiSFFOFOPayGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45142,7 +28450,6 @@ export class SFFOFOPayGroupApi extends BaseAPI {
 
 /**
  * SFFOGeozoneApi - axios parameter creator
- * @export
  */
 export const SFFOGeozoneApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45199,7 +28506,6 @@ export const SFFOGeozoneApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * SFFOGeozoneApi - functional programming interface
- * @export
  */
 export const SFFOGeozoneApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOGeozoneApiAxiosParamCreator(configuration)
@@ -45223,7 +28529,6 @@ export const SFFOGeozoneApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOGeozoneApi - factory interface
- * @export
  */
 export const SFFOGeozoneApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOGeozoneApiFp(configuration)
@@ -45244,9 +28549,6 @@ export const SFFOGeozoneApiFactory = function (configuration?: Configuration, ba
 
 /**
  * SFFOGeozoneApi - object-oriented interface
- * @export
- * @class SFFOGeozoneApi
- * @extends {BaseAPI}
  */
 export class SFFOGeozoneApi extends BaseAPI {
     /**
@@ -45256,7 +28558,6 @@ export class SFFOGeozoneApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOGeozoneApi
      */
     public apiSFFOGeozoneGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOGeozoneApiFp(this.configuration).apiSFFOGeozoneGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45267,7 +28568,6 @@ export class SFFOGeozoneApi extends BaseAPI {
 
 /**
  * SFFOJobCodeApi - axios parameter creator
- * @export
  */
 export const SFFOJobCodeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45436,7 +28736,6 @@ export const SFFOJobCodeApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * SFFOJobCodeApi - functional programming interface
- * @export
  */
 export const SFFOJobCodeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOJobCodeApiAxiosParamCreator(configuration)
@@ -45496,7 +28795,6 @@ export const SFFOJobCodeApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOJobCodeApi - factory interface
- * @export
  */
 export const SFFOJobCodeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOJobCodeApiFp(configuration)
@@ -45544,9 +28842,6 @@ export const SFFOJobCodeApiFactory = function (configuration?: Configuration, ba
 
 /**
  * SFFOJobCodeApi - object-oriented interface
- * @export
- * @class SFFOJobCodeApi
- * @extends {BaseAPI}
  */
 export class SFFOJobCodeApi extends BaseAPI {
     /**
@@ -45554,7 +28849,6 @@ export class SFFOJobCodeApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOJobCodeApi
      */
     public apiSFFOJobCodeCheckRecruitmentCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeCheckRecruitmentCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -45565,7 +28859,6 @@ export class SFFOJobCodeApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOJobCodeApi
      */
     public apiSFFOJobCodeCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -45578,7 +28871,6 @@ export class SFFOJobCodeApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOJobCodeApi
      */
     public apiSFFOJobCodeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45589,7 +28881,6 @@ export class SFFOJobCodeApi extends BaseAPI {
      * @param {string} [workFlowId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOJobCodeApi
      */
     public apiSFFOJobCodePost(workFlowId?: string, options?: RawAxiosRequestConfig) {
         return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodePost(workFlowId, options).then((request) => request(this.axios, this.basePath));
@@ -45600,7 +28891,6 @@ export class SFFOJobCodeApi extends BaseAPI {
 
 /**
  * SFFOJobFunctionApi - axios parameter creator
- * @export
  */
 export const SFFOJobFunctionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45657,7 +28947,6 @@ export const SFFOJobFunctionApiAxiosParamCreator = function (configuration?: Con
 
 /**
  * SFFOJobFunctionApi - functional programming interface
- * @export
  */
 export const SFFOJobFunctionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOJobFunctionApiAxiosParamCreator(configuration)
@@ -45681,7 +28970,6 @@ export const SFFOJobFunctionApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOJobFunctionApi - factory interface
- * @export
  */
 export const SFFOJobFunctionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOJobFunctionApiFp(configuration)
@@ -45702,9 +28990,6 @@ export const SFFOJobFunctionApiFactory = function (configuration?: Configuration
 
 /**
  * SFFOJobFunctionApi - object-oriented interface
- * @export
- * @class SFFOJobFunctionApi
- * @extends {BaseAPI}
  */
 export class SFFOJobFunctionApi extends BaseAPI {
     /**
@@ -45714,7 +28999,6 @@ export class SFFOJobFunctionApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOJobFunctionApi
      */
     public apiSFFOJobFunctionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOJobFunctionApiFp(this.configuration).apiSFFOJobFunctionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45725,7 +29009,6 @@ export class SFFOJobFunctionApi extends BaseAPI {
 
 /**
  * SFFOLocationApi - axios parameter creator
- * @export
  */
 export const SFFOLocationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45787,7 +29070,6 @@ export const SFFOLocationApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * SFFOLocationApi - functional programming interface
- * @export
  */
 export const SFFOLocationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOLocationApiAxiosParamCreator(configuration)
@@ -45812,7 +29094,6 @@ export const SFFOLocationApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOLocationApi - factory interface
- * @export
  */
 export const SFFOLocationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOLocationApiFp(configuration)
@@ -45834,9 +29115,6 @@ export const SFFOLocationApiFactory = function (configuration?: Configuration, b
 
 /**
  * SFFOLocationApi - object-oriented interface
- * @export
- * @class SFFOLocationApi
- * @extends {BaseAPI}
  */
 export class SFFOLocationApi extends BaseAPI {
     /**
@@ -45847,7 +29125,6 @@ export class SFFOLocationApi extends BaseAPI {
      * @param {string} [parentId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOLocationApi
      */
     public apiSFFOLocationGet(skip?: number, top?: number, name?: string, parentId?: string, options?: RawAxiosRequestConfig) {
         return SFFOLocationApiFp(this.configuration).apiSFFOLocationGet(skip, top, name, parentId, options).then((request) => request(this.axios, this.basePath));
@@ -45858,7 +29135,6 @@ export class SFFOLocationApi extends BaseAPI {
 
 /**
  * SFFOLocationGroupApi - axios parameter creator
- * @export
  */
 export const SFFOLocationGroupApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -45915,7 +29191,6 @@ export const SFFOLocationGroupApiAxiosParamCreator = function (configuration?: C
 
 /**
  * SFFOLocationGroupApi - functional programming interface
- * @export
  */
 export const SFFOLocationGroupApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOLocationGroupApiAxiosParamCreator(configuration)
@@ -45939,7 +29214,6 @@ export const SFFOLocationGroupApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOLocationGroupApi - factory interface
- * @export
  */
 export const SFFOLocationGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOLocationGroupApiFp(configuration)
@@ -45960,9 +29234,6 @@ export const SFFOLocationGroupApiFactory = function (configuration?: Configurati
 
 /**
  * SFFOLocationGroupApi - object-oriented interface
- * @export
- * @class SFFOLocationGroupApi
- * @extends {BaseAPI}
  */
 export class SFFOLocationGroupApi extends BaseAPI {
     /**
@@ -45972,7 +29243,6 @@ export class SFFOLocationGroupApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOLocationGroupApi
      */
     public apiSFFOLocationGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOLocationGroupApiFp(this.configuration).apiSFFOLocationGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -45983,7 +29253,6 @@ export class SFFOLocationGroupApi extends BaseAPI {
 
 /**
  * SFFOPayGradeApi - axios parameter creator
- * @export
  */
 export const SFFOPayGradeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -46040,7 +29309,6 @@ export const SFFOPayGradeApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * SFFOPayGradeApi - functional programming interface
- * @export
  */
 export const SFFOPayGradeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFFOPayGradeApiAxiosParamCreator(configuration)
@@ -46064,7 +29332,6 @@ export const SFFOPayGradeApiFp = function(configuration?: Configuration) {
 
 /**
  * SFFOPayGradeApi - factory interface
- * @export
  */
 export const SFFOPayGradeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFFOPayGradeApiFp(configuration)
@@ -46085,9 +29352,6 @@ export const SFFOPayGradeApiFactory = function (configuration?: Configuration, b
 
 /**
  * SFFOPayGradeApi - object-oriented interface
- * @export
- * @class SFFOPayGradeApi
- * @extends {BaseAPI}
  */
 export class SFFOPayGradeApi extends BaseAPI {
     /**
@@ -46097,7 +29361,6 @@ export class SFFOPayGradeApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFFOPayGradeApi
      */
     public apiSFFOPayGradeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFFOPayGradeApiFp(this.configuration).apiSFFOPayGradeGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -46108,7 +29371,6 @@ export class SFFOPayGradeApi extends BaseAPI {
 
 /**
  * SFPositionsApi - axios parameter creator
- * @export
  */
 export const SFPositionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -46614,7 +29876,6 @@ export const SFPositionsApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * SFPositionsApi - functional programming interface
- * @export
  */
 export const SFPositionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFPositionsApiAxiosParamCreator(configuration)
@@ -46783,7 +30044,6 @@ export const SFPositionsApiFp = function(configuration?: Configuration) {
 
 /**
  * SFPositionsApi - factory interface
- * @export
  */
 export const SFPositionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFPositionsApiFp(configuration)
@@ -46913,9 +30173,6 @@ export const SFPositionsApiFactory = function (configuration?: Configuration, ba
 
 /**
  * SFPositionsApi - object-oriented interface
- * @export
- * @class SFPositionsApi
- * @extends {BaseAPI}
  */
 export class SFPositionsApi extends BaseAPI {
     /**
@@ -46923,7 +30180,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsByPositionCodeUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsByPositionCodeUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -46935,7 +30191,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {PositionSFDto} [positionSFDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsByUserIdAllUserIdPost(userId: string, positionSFDto?: PositionSFDto, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsByUserIdAllUserIdPost(userId, positionSFDto, options).then((request) => request(this.axios, this.basePath));
@@ -46946,7 +30201,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsByUserIdUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -46957,7 +30211,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -46968,7 +30221,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsDetailByPositionCodeCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsDetailByPositionCodeCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -46979,7 +30231,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsDetailByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsDetailByUserIdUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -46990,7 +30241,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsDetailCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsDetailCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -47001,7 +30251,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} code 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsEmpCodeGet(code: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsEmpCodeGet(code, options).then((request) => request(this.axios, this.basePath));
@@ -47014,7 +30263,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} [firstName] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsGet(skip, top, firstName, options).then((request) => request(this.axios, this.basePath));
@@ -47025,7 +30273,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} positioncode 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode, options).then((request) => request(this.axios, this.basePath));
@@ -47036,7 +30283,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -47047,7 +30293,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsGetMngFromEmpJobUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngFromEmpJobUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -47058,7 +30303,6 @@ export class SFPositionsApi extends BaseAPI {
      * @param {string} [workFlowId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFPositionsApi
      */
     public apiSFPositionsPost(workFlowId?: string, options?: RawAxiosRequestConfig) {
         return SFPositionsApiFp(this.configuration).apiSFPositionsPost(workFlowId, options).then((request) => request(this.axios, this.basePath));
@@ -47069,7 +30313,6 @@ export class SFPositionsApi extends BaseAPI {
 
 /**
  * SFUserApi - axios parameter creator
- * @export
  */
 export const SFUserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -47163,7 +30406,6 @@ export const SFUserApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * SFUserApi - functional programming interface
- * @export
  */
 export const SFUserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFUserApiAxiosParamCreator(configuration)
@@ -47199,7 +30441,6 @@ export const SFUserApiFp = function(configuration?: Configuration) {
 
 /**
  * SFUserApi - factory interface
- * @export
  */
 export const SFUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFUserApiFp(configuration)
@@ -47229,9 +30470,6 @@ export const SFUserApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * SFUserApi - object-oriented interface
- * @export
- * @class SFUserApi
- * @extends {BaseAPI}
  */
 export class SFUserApi extends BaseAPI {
     /**
@@ -47241,7 +30479,6 @@ export class SFUserApi extends BaseAPI {
      * @param {string} [firstName] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFUserApi
      */
     public apiSFUserGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig) {
         return SFUserApiFp(this.configuration).apiSFUserGet(skip, top, firstName, options).then((request) => request(this.axios, this.basePath));
@@ -47252,7 +30489,6 @@ export class SFUserApi extends BaseAPI {
      * @param {string} userid 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFUserApi
      */
     public apiSFUserUserUseridGet(userid: string, options?: RawAxiosRequestConfig) {
         return SFUserApiFp(this.configuration).apiSFUserUserUseridGet(userid, options).then((request) => request(this.axios, this.basePath));
@@ -47263,7 +30499,6 @@ export class SFUserApi extends BaseAPI {
 
 /**
  * SFcustSubDivisionApi - axios parameter creator
- * @export
  */
 export const SFcustSubDivisionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -47373,7 +30608,6 @@ export const SFcustSubDivisionApiAxiosParamCreator = function (configuration?: C
 
 /**
  * SFcustSubDivisionApi - functional programming interface
- * @export
  */
 export const SFcustSubDivisionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SFcustSubDivisionApiAxiosParamCreator(configuration)
@@ -47412,7 +30646,6 @@ export const SFcustSubDivisionApiFp = function(configuration?: Configuration) {
 
 /**
  * SFcustSubDivisionApi - factory interface
- * @export
  */
 export const SFcustSubDivisionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SFcustSubDivisionApiFp(configuration)
@@ -47445,9 +30678,6 @@ export const SFcustSubDivisionApiFactory = function (configuration?: Configurati
 
 /**
  * SFcustSubDivisionApi - object-oriented interface
- * @export
- * @class SFcustSubDivisionApi
- * @extends {BaseAPI}
  */
 export class SFcustSubDivisionApi extends BaseAPI {
     /**
@@ -47458,7 +30688,6 @@ export class SFcustSubDivisionApi extends BaseAPI {
      * @param {string} [division] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFcustSubDivisionApi
      */
     public apiSFcustSubDivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, division?: string, options?: RawAxiosRequestConfig) {
         return SFcustSubDivisionApiFp(this.configuration).apiSFcustSubDivisionAllByBusinessUnitGet(skip, top, name, division, options).then((request) => request(this.axios, this.basePath));
@@ -47471,7 +30700,6 @@ export class SFcustSubDivisionApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SFcustSubDivisionApi
      */
     public apiSFcustSubDivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
         return SFcustSubDivisionApiFp(this.configuration).apiSFcustSubDivisionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
@@ -47482,7 +30710,6 @@ export class SFcustSubDivisionApi extends BaseAPI {
 
 /**
  * SpecialDaysApi - axios parameter creator
- * @export
  */
 export const SpecialDaysApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -47676,7 +30903,6 @@ export const SpecialDaysApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * SpecialDaysApi - functional programming interface
- * @export
  */
 export const SpecialDaysApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SpecialDaysApiAxiosParamCreator(configuration)
@@ -47746,7 +30972,6 @@ export const SpecialDaysApiFp = function(configuration?: Configuration) {
 
 /**
  * SpecialDaysApi - factory interface
- * @export
  */
 export const SpecialDaysApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SpecialDaysApiFp(configuration)
@@ -47801,9 +31026,6 @@ export const SpecialDaysApiFactory = function (configuration?: Configuration, ba
 
 /**
  * SpecialDaysApi - object-oriented interface
- * @export
- * @class SpecialDaysApi
- * @extends {BaseAPI}
  */
 export class SpecialDaysApi extends BaseAPI {
     /**
@@ -47811,7 +31033,6 @@ export class SpecialDaysApi extends BaseAPI {
      * @param {string} customerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SpecialDaysApi
      */
     public apiCrmSpecialDaysCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return SpecialDaysApiFp(this.configuration).apiCrmSpecialDaysCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
@@ -47822,7 +31043,6 @@ export class SpecialDaysApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SpecialDaysApi
      */
     public apiCrmSpecialDaysIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return SpecialDaysApiFp(this.configuration).apiCrmSpecialDaysIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -47833,7 +31053,6 @@ export class SpecialDaysApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SpecialDaysApi
      */
     public apiCrmSpecialDaysIdGet(id: string, options?: RawAxiosRequestConfig) {
         return SpecialDaysApiFp(this.configuration).apiCrmSpecialDaysIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -47844,7 +31063,6 @@ export class SpecialDaysApi extends BaseAPI {
      * @param {SpecialDayDto} [specialDayDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SpecialDaysApi
      */
     public apiCrmSpecialDaysPost(specialDayDto?: SpecialDayDto, options?: RawAxiosRequestConfig) {
         return SpecialDaysApiFp(this.configuration).apiCrmSpecialDaysPost(specialDayDto, options).then((request) => request(this.axios, this.basePath));
@@ -47855,7 +31073,6 @@ export class SpecialDaysApi extends BaseAPI {
      * @param {SpecialDayDto} [specialDayDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SpecialDaysApi
      */
     public apiCrmSpecialDaysPut(specialDayDto?: SpecialDayDto, options?: RawAxiosRequestConfig) {
         return SpecialDaysApiFp(this.configuration).apiCrmSpecialDaysPut(specialDayDto, options).then((request) => request(this.axios, this.basePath));
@@ -47866,7 +31083,6 @@ export class SpecialDaysApi extends BaseAPI {
 
 /**
  * TicketApi - axios parameter creator
- * @export
  */
 export const TicketApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -49124,7 +32340,6 @@ export const TicketApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * TicketApi - functional programming interface
- * @export
  */
 export const TicketApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TicketApiAxiosParamCreator(configuration)
@@ -49495,7 +32710,6 @@ export const TicketApiFp = function(configuration?: Configuration) {
 
 /**
  * TicketApi - factory interface
- * @export
  */
 export const TicketApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TicketApiFp(configuration)
@@ -49791,9 +33005,6 @@ export const TicketApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * TicketApi - object-oriented interface
- * @export
- * @class TicketApi
- * @extends {BaseAPI}
  */
 export class TicketApi extends BaseAPI {
     /**
@@ -49802,7 +33013,6 @@ export class TicketApi extends BaseAPI {
      * @param {TicketCommentInsertDto} [ticketCommentInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketAddCommentPost(id?: string, ticketCommentInsertDto?: TicketCommentInsertDto, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketAddCommentPost(id, ticketCommentInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -49813,7 +33023,6 @@ export class TicketApi extends BaseAPI {
      * @param {TicketManagerUpdateDto} [ticketManagerUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketAssignPost(ticketManagerUpdateDto?: TicketManagerUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketAssignPost(ticketManagerUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -49823,7 +33032,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketCheckOthercompanypermGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketCheckOthercompanypermGet(options).then((request) => request(this.axios, this.basePath));
@@ -49833,7 +33041,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketCheckPermGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketCheckPermGet(options).then((request) => request(this.axios, this.basePath));
@@ -49880,7 +33087,6 @@ export class TicketApi extends BaseAPI {
      * @param {number} [createEnvironment] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketCheckRuleEnginePatch(insertDtoTicketCode?: string, insertDtoTitle?: string, insertDtoDescription?: string, insertDtoWorkCompanyId?: string, insertDtoWorkCompanySystemInfoId?: string, insertDtoUserAppId?: string, insertDtoType?: TicketType, insertDtoTicketSLA?: TicketSLA, insertDtoTicketSubject?: TicketSubject, insertDtoPriority?: TicketPriority, insertDtoTicketComment?: Array<TicketCommentInsertDto>, insertDtoIsSend?: boolean, insertDtoCustomerRefId?: string, insertDtoIsFromEmail?: boolean, insertDtoMailConversationId?: string, insertDtoAddedMailAddresses?: string, insertDtoIsFilePath?: boolean, insertDtoFilePath?: string, updateDtoId?: string, updateDtoTicketCode?: string, updateDtoTitle?: string, updateDtoDescription?: string, updateDtoWorkCompanyId?: string, updateDtoWorkCompanySystemInfoId?: string, updateDtoUserAppId?: string, updateDtoType?: TicketType, updateDtoTicketSLA?: TicketSLA, updateDtoTicketSubject?: TicketSubject, updateDtoStatus?: TicketStatus, updateDtoPriority?: TicketPriority, updateDtoTicketDepartmentId?: string, updateDtoIsSend?: boolean, updateDtoCustomerRefId?: string, updateDtoAddedMailAddresses?: string, updateDtoEstimatedDeadline?: string, updateDtoTicketProjectId?: string, createEnvironment?: number, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketCheckRuleEnginePatch(insertDtoTicketCode, insertDtoTitle, insertDtoDescription, insertDtoWorkCompanyId, insertDtoWorkCompanySystemInfoId, insertDtoUserAppId, insertDtoType, insertDtoTicketSLA, insertDtoTicketSubject, insertDtoPriority, insertDtoTicketComment, insertDtoIsSend, insertDtoCustomerRefId, insertDtoIsFromEmail, insertDtoMailConversationId, insertDtoAddedMailAddresses, insertDtoIsFilePath, insertDtoFilePath, updateDtoId, updateDtoTicketCode, updateDtoTitle, updateDtoDescription, updateDtoWorkCompanyId, updateDtoWorkCompanySystemInfoId, updateDtoUserAppId, updateDtoType, updateDtoTicketSLA, updateDtoTicketSubject, updateDtoStatus, updateDtoPriority, updateDtoTicketDepartmentId, updateDtoIsSend, updateDtoCustomerRefId, updateDtoAddedMailAddresses, updateDtoEstimatedDeadline, updateDtoTicketProjectId, createEnvironment, options).then((request) => request(this.axios, this.basePath));
@@ -49890,7 +33096,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketDeleteAllSentEmailsGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketDeleteAllSentEmailsGet(options).then((request) => request(this.axios, this.basePath));
@@ -49914,7 +33119,6 @@ export class TicketApi extends BaseAPI {
      * @param {Array<string>} [ticketProjectId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketExcelExportGet(pageDesc?: string, statues?: Array<string>, workCompanyId?: string, assignedUser?: string, assignedTeam?: string, type?: string, endDate?: string, startDate?: string, creator?: string, customer?: string, closeInc?: boolean, title?: string, departmentId?: Array<string>, ticketProjectId?: Array<string>, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketExcelExportGet(pageDesc, statues, workCompanyId, assignedUser, assignedTeam, type, endDate, startDate, creator, customer, closeInc, title, departmentId, ticketProjectId, options).then((request) => request(this.axios, this.basePath));
@@ -49940,7 +33144,6 @@ export class TicketApi extends BaseAPI {
      * @param {Array<string>} [ticketProjectId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketFilteredAllTicketsGet(skip?: number, top?: number, pageDesc?: string, statues?: Array<string>, workCompanyId?: string, assignedUser?: string, assignedTeam?: string, type?: string, endDate?: string, startDate?: string, creator?: string, customer?: string, closeInc?: boolean, title?: string, departmentId?: Array<string>, ticketProjectId?: Array<string>, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketFilteredAllTicketsGet(skip, top, pageDesc, statues, workCompanyId, assignedUser, assignedTeam, type, endDate, startDate, creator, customer, closeInc, title, departmentId, ticketProjectId, options).then((request) => request(this.axios, this.basePath));
@@ -49950,7 +33153,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketGet(options).then((request) => request(this.axios, this.basePath));
@@ -49960,7 +33162,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketGetAssignTicketsGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketGetAssignTicketsGet(options).then((request) => request(this.axios, this.basePath));
@@ -49971,7 +33172,6 @@ export class TicketApi extends BaseAPI {
      * @param {string} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketGetAssingListGet(ticketId?: string, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketGetAssingListGet(ticketId, options).then((request) => request(this.axios, this.basePath));
@@ -49982,7 +33182,6 @@ export class TicketApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketGetFileGet(id?: string, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketGetFileGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -49993,7 +33192,6 @@ export class TicketApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketGetTicketPdfIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketGetTicketPdfIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -50004,7 +33202,6 @@ export class TicketApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -50015,7 +33212,6 @@ export class TicketApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -50028,7 +33224,6 @@ export class TicketApi extends BaseAPI {
      * @param {TicketInsertDto} [ticketInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketPost(createEnvironment?: number, ccRecipients?: Array<string>, ticketInsertDto?: TicketInsertDto, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketPost(createEnvironment, ccRecipients, ticketInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -50039,7 +33234,6 @@ export class TicketApi extends BaseAPI {
      * @param {TicketUpdateDto} [ticketUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketPut(ticketUpdateDto?: TicketUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketPut(ticketUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -50049,7 +33243,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketReadMailsGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketReadMailsGet(options).then((request) => request(this.axios, this.basePath));
@@ -50063,7 +33256,6 @@ export class TicketApi extends BaseAPI {
      * @param {number} [top] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketSearchTicketGet(pageDesc?: string, talepNo?: string, skip?: number, top?: number, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketSearchTicketGet(pageDesc, talepNo, skip, top, options).then((request) => request(this.axios, this.basePath));
@@ -50073,7 +33265,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketTicketPrioritiesGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketTicketPrioritiesGet(options).then((request) => request(this.axios, this.basePath));
@@ -50083,7 +33274,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketTicketSLAGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketTicketSLAGet(options).then((request) => request(this.axios, this.basePath));
@@ -50093,7 +33283,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketTicketStatusGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketTicketStatusGet(options).then((request) => request(this.axios, this.basePath));
@@ -50103,7 +33292,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketTicketSubjectGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketTicketSubjectGet(options).then((request) => request(this.axios, this.basePath));
@@ -50113,7 +33301,6 @@ export class TicketApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketTicketTypeGet(options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketTicketTypeGet(options).then((request) => request(this.axios, this.basePath));
@@ -50126,7 +33313,6 @@ export class TicketApi extends BaseAPI {
      * @param {TicketUpdateDto} [ticketUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketApi
      */
     public apiTicketUpdateStartTicketPost(createEnvironment?: number, isEdit?: boolean, ticketUpdateDto?: TicketUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketApiFp(this.configuration).apiTicketUpdateStartTicketPost(createEnvironment, isEdit, ticketUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -50137,7 +33323,6 @@ export class TicketApi extends BaseAPI {
 
 /**
  * TicketDepartmentsApi - axios parameter creator
- * @export
  */
 export const TicketDepartmentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -50534,7 +33719,6 @@ export const TicketDepartmentsApiAxiosParamCreator = function (configuration?: C
 
 /**
  * TicketDepartmentsApi - functional programming interface
- * @export
  */
 export const TicketDepartmentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TicketDepartmentsApiAxiosParamCreator(configuration)
@@ -50671,7 +33855,6 @@ export const TicketDepartmentsApiFp = function(configuration?: Configuration) {
 
 /**
  * TicketDepartmentsApi - factory interface
- * @export
  */
 export const TicketDepartmentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TicketDepartmentsApiFp(configuration)
@@ -50775,9 +33958,6 @@ export const TicketDepartmentsApiFactory = function (configuration?: Configurati
 
 /**
  * TicketDepartmentsApi - object-oriented interface
- * @export
- * @class TicketDepartmentsApi
- * @extends {BaseAPI}
  */
 export class TicketDepartmentsApi extends BaseAPI {
     /**
@@ -50785,7 +33965,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {string} [companyId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsAllFilteredCompanyGet(companyId?: string, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsAllFilteredCompanyGet(companyId, options).then((request) => request(this.axios, this.basePath));
@@ -50795,7 +33974,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsAllOnlyNameGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsAllOnlyNameGet(options).then((request) => request(this.axios, this.basePath));
@@ -50805,7 +33983,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGet(options).then((request) => request(this.axios, this.basePath));
@@ -50815,7 +33992,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsGetAllVisibleDepartmentsGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetAllVisibleDepartmentsGet(options).then((request) => request(this.axios, this.basePath));
@@ -50825,7 +34001,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsGetAllWithUsersGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetAllWithUsersGet(options).then((request) => request(this.axios, this.basePath));
@@ -50835,7 +34010,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options).then((request) => request(this.axios, this.basePath));
@@ -50846,7 +34020,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsGetUsersByDepartmentIdIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetUsersByDepartmentIdIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -50857,7 +34030,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -50868,7 +34040,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -50879,7 +34050,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {TicketDepartmensInsertDto} [ticketDepartmensInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsPost(ticketDepartmensInsertDto?: TicketDepartmensInsertDto, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsPost(ticketDepartmensInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -50890,7 +34060,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      * @param {TicketDepartmensUpdateDto} [ticketDepartmensUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketDepartmentsApi
      */
     public apiTicketDepartmentsPut(ticketDepartmensUpdateDto?: TicketDepartmensUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsPut(ticketDepartmensUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -50901,7 +34070,6 @@ export class TicketDepartmentsApi extends BaseAPI {
 
 /**
  * TicketProjectsApi - axios parameter creator
- * @export
  */
 export const TicketProjectsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -51258,7 +34426,6 @@ export const TicketProjectsApiAxiosParamCreator = function (configuration?: Conf
 
 /**
  * TicketProjectsApi - functional programming interface
- * @export
  */
 export const TicketProjectsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TicketProjectsApiAxiosParamCreator(configuration)
@@ -51377,7 +34544,6 @@ export const TicketProjectsApiFp = function(configuration?: Configuration) {
 
 /**
  * TicketProjectsApi - factory interface
- * @export
  */
 export const TicketProjectsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TicketProjectsApiFp(configuration)
@@ -51469,9 +34635,6 @@ export const TicketProjectsApiFactory = function (configuration?: Configuration,
 
 /**
  * TicketProjectsApi - object-oriented interface
- * @export
- * @class TicketProjectsApi
- * @extends {BaseAPI}
  */
 export class TicketProjectsApi extends BaseAPI {
     /**
@@ -51479,7 +34642,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsDelete(id?: string, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -51490,7 +34652,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {string} [workCompanyId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsGet(workCompanyId?: string, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsGet(workCompanyId, options).then((request) => request(this.axios, this.basePath));
@@ -51501,7 +34662,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {string} [workCompanyId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsGetActiveProjectsGet(workCompanyId?: string, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsGetActiveProjectsGet(workCompanyId, options).then((request) => request(this.axios, this.basePath));
@@ -51511,7 +34671,6 @@ export class TicketProjectsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsGetActiveProjectsOnlyNameGet(options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsGetActiveProjectsOnlyNameGet(options).then((request) => request(this.axios, this.basePath));
@@ -51524,7 +34683,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {boolean} [isNewProject] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsGetChangedProjectsGet(startDate?: string, endDate?: string, isNewProject?: boolean, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsGetChangedProjectsGet(startDate, endDate, isNewProject, options).then((request) => request(this.axios, this.basePath));
@@ -51535,7 +34693,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsGetProjectsByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsGetProjectsByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -51546,7 +34703,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -51557,7 +34713,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {TicketProjectsInsertDto} [ticketProjectsInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsPost(ticketProjectsInsertDto?: TicketProjectsInsertDto, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsPost(ticketProjectsInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -51568,7 +34723,6 @@ export class TicketProjectsApi extends BaseAPI {
      * @param {TicketProjectsUpdateDto} [ticketProjectsUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketProjectsApi
      */
     public apiTicketProjectsPut(ticketProjectsUpdateDto?: TicketProjectsUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketProjectsApiFp(this.configuration).apiTicketProjectsPut(ticketProjectsUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -51579,7 +34733,6 @@ export class TicketProjectsApi extends BaseAPI {
 
 /**
  * TicketRuleEngineApi - axios parameter creator
- * @export
  */
 export const TicketRuleEngineApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -51769,7 +34922,6 @@ export const TicketRuleEngineApiAxiosParamCreator = function (configuration?: Co
 
 /**
  * TicketRuleEngineApi - functional programming interface
- * @export
  */
 export const TicketRuleEngineApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TicketRuleEngineApiAxiosParamCreator(configuration)
@@ -51838,7 +34990,6 @@ export const TicketRuleEngineApiFp = function(configuration?: Configuration) {
 
 /**
  * TicketRuleEngineApi - factory interface
- * @export
  */
 export const TicketRuleEngineApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TicketRuleEngineApiFp(configuration)
@@ -51892,16 +35043,12 @@ export const TicketRuleEngineApiFactory = function (configuration?: Configuratio
 
 /**
  * TicketRuleEngineApi - object-oriented interface
- * @export
- * @class TicketRuleEngineApi
- * @extends {BaseAPI}
  */
 export class TicketRuleEngineApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketRuleEngineApi
      */
     public apiTicketRuleEngineAllGet(options?: RawAxiosRequestConfig) {
         return TicketRuleEngineApiFp(this.configuration).apiTicketRuleEngineAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -51912,7 +35059,6 @@ export class TicketRuleEngineApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketRuleEngineApi
      */
     public apiTicketRuleEngineIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return TicketRuleEngineApiFp(this.configuration).apiTicketRuleEngineIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -51923,7 +35069,6 @@ export class TicketRuleEngineApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketRuleEngineApi
      */
     public apiTicketRuleEngineIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketRuleEngineApiFp(this.configuration).apiTicketRuleEngineIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -51934,7 +35079,6 @@ export class TicketRuleEngineApi extends BaseAPI {
      * @param {TicketRuleEngineInsertDto} [ticketRuleEngineInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketRuleEngineApi
      */
     public apiTicketRuleEnginePost(ticketRuleEngineInsertDto?: TicketRuleEngineInsertDto, options?: RawAxiosRequestConfig) {
         return TicketRuleEngineApiFp(this.configuration).apiTicketRuleEnginePost(ticketRuleEngineInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -51945,7 +35089,6 @@ export class TicketRuleEngineApi extends BaseAPI {
      * @param {TicketRuleEngineUpdateDto} [ticketRuleEngineUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketRuleEngineApi
      */
     public apiTicketRuleEnginePut(ticketRuleEngineUpdateDto?: TicketRuleEngineUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketRuleEngineApiFp(this.configuration).apiTicketRuleEnginePut(ticketRuleEngineUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -51956,7 +35099,6 @@ export class TicketRuleEngineApi extends BaseAPI {
 
 /**
  * TicketTeamApi - axios parameter creator
- * @export
  */
 export const TicketTeamApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -52179,7 +35321,6 @@ export const TicketTeamApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * TicketTeamApi - functional programming interface
- * @export
  */
 export const TicketTeamApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TicketTeamApiAxiosParamCreator(configuration)
@@ -52259,7 +35400,6 @@ export const TicketTeamApiFp = function(configuration?: Configuration) {
 
 /**
  * TicketTeamApi - factory interface
- * @export
  */
 export const TicketTeamApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TicketTeamApiFp(configuration)
@@ -52321,16 +35461,12 @@ export const TicketTeamApiFactory = function (configuration?: Configuration, bas
 
 /**
  * TicketTeamApi - object-oriented interface
- * @export
- * @class TicketTeamApi
- * @extends {BaseAPI}
  */
 export class TicketTeamApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamAllGet(options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -52341,7 +35477,6 @@ export class TicketTeamApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -52352,7 +35487,6 @@ export class TicketTeamApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamIdGet(id: string, options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -52363,7 +35497,6 @@ export class TicketTeamApi extends BaseAPI {
      * @param {TicketTeamInsertDto} [ticketTeamInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamPost(ticketTeamInsertDto?: TicketTeamInsertDto, options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamPost(ticketTeamInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -52374,7 +35507,6 @@ export class TicketTeamApi extends BaseAPI {
      * @param {TicketTeamUpdateDto} [ticketTeamUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamPut(ticketTeamUpdateDto?: TicketTeamUpdateDto, options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamPut(ticketTeamUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -52384,7 +35516,6 @@ export class TicketTeamApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TicketTeamApi
      */
     public apiTicketTeamWithoutTeamGet(options?: RawAxiosRequestConfig) {
         return TicketTeamApiFp(this.configuration).apiTicketTeamWithoutTeamGet(options).then((request) => request(this.axios, this.basePath));
@@ -52395,7 +35526,6 @@ export class TicketTeamApi extends BaseAPI {
 
 /**
  * UserApi - axios parameter creator
- * @export
  */
 export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -53264,7 +36394,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * UserApi - functional programming interface
- * @export
  */
 export const UserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserApiAxiosParamCreator(configuration)
@@ -53552,7 +36681,6 @@ export const UserApiFp = function(configuration?: Configuration) {
 
 /**
  * UserApi - factory interface
- * @export
  */
 export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserApiFp(configuration)
@@ -53768,16 +36896,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * UserApi - object-oriented interface
- * @export
- * @class UserApi
- * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserCheckApplyDefaultFiltersGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserCheckApplyDefaultFiltersGet(options).then((request) => request(this.axios, this.basePath));
@@ -53788,7 +36912,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [email] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserCheckEmailGet(email?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserCheckEmailGet(email, options).then((request) => request(this.axios, this.basePath));
@@ -53798,7 +36921,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserCheckIsAdminGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserCheckIsAdminGet(options).then((request) => request(this.axios, this.basePath));
@@ -53809,7 +36931,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [mail] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserCheckSSOEmailControlGet(mail?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserCheckSSOEmailControlGet(mail, options).then((request) => request(this.axios, this.basePath));
@@ -53820,7 +36941,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [userName] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGet(userName?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGet(userName, options).then((request) => request(this.axios, this.basePath));
@@ -53831,7 +36951,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetAllUsersAsyncWitNameGet(name?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetAllUsersAsyncWitNameGet(name, options).then((request) => request(this.axios, this.basePath));
@@ -53841,7 +36960,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetAllUsersNameIdOnlyGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetAllUsersNameIdOnlyGet(options).then((request) => request(this.axios, this.basePath));
@@ -53852,7 +36970,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [name] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetAllUsersWitNameAssignGet(name?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetAllUsersWitNameAssignGet(name, options).then((request) => request(this.axios, this.basePath));
@@ -53862,7 +36979,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetAllWithOuthPhotoForManagementGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetAllWithOuthPhotoForManagementGet(options).then((request) => request(this.axios, this.basePath));
@@ -53872,7 +36988,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetAllWithOuthPhotoGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetAllWithOuthPhotoGet(options).then((request) => request(this.axios, this.basePath));
@@ -53882,7 +36997,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetJwtBearerOptionsAsStringGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetJwtBearerOptionsAsStringGet(options).then((request) => request(this.axios, this.basePath));
@@ -53892,7 +37006,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetLoginUserDetailGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetLoginUserDetailGet(options).then((request) => request(this.axios, this.basePath));
@@ -53902,7 +37015,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetLoginUserGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetLoginUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -53912,7 +37024,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserGetUserGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserGetUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -53923,7 +37034,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserIsGlobalAdminGet(userId?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserIsGlobalAdminGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -53935,7 +37045,6 @@ export class UserApi extends BaseAPI {
      * @param {CreateUserDto} [createUserDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserPost(isSendMail?: boolean, createUserDto?: CreateUserDto, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserPost(isSendMail, createUserDto, options).then((request) => request(this.axios, this.basePath));
@@ -53946,7 +37055,6 @@ export class UserApi extends BaseAPI {
      * @param {UpdateUserDto} [updateUserDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserPut(updateUserDto?: UpdateUserDto, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserPut(updateUserDto, options).then((request) => request(this.axios, this.basePath));
@@ -53957,7 +37065,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [userName] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserRemoveUserGet(userName?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserRemoveUserGet(userName, options).then((request) => request(this.axios, this.basePath));
@@ -53970,7 +37077,6 @@ export class UserApi extends BaseAPI {
      * @param {boolean} [isSendMail] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserResetPassWordGet(userName?: string, passWord?: string, isSendMail?: boolean, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserResetPassWordGet(userName, passWord, isSendMail, options).then((request) => request(this.axios, this.basePath));
@@ -53980,7 +37086,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserUserCompanyGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserUserCompanyGet(options).then((request) => request(this.axios, this.basePath));
@@ -53990,7 +37095,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserUserDepartmentGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserUserDepartmentGet(options).then((request) => request(this.axios, this.basePath));
@@ -54000,7 +37104,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserUserLevelsGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserUserLevelsGet(options).then((request) => request(this.axios, this.basePath));
@@ -54010,7 +37113,6 @@ export class UserApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserValidatetokenAndUserGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserValidatetokenAndUserGet(options).then((request) => request(this.axios, this.basePath));
@@ -54021,7 +37123,6 @@ export class UserApi extends BaseAPI {
      * @param {string} [departmentId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public apiUserVesaUsersWithoutPhotoGet(departmentId?: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserVesaUsersWithoutPhotoGet(departmentId, options).then((request) => request(this.axios, this.basePath));
@@ -54032,7 +37133,6 @@ export class UserApi extends BaseAPI {
 
 /**
  * UserCalendarApi - axios parameter creator
- * @export
  */
 export const UserCalendarApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -54624,7 +37724,6 @@ export const UserCalendarApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * UserCalendarApi - functional programming interface
- * @export
  */
 export const UserCalendarApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserCalendarApiAxiosParamCreator(configuration)
@@ -54813,7 +37912,6 @@ export const UserCalendarApiFp = function(configuration?: Configuration) {
 
 /**
  * UserCalendarApi - factory interface
- * @export
  */
 export const UserCalendarApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserCalendarApiFp(configuration)
@@ -54960,16 +38058,12 @@ export const UserCalendarApiFactory = function (configuration?: Configuration, b
 
 /**
  * UserCalendarApi - object-oriented interface
- * @export
- * @class UserCalendarApi
- * @extends {BaseAPI}
  */
 export class UserCalendarApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarCheckOtherDeptpermGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarCheckOtherDeptpermGet(options).then((request) => request(this.axios, this.basePath));
@@ -54979,7 +38073,6 @@ export class UserCalendarApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarCheckUserIsManagerGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarCheckUserIsManagerGet(options).then((request) => request(this.axios, this.basePath));
@@ -54990,7 +38083,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarDelete(id?: string, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -55001,7 +38093,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarDepartmentIdGet(id: string, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarDepartmentIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -55011,7 +38102,6 @@ export class UserCalendarApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGet(options).then((request) => request(this.axios, this.basePath));
@@ -55024,7 +38114,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {Array<string>} [users] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGetByUsersGet(year?: number, month?: number, users?: Array<string>, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGetByUsersGet(year, month, users, options).then((request) => request(this.axios, this.basePath));
@@ -55037,7 +38126,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {Array<string>} [userMails] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGetEmployeeLeavesByMonthlyGet(year?: number, month?: number, userMails?: Array<string>, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGetEmployeeLeavesByMonthlyGet(year, month, userMails, options).then((request) => request(this.axios, this.basePath));
@@ -55050,7 +38138,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {Array<string>} [userMails] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGetEmployeeLeavesByWeeklyGet(year?: number, week?: number, userMails?: Array<string>, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGetEmployeeLeavesByWeeklyGet(year, week, userMails, options).then((request) => request(this.axios, this.basePath));
@@ -55068,7 +38155,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {boolean} [isGetAll] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGetTasksByWeeklyGet(yil?: number, hafta?: number, users?: Array<string>, ticketDepartmentId?: string, userLevel?: number, daysOfWeek?: Array<string>, percentage?: Array<number>, isGetAll?: boolean, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGetTasksByWeeklyGet(yil, hafta, users, ticketDepartmentId, userLevel, daysOfWeek, percentage, isGetAll, options).then((request) => request(this.axios, this.basePath));
@@ -55081,7 +38167,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {Array<string>} [userId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarGetUsersByDepartmentAndLevelGet(ticketDepartmentId?: string, level?: number, userId?: Array<string>, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarGetUsersByDepartmentAndLevelGet(ticketDepartmentId, level, userId, options).then((request) => request(this.axios, this.basePath));
@@ -55092,7 +38177,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarIdGet(id: string, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -55103,7 +38187,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {UserCalendarInsertDto} [userCalendarInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarPost(userCalendarInsertDto?: UserCalendarInsertDto, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarPost(userCalendarInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -55114,7 +38197,6 @@ export class UserCalendarApi extends BaseAPI {
      * @param {UserCalendarUpdateDto} [userCalendarUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarPut(userCalendarUpdateDto?: UserCalendarUpdateDto, options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarPut(userCalendarUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -55124,7 +38206,6 @@ export class UserCalendarApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserCalendarApi
      */
     public apiUserCalendarWorkLocationsGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarWorkLocationsGet(options).then((request) => request(this.axios, this.basePath));
@@ -55135,7 +38216,6 @@ export class UserCalendarApi extends BaseAPI {
 
 /**
  * UserTenantRolesApi - axios parameter creator
- * @export
  */
 export const UserTenantRolesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -55185,7 +38265,6 @@ export const UserTenantRolesApiAxiosParamCreator = function (configuration?: Con
 
 /**
  * UserTenantRolesApi - functional programming interface
- * @export
  */
 export const UserTenantRolesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserTenantRolesApiAxiosParamCreator(configuration)
@@ -55208,7 +38287,6 @@ export const UserTenantRolesApiFp = function(configuration?: Configuration) {
 
 /**
  * UserTenantRolesApi - factory interface
- * @export
  */
 export const UserTenantRolesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserTenantRolesApiFp(configuration)
@@ -55228,9 +38306,6 @@ export const UserTenantRolesApiFactory = function (configuration?: Configuration
 
 /**
  * UserTenantRolesApi - object-oriented interface
- * @export
- * @class UserTenantRolesApi
- * @extends {BaseAPI}
  */
 export class UserTenantRolesApi extends BaseAPI {
     /**
@@ -55239,7 +38314,6 @@ export class UserTenantRolesApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantRolesApi
      */
     public apiUserTenantRolesByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return UserTenantRolesApiFp(this.configuration).apiUserTenantRolesByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -55250,7 +38324,6 @@ export class UserTenantRolesApi extends BaseAPI {
 
 /**
  * UserTenantsApi - axios parameter creator
- * @export
  */
 export const UserTenantsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -55588,7 +38661,6 @@ export const UserTenantsApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * UserTenantsApi - functional programming interface
- * @export
  */
 export const UserTenantsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserTenantsApiAxiosParamCreator(configuration)
@@ -55636,7 +38708,7 @@ export const UserTenantsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserTenantWithAdminFlagDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantsByUserUserIdGet(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserTenantsApi.apiUserTenantsByUserUserIdGet']?.[localVarOperationServerIndex]?.url;
@@ -55705,7 +38777,6 @@ export const UserTenantsApiFp = function(configuration?: Configuration) {
 
 /**
  * UserTenantsApi - factory interface
- * @export
  */
 export const UserTenantsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserTenantsApiFp(configuration)
@@ -55744,7 +38815,7 @@ export const UserTenantsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserTenantWithAdminFlagDto>> {
             return localVarFp.apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -55795,9 +38866,6 @@ export const UserTenantsApiFactory = function (configuration?: Configuration, ba
 
 /**
  * UserTenantsApi - object-oriented interface
- * @export
- * @class UserTenantsApi
- * @extends {BaseAPI}
  */
 export class UserTenantsApi extends BaseAPI {
     /**
@@ -55805,7 +38873,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {UserTenantBulkAssignUsersDto} [userTenantBulkAssignUsersDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto?: UserTenantBulkAssignUsersDto, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsBulkAssignUsersPost(userTenantBulkAssignUsersDto, options).then((request) => request(this.axios, this.basePath));
@@ -55816,7 +38883,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsByTenantTenantIdGet(tenantId: string, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsByTenantTenantIdGet(tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -55828,7 +38894,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsByUserIdTenantIdGet(userId: string, tenantId: string, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsByUserIdTenantIdGet(userId, tenantId, options).then((request) => request(this.axios, this.basePath));
@@ -55839,7 +38904,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsByUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
@@ -55849,7 +38913,6 @@ export class UserTenantsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsFullGet(options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsFullGet(options).then((request) => request(this.axios, this.basePath));
@@ -55859,7 +38922,6 @@ export class UserTenantsApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsGet(options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsGet(options).then((request) => request(this.axios, this.basePath));
@@ -55870,7 +38932,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -55881,7 +38942,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {UserTenantInsertDto} [userTenantInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsPost(userTenantInsertDto?: UserTenantInsertDto, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsPost(userTenantInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -55892,7 +38952,6 @@ export class UserTenantsApi extends BaseAPI {
      * @param {UserTenantUpdateDto} [userTenantUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserTenantsApi
      */
     public apiUserTenantsPut(userTenantUpdateDto?: UserTenantUpdateDto, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsPut(userTenantUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -55903,7 +38962,6 @@ export class UserTenantsApi extends BaseAPI {
 
 /**
  * VesaSupportApi - axios parameter creator
- * @export
  */
 export const VesaSupportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -56011,7 +39069,6 @@ export const VesaSupportApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * VesaSupportApi - functional programming interface
- * @export
  */
 export const VesaSupportApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = VesaSupportApiAxiosParamCreator(configuration)
@@ -56054,7 +39111,6 @@ export const VesaSupportApiFp = function(configuration?: Configuration) {
 
 /**
  * VesaSupportApi - factory interface
- * @export
  */
 export const VesaSupportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = VesaSupportApiFp(configuration)
@@ -56088,16 +39144,12 @@ export const VesaSupportApiFactory = function (configuration?: Configuration, ba
 
 /**
  * VesaSupportApi - object-oriented interface
- * @export
- * @class VesaSupportApi
- * @extends {BaseAPI}
  */
 export class VesaSupportApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VesaSupportApi
      */
     public apiVesaSupportGet(options?: RawAxiosRequestConfig) {
         return VesaSupportApiFp(this.configuration).apiVesaSupportGet(options).then((request) => request(this.axios, this.basePath));
@@ -56107,7 +39159,6 @@ export class VesaSupportApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VesaSupportApi
      */
     public apiVesaSupportGetAllGet(options?: RawAxiosRequestConfig) {
         return VesaSupportApiFp(this.configuration).apiVesaSupportGetAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -56117,7 +39168,6 @@ export class VesaSupportApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VesaSupportApi
      */
     public apiVesaSupportGetSelectListGet(options?: RawAxiosRequestConfig) {
         return VesaSupportApiFp(this.configuration).apiVesaSupportGetSelectListGet(options).then((request) => request(this.axios, this.basePath));
@@ -56128,7 +39178,6 @@ export class VesaSupportApi extends BaseAPI {
 
 /**
  * WorkCompanyApi - axios parameter creator
- * @export
  */
 export const WorkCompanyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -56417,7 +39466,6 @@ export const WorkCompanyApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * WorkCompanyApi - functional programming interface
- * @export
  */
 export const WorkCompanyApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkCompanyApiAxiosParamCreator(configuration)
@@ -56519,7 +39567,6 @@ export const WorkCompanyApiFp = function(configuration?: Configuration) {
 
 /**
  * WorkCompanyApi - factory interface
- * @export
  */
 export const WorkCompanyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkCompanyApiFp(configuration)
@@ -56597,16 +39644,12 @@ export const WorkCompanyApiFactory = function (configuration?: Configuration, ba
 
 /**
  * WorkCompanyApi - object-oriented interface
- * @export
- * @class WorkCompanyApi
- * @extends {BaseAPI}
  */
 export class WorkCompanyApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyGet(options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyGet(options).then((request) => request(this.axios, this.basePath));
@@ -56616,7 +39659,6 @@ export class WorkCompanyApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyGetAllGet(options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyGetAllGet(options).then((request) => request(this.axios, this.basePath));
@@ -56626,7 +39668,6 @@ export class WorkCompanyApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyGetApproveWorkDesignGet(options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyGetApproveWorkDesignGet(options).then((request) => request(this.axios, this.basePath));
@@ -56636,7 +39677,6 @@ export class WorkCompanyApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyGetAssingListGet(options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyGetAssingListGet(options).then((request) => request(this.axios, this.basePath));
@@ -56647,7 +39687,6 @@ export class WorkCompanyApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -56658,7 +39697,6 @@ export class WorkCompanyApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyIdGet(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -56669,7 +39707,6 @@ export class WorkCompanyApi extends BaseAPI {
      * @param {WorkCompanyInsertDto} [workCompanyInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyPost(workCompanyInsertDto?: WorkCompanyInsertDto, options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyPost(workCompanyInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -56680,7 +39717,6 @@ export class WorkCompanyApi extends BaseAPI {
      * @param {WorkCompanyUpdateDto} [workCompanyUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyApi
      */
     public apiWorkCompanyPut(workCompanyUpdateDto?: WorkCompanyUpdateDto, options?: RawAxiosRequestConfig) {
         return WorkCompanyApiFp(this.configuration).apiWorkCompanyPut(workCompanyUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -56691,7 +39727,6 @@ export class WorkCompanyApi extends BaseAPI {
 
 /**
  * WorkCompanySystemInfoApi - axios parameter creator
- * @export
  */
 export const WorkCompanySystemInfoApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -56918,7 +39953,6 @@ export const WorkCompanySystemInfoApiAxiosParamCreator = function (configuration
 
 /**
  * WorkCompanySystemInfoApi - functional programming interface
- * @export
  */
 export const WorkCompanySystemInfoApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkCompanySystemInfoApiAxiosParamCreator(configuration)
@@ -56999,7 +40033,6 @@ export const WorkCompanySystemInfoApiFp = function(configuration?: Configuration
 
 /**
  * WorkCompanySystemInfoApi - factory interface
- * @export
  */
 export const WorkCompanySystemInfoApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkCompanySystemInfoApiFp(configuration)
@@ -57062,9 +40095,6 @@ export const WorkCompanySystemInfoApiFactory = function (configuration?: Configu
 
 /**
  * WorkCompanySystemInfoApi - object-oriented interface
- * @export
- * @class WorkCompanySystemInfoApi
- * @extends {BaseAPI}
  */
 export class WorkCompanySystemInfoApi extends BaseAPI {
     /**
@@ -57072,7 +40102,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoByCompanyIdIdGet(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoByCompanyIdIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -57083,7 +40112,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoBySystemIdIdGet(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoBySystemIdIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -57093,7 +40121,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoGet(options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoGet(options).then((request) => request(this.axios, this.basePath));
@@ -57104,7 +40131,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -57115,7 +40141,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * @param {WorkCompanySystemInfoInsertDto} [workCompanySystemInfoInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoPost(workCompanySystemInfoInsertDto?: WorkCompanySystemInfoInsertDto, options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoPost(workCompanySystemInfoInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -57126,7 +40151,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
      * @param {WorkCompanySystemInfoUpdateDto} [workCompanySystemInfoUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanySystemInfoApi
      */
     public apiWorkCompanySystemInfoPut(workCompanySystemInfoUpdateDto?: WorkCompanySystemInfoUpdateDto, options?: RawAxiosRequestConfig) {
         return WorkCompanySystemInfoApiFp(this.configuration).apiWorkCompanySystemInfoPut(workCompanySystemInfoUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -57137,7 +40161,6 @@ export class WorkCompanySystemInfoApi extends BaseAPI {
 
 /**
  * WorkCompanyTicketMatrisApi - axios parameter creator
- * @export
  */
 export const WorkCompanyTicketMatrisApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -57328,7 +40351,6 @@ export const WorkCompanyTicketMatrisApiAxiosParamCreator = function (configurati
 
 /**
  * WorkCompanyTicketMatrisApi - functional programming interface
- * @export
  */
 export const WorkCompanyTicketMatrisApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkCompanyTicketMatrisApiAxiosParamCreator(configuration)
@@ -57397,7 +40419,6 @@ export const WorkCompanyTicketMatrisApiFp = function(configuration?: Configurati
 
 /**
  * WorkCompanyTicketMatrisApi - factory interface
- * @export
  */
 export const WorkCompanyTicketMatrisApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkCompanyTicketMatrisApiFp(configuration)
@@ -57451,16 +40472,12 @@ export const WorkCompanyTicketMatrisApiFactory = function (configuration?: Confi
 
 /**
  * WorkCompanyTicketMatrisApi - object-oriented interface
- * @export
- * @class WorkCompanyTicketMatrisApi
- * @extends {BaseAPI}
  */
 export class WorkCompanyTicketMatrisApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyTicketMatrisApi
      */
     public apiWorkCompanyTicketMatrisGet(options?: RawAxiosRequestConfig) {
         return WorkCompanyTicketMatrisApiFp(this.configuration).apiWorkCompanyTicketMatrisGet(options).then((request) => request(this.axios, this.basePath));
@@ -57471,7 +40488,6 @@ export class WorkCompanyTicketMatrisApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyTicketMatrisApi
      */
     public apiWorkCompanyTicketMatrisIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return WorkCompanyTicketMatrisApiFp(this.configuration).apiWorkCompanyTicketMatrisIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -57482,7 +40498,6 @@ export class WorkCompanyTicketMatrisApi extends BaseAPI {
      * @param {string} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyTicketMatrisApi
      */
     public apiWorkCompanyTicketMatrisIdGet(id?: string, options?: RawAxiosRequestConfig) {
         return WorkCompanyTicketMatrisApiFp(this.configuration).apiWorkCompanyTicketMatrisIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -57493,7 +40508,6 @@ export class WorkCompanyTicketMatrisApi extends BaseAPI {
      * @param {WorkCompanyTicketMatrisInsertDto} [workCompanyTicketMatrisInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyTicketMatrisApi
      */
     public apiWorkCompanyTicketMatrisPost(workCompanyTicketMatrisInsertDto?: WorkCompanyTicketMatrisInsertDto, options?: RawAxiosRequestConfig) {
         return WorkCompanyTicketMatrisApiFp(this.configuration).apiWorkCompanyTicketMatrisPost(workCompanyTicketMatrisInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -57504,7 +40518,6 @@ export class WorkCompanyTicketMatrisApi extends BaseAPI {
      * @param {WorkCompanyTicketMatrisUpdateDto} [workCompanyTicketMatrisUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkCompanyTicketMatrisApi
      */
     public apiWorkCompanyTicketMatrisPut(workCompanyTicketMatrisUpdateDto?: WorkCompanyTicketMatrisUpdateDto, options?: RawAxiosRequestConfig) {
         return WorkCompanyTicketMatrisApiFp(this.configuration).apiWorkCompanyTicketMatrisPut(workCompanyTicketMatrisUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -57515,7 +40528,6 @@ export class WorkCompanyTicketMatrisApi extends BaseAPI {
 
 /**
  * WorkFlowApi - axios parameter creator
- * @export
  */
 export const WorkFlowApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -57635,7 +40647,6 @@ export const WorkFlowApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * WorkFlowApi - functional programming interface
- * @export
  */
 export const WorkFlowApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkFlowApiAxiosParamCreator(configuration)
@@ -57681,7 +40692,6 @@ export const WorkFlowApiFp = function(configuration?: Configuration) {
 
 /**
  * WorkFlowApi - factory interface
- * @export
  */
 export const WorkFlowApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkFlowApiFp(configuration)
@@ -57718,9 +40728,6 @@ export const WorkFlowApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * WorkFlowApi - object-oriented interface
- * @export
- * @class WorkFlowApi
- * @extends {BaseAPI}
  */
 export class WorkFlowApi extends BaseAPI {
     /**
@@ -57728,7 +40735,6 @@ export class WorkFlowApi extends BaseAPI {
      * @param {WorkFlowContiuneApiDto} [workFlowContiuneApiDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowApi
      */
     public apiWorkFlowContiunePost(workFlowContiuneApiDto?: WorkFlowContiuneApiDto, options?: RawAxiosRequestConfig) {
         return WorkFlowApiFp(this.configuration).apiWorkFlowContiunePost(workFlowContiuneApiDto, options).then((request) => request(this.axios, this.basePath));
@@ -57739,7 +40745,6 @@ export class WorkFlowApi extends BaseAPI {
      * @param {WorkFlowStartApiDto} [workFlowStartApiDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowApi
      */
     public apiWorkFlowStartAndTicketPost(workFlowStartApiDto?: WorkFlowStartApiDto, options?: RawAxiosRequestConfig) {
         return WorkFlowApiFp(this.configuration).apiWorkFlowStartAndTicketPost(workFlowStartApiDto, options).then((request) => request(this.axios, this.basePath));
@@ -57750,7 +40755,6 @@ export class WorkFlowApi extends BaseAPI {
      * @param {WorkFlowStartApiDto} [workFlowStartApiDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowApi
      */
     public apiWorkFlowStartPost(workFlowStartApiDto?: WorkFlowStartApiDto, options?: RawAxiosRequestConfig) {
         return WorkFlowApiFp(this.configuration).apiWorkFlowStartPost(workFlowStartApiDto, options).then((request) => request(this.axios, this.basePath));
@@ -57761,7 +40765,6 @@ export class WorkFlowApi extends BaseAPI {
 
 /**
  * WorkFlowDefinationApi - axios parameter creator
- * @export
  */
 export const WorkFlowDefinationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -57947,7 +40950,6 @@ export const WorkFlowDefinationApiAxiosParamCreator = function (configuration?: 
 
 /**
  * WorkFlowDefinationApi - functional programming interface
- * @export
  */
 export const WorkFlowDefinationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkFlowDefinationApiAxiosParamCreator(configuration)
@@ -58015,7 +41017,6 @@ export const WorkFlowDefinationApiFp = function(configuration?: Configuration) {
 
 /**
  * WorkFlowDefinationApi - factory interface
- * @export
  */
 export const WorkFlowDefinationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkFlowDefinationApiFp(configuration)
@@ -58068,16 +41069,12 @@ export const WorkFlowDefinationApiFactory = function (configuration?: Configurat
 
 /**
  * WorkFlowDefinationApi - object-oriented interface
- * @export
- * @class WorkFlowDefinationApi
- * @extends {BaseAPI}
  */
 export class WorkFlowDefinationApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowDefinationApi
      */
     public apiWorkFlowDefinationGet(options?: RawAxiosRequestConfig) {
         return WorkFlowDefinationApiFp(this.configuration).apiWorkFlowDefinationGet(options).then((request) => request(this.axios, this.basePath));
@@ -58087,7 +41084,6 @@ export class WorkFlowDefinationApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowDefinationApi
      */
     public apiWorkFlowDefinationGetWorkFlowListByMenuGet(options?: RawAxiosRequestConfig) {
         return WorkFlowDefinationApiFp(this.configuration).apiWorkFlowDefinationGetWorkFlowListByMenuGet(options).then((request) => request(this.axios, this.basePath));
@@ -58098,7 +41094,6 @@ export class WorkFlowDefinationApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowDefinationApi
      */
     public apiWorkFlowDefinationIdGet(id: string, options?: RawAxiosRequestConfig) {
         return WorkFlowDefinationApiFp(this.configuration).apiWorkFlowDefinationIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -58109,7 +41104,6 @@ export class WorkFlowDefinationApi extends BaseAPI {
      * @param {WorkFlowDefinationInsertDto} [workFlowDefinationInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowDefinationApi
      */
     public apiWorkFlowDefinationPost(workFlowDefinationInsertDto?: WorkFlowDefinationInsertDto, options?: RawAxiosRequestConfig) {
         return WorkFlowDefinationApiFp(this.configuration).apiWorkFlowDefinationPost(workFlowDefinationInsertDto, options).then((request) => request(this.axios, this.basePath));
@@ -58120,7 +41114,6 @@ export class WorkFlowDefinationApi extends BaseAPI {
      * @param {WorkFlowDefinationUpdateDto} [workFlowDefinationUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowDefinationApi
      */
     public apiWorkFlowDefinationPut(workFlowDefinationUpdateDto?: WorkFlowDefinationUpdateDto, options?: RawAxiosRequestConfig) {
         return WorkFlowDefinationApiFp(this.configuration).apiWorkFlowDefinationPut(workFlowDefinationUpdateDto, options).then((request) => request(this.axios, this.basePath));
@@ -58131,7 +41124,6 @@ export class WorkFlowDefinationApi extends BaseAPI {
 
 /**
  * WorkFlowItemApi - axios parameter creator
- * @export
  */
 export const WorkFlowItemApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -58214,7 +41206,6 @@ export const WorkFlowItemApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * WorkFlowItemApi - functional programming interface
- * @export
  */
 export const WorkFlowItemApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WorkFlowItemApiAxiosParamCreator(configuration)
@@ -58248,7 +41239,6 @@ export const WorkFlowItemApiFp = function(configuration?: Configuration) {
 
 /**
  * WorkFlowItemApi - factory interface
- * @export
  */
 export const WorkFlowItemApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WorkFlowItemApiFp(configuration)
@@ -58276,9 +41266,6 @@ export const WorkFlowItemApiFactory = function (configuration?: Configuration, b
 
 /**
  * WorkFlowItemApi - object-oriented interface
- * @export
- * @class WorkFlowItemApi
- * @extends {BaseAPI}
  */
 export class WorkFlowItemApi extends BaseAPI {
     /**
@@ -58286,7 +41273,6 @@ export class WorkFlowItemApi extends BaseAPI {
      * @param {string} workFlowHeadId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowItemApi
      */
     public apiWorkFlowItemGetApproveItemsWorkFlowHeadIdGet(workFlowHeadId: string, options?: RawAxiosRequestConfig) {
         return WorkFlowItemApiFp(this.configuration).apiWorkFlowItemGetApproveItemsWorkFlowHeadIdGet(workFlowHeadId, options).then((request) => request(this.axios, this.basePath));
@@ -58297,7 +41283,6 @@ export class WorkFlowItemApi extends BaseAPI {
      * @param {string} workFlowHeadId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WorkFlowItemApi
      */
     public apiWorkFlowItemGetStatusWorkFlowHeadIdGet(workFlowHeadId: string, options?: RawAxiosRequestConfig) {
         return WorkFlowItemApiFp(this.configuration).apiWorkFlowItemGetStatusWorkFlowHeadIdGet(workFlowHeadId, options).then((request) => request(this.axios, this.basePath));

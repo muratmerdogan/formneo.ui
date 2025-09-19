@@ -304,7 +304,45 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
       var conf = getConfigurationAccessTokenLogin();
       var api = new MenuApi(conf);
       var data = await api.apiMenuGet();
-      setMenuItems(data.data);
+      console.log("Tüm menüler (apiMenuGet):", data.data);
+      
+      // Yetkili menüleri de getir
+      try {
+        var authData = await api.apiMenuGetAuthByUserGet();
+        console.log("Yetkili menüler (apiMenuGetAuthByUserGet):", authData.data);
+        
+        // Yetkili menüleri filtrele
+        const authorizedMenus = data.data.filter((menu: any) => {
+          return authData.data.some((authMenu: any) => {
+            const menuHref = menu.href || menu.route || "";
+            const authHref = authMenu.href || authMenu.route || "";
+            return menuHref === authHref || 
+                   (menuHref.includes("/users") && authHref.includes("/users")) ||
+                   (menuHref.includes("/tenants") && authHref.includes("/tenants"));
+          });
+        });
+        
+        // Parent menüleri de ekle (alt menülerin parent'ları)
+        const parentIds = new Set(authorizedMenus.map((menu: any) => menu.parentMenuId).filter(Boolean));
+        const parentMenus = data.data.filter((menu: any) => parentIds.has(menu.id));
+        
+        // Parent menüleri alt menülerle birleştir
+        const allMenus = [...authorizedMenus, ...parentMenus];
+        const uniqueMenus = allMenus.filter((menu, index, self) => 
+          index === self.findIndex(m => m.id === menu.id)
+        );
+        
+        console.log("Yetkili menüler:", authorizedMenus);
+        console.log("Parent ID'ler:", Array.from(parentIds));
+        console.log("Parent menüler:", parentMenus);
+        console.log("Birleşik menüler:", uniqueMenus);
+        
+        setMenuItems(uniqueMenus);
+      } catch (error) {
+        console.error("Yetki kontrolü hatası:", error);
+        setMenuItems(data.data); // Hata durumunda tüm menüleri göster
+      }
+      
       findDb();
     };
     fetchMenuItems();
