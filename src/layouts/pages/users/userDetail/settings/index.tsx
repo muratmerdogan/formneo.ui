@@ -51,7 +51,7 @@ import { CreateUserDto, UpdateUserDto, UserApi, WorkCompanyApi, WorkCompanyDto }
 import UserTenantRoles from "./components/UserTenantRoles";
 import UserTenantAdmin from "./components/UserTenantAdmin";
 import { useBusy } from "layouts/pages/hooks/useBusy";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MessageBoxType } from "@ui5/webcomponents-react";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -70,7 +70,16 @@ function Settings(): JSX.Element {
 
   const handleSubmit = async (values: any, actions: any) => {
     console.log("isMailSender Geliyor mu", values.isMailSender);
-    const id = urlParams.get("id"); // id parametresini alıyoruz
+    
+    // State'den ID al
+    if (!userId) {
+      dispatchAlert({
+        message: "Geçersiz kullanıcı ID'si. İşlem iptal edildi.",
+        type: MessageBoxType.Error,
+      });
+      return;
+    }
+    
     if (formGudid) {
       dispatchBusy({ isBusy: true });
       var update = values as UpdateUserDto;
@@ -127,8 +136,11 @@ function Settings(): JSX.Element {
   const dispatchBusy = useBusy();
   const [activeStep, setActiveStep] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("profile");
-  const isTenantMode = Boolean(localStorage.getItem("selectedTenantId"));
-  const [isGlobalAdmin, setIsGlobalAdmin] = useState<boolean>(localStorage.getItem("isGlobalAdmin") === "true");
+  const [isTenantMode, setIsTenantMode] = useState<boolean>(false);
+  const [isGlobalAdmin, setIsGlobalAdmin] = useState<boolean>(false);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  
+  // items array'ini computed olarak oluştur
   const items = [
     { label: "Profil", icon: "pi pi-user", key: "profile" },
     { label: "Şifre", icon: "pi pi-lock", key: "password" },
@@ -141,33 +153,68 @@ function Settings(): JSX.Element {
     { label: "Hesabı Sil", icon: "pi pi-trash", key: "danger" },
   ];
 
+  // İlk yükleme - localStorage'dan değerleri al
+  useEffect(() => {
+    const tenantMode = Boolean(localStorage.getItem("selectedTenantId"));
+    const globalAdmin = localStorage.getItem("isGlobalAdmin") === "true";
+    
+    setIsTenantMode(tenantMode);
+    setIsGlobalAdmin(globalAdmin);
+    setIsInitialized(true);
+  }, []);
+
   // items değiştiğinde activeTab listedeyse koru, değilse ilk elemana al
   useEffect(() => {
+    if (!isInitialized) return; // İlk yükleme tamamlanana kadar bekle
+    
     const exists = items.some((i: any) => i.key === activeTab);
     if (!exists && items.length > 0) {
       setActiveTab(items[0].key as string);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isGlobalAdmin, isTenantMode]);
+  }, [isGlobalAdmin, isTenantMode, isInitialized]);
 
   const activeIndex = Math.max(0, items.findIndex((i: any) => i.key === activeTab));
 
   const [formGudid, setFormId] = useState("");
-  const urlParams = new URLSearchParams(window.location.search);
+  const [isValidUser, setIsValidUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
   const navigate = useNavigate(); // Navig
+  const location = useLocation();
   const [companies, setCompanies] = useState<WorkCompanyDto[]>([]);
 
+
+
   useEffect(() => {
-    const id = urlParams.get("id"); // id parametresini alıyoruz
-    // const id = urlParams.get('id'); // id parametresini alıyoruz
-
+    // State'den userId al
+    const id = location.state?.userId;
+    
     if (id) {
-      fetchDetail(id);
+      // XSS koruması için basit sanitizasyon
+      const sanitizedId = id.replace(/[<>\"'&]/g, '');
+      
+      // Boş string kontrolü
+      if (sanitizedId.trim() === '') {
+        dispatchAlert({
+          message: "Geçersiz kullanıcı ID'si. Lütfen geçerli bir kullanıcı seçin.",
+          type: MessageBoxType.Error,
+        });
+        navigate("/users");
+        return;
+      }
+      
+      // ID'yi state'e kaydet
+      setUserId(sanitizedId);
+      fetchDetail(sanitizedId);
+    } else {
+      // Geçersiz veya eksik ID
+      dispatchAlert({
+        message: "Geçersiz kullanıcı ID'si. Lütfen geçerli bir kullanıcı seçin.",
+        type: MessageBoxType.Error,
+      });
+      navigate("/users");
     }
-
-    // if (id) {
-    //   fetchDetail(id);
-    // }
   }, []);
 
   useEffect(() => {
@@ -186,6 +233,8 @@ function Settings(): JSX.Element {
 
   // Global admin kontrolü (güvenilir sekme görünürlüğü için)
   useEffect(() => {
+    if (!isInitialized) return; // İlk yükleme tamamlanana kadar bekle
+    
     const checkGlobalAdmin = async () => {
       try {
         const conf = getConfiguration();
@@ -207,49 +256,103 @@ function Settings(): JSX.Element {
       }
     };
     checkGlobalAdmin();
-  }, []);
+  }, [isInitialized]);
 
-  const fetchDetail = async (id: any) => {
-    dispatchBusy({ isBusy: true });
-    let isLoading: boolean;
-    isLoading = false;
-    var conf = getConfiguration();
-    var api = new UserApi(conf);
-    var data = await api.apiUserGet(id);
-    var resultData = data.data;
-    setFormId(resultData.id);
-    console.log("formGudid set edildi:", resultData.id);
-    console.log(data.data);
-    setFormValues((prevValues) => ({
-      ...prevValues,
+  const fetchDetail = async (id: string) => {
+    try {
+      dispatchBusy({ isBusy: true });
+      setIsLoading(true);
+      
+      var conf = getConfiguration();
+      var api = new UserApi(conf);
+      
+      // API çağrısı yap
+      var data = await api.apiUserGet(id);
+      
+      // API yanıtını kontrol et
+      if (!data || !data.data) {
+        throw new Error("Kullanıcı verisi bulunamadı");
+      }
+      
+      var resultData = data.data;
+      
+      // Kullanıcı verilerini güvenli şekilde işle
+      setFormId(resultData.id);
+      setIsValidUser(true);
+      
+      console.log("formGudid set edildi:", resultData.id);
+      console.log(data.data);
+      
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        manager1: data.data.manager1 || "",
+        manager2: data.data.manager2 || "",
+        userName: data.data.userName || "",
+        firstName: data.data.firstName || "",
+        lastName: data.data.lastName || "",
+        department: data.data.departmentId || "",
+        title: data.data.title || "",
+        email: data.data.email || "",
+        linkedinUrl: data.data.linkedinUrl || "",
+        isBlocked: data.data.isBlocked || false,
+        isTestData: data.data.isTestData || false,
+        isSystemAdmin: data.data.isSystemAdmin || false,
+        canSsoLogin: data.data.canSsoLogin || false,
+        vacationMode: data.data.vacationMode || false,
+        profileInfo: data.data.profileInfo || "",
+        photo: data.data.photo || "",
+        sapDepartmentText: data.data.sapDepartmentText || "",
+        sapPositionText: data.data.sapPositionText || "",
+        roleIds: data.data.roles || [],
+        positionId: data.data.positionId || null,
+        userLevel: data.data.userLevel || null,
+      }));
 
-      manager1: data.data.manager1 || "",
-      manager2: data.data.manager2 || "",
-      userName: data.data.userName || "",
-      firstName: data.data.firstName || "", // Sadece firstName'i günceller
-      lastName: data.data.lastName || "", // Sadece firstName'i günceller
-      department: data.data.departmentId || "", // Sadece firstName'i günceller
-      title: data.data.title || "", // Sadece firstName'i günceller
-      email: data.data.email || "", // Sadece firstName'i günceller
-      linkedinUrl: data.data.linkedinUrl || "",
-      isBlocked: data.data.isBlocked || false,
-      isTestData: data.data.isTestData || false,
-      isSystemAdmin: data.data.isSystemAdmin || false,
-      canSsoLogin: data.data.canSsoLogin || false,
-      vacationMode: data.data.vacationMode || false,
-      profileInfo: data.data.profileInfo || "",
-      photo: data.data.photo || "",
-      sapDepartmentText: data.data.sapDepartmentText || "",
-      sapPositionText: data.data.sapPositionText || "",
-      // authorizationTicketLevel: data.data.authorizationTicketLevel || "",
-      roleIds: data.data.roles || [],
-      positionId: data.data.positionId || null,
-      userLevel: data.data.userLevel || null,
-    }));
-
-    isLoading = true;
-    dispatchBusy({ isBusy: false });
+    } catch (error: any) {
+      console.error("Kullanıcı verisi yüklenirken hata:", error);
+      
+      // Güvenli hata mesajı göster
+      dispatchAlert({
+        message: "Kullanıcı verisi yüklenirken hata oluştu. Bu kullanıcıya erişim yetkiniz olmayabilir.",
+        type: MessageBoxType.Error,
+      });
+      
+      // Kullanıcı listesine yönlendir
+      navigate("/users");
+      
+    } finally {
+      dispatchBusy({ isBusy: false });
+      setIsLoading(false);
+    }
   };
+  // Loading durumunda göster
+  if (isLoading || !isInitialized) {
+    return (
+      <BaseLayout>
+        <DashboardNavbar />
+        <MDBox mt={4} display="flex" justifyContent="center" alignItems="center">
+          <MDTypography variant="h6" color="text">
+            Kullanıcı verisi yükleniyor...
+          </MDTypography>
+        </MDBox>
+      </BaseLayout>
+    );
+  }
+
+  // Geçersiz kullanıcı durumunda göster
+  if (!isValidUser) {
+    return (
+      <BaseLayout>
+        <DashboardNavbar />
+        <MDBox mt={4} display="flex" justifyContent="center" alignItems="center">
+          <MDTypography variant="h6" color="error">
+            Geçersiz kullanıcı. Yönlendiriliyorsunuz...
+          </MDTypography>
+        </MDBox>
+      </BaseLayout>
+    );
+  }
+
   return (
     <BaseLayout>
       <DashboardNavbar />

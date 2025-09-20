@@ -110,7 +110,9 @@ function DataTables(): JSX.Element {
           <MDBox mx={2}>
             <Icon
               style={{ marginRight: "8px", cursor: "pointer" }}
-              onClick={() => navigate(`/users/detail/?id=${row.original.userName}`)}
+              onClick={() => navigate('/users/detail/', { 
+                state: { userId: row.original.userName } 
+              })}
             >
               edit
             </Icon>

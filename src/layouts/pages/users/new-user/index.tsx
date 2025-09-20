@@ -28,6 +28,7 @@ import StepLabel from "@mui/material/StepLabel";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 PRO React TS examples components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -47,7 +48,7 @@ import initialValues from "layouts/pages/users/new-user/schemas/initialValues";
 import getConfiguration from "confiuration";
 import { CreateUserDto, UpdateUserDto, UserApi } from "api/generated";
 import { dA } from "@fullcalendar/core/internal-common";
-import { useNavigate, useOutlet } from "react-router-dom";
+import { useNavigate, useOutlet, useLocation } from "react-router-dom";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { AxiosError } from "axios";
 import { useAlert } from "layouts/pages/hooks/useAlert";
@@ -82,51 +83,97 @@ function NewUser(): JSX.Element {
   const isLastStep = activeStep === steps.length - 1;
   const [formValues, setFormValues] = useState(initialValues);
   const [formGudid, setFormId] = useState("");
-  const urlParams = new URLSearchParams(window.location.search);
+  const [isValidUser, setIsValidUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
   const navigate = useNavigate(); // Navig
+  const location = useLocation();
   const dispatchAlert = useAlert()
+
+
   // Setting the dir attribute for the body element
   useEffect(() => {
-    const id = urlParams.get('id'); // id parametresini alıyoruz
-
+    // State'den userId al
+    const id = location.state?.userId;
+    
     if (id) {
-      fetchDetail(id);
+      // XSS koruması için basit sanitizasyon
+      const sanitizedId = id.replace(/[<>\"'&]/g, '');
+      
+      // Boş string kontrolü
+      if (sanitizedId.trim() === '') {
+        // Yeni kullanıcı oluşturma modu
+        setIsValidUser(true);
+        setIsLoading(false);
+        return;
+      }
+      
+      // ID'yi state'e kaydet
+      setUserId(sanitizedId);
+      fetchDetail(sanitizedId);
+    } else {
+      // Yeni kullanıcı oluşturma modu
+      setIsValidUser(true);
+      setIsLoading(false);
     }
-
   }, []);
 
-  const fetchDetail = async (id: any) => {
-    dispatchBusy({ isBusy: true });
-    let isLoading: boolean;
-    isLoading = false;
-    var conf = getConfiguration();
-    var api = new UserApi(conf);
-    var data = await api.apiUserGet(id);
-    var resultData = data.data;
-    setFormId(resultData.id);
-    setFormValues((prevValues) => ({
-      ...prevValues,
 
-      manager1: data.data.manager1 || "",
-      manager2: data.data.manager2 || "",
-      userName: data.data.userName || "",
-      firstName: data.data.firstName || "", // Sadece firstName'i günceller
-      lastName: data.data.lastName || "", // Sadece firstName'i günceller
-      department: data.data.departmentId || "", // Sadece firstName'i günceller
-      title: data.data.title || "", // Sadece firstName'i günceller
-      email: data.data.email || "", // Sadece firstName'i günceller
-      linkedinUrl: data.data.linkedinUrl || "",
-      isBlocked: data.data.isBlocked || false,
-      isSystemAdmin: data.data.isSystemAdmin || false,
-      vacationMode: data.data.vacationMode || false,
-      profileInfo: data.data.profileInfo || "",
+  const fetchDetail = async (id: string) => {
+    try {
+      dispatchBusy({ isBusy: true });
+      setIsLoading(true);
+      
+      var conf = getConfiguration();
+      var api = new UserApi(conf);
+      
+      // API çağrısı yap
+      var data = await api.apiUserGet(id);
+      
+      // API yanıtını kontrol et
+      if (!data || !data.data) {
+        throw new Error("Kullanıcı verisi bulunamadı");
+      }
+      
+      var resultData = data.data;
+      
+      // Kullanıcı verilerini güvenli şekilde işle
+      setFormId(resultData.id);
+      setIsValidUser(true);
+      
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        manager1: data.data.manager1 || "",
+        manager2: data.data.manager2 || "",
+        userName: data.data.userName || "",
+        firstName: data.data.firstName || "",
+        lastName: data.data.lastName || "",
+        department: data.data.departmentId || "",
+        title: data.data.title || "",
+        email: data.data.email || "",
+        linkedinUrl: data.data.linkedinUrl || "",
+        isBlocked: data.data.isBlocked || false,
+        isSystemAdmin: data.data.isSystemAdmin || false,
+        vacationMode: data.data.vacationMode || false,
+        profileInfo: data.data.profileInfo || "",
+      }));
 
-    }));
-
-
-
-    isLoading = true;
-    dispatchBusy({ isBusy: false });
+    } catch (error: any) {
+      console.error("Kullanıcı verisi yüklenirken hata:", error);
+      
+      // Güvenli hata mesajı göster
+      dispatchAlert({
+        message: "Kullanıcı verisi yüklenirken hata oluştu. Bu kullanıcıya erişim yetkiniz olmayabilir.",
+        type: MessageBoxType.Error,
+      });
+      
+      // Kullanıcı listesine yönlendir
+      navigate("/users");
+      
+    } finally {
+      dispatchBusy({ isBusy: false });
+      setIsLoading(false);
+    }
   };
 
   const sleep = (ms: any) =>
@@ -137,11 +184,17 @@ function NewUser(): JSX.Element {
   const handleBack = () => setActiveStep(activeStep - 1);
 
   const submitForm = async (values: any, actions: any) => {
-
-
     await sleep(1000);
 
-    const id = urlParams.get('id'); // id parametresini alıyoruz
+    // State'den ID kontrolü
+    if (userId && !formGudid) {
+      dispatchAlert({
+        message: "Geçersiz kullanıcı ID'si. İşlem iptal edildi.",
+        type: MessageBoxType.Error,
+      });
+      return;
+    }
+    
     if (formGudid) {
       var update = values as UpdateUserDto;
 
@@ -213,6 +266,34 @@ function NewUser(): JSX.Element {
       actions.setSubmitting(false);
     }
   };
+
+  // Loading durumunda göster
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox mt={4} display="flex" justifyContent="center" alignItems="center">
+          <MDTypography variant="h6" color="text">
+            Kullanıcı verisi yükleniyor...
+          </MDTypography>
+        </MDBox>
+      </DashboardLayout>
+    );
+  }
+
+  // Geçersiz kullanıcı durumunda göster (sadece edit modunda)
+  if (!isValidUser && formGudid) {
+    return (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox mt={4} display="flex" justifyContent="center" alignItems="center">
+          <MDTypography variant="h6" color="error">
+            Geçersiz kullanıcı. Yönlendiriliyorsunuz...
+          </MDTypography>
+        </MDBox>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
