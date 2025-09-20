@@ -71,6 +71,7 @@ const MenuDetail = lazy(() => import("layouts/pages/menuDefination/MenuDetail"))
 const ParametersPage = lazy(() => import("layouts/pages/settings/ParametersPage"));
 const NotAuthorizationPage = lazy(() => import("layouts/pages/notAuthorizationPage"));
 const ResetCover = lazy(() => import("layouts/authentication/reset-password/cover"));
+const Analytics = lazy(() => import("layouts/dashboards/analytics"));
 const Sales = lazy(() => import("layouts/dashboards/sales"));
 const CustomerSales = lazy(() => import("layouts/dashboards/customer"));
 const QueryList = lazy(() => import("layouts/pages/queryBuild/queryList"));
@@ -238,6 +239,18 @@ export default function App() {
             <Route path="/LogOut" element={<Logout />} />
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
+            {/* Dashboard Routes - Genel erişim */}
+            <Route path="/dashboards/analytics" element={
+              <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
+                <Analytics />
+              </Suspense>
+            } />
+            <Route path="/dashboards/sales" element={
+              <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
+                <Sales />
+              </Suspense>
+            } />
+            
             {/* Private Routes */}
             <Route element={<PrivateRoute />}>
               {getRoutes(routes)} {/* Tüm özel rotaları ekler */}
@@ -249,56 +262,56 @@ export default function App() {
               <Route path="/Menus" element={<MenuList />} />
               <Route path="/MenuDetail" element={<MenuDetail />} />
               <Route path="/parameters" element={<ParametersPage />} />
+              <Route path="/customers" element={<CustomersPage />} />
+              <Route path="/customers/new" element={<CustomerFormPage />} />
+              <Route path="/customers/:id" element={<CustomerFormPage />} />
+              
+              <Route path="/pages/demos/alldemos" element={<AllDemos />} />
+              <Route path="/tickets/statistic" element={<Sales />} />
+              <Route path="/queryBuild" element={<QueryList />} />
+              <Route path="/queryBuild/detail" element={<QueryDetail />} />
+              <Route path="/queryBuild/detail/:id" element={<QueryDetail />} />
+              <Route path="/calendar" element={<CalendarList />} />
+              <Route path="/calendar/detail" element={<CalendarPage />} />
+              <Route path="/calendar/detail/:id" element={<CalendarPage />} />
+              <Route path="/position" element={<PositionPage />} />
+              <Route path="/position/detail" element={<PositionDetailPage />} />
+              <Route path="/position/detail/:id" element={<PositionDetailPage />} />
+              <Route path="/organizationalChart" element={<OrganizationalChart />} />
+              <Route path="/form-role" element={<FormRoleList />} />
+              <Route path="/form-role/detail" element={<FormRoleDetail />} />
+              <Route path="/form-role/detail/:id" element={<FormRoleDetail />} />
+              <Route path="/companyRelation" element={<CompanyRelation />} />
+              <Route path="/companyRelation/detail" element={<CompanyRelationDetail />} />
+              <Route path="/companyRelation/detail/:id" element={<CompanyRelationDetail />} />
+              <Route path="/projectManagement" element={<MainScreen />} />
+              <Route path="/projectManagement/chart" element={<ProjectChart />} />
+              <Route path="/ticketProjects" element={<TicketProjects />} />
+              <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
+              <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
+              <Route path="/inventory" element={<Inventory />} />
+              <Route path="/inventory/detail" element={<CreateInventory />} />
+              <Route path="/inventory/detail/:id" element={<CreateInventory />} />
+              <Route path="/resumeBuild" element={<ResumeBuild />} />
+              <Route path="/userTasks" element={<UserTasks />} />
+              <Route path="/userProjects" element={<UserProjects />} />
+              <Route path="/vpn" element={<VpnDashboard />} />
+              <Route path="/kanban" element={<KanbanPage />} />
+              <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
+
+              <Route path="/customer" element={<CustomerList />} />
+              <Route path="/customer/detail" element={<CustomerDetail />} />
+              <Route path="/customer/detail/:id" element={<CustomerDetail />} />
+
+              <Route path="/formAuth" element={<FormAuth />} />
+              <Route path="/formAuth/detail" element={<FormAuthDetail />} />
+              <Route path="/formAuth/detail/:id" element={<FormAuthDetail />} />
+
+              <Route path="/formlist/:formId" element={<FormList />} />
               {/* <Route path="/mmessages" element={<ChatPage />} /> */}
             </Route>
 
-            <Route path="/pages/demos/alldemos" element={<AllDemos />} />
-            <Route path="/tickets/statistic" element={<Sales />} />
-            <Route path="/queryBuild" element={<QueryList />} />
-            <Route path="/queryBuild/detail" element={<QueryDetail />} />
-            <Route path="/queryBuild/detail/:id" element={<QueryDetail />} />
-            <Route path="/calendar" element={<CalendarList />} />
-            <Route path="/calendar/detail" element={<CalendarPage />} />
-            <Route path="/calendar/detail/:id" element={<CalendarPage />} />
-            <Route path="/position" element={<PositionPage />} />
-            <Route path="/position/detail" element={<PositionDetailPage />} />
-            <Route path="/position/detail/:id" element={<PositionDetailPage />} />
-            <Route path="/organizationalChart" element={<OrganizationalChart />} />
-            <Route path="/form-role" element={<FormRoleList />} />
-            <Route path="/form-role/detail" element={<FormRoleDetail />} />
-            <Route path="/form-role/detail/:id" element={<FormRoleDetail />} />
             <Route path="/NotAuthorization" element={<NotAuthorizationPage />} />
-            <Route path="/companyRelation" element={<CompanyRelation />} />
-            <Route path="/companyRelation/detail" element={<CompanyRelationDetail />} />
-            <Route path="/companyRelation/detail/:id" element={<CompanyRelationDetail />} />
-            <Route path="/projectManagement" element={<MainScreen />} />
-            <Route path="/projectManagement/chart" element={<ProjectChart />} />
-            <Route path="/ticketProjects" element={<TicketProjects />} />
-            <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
-            <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/inventory/detail" element={<CreateInventory />} />
-            <Route path="/inventory/detail/:id" element={<CreateInventory />} />
-            <Route path="/resumeBuild" element={<ResumeBuild />} />
-            <Route path="/userTasks" element={<UserTasks />} />
-            <Route path="/userProjects" element={<UserProjects />} />
-            <Route path="/vpn" element={<VpnDashboard />} />
-            <Route path="/kanban" element={<KanbanPage />} />
-            <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
-
-            <Route path="/customer" element={<CustomerList />} />
-            <Route path="/customer/detail" element={<CustomerDetail />} />
-            <Route path="/customer/detail/:id" element={<CustomerDetail />} />
-
-            <Route path="/customers" element={<CustomersPage />} />
-            <Route path="/customers/new" element={<CustomerFormPage />} />
-            <Route path="/customers/:id" element={<CustomerFormPage />} />
-
-            <Route path="/formAuth" element={<FormAuth />} />
-            <Route path="/formAuth/detail" element={<FormAuthDetail />} />
-            <Route path="/formAuth/detail/:id" element={<FormAuthDetail />} />
-
-            <Route path="/formlist/:formId" element={<FormList />} />
 
             {/* Tüm Eşleşmeyen URL'ler için Yönlendirme */}
             {/* <Route path="*" element={<Navigate to="/dashboards/analytics" replace />} /> */}
