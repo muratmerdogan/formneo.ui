@@ -2109,6 +2109,7 @@ export interface MenuInsertDto {
     'order'?: number;
     'description'?: string | null;
     'showMenu'?: boolean;
+    'isTenantOnly'?: boolean;
 }
 export interface MenuListDto {
     'id'?: string;
@@ -2146,6 +2147,7 @@ export interface MenuUpdateDto {
     'order'?: number;
     'description'?: string | null;
     'showMenu'?: boolean;
+    'isTenantOnly'?: boolean;
 }
 export interface Metadata {
     'uri'?: string | null;
@@ -20281,6 +20283,39 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuAllWithoutAuthGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Menu/all-without-auth`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} [tenantId] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
@@ -20603,6 +20638,17 @@ export const MenuApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMenuAllWithoutAuthGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Menu>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMenuAllWithoutAuthGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MenuApi.apiMenuAllWithoutAuthGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} [tenantId] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
@@ -20723,6 +20769,14 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMenuAllWithoutAuthGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<Menu>> {
+            return localVarFp.apiMenuAllWithoutAuthGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} [tenantId] 
          * @param {string} [userId] 
          * @param {*} [options] Override http request option.
@@ -20815,6 +20869,15 @@ export class MenuApi extends BaseAPI {
      */
     public apiMenuAllPlainGet(tenantOnly?: boolean, options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuAllPlainGet(tenantOnly, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMenuAllWithoutAuthGet(options?: RawAxiosRequestConfig) {
+        return MenuApiFp(this.configuration).apiMenuAllWithoutAuthGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

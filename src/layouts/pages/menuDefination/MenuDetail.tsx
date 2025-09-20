@@ -60,6 +60,7 @@ const MenuDetail = () => {
     isActive: false,
     icon: "",
     showMenu: false,
+    isTenantOnly: false,
   });
   const { id } = useParams();
 
@@ -81,6 +82,7 @@ const MenuDetail = () => {
           isActive: data.data.isActive,
           icon: data.data.icon || "",
           showMenu: data.data.showMenu,
+          isTenantOnly: data.data.isTenantOnly || false,
         });
       };
       fetchIdData();
@@ -91,7 +93,7 @@ const MenuDetail = () => {
     const fetchParentMenu = async () => {
       var conf = getConfiguration();
       var api = new MenuApi(conf);
-      var data = await api.apiMenuAllListDataGet();
+      var data = await api.apiMenuAllWithoutAuthGet();
       setParentMenu(data.data);
     };
     fetchParentMenu();
@@ -112,6 +114,7 @@ const MenuDetail = () => {
           isActive: item.isActive,
           icon: item.icon,
           showMenu: item.showMenu,
+          isTenantOnly: item.isTenantOnly || false,
         });
       });
     }
@@ -129,6 +132,7 @@ const MenuDetail = () => {
       isActive: false,
       icon: "database",
       showMenu: false,
+      isTenantOnly: false,
     };
   };
 
@@ -143,6 +147,8 @@ const MenuDetail = () => {
       setFormData({ ...formData, [name]: value });
     }
   };
+
+
 
   const checkValues = () => {
     if (formData.icon && formData.parentCode) {
@@ -192,6 +198,7 @@ const MenuDetail = () => {
         isActive: formData.isActive,
         icon: formData.icon,
         showMenu: formData.showMenu,
+        isTenantOnly: formData.isTenantOnly,
       });
       dispatchBusy({ isBusy: false });
       dispatchAlert({
@@ -237,6 +244,7 @@ const MenuDetail = () => {
         isActive: formData.isActive,
         icon: formData.icon,
         showMenu: formData.showMenu,
+        isTenantOnly: formData.isTenantOnly,
       });
       dispatchBusy({ isBusy: false });
       dispatchAlert({
@@ -373,6 +381,22 @@ const MenuDetail = () => {
                         }));
                       }}
                     />
+                    <FormControl sx={{ marginLeft: "6px" }}>
+                      <FormControlLabel
+                        control={<Checkbox id="isTenantOnly" checked={formData.isTenantOnly} />}
+                        label={
+                          <MDTypography fontWeight="medium" variant="caption" color="text">
+                            Tenant Modu
+                          </MDTypography>
+                        }
+                        onChange={(event, newValue) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            isTenantOnly: newValue,
+                          }));
+                        }}
+                      />
+                    </FormControl>
                     <FormControl sx={{ marginLeft: "6px" }}>
                       <FormControlLabel
                         control={<Checkbox id="showMenu" checked={formData.showMenu} />}

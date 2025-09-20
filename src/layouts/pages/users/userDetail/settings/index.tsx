@@ -132,10 +132,12 @@ function Settings(): JSX.Element {
   const items = [
     { label: "Profil", icon: "pi pi-user", key: "profile" },
     { label: "Şifre", icon: "pi pi-lock", key: "password" },
-    ...(isGlobalAdmin ? [{ label: "Hesaplar", icon: "pi pi-id-card", key: "accounts" }] : []),
-    ...(isGlobalAdmin ? [{ label: "Tenantlar", icon: "pi pi-users", key: "userTenants" }] : []),
+    // Global admin özellikleri sadece global modda göster
+    ...(!isTenantMode && isGlobalAdmin ? [{ label: "Hesaplar", icon: "pi pi-id-card", key: "accounts" }] : []),
+    ...(!isTenantMode && isGlobalAdmin ? [{ label: "Tenantlar", icon: "pi pi-users", key: "userTenants" }] : []),
+    // Tenant özellikleri tenant modda göster
     ...(isTenantMode ? [{ label: "Ticket Yetkileri", icon: "pi pi-ticket", key: "ticket" }] : []),
-    ...(isTenantMode && !isGlobalAdmin ? [{ label: "Tenant Rolleri", icon: "pi pi-users", key: "tenantRoles" }] : []),
+    ...(isTenantMode ? [{ label: "Tenant Rolleri", icon: "pi pi-users", key: "tenantRoles" }] : []),
     { label: "Hesabı Sil", icon: "pi pi-trash", key: "danger" },
   ];
 
@@ -365,7 +367,7 @@ function Settings(): JSX.Element {
                               </MDBox>
                             )}
 
-                            {it.key === "tenantRoles" && isTenantMode && !isGlobalAdmin && (
+                            {it.key === "tenantRoles" && isTenantMode && (
                               <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
                                 <Grid container spacing={3}>
                                   <Grid item xs={12}>

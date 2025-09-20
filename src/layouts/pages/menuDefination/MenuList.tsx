@@ -58,6 +58,7 @@ import { useAlert } from "../hooks/useAlert";
 import MessageBox from "../Components/MessageBox";
 import "@ui5/webcomponents-icons/dist/add.js";
 import { useTranslation } from "react-i18next";
+import { Tree } from "primereact/tree";
 
 function MenuList(): JSX.Element {
   const navigate = useNavigate(); // Navig
@@ -65,9 +66,62 @@ function MenuList(): JSX.Element {
   const { userAppDto } = useUser(); // Context'ten veriyi alıyoruz
   const { t } = useTranslation();
   const dispatchBusy = useBusy();
-  const [dataTableData, setDataTableData] = useState<[]>([]);
+  const [dataTableData, setDataTableData] = useState<any[]>([]);
   const [isQuestionMessageBoxOpen, setIsQuestionMessageBoxOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
+  const [treeNodes, setTreeNodes] = useState<any[]>([]);
+  const [expandedKeys, setExpandedKeys] = useState<any>({});
+  const [showTree, setShowTree] = useState(false);
+
+  const buildMenuTree = (menus: any[]) => {
+    const menuMap = new Map();
+    const rootMenus: any[] = [];
+    
+    // Tüm menüleri map'e ekle
+    menus.forEach(menu => {
+      menuMap.set(menu.id, { 
+        ...menu, 
+        children: [],
+        key: menu.id,
+        label: menu.name,
+        data: menu
+      });
+    });
+    
+    // Parent-child ilişkisini kur
+    menus.forEach(menu => {
+      if (menu.parentMenuId) {
+        const parent = menuMap.get(menu.parentMenuId);
+        if (parent) {
+          parent.children.push(menuMap.get(menu.id));
+        }
+      } else {
+        rootMenus.push(menuMap.get(menu.id));
+      }
+    });
+    
+    // Sıralama fonksiyonu
+    const sortByOrder = (nodes: any[]) => {
+      return nodes.sort((a, b) => (a.order || 0) - (b.order || 0));
+    };
+    
+    // Root menüleri sırala
+    const sortedRootMenus = sortByOrder(rootMenus);
+    
+    // Her düğümün alt menülerini de sırala
+    const sortChildren = (nodes: any[]) => {
+      nodes.forEach(node => {
+        if (node.children && node.children.length > 0) {
+          node.children = sortByOrder(node.children);
+          sortChildren(node.children);
+        }
+      });
+    };
+    
+    sortChildren(sortedRootMenus);
+    
+    return sortedRootMenus;
+  };
 
   const fetchMenus = async () => {
     try {
@@ -77,6 +131,24 @@ function MenuList(): JSX.Element {
       var data = await api.apiMenuAllPlainGet();
       console.log(data.data);
       setDataTableData(data.data as any);
+      
+      // Tree yapısını oluştur
+      const treeData = buildMenuTree(data.data as any);
+      setTreeNodes(treeData);
+      
+      // Tüm düğümleri genişlet
+      const allKeys: any = {};
+      const expandAll = (nodes: any[]) => {
+        nodes.forEach(node => {
+          allKeys[node.key] = true;
+          if (node.children && node.children.length > 0) {
+            expandAll(node.children);
+          }
+        });
+      };
+      expandAll(treeData);
+      setExpandedKeys(allKeys);
+      
     } catch (error) {
       dispatchAlert({
         message: t("ns1:MenuPage.MenuList.MenuleriAlirkenHata"),
@@ -132,6 +204,64 @@ function MenuList(): JSX.Element {
     }
   };
 
+  const renderNode = (node: any) => {
+    const menu = node.data;
+    const parentMenu = dataTableData.find((item: any) => item.id === menu.parentMenuId);
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 4px", lineHeight: "22px" }}>
+        <i className={`pi ${menu.icon ? `pi-${menu.icon}` : "pi-box"}`} style={{ fontSize: 16, opacity: 0.85 }} />
+        <span style={{ fontWeight: 600 }}>{node.label}</span>
+        {menu.route && (
+          <span style={{ fontSize: 12, color: "#6b7280", marginLeft: 8 }}>
+            ({menu.route})
+          </span>
+        )}
+        {parentMenu && (
+          <span style={{ 
+            fontSize: 10, 
+            color: "#374151", 
+            backgroundColor: "#f3f4f6", 
+            padding: "2px 6px", 
+            borderRadius: "4px",
+            marginLeft: 8,
+            fontWeight: 500,
+            border: "1px solid #d1d5db"
+          }}>
+            ↑ {parentMenu.name}
+          </span>
+        )}
+        {menu.isTenantOnly ? (
+          <span style={{ 
+            fontSize: 10, 
+            color: "#ffffff", 
+            backgroundColor: "#3b82f6", 
+            padding: "2px 6px", 
+            borderRadius: "4px",
+            marginLeft: 8,
+            fontWeight: 500
+          }}>
+            TENANT
+          </span>
+        ) : (
+          <span style={{ 
+            fontSize: 10, 
+            color: "#ffffff", 
+            backgroundColor: "#10b981", 
+            padding: "2px 6px", 
+            borderRadius: "4px",
+            marginLeft: 8,
+            fontWeight: 500
+          }}>
+            GLOBAL
+          </span>
+        )}
+        <span style={{ fontSize: 10, color: menu.isActive ? "#16a34a" : "#9ca3af", marginLeft: 4 }}>
+          {menu.isActive ? "Aktif" : "Pasif"}
+        </span>
+      </div>
+    );
+  };
+
   const columns = [
     {
       id: "order",
@@ -175,6 +305,69 @@ function MenuList(): JSX.Element {
       Cell: ({ row, value, column }: any) => (
         <GlobalCell value={value} columnName={column.id} testRow={row.original} />
       ),
+    },
+    {
+      id: "parentMenu",
+      name: "Üst Menü",
+      Header: (
+        <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>
+          Üst Menü
+        </div>
+      ),
+      accessor: "parentMenuId",
+      Cell: ({ row, value, column }: any) => {
+        const parentMenu = dataTableData.find((item: any) => item.id === value);
+        return parentMenu ? (
+          <span style={{ 
+            fontSize: 12, 
+            color: "#374151", 
+            backgroundColor: "#f3f4f6", 
+            padding: "4px 8px", 
+            borderRadius: "4px",
+            fontWeight: 500,
+            border: "1px solid #d1d5db"
+          }}>
+            ↑ {parentMenu.name}
+          </span>
+        ) : (
+          <span style={{ color: "#9ca3af", fontSize: 12 }}>Root</span>
+        );
+      },
+    },
+    {
+      id: "type",
+      name: "Tip",
+      Header: (
+        <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>
+          Tip
+        </div>
+      ),
+      accessor: "isTenantOnly",
+      Cell: ({ row, value, column }: any) => {
+        return value ? (
+          <span style={{ 
+            fontSize: 10, 
+            color: "#ffffff", 
+            backgroundColor: "#3b82f6", 
+            padding: "4px 8px", 
+            borderRadius: "4px",
+            fontWeight: 500
+          }}>
+            TENANT
+          </span>
+        ) : (
+          <span style={{ 
+            fontSize: 10, 
+            color: "#ffffff", 
+            backgroundColor: "#10b981", 
+            padding: "4px 8px", 
+            borderRadius: "4px",
+            fontWeight: 500
+          }}>
+            GLOBAL
+          </span>
+        );
+      },
     },
     {
       id: "showMenu",
@@ -270,6 +463,8 @@ function MenuList(): JSX.Element {
           backgroundColor: "#ffffff",
           borderRadius: "12px",
           boxShadow: "0 2px 12px 0 rgba(0,0,0,0.1)",
+          width: "100%",
+          overflow: "hidden"
         }}
         titleArea={
           <ObjectPageTitle
@@ -282,6 +477,24 @@ function MenuList(): JSX.Element {
             }}
             actionsBar={
               <MDBox style={{ marginTop: "15px", marginRight: "15px" }}>
+                <MDButton
+                  variant={showTree ? "outlined" : "gradient"}
+                  color="info"
+                  onClick={() => setShowTree(!showTree)}
+                  size="small"
+                  startIcon={<Icon>{showTree ? "table_view" : "account_tree"}</Icon>}
+                  sx={{
+                    marginRight: "0.5rem",
+                    bottom: "11px",
+                    height: "2.25rem",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-1px)",
+                    },
+                  }}
+                >
+                  {showTree ? "Grid Görünümü" : "Tree Görünümü"}
+                </MDButton>
                 <MDButton
                   variant="gradient"
                   color="info"
@@ -327,17 +540,66 @@ function MenuList(): JSX.Element {
           </ObjectPageTitle>
         }
       >
-        <Grid xs={12} lg={6} sx={{ paddingLeft: "3px" }}>
-          <Card style={{ height: "660px" }}>
+        <Grid xs={12} lg={showTree ? 12 : 12} sx={{ paddingLeft: "3px", paddingRight: "3px" }}>
+          <Card style={{ height: "660px", width: "100%" }}>
             <MDBox>
               <MDBox height="565px">
-                <DataTable
-                  canSearch={true}
-                  table={{
-                    columns: columns,
-                    rows: dataTableData,
-                  }}
-                />
+                {showTree ? (
+                  <div style={{ padding: "16px" }}>
+                    <MDBox display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+                      <MDTypography variant="h6">Menü Ağacı</MDTypography>
+                      <MDBox display="flex" gap={1}>
+                        <MDButton
+                          variant="outlined"
+                          color="secondary"
+                          size="small"
+                          onClick={() => {
+                            const allKeys: any = {};
+                            const expandAll = (nodes: any[]) => {
+                              nodes.forEach(node => {
+                                allKeys[node.key] = true;
+                                if (node.children && node.children.length > 0) {
+                                  expandAll(node.children);
+                                }
+                              });
+                            };
+                            expandAll(treeNodes);
+                            setExpandedKeys(allKeys);
+                          }}
+                        >
+                          Hepsini Aç
+                        </MDButton>
+                        <MDButton
+                          variant="outlined"
+                          color="secondary"
+                          size="small"
+                          onClick={() => setExpandedKeys({})}
+                        >
+                          Hepsini Kapat
+                        </MDButton>
+                      </MDBox>
+                    </MDBox>
+                    <div style={{ background: "#f9fafb", borderRadius: 12, border: "1px solid #e8e8e8", padding: 16 }}>
+                      <Tree
+                        value={treeNodes}
+                        expandedKeys={expandedKeys}
+                        onToggle={(e) => setExpandedKeys(e.value)}
+                        nodeTemplate={renderNode}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ overflowX: "auto", width: "100%", maxWidth: "100%" }}>
+                    <DataTable
+                      canSearch={true}
+                      table={{
+                        columns: columns,
+                        rows: dataTableData,
+                      }}
+                    />
+                  </div>
+                )}
               </MDBox>
             </MDBox>
           </Card>

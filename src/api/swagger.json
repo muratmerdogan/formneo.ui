@@ -7318,6 +7318,44 @@
         }
       }
     },
+    "/api/Menu/all-without-auth": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Menu/effective-preview": {
       "get": {
         "tags": [
@@ -24976,6 +25014,9 @@
           },
           "showMenu": {
             "type": "boolean"
+          },
+          "isTenantOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -25123,6 +25164,9 @@
             "nullable": true
           },
           "showMenu": {
+            "type": "boolean"
+          },
+          "isTenantOnly": {
             "type": "boolean"
           }
         },

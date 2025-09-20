@@ -74,17 +74,22 @@ function UserTenantRoles({ userId }: Props): JSX.Element {
                 const conf = getConfiguration();
                 const api = new RoleTenantMenuApi(conf);
 
-                // GetUserRoleAssignments: beklenen dönüş ya dizi ya da { items | roles | roleAssignments }
-                const res = (await api.apiRoleTenantMenuUserRoleAssignmentsGet(userId)) as any;
+                // GetUserRoleAssignments: API'den dönen veri yapısı { userId, tenantId, roles: [...] }
+                const tenantId = localStorage.getItem("selectedTenantId");
+                console.log("UserTenantRoles - API çağrısı:", { userId, tenantId });
+                const res = (await api.apiRoleTenantMenuUserRoleAssignmentsGet(userId, tenantId)) as any;
+                console.log("UserTenantRoles - API yanıtı:", res);
                 const raw = (res?.data as any);
+                console.log("UserTenantRoles - Raw data:", raw);
                 const list: any[] = Array.isArray(raw)
                     ? raw
-                    : (raw?.items || raw?.roles || raw?.roleAssignments || []);
+                    : (raw?.roles || raw?.items || raw?.roleAssignments || []);
+                console.log("UserTenantRoles - Processed list:", list);
 
-                // Sadece rol düğümleri
+                // Sadece rol düğümleri - API'den dönen alan adlarına göre güncellendi
                 const roleNodes: TreeNode[] = (list || []).map((r: any) => {
-                    const roleId = String(r.RoleId || r.roleId || r.Id || r.id || r.role?.id || "");
-                    const roleName = r.RoleName || r.roleName || r.role?.name || r.Name || r.name || r.title || roleId;
+                    const roleId = String(r.roleId || r.RoleId || r.Id || r.id || r.role?.id || "");
+                    const roleName = r.roleName || r.RoleName || r.role?.name || r.Name || r.name || r.title || roleId;
                     return {
                         key: `role:${roleId}`,
                         label: roleName,
@@ -97,10 +102,10 @@ function UserTenantRoles({ userId }: Props): JSX.Element {
                     } as TreeNode;
                 });
 
-                // Seçimler: isAssignedToUser/assigned/selected/isAssigned/shouldAssign alanlarından biri true ise işaretle
+                // Seçimler: isAssignedToUser alanına göre işaretle
                 const sel: any = {};
                 (list || []).forEach((r: any) => {
-                    const roleId = String(r.RoleId || r.roleId || r.Id || r.id || r.role?.id || "");
+                    const roleId = String(r.roleId || r.RoleId || r.Id || r.id || r.role?.id || "");
                     const isAssigned = Boolean(r.isAssignedToUser ?? r.IsAssignedToUser ?? r.isAssigned ?? r.assigned ?? r.selected ?? r.shouldAssign);
                     if (roleId && isAssigned) sel[`role:${roleId}`] = { checked: true };
                 });
