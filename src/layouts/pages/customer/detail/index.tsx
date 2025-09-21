@@ -1034,24 +1034,42 @@ function CustomerDetail(): JSX.Element {
             <MDSnackbar
                 color="success"
                 icon="check"
-                title="Başarılı!"
+                title="🎉 Başarılı!"
                 content={successMessage}
                 dateTime="Şimdi"
                 open={successSB}
                 close={() => setSuccessSB(false)}
-                bgWhite
+                autoHideDuration={3000}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                }}
+                sx={{
+                    "& .MuiSnackbar-root": {
+                        top: "80px !important",
+                    }
+                }}
             />
             
             {/* Error Toast */}
             <MDSnackbar
                 color="error"
                 icon="warning"
-                title="Hata!"
+                title="❌ Hata!"
                 content={errorMessage}
                 dateTime="Şimdi"
                 open={errorSB}
                 close={() => setErrorSB(false)}
-                bgWhite
+                autoHideDuration={4000}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                }}
+                sx={{
+                    "& .MuiSnackbar-root": {
+                        top: "80px !important",
+                    }
+                }}
             />
         </DashboardLayout>
     );

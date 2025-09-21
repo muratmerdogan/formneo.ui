@@ -234,7 +234,7 @@ export default function CustomerFormPage(): JSX.Element {
             console.log("typeof customerTypeId:", typeof values.customerTypeId);
             
             // Test için alert
-            alert(`Submit Debug:\ncustomerTypeId: ${values.customerTypeId}\ncategoryId: ${values.categoryId}\nrowVersion: ${values.rowVersion}`);
+           
       
             const api = new CustomersApi(getConfiguration());
             
@@ -458,24 +458,42 @@ export default function CustomerFormPage(): JSX.Element {
             <MDSnackbar
                 color="success"
                 icon="check"
-                title="Başarılı!"
+                title="🎉 Başarılı!"
                 content={successMessage}
                 dateTime="Şimdi"
                 open={successSB}
                 close={() => setSuccessSB(false)}
-                bgWhite
+                autoHideDuration={3000}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                }}
+                sx={{
+                    "& .MuiSnackbar-root": {
+                        top: "80px !important",
+                    }
+                }}
             />
             
             {/* Error Toast */}
             <MDSnackbar
                 color="error"
                 icon="warning"
-                title="Hata!"
+                title="❌ Hata!"
                 content={errorMessage}
                 dateTime="Şimdi"
                 open={errorSB}
                 close={() => setErrorSB(false)}
-                bgWhite
+                autoHideDuration={4000}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                }}
+                sx={{
+                    "& .MuiSnackbar-root": {
+                        top: "80px !important",
+                    }
+                }}
             />
         </DashboardLayout>
     );
