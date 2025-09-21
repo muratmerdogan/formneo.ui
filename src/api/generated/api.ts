@@ -780,7 +780,9 @@ export interface Customer {
     'isReferenceCustomer'?: boolean;
     'logoFilePath'?: string | null;
     'note'?: string | null;
+    'website'?: string | null;
     'twitterUrl'?: string | null;
+    'facebookUrl'?: string | null;
     'linkedinUrl'?: string | null;
     'instagramUrl'?: string | null;
     'ownerId'?: string | null;
@@ -1192,14 +1194,13 @@ export interface CustomerUpdateDto {
     'name'?: string | null;
     'legalName'?: string | null;
     'code'?: string | null;
-    'customerTypeId'?: number;
-    'categoryId'?: number;
+    'customerTypeId'?: string | null;
+    'categoryId'?: string | null;
     'status'?: number;
     'website'?: string | null;
     'taxOffice'?: string | null;
     'taxNumber'?: string | null;
     'isReferenceCustomer'?: boolean;
-    'defaultNotificationEmail'?: string | null;
     'twitterUrl'?: string | null;
     'facebookUrl'?: string | null;
     'linkedinUrl'?: string | null;
@@ -11647,6 +11648,82 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
+         * @param {number} [skip] 
+         * @param {number} [take] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersBasicGet: async (skip?: number, take?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Customers/basic`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skip !== undefined) {
+                localVarQueryParameter['skip'] = skip;
+            }
+
+            if (take !== undefined) {
+                localVarQueryParameter['take'] = take;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCountGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Customers/count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11754,6 +11831,54 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [includeDetails] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersPagedGet: async (page?: number, pageSize?: number, includeDetails?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Customers/paged`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (includeDetails !== undefined) {
+                localVarQueryParameter['includeDetails'] = includeDetails;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CustomerInsertDto} [customerInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11837,6 +11962,30 @@ export const CustomersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {number} [skip] 
+         * @param {number} [take] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersBasicGet(skip?: number, take?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersBasicGet(skip, take, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomersApi.apiCustomersBasicGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersCountGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersCountGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomersApi.apiCustomersCountGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11868,6 +12017,20 @@ export const CustomersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersIdGet(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomersApi.apiCustomersIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [includeDetails] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersPagedGet(page, pageSize, includeDetails, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomersApi.apiCustomersPagedGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -11905,6 +12068,24 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @param {number} [skip] 
+         * @param {number} [take] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersBasicGet(skip?: number, take?: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersBasicGet(skip, take, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersCountGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersCountGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11928,6 +12109,17 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
          */
         apiCustomersIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiCustomersIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [includeDetails] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersPagedGet(page, pageSize, includeDetails, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11956,6 +12148,26 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
 export class CustomersApi extends BaseAPI {
     /**
      * 
+     * @param {number} [skip] 
+     * @param {number} [take] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCustomersBasicGet(skip?: number, take?: number, options?: RawAxiosRequestConfig) {
+        return CustomersApiFp(this.configuration).apiCustomersBasicGet(skip, take, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCustomersCountGet(options?: RawAxiosRequestConfig) {
+        return CustomersApiFp(this.configuration).apiCustomersCountGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -11981,6 +12193,18 @@ export class CustomersApi extends BaseAPI {
      */
     public apiCustomersIdGet(id: string, options?: RawAxiosRequestConfig) {
         return CustomersApiFp(this.configuration).apiCustomersIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [includeDetails] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig) {
+        return CustomersApiFp(this.configuration).apiCustomersPagedGet(page, pageSize, includeDetails, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -3475,6 +3475,90 @@
         }
       }
     },
+    "/api/Customers/paged": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "includeDetails",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Customers/basic": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Customers/count": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Customers/{id}": {
       "get": {
         "tags": [
@@ -20383,7 +20467,15 @@
             "type": "string",
             "nullable": true
           },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
           "twitterUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "facebookUrl": {
             "type": "string",
             "nullable": true
           },
@@ -21968,12 +22060,14 @@
             "nullable": true
           },
           "customerTypeId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           },
           "categoryId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           },
           "status": {
             "type": "integer",
@@ -21993,10 +22087,6 @@
           },
           "isReferenceCustomer": {
             "type": "boolean"
-          },
-          "defaultNotificationEmail": {
-            "type": "string",
-            "nullable": true
           },
           "twitterUrl": {
             "type": "string",

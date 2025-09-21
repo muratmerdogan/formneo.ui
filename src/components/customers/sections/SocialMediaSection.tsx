@@ -3,7 +3,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
+// MailOutlineIcon kaldırıldı - defaultNotificationEmail alanı kaldırıldı
 
 type Props = {
     register: any;
@@ -33,11 +33,7 @@ export default function SocialMediaSection({ register, errors }: Props): JSX.Ele
                 <input {...register("instagramUrl")} name="instagramUrl" type="url" className="w-full h-10 px-3 rounded-md border" placeholder="https://instagram.com/..." />
                 {errors?.instagramUrl?.message && <div className="text-xs text-rose-600 mt-1">{String(errors?.instagramUrl?.message)}</div>}
             </div>
-            <div className="md:col-span-2">
-                <label className="block text-sm font-medium mb-1 flex items-center gap-2"><MailOutlineIcon fontSize="small" className="text-slate-600" /> Varsayılan Bildirim E-postası</label>
-                <input {...register("defaultNotificationEmail")} name="defaultNotificationEmail" type="email" className="w-full h-10 px-3 rounded-md border" placeholder="bildirim@ornek.com" />
-                {errors?.defaultNotificationEmail?.message && <div className="text-xs text-rose-600 mt-1">{String(errors?.defaultNotificationEmail?.message)}</div>}
-            </div>
+            {/* defaultNotificationEmail alanı kaldırıldı */}
         </div>
     );
 }

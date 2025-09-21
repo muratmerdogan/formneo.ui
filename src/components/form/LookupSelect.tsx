@@ -7,8 +7,8 @@ import { LookupApi, LookupCategoryDto, LookupItemDto } from "api/generated";
 type LookupSelectProps = {
     categoryKey: string;
     moduleKey?: string;
-    value?: string | null; // default: item.code
-    onChange: (value: string | null, item?: LookupItemDto | null) => void;
+    value?: string | null; // ID değeri
+    onChange: (id: string | null, item?: LookupItemDto | null) => void;
     label?: string;
     placeholder?: string;
     includeInactive?: boolean;
@@ -50,7 +50,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
     const [inputValue, setInputValue] = useState<string>("");
     const [create, setCreate] = useState<CreateState>({ open: false, code: "", name: "", isSubmitting: false, error: null });
 
-    const selectedOption = useMemo(() => items.find(i => (i.code || null) === (value || null)) || null, [items, value]);
+    const selectedOption = useMemo(() => items.find(i => (i.id || null) === (value || null)) || null, [items, value]);
 
     const filteredItems = useMemo(() => {
         const base = includeInactive ? items : items.filter(i => i.isActive !== false);
@@ -59,6 +59,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
         return base.filter(i => (i.code || "").toLowerCase().includes(q) || (i.name || "").toLowerCase().includes(q));
     }, [items, includeInactive, inputValue]);
 
+
     const fetchItems = async (): Promise<LookupItemDto[]> => {
         setLoading(true);
         try {
@@ -66,6 +67,9 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
             const data = (res?.data || []) as LookupItemDto[];
             setItems(data);
             return data;
+        } catch (error) {
+            console.error("Error fetching items:", error);
+            return [];
         } finally {
             setLoading(false);
         }
@@ -127,7 +131,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
             // Sunucudan güncel listeyi çek ve eklenen öğeyi seç
             const latest = await fetchItems();
             const created = (latest || []).find(i => (i.code || "") === create.code.trim()) || null;
-            onChange(created?.code || create.code.trim(), created || null);
+            onChange(created?.id || null, created || null);
             closeCreateModal();
         } catch (err: any) {
             setCreate(s => ({ ...s, error: err?.message || "Öğe eklenemedi" }));
@@ -141,22 +145,30 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
             options={filteredItems}
             getOptionLabel={(o) => o?.name || o?.code || ""}
             value={selectedOption}
-            onChange={(_, opt) => onChange(opt?.code || null, opt || null)}
+            onChange={(_, opt) => {
+                onChange(opt?.id || null, opt || null);
+            }}
             onInputChange={(_, v) => setInputValue(v)}
             loading={loading}
             disabled={disabled}
             size="small"
             openOnFocus
             disablePortal
-            onOpen={() => { if (manualFetch && items.length === 0) { void fetchItems(); } }}
-            renderOption={(props, option) => (
-                <li {...props} style={{ display: "flex", alignItems: "center", padding: "6px 12px" }}>
-                    <div>
-                        <div style={{ fontWeight: 600, color: "#0f172a" }}>{option.name}</div>
-                        <div style={{ fontSize: 12, color: "#64748b" }}>{option.code}</div>
-                    </div>
-                </li>
-            )}
+            onOpen={() => { 
+                if (manualFetch && items.length === 0) { 
+                    void fetchItems(); 
+                }
+            }}
+            renderOption={(props, option) => {
+                return (
+                    <li {...props} style={{ display: "flex", alignItems: "center", padding: "6px 12px" }}>
+                        <div>
+                            <div style={{ fontWeight: 600, color: "#0f172a" }}>{option.name}</div>
+                            <div style={{ fontSize: 12, color: "#64748b" }}>{option.code}</div>
+                        </div>
+                    </li>
+                );
+            }}
             componentsProps={{
                 paper: { sx: { borderRadius: 2, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", mt: 1 } } as any,
                 popper: { sx: { zIndex: 1400 } } as any,
@@ -198,7 +210,7 @@ const LookupSelect: React.FC<LookupSelectProps> = ({
                     }}
                 />
             )}
-            isOptionEqualToValue={(a, b) => (a?.code || a?.id) === (b?.code || b?.id)}
+            isOptionEqualToValue={(a, b) => a?.id === b?.id}
             clearOnBlur={false}
             blurOnSelect={false}
             noOptionsText={loading ? "Yükleniyor…" : "Kayıt bulunamadı - Yeni ekleyin"}

@@ -4,11 +4,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CustomersApi } from "api/generated/api";
 import { useNavigate, useParams } from "react-router-dom";
+import { useCustomerReferences } from "hooks/useCustomerReferences";
+import { 
+  createInsertDto, 
+  createUpdateDto, 
+  CustomerFormData
+} from "utils/customerFormUtils";
+import { convertApiLifecycleStageToForm, convertApiStatusToForm } from "constants/customerConstants";
+// Toast sistemi için mevcut alert sistemi kullanılacak
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
 import BasicInfoSection from "components/customers/sections/BasicInfoSection";
+import MDSnackbar from "components/MDSnackbar";
 // import AddressInfoSection from "components/customers/sections/AddressInfoSection";
 import { useRegisterActions } from "context/ActionBarContext";
 import SaveIcon from "@mui/icons-material/Save";
@@ -26,31 +35,44 @@ import { DndContext, closestCenter } from "@dnd-kit/core";
 import DraggableSection from "components/customers/sections/DraggableSection";
 
 const schema = z.object({
-    // Temel bilgiler
+    // Temel bilgiler - CustomerInsertDto ve CustomerUpdateDto'ya uygun
     name: z.string().min(2, "Zorunlu"),
     legalName: z.string().optional(),
     code: z.string().optional(),
-    customerTypeId: z.string().optional(),
-    categoryId: z.string().optional(),
-    status: z.enum(["active", "inactive"]),
+    customerTypeId: z.string().optional(), // InsertDto'da string, UpdateDto'da number olacak
+    categoryId: z.string().optional(), // InsertDto'da string, UpdateDto'da number olacak
+    status: z.enum(["active", "inactive"]).optional(), // Sadece UpdateDto'da var
     lifecycleStage: z.enum(["lead", "mql", "sql", "opportunity", "customer"]).optional(),
     ownerId: z.string().optional(),
     nextActivityDate: z.string().optional(), // ISO date string
-    sectors: z.array(z.string()).optional(),
     isReferenceCustomer: z.boolean().optional(),
-    // İletişim
-    emailPrimary: z.string().email().optional().or(z.literal("")),
-    emailSecondary: z.array(z.string()).optional(),
-    // Diğer
-    website: z.string().url().optional().or(z.literal("")),
+    
+    // Logo
+    logoFilePath: z.string().optional(),
+    
+    // Vergi bilgileri
     taxOffice: z.string().optional(),
     taxNumber: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    defaultNotificationEmail: z.string().email().optional().or(z.literal("")),
+    
+    // Web sitesi
+    website: z.string().url().optional().or(z.literal("")),
+    
+    // Sosyal medya
     twitterUrl: z.string().url().optional().or(z.literal("")),
     facebookUrl: z.string().url().optional().or(z.literal("")),
     linkedinUrl: z.string().url().optional().or(z.literal("")),
     instagramUrl: z.string().url().optional().or(z.literal("")),
+    
+    // UpdateDto'ya özel alanlar
+    // defaultNotificationEmail alanı kaldırıldı
+    
+    // Optimistic locking için
+    rowVersion: z.string().optional(),
+    
+    // InsertDto'da var ama şemada olmayan alanlar (opsiyonel)
+    officials: z.array(z.any()).optional(),
+    customFields: z.array(z.any()).optional(),
+    documents: z.array(z.any()).optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -59,7 +81,7 @@ export default function CustomerFormPage(): JSX.Element {
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<FormValues>({
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch, trigger, getValues } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: { status: "active" },
     });
@@ -78,6 +100,14 @@ export default function CustomerFormPage(): JSX.Element {
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
     const [noteRows, setNoteRows] = useState<NoteRow[]>([]);
     const [loading, setLoading] = useState(false);
+    
+    // Toast state'leri
+    const [successSB, setSuccessSB] = useState(false);
+    const [errorSB, setErrorSB] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    
+    // Reference yapısı kaldırıldı - sadece form değerleri kullanılıyor
 
     // Edit modunda müşteri verilerini yükle
     useEffect(() => {
@@ -86,6 +116,13 @@ export default function CustomerFormPage(): JSX.Element {
         }
     }, [isEdit, id]);
 
+    // customerTypeId set etmek için yardımcı fonksiyon
+    const setCustomerTypeId = (id: string) => {
+        setValue("customerTypeId", id);
+        trigger("customerTypeId");
+        console.log("customerTypeId set edildi:", id);
+    };
+
     const loadCustomerData = async (customerId: string) => {
         setLoading(true);
         try {
@@ -93,29 +130,30 @@ export default function CustomerFormPage(): JSX.Element {
             const response: any = await api.apiCustomersIdGet(customerId);
             const customer = response.data;
 
-
+            // RowVersion backend'den geliyor ✅
 
             if (customer) {
                 // Form alanlarını doldur
                 setValue("name", customer.name || "");
                 setValue("legalName", customer.legalName || "");
                 setValue("code", customer.code || "");
-                setValue("customerTypeId", customer.customerTypeId?.toString() || "");
-                setValue("categoryId", customer.categoryId?.toString() || "");
-                setValue("status", customer.status === 1 ? "active" : "inactive");
-                const lifecycleValues = ["lead", "mql", "sql", "opportunity", "customer"] as const;
-                setValue("lifecycleStage", customer.lifecycleStage !== null && customer.lifecycleStage >= 0 && customer.lifecycleStage < lifecycleValues.length ? lifecycleValues[customer.lifecycleStage] : undefined);
+                // Form alanlarına ID'leri set et
+                setValue("customerTypeId", customer.customerTypeId?.toString() || undefined);
+                setValue("categoryId", customer.categoryId?.toString() || undefined);
+                
+                // RowVersion'ı form'a set et (Optimistic locking için)
+                setValue("rowVersion", customer.rowVersion || undefined);
+                setValue("status", convertApiStatusToForm(customer.status === 1 ? 1 : 0));
+                setValue("lifecycleStage", convertApiLifecycleStageToForm(customer.lifecycleStage || 0));
                 setValue("ownerId", customer.ownerId || "");
                 setValue("nextActivityDate", customer.nextActivityDate || "");
-                setValue("sectors", customer.sectors || []);
                 setValue("isReferenceCustomer", !!customer.isReferenceCustomer);
-                setValue("emailPrimary", customer.emailPrimary || "");
-                setValue("emailSecondary", customer.emailSecondary || []);
+                setValue("logoFilePath", customer.logoFilePath || "");
                 setValue("website", customer.website || "");
                 setValue("taxOffice", customer.taxOffice || "");
                 setValue("taxNumber", customer.taxNumber || "");
-                setValue("tags", customer.tags || []);
-                setValue("defaultNotificationEmail", customer.defaultNotificationEmail || "");
+                // tags alanı şemadan kaldırıldı
+                // defaultNotificationEmail alanı kaldırıldı
                 setValue("twitterUrl", customer.twitterUrl || "");
                 setValue("facebookUrl", customer.facebookUrl || "");
                 setValue("linkedinUrl", customer.linkedinUrl || "");
@@ -189,74 +227,98 @@ export default function CustomerFormPage(): JSX.Element {
     };
 
     const onSubmit = async (values: FormValues) => {
-        const api = new CustomersApi(getConfiguration());
-        const dto: any = {
-            name: values.name,
-            legalName: values.legalName || null,
-            code: values.code || null,
-            customerTypeId: values.customerTypeId ? Number(values.customerTypeId) : null,
-            categoryId: values.categoryId ? Number(values.categoryId) : null,
-            status: values.status === "active" ? 1 : 0,
-            lifecycleStage: values.lifecycleStage ? ["lead", "mql", "sql", "opportunity", "customer"].indexOf(values.lifecycleStage) : null,
-            ownerId: values.ownerId || null,
-            nextActivityDate: values.nextActivityDate || null,
-            sectors: values.sectors || null,
-            isReferenceCustomer: !!values.isReferenceCustomer,
-            emailPrimary: values.emailPrimary || null,
-            emailSecondary: values.emailSecondary || null,
-            emails: emailRows.map(e => ({
-                id: e.id,
-                email: e.email,
-                description: e.description || null,
-                notify: e.notify,
-                bulk: e.bulk,
-                isActive: e.isActive,
-                isPrimary: e.isPrimary
-            })),
-            addresses: addressRows.map(a => ({
-                id: a.id,
-                country: a.country || null,
-                city: a.city || null,
-                district: a.district || null,
-                postalCode: a.postalCode || null,
-                line1: a.line1 || null,
-                line2: a.line2 || null,
-                isBilling: a.isBilling,
-                isShipping: a.isShipping,
-                isActive: a.isActive
-            })),
-            phones: phoneRows.map(p => ({
-                id: p.id,
-                label: p.label || null,
-                number: p.number,
-                isPrimary: p.isPrimary,
-                isActive: p.isActive
-            })),
-            notes: noteRows.map(n => ({
-                id: n.id,
-                date: n.date,
-                title: n.title,
-                content: n.note
-            })),
-            website: values.website || null,
-            taxOffice: values.taxOffice || null,
-            taxNumber: values.taxNumber || null,
-            tags: values.tags || null,
-            defaultNotificationEmail: values.defaultNotificationEmail || null,
-            twitterUrl: values.twitterUrl || null,
-            facebookUrl: values.facebookUrl || null,
-            linkedinUrl: values.linkedinUrl || null,
-            instagramUrl: values.instagramUrl || null,
-        };
-
-        if (isEdit) {
-            dto.id = id;
-            await api.apiCustomersPut(dto);
-            navigate(`/customers/${id}`);
-        } else {
-            const res: any = await api.apiCustomersPost(dto);
-            const createdId = String(res?.data?.id ?? "");
-            navigate(`/customers/${createdId}`);
+        try {
+            console.log("=== FORM SUBMISSION DEBUG ===");
+            console.log("values.customerTypeId:", values.customerTypeId);
+            console.log("values.categoryId:", values.categoryId);
+            console.log("typeof customerTypeId:", typeof values.customerTypeId);
+            
+            // Test için alert
+            alert(`Submit Debug:\ncustomerTypeId: ${values.customerTypeId}\ncategoryId: ${values.categoryId}\nrowVersion: ${values.rowVersion}`);
+      
+            const api = new CustomersApi(getConfiguration());
+            
+            // Prepare form data
+            const formData: CustomerFormData = {
+                ...values,
+                status: values.status as "active" | "inactive",
+            };
+            
+            if (isEdit && id) {
+                // Update existing customer
+                const updateDto = createUpdateDto(id, formData);
+                console.log("Update DTO:", updateDto);
+                console.log("Update DTO customerTypeId:", updateDto.customerTypeId);
+                
+                await api.apiCustomersPut(updateDto);
+                
+                // Başarılı güncelleme toast'ı
+                setSuccessMessage("Müşteri bilgileri başarıyla güncellendi!");
+                setSuccessSB(true);
+                
+                navigate(`/customers/${id}`);
+            } else {
+                // Create new customer
+                const additionalData = {
+                    emails: emailRows.map(e => ({
+                        id: e.id,
+                        email: e.email,
+                        description: e.description || null,
+                        notify: e.notify,
+                        bulk: e.bulk,
+                        isActive: e.isActive,
+                        isPrimary: e.isPrimary
+                    })),
+                    addresses: addressRows.map(a => ({
+                        id: a.id,
+                        country: a.country || null,
+                        city: a.city || null,
+                        district: a.district || null,
+                        postalCode: a.postalCode || null,
+                        line1: a.line1 || null,
+                        line2: a.line2 || null,
+                        isBilling: a.isBilling,
+                        isShipping: a.isShipping,
+                        isActive: a.isActive,
+                        isPrimary: a.isPrimary
+                    })),
+                    phones: phoneRows.map(p => ({
+                        id: p.id,
+                        label: p.label || null,
+                        number: p.number,
+                        isPrimary: p.isPrimary,
+                        isActive: p.isActive
+                    })),
+                    notes: noteRows.map(n => ({
+                        id: n.id,
+                        date: n.date,
+                        title: n.title,
+                        content: n.note
+                    })),
+                    officials: values.officials || null,
+                    customFields: values.customFields || null,
+                    documents: values.documents || null,
+                };
+                
+                const insertDto = createInsertDto(formData, additionalData);
+                console.log("Insert DTO:", insertDto);
+                console.log("Insert DTO customerTypeId:", insertDto.customerTypeId);
+                
+                const res: any = await api.apiCustomersPost(insertDto);
+                const createdId = String(res?.data?.id ?? "");
+                
+                // Başarılı oluşturma toast'ı
+                setSuccessMessage("Yeni müşteri başarıyla oluşturuldu!");
+                setSuccessSB(true);
+                
+                navigate(`/customers/${createdId}`);
+            }
+        } catch (error) {
+            console.error("Form submission error:", error);
+            
+            // Hata toast'ı
+            setErrorMessage("Bir hata oluştu! Lütfen tekrar deneyin.");
+            setErrorSB(true);
         }
     };
 
@@ -308,15 +370,29 @@ export default function CustomerFormPage(): JSX.Element {
                 <DndContext collisionDetection={closestCenter}>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <DraggableSection id="basic" title="Temel Bilgiler">
+                      
                             <BasicInfoSection
                                 register={register}
                                 errors={errors}
                                 customerTypeValue={watch("customerTypeId") || null}
-                                onCustomerTypeChange={(val) => setValue("customerTypeId", val || "")}
-                                sectorTypeValue={watch("sectors")?.join(",") || null}
-                                onSectorTypeChange={(val) => setValue("sectors", val ? val.split(",").map(s => s.trim()).filter(Boolean) : [])}
-                                sectorsValue={watch("sectors")?.join(",") || null}
-                                onSectorsChange={(val) => setValue("sectors", val ? val.split(",").map(s => s.trim()).filter(Boolean) : [])}
+                                onCustomerTypeChange={(id, item) => {
+                                    // Form'a ID'yi bağla (Müşteri Tipi alanı için)
+                                    setValue("customerTypeId", id || undefined);
+                                    trigger("customerTypeId"); // Form'u güncelle
+    
+                                   }}
+                                categoryIdValue={watch("categoryId") || null}
+                                onCategoryIdChange={(id, item) => {
+                                    // Form'a ID'yi bağla (Kategori alanı için)
+                                    setValue("categoryId", id || undefined);
+                                    trigger("categoryId"); // Form'u güncelle
+                       
+                                    // Test için alert  alert(`Kategori Seçildi!\nID: ${id}\nAd: ${item?.name}\nKod: ${item?.code}\nForm'a bağlandı: ${id}`);
+                                }}
+                                sectorTypeValue={null}
+                                onSectorTypeChange={(val) => {}}
+                                sectorsValue={null}
+                                onSectorsChange={(val) => {}}
                             />
                         </DraggableSection>
                         <DraggableSection id="emails" title="E-Postalar">

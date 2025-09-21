@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
     Autocomplete,
     Box,
@@ -20,6 +20,8 @@ import {
     FormControlLabel,
 } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { CustomersApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -36,6 +38,7 @@ import {
 } from "@ui5/webcomponents-react";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { useBusy } from "layouts/pages/hooks/useBusy";
+// Toast sistemi için mevcut alert sistemi kullanılacak
 
 type Address = {
     id: string;
@@ -83,6 +86,11 @@ type CustomerForm = {
     website?: string;
     preferedContact?: string;
     tags: string[];
+    // Sosyal medya
+    twitterUrl?: string;
+    facebookUrl?: string;
+    linkedinUrl?: string;
+    instagramUrl?: string;
     // Adresler
     addresses: Address[];
     // Yetkililer
@@ -151,6 +159,50 @@ function CustomerDetail(): JSX.Element {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [dirty, setDirty] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    // Veri yükleme
+    useEffect(() => {
+        if (customerId) {
+            loadCustomerData(customerId);
+        }
+    }, [customerId]);
+
+    const loadCustomerData = async (id: string) => {
+        setLoading(true);
+        try {
+            const api = new CustomersApi(getConfiguration());
+            const response: any = await api.apiCustomersIdGet(id);
+            const customer = response.data;
+
+            if (customer) {
+                // Form alanlarını doldur
+                setForm(prev => ({
+                    ...prev,
+                    name: customer.name || "",
+                    code: customer.code || "",
+                    status: customer.status === 1 ? "Aktif" : "Pasif",
+                    taxOffice: customer.taxOffice || "",
+                    taxNumber: customer.taxNumber || "",
+                    website: customer.website || "",
+                    // Sosyal medya bilgileri
+                    twitterUrl: customer.twitterUrl || "",
+                    facebookUrl: customer.facebookUrl || "",
+                    linkedinUrl: customer.linkedinUrl || "",
+                    instagramUrl: customer.instagramUrl || "",
+                    // ID değerlerini string olarak set et
+                    customerType: customer.customerTypeId?.toString() || "Bireysel",
+                    category: customer.categoryId?.toString() || "Standart",
+                    sectors: customer.sectors || [],
+                }));
+            }
+        } catch (error) {
+            console.error("Müşteri verisi yüklenemedi:", error);
+            dispatchAlert({ type: MessageBoxType.Error, message: "Müşteri verisi yüklenemedi" });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Klavye kısayolları
     React.useEffect(() => {
@@ -197,6 +249,11 @@ function CustomerDetail(): JSX.Element {
         website: "",
         preferedContact: "E-posta",
         tags: [],
+        // Sosyal medya
+        twitterUrl: "",
+        facebookUrl: "",
+        linkedinUrl: "",
+        instagramUrl: "",
         addresses: [],
         officials: [],
         paymentMethod: "",
@@ -365,11 +422,20 @@ function CustomerDetail(): JSX.Element {
         try {
             dispatchBusy({ isBusy: true });
             // API entegrasyonu burada yapılacak
+            
+            // Başarılı kaydetme mesajı
+            alert("🎉 Müşteri bilgileri başarıyla kaydedildi!");
+            
             dispatchAlert({ message: "Müşteri başarıyla kaydedildi", type: MessageBoxType.Success });
             setDirty(false);
             if (andNew) {
                 navigate("/customer/detail");
             }
+        } catch (error) {
+            console.error("Save error:", error);
+            
+            // Hata mesajı
+            alert("❌ Kaydetme sırasında bir hata oluştu! Lütfen tekrar deneyin.");
         } finally {
             dispatchBusy({ isBusy: false });
         }
@@ -653,6 +719,18 @@ function CustomerDetail(): JSX.Element {
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <MDInput label="Web Sitesi" name="website" value={form.website} onChange={handleChange} fullWidth />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <MDInput label="Twitter URL" name="twitterUrl" value={form.twitterUrl} onChange={handleChange} fullWidth />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <MDInput label="Facebook URL" name="facebookUrl" value={form.facebookUrl} onChange={handleChange} fullWidth />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <MDInput label="LinkedIn URL" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} fullWidth />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <MDInput label="Instagram URL" name="instagramUrl" value={form.instagramUrl} onChange={handleChange} fullWidth />
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <TextField
