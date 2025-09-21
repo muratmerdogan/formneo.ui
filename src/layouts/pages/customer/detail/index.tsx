@@ -31,6 +31,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+import MDSnackbar from "components/MDSnackbar";
 import {
     ObjectPage,
     ObjectPageTitle,
@@ -160,6 +161,12 @@ function CustomerDetail(): JSX.Element {
     const [dirty, setDirty] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    
+    // Toast state'leri
+    const [successSB, setSuccessSB] = useState(false);
+    const [errorSB, setErrorSB] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     // Veri yükleme
     useEffect(() => {
@@ -423,8 +430,9 @@ function CustomerDetail(): JSX.Element {
             dispatchBusy({ isBusy: true });
             // API entegrasyonu burada yapılacak
             
-            // Başarılı kaydetme mesajı
-            alert("🎉 Müşteri bilgileri başarıyla kaydedildi!");
+            // Başarılı kaydetme toast'ı
+            setSuccessMessage("Müşteri bilgileri başarıyla kaydedildi!");
+            setSuccessSB(true);
             
             dispatchAlert({ message: "Müşteri başarıyla kaydedildi", type: MessageBoxType.Success });
             setDirty(false);

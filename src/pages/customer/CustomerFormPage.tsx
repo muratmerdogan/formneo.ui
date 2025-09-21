@@ -453,9 +453,31 @@ export default function CustomerFormPage(): JSX.Element {
                 </DndContext>
             </form>
             <Footer />
+            
+            {/* Success Toast */}
+            <MDSnackbar
+                color="success"
+                icon="check"
+                title="Başarılı!"
+                content={successMessage}
+                dateTime="Şimdi"
+                open={successSB}
+                close={() => setSuccessSB(false)}
+                bgWhite
+            />
+            
+            {/* Error Toast */}
+            <MDSnackbar
+                color="error"
+                icon="warning"
+                title="Hata!"
+                content={errorMessage}
+                dateTime="Şimdi"
+                open={errorSB}
+                close={() => setErrorSB(false)}
+                bgWhite
+            />
         </DashboardLayout>
-
-
     );
 }
 
