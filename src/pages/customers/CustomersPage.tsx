@@ -12,6 +12,7 @@ import { useRegisterActions } from "context/ActionBarContext";
 import AddIcon from "@mui/icons-material/Add";
 import { GridView, TableChart } from "@mui/icons-material";
 import DataGrid, { ColumnDef } from "../../components/ui/DataGrid";
+import MuiCustomerGrid from "../../components/customers/MuiCustomerGrid";
 
 export default function CustomersPage(): JSX.Element {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function CustomersPage(): JSX.Element {
     const sort = params.get("sort") ?? "recent";
     const page = Number(params.get("page") ?? 1);
     const pageSize = Number(params.get("pageSize") ?? 20);
+    const totalFromUrl = Number(params.get("total") ?? 0);
 
     const patch = (patch: Record<string, string>) => {
         const next = new URLSearchParams(params);
@@ -50,36 +52,76 @@ export default function CustomersPage(): JSX.Element {
         let isMounted = true;
         setLoading(true);
         const api = new CustomersApi(getConfiguration());
-        api.apiCustomersGet()
+        
+        // Server-side paging ile veri çek
+        // Filtreleme parametrelerini query string olarak ekle
+        const queryParams = new URLSearchParams();
+        if (q) queryParams.append('search', q);
+        if (sector) queryParams.append('sector', sector);
+        if (tag) queryParams.append('tag', tag);
+        if (status) queryParams.append('status', status);
+        if (sort) queryParams.append('sort', sort);
+        
+        const queryString = queryParams.toString();
+        const options = queryString ? { params: queryParams } : {};
+        
+        api.apiCustomersPagedGet(page, pageSize, true, options)
             .then((res: any) => {
-                const data = Array.isArray(res?.data) ? res.data : (res?.data?.items ?? []);
+                // Backend response yapısı:
+                // {
+                //   items: [],
+                //   TotalCount: number,
+                //   TotalPages: number, 
+                //   Page: number,
+                //   PageSize: number,
+                //   HasNextPage: boolean,
+                //   HasPreviousPage: boolean
+                // }
+                const data = res?.data?.items ?? [];
+                // Backend TotalCount değerini al
+                const totalCount = res?.data?.totalCount ?? 0;
+                // Backend TotalPages yanlış olabilir, TotalCount'dan hesapla
+                const calculatedTotalPages = Math.ceil(totalCount / pageSize);
+                const totalPages = calculatedTotalPages; // Backend değerini ignore et
+                const currentPage = res?.data?.page ?? page;
+                const hasNext = res?.data?.hasNextPage ?? (currentPage < totalPages);
+                const hasPrev = res?.data?.hasPreviousPage ?? (currentPage > 1);
+                
                 const mapped: Customer[] = (data as any[]).map(normalizeCustomerFromDto);
-                if (isMounted) setAll(mapped);
+                
+                console.log("=== BACKEND PAGING RESPONSE ===");
+                console.log("TotalCount:", totalCount, "(300 kayıt)");
+                console.log("Backend TotalPages:", res?.data?.totalPages, "(yanlış: 150)");
+                console.log("Calculated TotalPages:", totalPages, "(doğru: 15)");
+                console.log("Page:", currentPage);
+                console.log("PageSize:", pageSize);
+                console.log("HasNextPage:", hasNext);
+                console.log("HasPreviousPage:", hasPrev);
+                console.log("Items length:", data.length);
+                
+                if (isMounted) {
+                    setAll(mapped);
+                    // TotalCount'ı URL'ye ekle (pagination için)
+                    if (totalCount !== 0) {
+                        const next = new URLSearchParams(params);
+                        next.set('total', String(totalCount));
+                        setParams(next, { replace: true });
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Müşteri listesi yüklenemedi:', error);
+                if (isMounted) setAll([]);
             })
             .finally(() => { if (isMounted) setLoading(false); });
         return () => { isMounted = false; };
-    }, []);
+    }, [page, pageSize, q, sector, tag, status, sort]); // Filtreler değiştiğinde de yeniden yükle
 
-    const { items, total } = useMemo(() => {
-        // Önceden client-side filtreleme/paging vardı; aynı mantığı koruyoruz
-        const sortBy = (sort === "recent" || sort === "revenue" || sort === "name") ? sort : "recent";
-        let data = [...all];
-        if (q) {
-            const s = q.toLowerCase();
-            data = data.filter((c) => c.name.toLowerCase().includes(s));
-        }
-        if (sector) data = data.filter((c) => c.sector === sector);
-        if (tag) data = data.filter((c) => (c.tags || []).includes(tag));
-        if (status === "active" || status === "inactive") data = data.filter((c) => c.status === status);
-
-        if (sortBy === "revenue") data.sort((a, b) => (b.kpis?.totalRevenue ?? 0) - (a.kpis?.totalRevenue ?? 0));
-        if (sortBy === "name") data.sort((a, b) => a.name.localeCompare(b.name));
-        if (sortBy === "recent") data.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-
-        const start = (page - 1) * pageSize;
-        const pageItems = data.slice(start, start + pageSize);
-        return { items: pageItems, total: data.length };
-    }, [all, q, sector, tag, status, sort, page, pageSize]);
+    // Server-side paging kullanıyoruz, client-side filtreleme kaldırıldı
+    const items = all; // API'den gelen veriler direkt kullanılıyor
+    const total = totalFromUrl || all.length; // URL'den gelen total veya fallback
+    
+    // Pagination state debug logs removed
 
     const onClear = () => setParams(new URLSearchParams(), { replace: true });
 
@@ -239,26 +281,19 @@ export default function CustomersPage(): JSX.Element {
                         </div>
                     </>
                 ) : (
-                    <DataGrid
-                        data={items}
-                        columns={columns}
+                    <MuiCustomerGrid
+                        customers={items}
                         loading={loading}
-                        selectable={true}
-                        selectedRows={selectedCustomers}
-                        onSelectionChange={setSelectedCustomers}
+                        total={total}
+                        page={page}
+                        pageSize={pageSize}
+                        onPageChange={(newPage) => {
+                            patch({ page: String(newPage) });
+                        }}
+                        onPageSizeChange={(newSize) => {
+                            patch({ pageSize: String(newSize) });
+                        }}
                         onRowClick={(customer) => navigate(`/customers/${customer.id}`)}
-                        onSort={(key, direction) => {
-                            patch({ sort: `${key}_${direction}` });
-                        }}
-                        pagination={{
-                            page,
-                            pageSize,
-                            total,
-                            onPageChange: (newPage) => patch({ page: String(newPage) }),
-                            onPageSizeChange: (newSize) => patch({ pageSize: String(newSize) })
-                        }}
-                        emptyMessage="Henüz müşteri eklenmemiş"
-                        rowKey="id"
                     />
                 )}
             </div>
