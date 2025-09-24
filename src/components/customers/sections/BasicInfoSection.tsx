@@ -37,6 +37,7 @@ export default function BasicInfoSection({ register, errors, customerTypeValue, 
             <LookupSelect
                 categoryKey="CustomerType"
                 moduleKey="CRM"
+        
                 label="Müşteri Tipi"
                 placeholder="Seçiniz"
                 value={customerTypeValue || null}
