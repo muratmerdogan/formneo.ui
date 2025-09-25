@@ -11,9 +11,14 @@ const healthTone: Record<Customer["health"], string> = {
 
 function CustomerCard({ c }: { c: Customer }) {
     const nav = useNavigate();
+    
+    const handleClick = () => {
+        nav('/customers/edit', { state: { customerId: c.id } });
+    };
+    
     return (
         <button
-            onClick={() => nav(`/customers/${c.id}`)}
+            onClick={handleClick}
             className="text-left rounded-2xl border bg-white shadow-sm hover:shadow-lg transition-all overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 hover:-translate-y-0.5"
             role="link"
             aria-label={`${c.name} detayına git`}

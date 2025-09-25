@@ -3,6 +3,7 @@ export type Health = "good" | "warning" | "risk";
 
 export interface Customer {
     id: string;
+    code?: string;
     name: string;
     logoUrl?: string;
     sector: string;

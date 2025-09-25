@@ -18139,22 +18139,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -20474,6 +20458,10 @@
         "additionalProperties": false
       },
       "Customer": {
+        "required": [
+          "code",
+          "name"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -20487,22 +20475,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -20545,30 +20517,42 @@
             "$ref": "#/components/schemas/LookupItem"
           },
           "status": {
+            "maxLength": 64,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "legalName": {
+            "maxLength": 256,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "companyType": {
+            "maxLength": 128,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "code": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string"
           },
           "taxOffice": {
+            "maxLength": 128,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "taxNumber": {
+            "maxLength": 64,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -20576,6 +20560,8 @@
             "type": "boolean"
           },
           "logoFilePath": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -20584,26 +20570,43 @@
             "nullable": true
           },
           "website": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "twitterUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "facebookUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "linkedinUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "instagramUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "ownerId": {
+            "maxLength": 256,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -20700,22 +20703,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -20990,22 +20977,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -21075,22 +21046,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -21196,22 +21151,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -21381,23 +21320,36 @@
         "additionalProperties": false
       },
       "CustomerInsertDto": {
+        "required": [
+          "code",
+          "legalName",
+          "name",
+          "taxNumber",
+          "taxOffice",
+          "website"
+        ],
         "type": "object",
         "properties": {
           "logoFilePath": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "legalName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "code": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string"
           },
           "customerTypeId": {
             "type": "string",
@@ -21410,41 +21362,61 @@
             "nullable": true
           },
           "taxOffice": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
           },
           "taxNumber": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string"
           },
           "isReferenceCustomer": {
             "type": "boolean"
           },
           "website": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
-            "nullable": true
+            "format": "uri"
           },
           "twitterUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "facebookUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "linkedinUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "instagramUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "ownerId": {
+            "maxLength": 256,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "lifecycleStage": {
+            "maximum": 4,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
@@ -21454,8 +21426,17 @@
             "nullable": true
           },
           "status": {
+            "maximum": 2147483647,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
+          },
+          "defaultNotificationEmail": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "format": "email",
+            "nullable": true
           },
           "officials": {
             "type": "array",
@@ -21537,22 +21518,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -21700,22 +21665,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -21843,22 +21792,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -22018,22 +21951,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -22091,22 +22008,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -22254,22 +22155,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -23013,22 +22898,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -25746,22 +25615,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -25834,22 +25687,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -25938,22 +25775,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -27477,22 +27298,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -27551,22 +27356,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -27711,22 +27500,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -27998,22 +27771,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -28140,22 +27897,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -28642,22 +28383,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -29135,22 +28860,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -29336,22 +29045,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -29527,22 +29220,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -30988,22 +30665,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -31135,22 +30796,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -31387,22 +31032,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",
@@ -31744,22 +31373,6 @@
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
           },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
-          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -31842,22 +31455,6 @@
           },
           "mainClient": {
             "$ref": "#/components/schemas/MainClient"
-          },
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/Company"
-          },
-          "plantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "plant": {
-            "$ref": "#/components/schemas/Plant"
           },
           "createdBy": {
             "type": "string",

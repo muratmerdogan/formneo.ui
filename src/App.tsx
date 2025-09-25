@@ -266,7 +266,7 @@ export default function App() {
               <Route path="/parameters" element={<ParametersPage />} />
               <Route path="/customers" element={<CustomersPage />} />
               <Route path="/customers/new" element={<CustomerFormPage />} />
-              <Route path="/customers/:id" element={<CustomerFormPage />} />
+              <Route path="/customers/edit" element={<CustomerFormPage />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />
               <Route path="/opportunities/new" element={<OpportunityFormPage />} />
               <Route path="/opportunities/:id" element={<OpportunityFormPage />} />

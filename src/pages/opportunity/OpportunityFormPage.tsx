@@ -10,6 +10,7 @@ import {
   OpportunityFormData,
   createOpportunityFormData
 } from "../../utils/opportunityFormUtils";
+import { extractFormErrorMessage, extractLoadingErrorMessage } from "../../utils/errorUtils";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -91,9 +92,13 @@ export default function OpportunityFormPage(): JSX.Element {
                 // Row version'ı sakla (güncelleme için gerekli)
                 setRowVersion(opportunityData.rowVersion || "");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Fırsat verisi yüklenirken hata:", error);
-            setErrorMessage("Fırsat verisi yüklenirken hata oluştu");
+            
+            // Backend'den gelen hataları işle
+            const errorMessage = extractLoadingErrorMessage(error, "Fırsat verisi");
+            
+            setErrorMessage(errorMessage);
             setErrorSB(true);
         } finally {
             setLoading(false);
@@ -123,9 +128,14 @@ export default function OpportunityFormPage(): JSX.Element {
                 navigate("/opportunities");
             }, 2000);
             
-        } catch (error) {
+        } catch (error: any) {
             console.error("Fırsat kaydedilirken hata:", error);
-            setErrorMessage(isEdit ? "Fırsat güncellenirken hata oluştu" : "Fırsat oluşturulurken hata oluştu");
+            
+            // Backend'den gelen validasyon hatalarını işle
+            const operation = isEdit ? "update" : "create";
+            const errorMessage = extractFormErrorMessage(error, operation, "Fırsat");
+            
+            setErrorMessage(errorMessage);
             setErrorSB(true);
         }
     };

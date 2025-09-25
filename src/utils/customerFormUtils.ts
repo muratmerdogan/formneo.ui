@@ -1,4 +1,5 @@
 import { CustomerLifecycleStage, convertFormStatusToApi, convertLifecycleStageToApi } from 'constants/customerConstants';
+import { CustomerInsertDto as ApiCustomerInsertDto, CustomerUpdateDto as ApiCustomerUpdateDto } from 'api/generated/api';
 
 export interface CustomerFormData {
   name: string;
@@ -25,34 +26,7 @@ export interface CustomerFormData {
 
 // Reference yapısı kaldırıldı - sadece form değerleri kullanılacak
 
-export interface CustomerInsertDto {
-  name: string;
-  legalName?: string | null;
-  code?: string | null;
-  customerTypeId?: string | null;
-  categoryId?: string | null;
-  status?: number;
-  lifecycleStage?: number | null;
-  ownerId?: string | null;
-  nextActivityDate?: string | null;
-  isReferenceCustomer?: boolean;
-  website?: string | null;
-  taxOffice?: string | null;
-  taxNumber?: string | null;
-  twitterUrl?: string | null;
-  facebookUrl?: string | null;
-  linkedinUrl?: string | null;
-  instagramUrl?: string | null;
-  logoFilePath?: string | null;
-  // Additional fields for insert
-  emails?: any[] | null;
-  addresses?: any[] | null;
-  phones?: any[] | null;
-  notes?: any[] | null;
-  officials?: any[] | null;
-  customFields?: any[] | null;
-  documents?: any[] | null;
-}
+// API'den gelen CustomerInsertDto tipini kullanıyoruz
 
 export interface CustomerUpdateDto {
   id: string;
@@ -89,34 +63,33 @@ export const createInsertDto = (
     customFields?: any[];
     documents?: any[];
   } = {}
-): CustomerInsertDto => {
+): ApiCustomerInsertDto => {
   return {
     name: formData.name,
-    legalName: formData.legalName || null,
-    code: formData.code || null,
+    legalName: formData.legalName || "",
+    code: formData.code || "",
     customerTypeId: formData.customerTypeId || null,
     categoryId: formData.categoryId || null,
     status: convertFormStatusToApi(formData.status),
-    lifecycleStage: formData.lifecycleStage ? convertLifecycleStageToApi(formData.lifecycleStage) : null,
-    ownerId: formData.ownerId || null,
+    lifecycleStage: formData.lifecycleStage ? convertLifecycleStageToApi(formData.lifecycleStage) : undefined,
+    ownerId: formData.ownerId || "",
     nextActivityDate: formData.nextActivityDate || null,
     isReferenceCustomer: !!formData.isReferenceCustomer,
-    website: formData.website || null,
-    taxOffice: formData.taxOffice || null,
-    taxNumber: formData.taxNumber || null,
+    website: formData.website || "",
+    taxOffice: formData.taxOffice || "",
+    taxNumber: formData.taxNumber || "",
     twitterUrl: formData.twitterUrl || null,
     facebookUrl: formData.facebookUrl || null,
     linkedinUrl: formData.linkedinUrl || null,
     instagramUrl: formData.instagramUrl || null,
     logoFilePath: formData.logoFilePath || null,
-    // Additional data
+    defaultNotificationEmail: null,
+    officials: additionalData.officials || null,
+    customFields: additionalData.customFields || null,
     emails: additionalData.emails || null,
     addresses: additionalData.addresses || null,
     phones: additionalData.phones || null,
     notes: additionalData.notes || null,
-    officials: additionalData.officials || null,
-    customFields: additionalData.customFields || null,
-    documents: additionalData.documents || null,
   };
 };
 

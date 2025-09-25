@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CustomersApi } from "api/generated/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useCustomerReferences } from "hooks/useCustomerReferences";
 import { 
   createInsertDto, 
   createUpdateDto, 
   CustomerFormData
 } from "utils/customerFormUtils";
+import { extractFormErrorMessage } from "utils/errorUtils";
 import { convertApiLifecycleStageToForm, convertApiStatusToForm } from "constants/customerConstants";
 // Toast sistemi için mevcut alert sistemi kullanılacak
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -79,8 +80,13 @@ type FormValues = z.infer<typeof schema>;
 
 export default function CustomerFormPage(): JSX.Element {
     const { id } = useParams();
-    const isEdit = Boolean(id);
+    const location = useLocation();
     const navigate = useNavigate();
+    
+    // State'den gelen customer ID'si
+    const customerIdFromState = location.state?.customerId;
+    const isEdit = Boolean(customerIdFromState) || location.pathname === '/customers/edit';
+    
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch, trigger, getValues } = useForm<FormValues>({
         resolver: zodResolver(schema),
         defaultValues: { 
@@ -103,6 +109,7 @@ export default function CustomerFormPage(): JSX.Element {
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
     const [noteRows, setNoteRows] = useState<NoteRow[]>([]);
     const [loading, setLoading] = useState(false);
+    const [customerId, setCustomerId] = useState<string>("");
     
     // Toast state'leri
     const [successSB, setSuccessSB] = useState(false);
@@ -114,10 +121,17 @@ export default function CustomerFormPage(): JSX.Element {
 
     // Edit modunda müşteri verilerini yükle
     useEffect(() => {
-        if (isEdit && id) {
+        if (isEdit && customerIdFromState) {
+            // State'den gelen ID ile API'den veri çek
+            loadCustomerData(customerIdFromState);
+            setCustomerId(customerIdFromState);
+        } else if (isEdit && id) {
+            // Fallback: URL'den ID ile API'den yükle
             loadCustomerData(id);
+            setCustomerId(id);
         }
-    }, [isEdit, id]);
+    }, [isEdit, customerIdFromState, id]);
+
 
     // customerTypeId set etmek için yardımcı fonksiyon
     const setCustomerTypeId = (id: string) => {
@@ -145,6 +159,7 @@ export default function CustomerFormPage(): JSX.Element {
                 setValue("categoryId", customer.categoryId?.toString() || undefined);
                 
                 // RowVersion'ı form'a set et (Optimistic locking için)
+                console.log("API'den gelen rowVersion:", customer.rowVersion);
                 setValue("rowVersion", customer.rowVersion || undefined);
                 setValue("status", convertApiStatusToForm(customer.status === 1 ? 1 : 0));
                 setValue("lifecycleStage", convertApiLifecycleStageToForm(customer.lifecycleStage || 0));
@@ -247,11 +262,13 @@ export default function CustomerFormPage(): JSX.Element {
                 status: values.status as "active" | "inactive",
             };
             
-            if (isEdit && id) {
+            if (isEdit && customerId) {
                 // Update existing customer
-                const updateDto = createUpdateDto(id, formData);
+                const updateDto = createUpdateDto(customerId, formData);
                 console.log("Update DTO:", updateDto);
                 console.log("Update DTO customerTypeId:", updateDto.customerTypeId);
+                console.log("Update DTO rowVersion:", updateDto.rowVersion);
+                console.log("Form rowVersion:", formData.rowVersion);
                 
                 await api.apiCustomersPut(updateDto);
                 
@@ -259,7 +276,8 @@ export default function CustomerFormPage(): JSX.Element {
                 setSuccessMessage("Müşteri bilgileri başarıyla güncellendi!");
                 setSuccessSB(true);
                 
-                navigate(`/customers/${id}`);
+                // Güncelleme sonrası aynı sayfada kal
+                // navigate("/customers");
             } else {
                 // Create new customer
                 const additionalData = {
@@ -314,13 +332,28 @@ export default function CustomerFormPage(): JSX.Element {
                 setSuccessMessage("Yeni müşteri başarıyla oluşturuldu!");
                 setSuccessSB(true);
                 
-                navigate(`/customers/${createdId}`);
+                // URL'yi temiz edit moduna çevir
+                window.history.replaceState(null, "", "/customers/edit");
+                
+                // Customer ID'sini sakla ve edit moduna geç
+                if (createdId) {
+                    setCustomerId(createdId);
+                    
+                    // Oluşturulan müşteriyi API'den yükle
+                    setTimeout(() => {
+                        loadCustomerData(createdId);
+                    }, 1000);
+                }
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Form submission error:", error);
             
+            // Backend'den gelen validasyon hatalarını işle
+            const operation = isEdit ? "update" : "create";
+            const errorMessage = extractFormErrorMessage(error, operation, "Müşteri");
+            
             // Hata toast'ı
-            setErrorMessage("Bir hata oluştu! Lütfen tekrar deneyin.");
+            setErrorMessage(errorMessage);
             setErrorSB(true);
         }
     };
@@ -396,6 +429,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 onSectorTypeChange={(val) => {}}
                                 sectorsValue={null}
                                 onSectorsChange={(val) => {}}
+                                isEdit={isEdit}
                             />
                         </DraggableSection>
                         <DraggableSection id="emails" title="E-Postalar">

@@ -14,15 +14,25 @@ type Props = {
     onSectorTypeChange?: (value: string | null) => void;
     sectorsValue?: string | null;
     onSectorsChange?: (value: string | null) => void;
+    isEdit?: boolean;
 };
 
-export default function BasicInfoSection({ register, errors, customerTypeValue, onCustomerTypeChange, categoryIdValue, onCategoryIdChange, sectorTypeValue, onSectorTypeChange, sectorsValue, onSectorsChange }: Props): JSX.Element {
+export default function BasicInfoSection({ register, errors, customerTypeValue, onCustomerTypeChange, categoryIdValue, onCategoryIdChange, sectorTypeValue, onSectorTypeChange, sectorsValue, onSectorsChange, isEdit }: Props): JSX.Element {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <TextInput label="Firma/Şirket Adı" name="name" register={register} error={errors?.name?.message} placeholder="Müşteri adı" maxLength={120} />
             <TextInput label="Resmi Adı" name="legalName" register={register} error={errors?.legalName?.message} placeholder="Resmi adı" maxLength={160} />
-            <TextInput label="Kod" name="code" register={register} error={errors?.code?.message} placeholder="Firma kodu" maxLength={40} />
+            <TextInput 
+                label="Kod" 
+                name="code" 
+                register={register} 
+                error={errors?.code?.message} 
+                placeholder="Firma kodu" 
+                maxLength={40}
+                disabled={isEdit}
+                helperText={isEdit ? "Müşteri kodu değiştirilemez" : undefined}
+            />
             <LookupSelect
                 categoryKey="CustomerCategory"
                 moduleKey="CRM"

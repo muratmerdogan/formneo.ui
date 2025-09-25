@@ -334,7 +334,7 @@ export default function CustomersPage(): JSX.Element {
                         onPageSizeChange={(newSize) => {
                             patch({ pageSize: String(newSize) });
                         }}
-                        onRowClick={(customer) => navigate(`/customers/${customer.id}`)}
+                        onRowClick={(customer) => navigate('/customers/edit', { state: { customerId: customer.id } })}
                     />
                 )}
             </div>
@@ -364,6 +364,7 @@ function normalizeCustomerFromDto(dto: any): Customer {
     const updatedAt = String(dto?.updatedDate ?? dto?.updatedAt ?? createdAt);
     return {
         id,
+        code: dto?.code || undefined,
         name,
         logoUrl: undefined,
         sector,
