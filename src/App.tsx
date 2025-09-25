@@ -107,6 +107,8 @@ const CustomerDetail = lazy(() => import("layouts/pages/customer/detail"));
 const CustomersPage = lazy(() => import("pages/customers/CustomersPage"));
 const CustomerDashboardPage = lazy(() => import("pages/customer/CustomerDashboardPage"));
 const CustomerFormPage = lazy(() => import("pages/customer/CustomerFormPage"));
+const OpportunitiesPage = lazy(() => import("pages/opportunities/OpportunitiesPage"));
+const OpportunityFormPage = lazy(() => import("pages/opportunity/OpportunityFormPage"));
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
@@ -265,6 +267,9 @@ export default function App() {
               <Route path="/customers" element={<CustomersPage />} />
               <Route path="/customers/new" element={<CustomerFormPage />} />
               <Route path="/customers/:id" element={<CustomerFormPage />} />
+              <Route path="/opportunities" element={<OpportunitiesPage />} />
+              <Route path="/opportunities/new" element={<OpportunityFormPage />} />
+              <Route path="/opportunities/:id" element={<OpportunityFormPage />} />
               
               <Route path="/pages/demos/alldemos" element={<AllDemos />} />
               <Route path="/tickets/statistic" element={<Sales />} />

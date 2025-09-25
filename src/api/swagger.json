@@ -21453,6 +21453,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
           "officials": {
             "type": "array",
             "items": {

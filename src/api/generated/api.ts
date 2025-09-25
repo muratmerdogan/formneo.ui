@@ -1008,6 +1008,7 @@ export interface CustomerInsertDto {
     'ownerId'?: string | null;
     'lifecycleStage'?: number;
     'nextActivityDate'?: string | null;
+    'status'?: number;
     'officials'?: Array<CustomerOfficialDto> | null;
     'customFields'?: Array<CustomFieldDto> | null;
     'emails'?: Array<CustomerEmailDto> | null;
