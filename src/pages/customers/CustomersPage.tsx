@@ -54,18 +54,19 @@ export default function CustomersPage(): JSX.Element {
         const api = new CustomersApi(getConfiguration());
         
         // Server-side paging ile veri çek
-        // Filtreleme parametrelerini query string olarak ekle
-        const queryParams = new URLSearchParams();
-        if (q) queryParams.append('search', q);
-        if (sector) queryParams.append('sector', sector);
-        if (tag) queryParams.append('tag', tag);
-        if (status) queryParams.append('status', status);
-        if (sort) queryParams.append('sort', sort);
+        // Search parametresi direkt API'ye geçiliyor (case-insensitive için küçük harfe çevir)
+        const searchParam = q ? q.toLowerCase().trim() : undefined;
         
-        const queryString = queryParams.toString();
-        const options = queryString ? { params: queryParams } : {};
+        console.log("=== API CALL DEBUG ===");
+        console.log("Search param:", searchParam);
+        console.log("Page:", page);
+        console.log("PageSize:", pageSize);
+        console.log("API URL will be:", `/api/customers/paged?page=${page}&pageSize=${pageSize}&includeDetails=true${searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''}`);
         
-        api.apiCustomersPagedGet(page, pageSize, true, options)
+        // Diğer filtreler şimdilik ignore edilecek (backend desteklemiyorsa)
+        // TODO: Backend'de sector, tag, status, sort parametreleri eklenmeli
+        
+        api.apiCustomersPagedGet(page, pageSize, true, searchParam)
             .then((res: any) => {
                 // Backend response yapısı:
                 // {
@@ -89,15 +90,7 @@ export default function CustomersPage(): JSX.Element {
                 
                 const mapped: Customer[] = (data as any[]).map(normalizeCustomerFromDto);
                 
-                console.log("=== BACKEND PAGING RESPONSE ===");
-                console.log("TotalCount:", totalCount, "(300 kayıt)");
-                console.log("Backend TotalPages:", res?.data?.totalPages, "(yanlış: 150)");
-                console.log("Calculated TotalPages:", totalPages, "(doğru: 15)");
-                console.log("Page:", currentPage);
-                console.log("PageSize:", pageSize);
-                console.log("HasNextPage:", hasNext);
-                console.log("HasPreviousPage:", hasPrev);
-                console.log("Items length:", data.length);
+                // Debug logs removed - search functionality ready
                 
                 if (isMounted) {
                     setAll(mapped);
@@ -116,6 +109,13 @@ export default function CustomersPage(): JSX.Element {
             .finally(() => { if (isMounted) setLoading(false); });
         return () => { isMounted = false; };
     }, [page, pageSize, q, sector, tag, status, sort]); // Filtreler değiştiğinde de yeniden yükle
+
+    // Filtreler değiştiğinde sayfa 1'e dön (arama sonuçları farklı sayfalarda olabilir)
+    useEffect(() => {
+        if (page !== 1) {
+            patch({ page: "1" });
+        }
+    }, [q, sector, tag, status]); // Herhangi bir filtre değiştiğinde sayfa 1'e dön
 
     // Server-side paging kullanıyoruz, client-side filtreleme kaldırıldı
     const items = all; // API'den gelen veriler direkt kullanılıyor
@@ -147,6 +147,47 @@ export default function CustomersPage(): JSX.Element {
                 </div>
             ),
             width: 250
+        },
+        {
+            key: 'customerType',
+            title: 'Müşteri Tipi',
+            sortable: true,
+            render: (value) => value || '-',
+            width: 120
+        },
+        {
+            key: 'category',
+            title: 'Kategori',
+            sortable: true,
+            render: (value) => value || '-',
+            width: 100
+        },
+        {
+            key: 'lifecycleStage',
+            title: 'Yaşam Döngüsü',
+            sortable: true,
+            render: (value) => {
+                const stageMap: Record<string, { label: string; color: string }> = {
+                    lead: { label: "Lead", color: "#64748b" },
+                    mql: { label: "MQL", color: "#0ea5e9" },
+                    sql: { label: "SQL", color: "#6366f1" },
+                    opportunity: { label: "Opportunity", color: "#f59e0b" },
+                    customer: { label: "Customer", color: "#10b981" },
+                };
+                const stage = stageMap[value as string] || { label: value || "-", color: "#94a3b8" };
+                return (
+                    <span 
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                        style={{ 
+                            backgroundColor: `${stage.color}1a`, 
+                            color: stage.color 
+                        }}
+                    >
+                        {stage.label}
+                    </span>
+                );
+            },
+            width: 120
         },
         {
             key: 'sector',
@@ -340,5 +381,9 @@ function normalizeCustomerFromDto(dto: any): Customer {
         notes: dto?.note ?? undefined,
         createdAt,
         updatedAt,
+        // Lookup text alanları
+        customerType: dto?.customerTypeText ?? dto?.customerTypeName ?? undefined,
+        category: dto?.categoryText ?? dto?.categoryName ?? undefined,
+        lifecycleStage: dto?.lifecycleStageText ?? dto?.lifecycleStageName ?? undefined,
     };
 }

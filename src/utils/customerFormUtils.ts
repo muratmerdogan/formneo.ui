@@ -31,6 +31,7 @@ export interface CustomerInsertDto {
   code?: string | null;
   customerTypeId?: string | null;
   categoryId?: string | null;
+  status?: number;
   lifecycleStage?: number | null;
   ownerId?: string | null;
   nextActivityDate?: string | null;
@@ -95,6 +96,7 @@ export const createInsertDto = (
     code: formData.code || null,
     customerTypeId: formData.customerTypeId || null,
     categoryId: formData.categoryId || null,
+    status: convertFormStatusToApi(formData.status),
     lifecycleStage: formData.lifecycleStage ? convertLifecycleStageToApi(formData.lifecycleStage) : null,
     ownerId: formData.ownerId || null,
     nextActivityDate: formData.nextActivityDate || null,

@@ -25,6 +25,10 @@ export interface Customer {
     notes?: string;
     createdAt: string;
     updatedAt: string;
+    // Lookup text alanları
+    customerType?: string;
+    category?: string;
+    lifecycleStage?: string;
 }
 
 export interface Opportunity {

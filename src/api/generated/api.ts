@@ -2176,19 +2176,31 @@ export const OfficialRole = {
 export type OfficialRole = typeof OfficialRole[keyof typeof OfficialRole];
 
 
-export interface OpportunityDto {
-    'id'?: string;
-    'customerId'?: string;
-    'title'?: string | null;
+export interface OpportunityInsertDto {
+    'customerId': string;
+    'title': string;
     'stage'?: number;
     'amount'?: number | null;
     'currency'?: string | null;
     'probability'?: number | null;
     'expectedCloseDate'?: string | null;
     'source'?: string | null;
-    'ownerUserId'?: string | null;
+    'ownerUserId': string;
     'description'?: string | null;
-    'rowVersion'?: string | null;
+}
+export interface OpportunityUpdateDto {
+    'id': string;
+    'customerId': string;
+    'title': string;
+    'stage'?: number;
+    'amount'?: number | null;
+    'currency'?: string | null;
+    'probability'?: number | null;
+    'expectedCloseDate'?: string | null;
+    'source'?: string | null;
+    'ownerUserId': string;
+    'description'?: string | null;
+    'rowVersion': string;
 }
 export interface OrganizationDto {
     'id'?: string | null;
@@ -11834,10 +11846,11 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {boolean} [includeDetails] 
+         * @param {string} [search] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCustomersPagedGet: async (page?: number, pageSize?: number, includeDetails?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiCustomersPagedGet: async (page?: number, pageSize?: number, includeDetails?: boolean, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Customers/paged`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11864,6 +11877,10 @@ export const CustomersApiAxiosParamCreator = function (configuration?: Configura
 
             if (includeDetails !== undefined) {
                 localVarQueryParameter['includeDetails'] = includeDetails;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
             }
 
 
@@ -12024,11 +12041,12 @@ export const CustomersApiFp = function(configuration?: Configuration) {
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {boolean} [includeDetails] 
+         * @param {string} [search] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersPagedGet(page, pageSize, includeDetails, options);
+        async apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCustomersPagedGet(page, pageSize, includeDetails, search, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomersApi.apiCustomersPagedGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12115,11 +12133,12 @@ export const CustomersApiFactory = function (configuration?: Configuration, base
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {boolean} [includeDetails] 
+         * @param {string} [search] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiCustomersPagedGet(page, pageSize, includeDetails, options).then((request) => request(axios, basePath));
+        apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, search?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCustomersPagedGet(page, pageSize, includeDetails, search, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -12200,11 +12219,12 @@ export class CustomersApi extends BaseAPI {
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {boolean} [includeDetails] 
+     * @param {string} [search] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, options?: RawAxiosRequestConfig) {
-        return CustomersApiFp(this.configuration).apiCustomersPagedGet(page, pageSize, includeDetails, options).then((request) => request(this.axios, this.basePath));
+    public apiCustomersPagedGet(page?: number, pageSize?: number, includeDetails?: boolean, search?: string, options?: RawAxiosRequestConfig) {
+        return CustomersApiFp(this.configuration).apiCustomersPagedGet(page, pageSize, includeDetails, search, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -21229,6 +21249,82 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @param {number} [months] 
+         * @param {string} [customerId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesDashboardGet: async (months?: number, customerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/crm/Opportunities/dashboard`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (months !== undefined) {
+                localVarQueryParameter['months'] = months;
+            }
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/crm/Opportunities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21303,11 +21399,110 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @param {OpportunityDto} [opportunityDto] 
+         * @param {string} id 
+         * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCrmOpportunitiesPost: async (opportunityDto?: OpportunityDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiCrmOpportunitiesIdPut: async (id: string, opportunityUpdateDto?: OpportunityUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCrmOpportunitiesIdPut', 'id', id)
+            const localVarPath = `/api/crm/Opportunities/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(opportunityUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [search] 
+         * @param {number} [stage] 
+         * @param {string} [customerId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesPagedGet: async (page?: number, pageSize?: number, search?: string, stage?: number, customerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/crm/Opportunities/paged`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (stage !== undefined) {
+                localVarQueryParameter['stage'] = stage;
+            }
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {OpportunityInsertDto} [opportunityInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesPost: async (opportunityInsertDto?: OpportunityInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/crm/Opportunities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -21331,44 +21526,7 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(opportunityDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {OpportunityDto} [opportunityDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiCrmOpportunitiesPut: async (opportunityDto?: OpportunityDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/crm/Opportunities`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(opportunityDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(opportunityInsertDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -21398,6 +21556,30 @@ export const OpportunitiesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} [months] 
+         * @param {string} [customerId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesDashboardGet(months?: number, customerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesDashboardGet(months, customerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesDashboardGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21422,26 +21604,43 @@ export const OpportunitiesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {OpportunityDto} [opportunityDto] 
+         * @param {string} id 
+         * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCrmOpportunitiesPost(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesPost(opportunityDto, options);
+        async apiCrmOpportunitiesIdPut(id: string, opportunityUpdateDto?: OpportunityUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesPost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesIdPut']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {OpportunityDto} [opportunityDto] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [search] 
+         * @param {number} [stage] 
+         * @param {string} [customerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCrmOpportunitiesPut(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesPut(opportunityDto, options);
+        async apiCrmOpportunitiesPagedGet(page?: number, pageSize?: number, search?: string, stage?: number, customerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesPagedGet(page, pageSize, search, stage, customerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesPut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesPagedGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {OpportunityInsertDto} [opportunityInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesPost(opportunityInsertDto?: OpportunityInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesPost(opportunityInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -21464,6 +21663,24 @@ export const OpportunitiesApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @param {number} [months] 
+         * @param {string} [customerId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesDashboardGet(months?: number, customerId?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesDashboardGet(months, customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21482,21 +21699,35 @@ export const OpportunitiesApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @param {OpportunityDto} [opportunityDto] 
+         * @param {string} id 
+         * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCrmOpportunitiesPost(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiCrmOpportunitiesPost(opportunityDto, options).then((request) => request(axios, basePath));
+        apiCrmOpportunitiesIdPut(id: string, opportunityUpdateDto?: OpportunityUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {OpportunityDto} [opportunityDto] 
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [search] 
+         * @param {number} [stage] 
+         * @param {string} [customerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCrmOpportunitiesPut(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiCrmOpportunitiesPut(opportunityDto, options).then((request) => request(axios, basePath));
+        apiCrmOpportunitiesPagedGet(page?: number, pageSize?: number, search?: string, stage?: number, customerId?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesPagedGet(page, pageSize, search, stage, customerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OpportunityInsertDto} [opportunityInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesPost(opportunityInsertDto?: OpportunityInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesPost(opportunityInsertDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -21513,6 +21744,26 @@ export class OpportunitiesApi extends BaseAPI {
      */
     public apiCrmOpportunitiesCustomerCustomerIdGet(customerId: string, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesCustomerCustomerIdGet(customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} [months] 
+     * @param {string} [customerId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesDashboardGet(months?: number, customerId?: string, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesDashboardGet(months, customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesGet(options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -21537,22 +21788,37 @@ export class OpportunitiesApi extends BaseAPI {
 
     /**
      * 
-     * @param {OpportunityDto} [opportunityDto] 
+     * @param {string} id 
+     * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public apiCrmOpportunitiesPost(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig) {
-        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPost(opportunityDto, options).then((request) => request(this.axios, this.basePath));
+    public apiCrmOpportunitiesIdPut(id: string, opportunityUpdateDto?: OpportunityUpdateDto, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {OpportunityDto} [opportunityDto] 
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [search] 
+     * @param {number} [stage] 
+     * @param {string} [customerId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public apiCrmOpportunitiesPut(opportunityDto?: OpportunityDto, options?: RawAxiosRequestConfig) {
-        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPut(opportunityDto, options).then((request) => request(this.axios, this.basePath));
+    public apiCrmOpportunitiesPagedGet(page?: number, pageSize?: number, search?: string, stage?: number, customerId?: string, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPagedGet(page, pageSize, search, stage, customerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OpportunityInsertDto} [opportunityInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesPost(opportunityInsertDto?: OpportunityInsertDto, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesPost(opportunityInsertDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

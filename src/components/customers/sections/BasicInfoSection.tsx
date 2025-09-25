@@ -34,6 +34,20 @@ export default function BasicInfoSection({ register, errors, customerTypeValue, 
                 manualFetch={false}
             />
             <SelectInput label="Durum" name="status" register={register} error={errors?.status?.message} options={[{ value: "active", label: "Aktif" }, { value: "inactive", label: "Pasif" }]} />
+            <SelectInput 
+                label="Yaşam Döngüsü Aşaması" 
+                name="lifecycleStage" 
+                register={register} 
+                error={errors?.lifecycleStage?.message} 
+                options={[
+                    { value: "", label: "Seçiniz" },
+                    { value: "lead", label: "Lead - Potansiyel" },
+                    { value: "mql", label: "MQL - Pazarlama Nitelikli" },
+                    { value: "sql", label: "SQL - Satış Nitelikli" },
+                    { value: "opportunity", label: "Opportunity - Fırsat" },
+                    { value: "customer", label: "Customer - Müşteri" }
+                ]} 
+            />
             <LookupSelect
                 categoryKey="CustomerType"
                 moduleKey="CRM"
@@ -45,16 +59,7 @@ export default function BasicInfoSection({ register, errors, customerTypeValue, 
                 allowCreate
                 manualFetch={false}
             />
-            <LookupSelect
-                categoryKey="SectorType"
-                moduleKey="CRM"
-                label="Sektör Türü"
-                placeholder="Seçiniz"
-                value={sectorsValue || null}
-                onChange={(val) => onSectorsChange && onSectorsChange(val)}
-                allowCreate
-                manualFetch={false}
-            />
+  
             <TextInput label="Vergi Dairesi" name="taxOffice" register={register} error={errors?.taxOffice?.message} placeholder="Vergi dairesi" maxLength={100} />
             <TextInput label="VKN / TC" name="taxNumber" register={register} error={errors?.taxNumber?.message} placeholder="1234567890" maxLength={20} />
             <TextInput label="Web Sitesi" name="website" register={register} error={errors?.website?.message} placeholder="https://www.example.com" maxLength={200} />

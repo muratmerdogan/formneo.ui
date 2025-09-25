@@ -61,16 +61,53 @@ export default function MuiCustomerGrid({
         },
         {
             field: 'customerType',
-            headerName: 'Tip',
+            headerName: 'Müşteri Tipi',
             width: 120,
             renderCell: (params) => (
                 <Chip 
-                    label={params.row.customerType || 'Bireysel'} 
+                    label={params.row.customerType || '-'} 
                     size="small" 
                     variant="outlined"
                     color="primary"
                 />
             ),
+        },
+        {
+            field: 'category',
+            headerName: 'Kategori',
+            width: 100,
+            renderCell: (params) => (
+                <Typography variant="body2" color="text.secondary">
+                    {params.row.category || '-'}
+                </Typography>
+            ),
+        },
+        {
+            field: 'lifecycleStage',
+            headerName: 'Yaşam Döngüsü',
+            width: 130,
+            renderCell: (params) => {
+                const stageMap: Record<string, { label: string; color: string }> = {
+                    lead: { label: "Lead", color: "#64748b" },
+                    mql: { label: "MQL", color: "#0ea5e9" },
+                    sql: { label: "SQL", color: "#6366f1" },
+                    opportunity: { label: "Opportunity", color: "#f59e0b" },
+                    customer: { label: "Customer", color: "#10b981" },
+                };
+                const stage = stageMap[params.row.lifecycleStage] || { label: params.row.lifecycleStage || "-", color: "#94a3b8" };
+                
+                return (
+                    <Chip 
+                        label={stage.label}
+                        size="small"
+                        sx={{
+                            backgroundColor: `${stage.color}1a`,
+                            color: stage.color,
+                            fontWeight: 'medium'
+                        }}
+                    />
+                );
+            },
         },
         {
             field: 'status',
@@ -82,16 +119,6 @@ export default function MuiCustomerGrid({
                     size="small" 
                     color={params.row.status === 'active' ? 'success' : 'default'}
                 />
-            ),
-        },
-        {
-            field: 'category',
-            headerName: 'Kategori',
-            width: 120,
-            renderCell: (params) => (
-                <Typography variant="body2" color="text.secondary">
-                    {params.row.category || 'Standart'}
-                </Typography>
             ),
         },
         {
@@ -129,18 +156,10 @@ export default function MuiCustomerGrid({
     ];
 
     const handlePaginationModelChange = (model: GridPaginationModel) => {
-        console.log("=== PAGINATION MODEL CHANGE ===");
-        console.log("New model:", model);
-        console.log("Current page:", page);
-        console.log("Model page (0-based):", model.page);
-        console.log("Model page (1-based):", model.page + 1);
-        
         if (model.page + 1 !== page) {
-            console.log("Page changing from", page, "to", model.page + 1);
             onPageChange(model.page + 1); // MUI uses 0-based, we use 1-based
         }
         if (model.pageSize !== pageSize) {
-            console.log("PageSize changing from", pageSize, "to", model.pageSize);
             onPageSizeChange(model.pageSize);
         }
     };
@@ -151,15 +170,7 @@ export default function MuiCustomerGrid({
         }
     };
 
-    console.log("=== MUI DATAGRID DEBUG ===");
-    console.log("Total (TotalCount):", total, "(300 kayıt)");
-    console.log("Page (1-based):", page);
-    console.log("PageSize:", pageSize);
-    console.log("Customers length:", customers.length);
-    console.log("MUI PaginationModel (0-based):", { page: page - 1, pageSize });
-    console.log("Total pages calculated:", Math.ceil(total / pageSize), "(15 sayfa)");
-    console.log("Can go next:", page < Math.ceil(total / pageSize));
-    console.log("Can go prev:", page > 1);
+    // Debug logs removed - search functionality ready
 
     return (
         <Box sx={{ height: 600, width: '100%' }}>

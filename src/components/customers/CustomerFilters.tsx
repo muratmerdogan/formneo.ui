@@ -17,7 +17,7 @@ export default function CustomerFilters({ q, sector, tag, status, sort, onChange
                 <input
                     value={q}
                     onChange={(e) => onChange({ q: e.target.value })}
-                    placeholder="Ara..."
+                    placeholder="Müşteri adı, kodu veya vergi no ile ara..."
                     className="h-9 px-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-slate-200"
                     aria-label="Ara"
                 />

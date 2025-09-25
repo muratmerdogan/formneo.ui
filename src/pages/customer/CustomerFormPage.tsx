@@ -83,7 +83,10 @@ export default function CustomerFormPage(): JSX.Element {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch, trigger, getValues } = useForm<FormValues>({
         resolver: zodResolver(schema),
-        defaultValues: { status: "active" },
+        defaultValues: { 
+            status: "active",
+            lifecycleStage: "lead" // Yeni müşteri için default stage
+        },
     });
 
     // Action bar hem yeni hem edit sayfalarında
@@ -501,11 +504,11 @@ export default function CustomerFormPage(): JSX.Element {
 
 function lifecyclePill(stage?: "lead" | "mql" | "sql" | "opportunity" | "customer") {
     const map: Record<string, { label: string; color: string }> = {
-        lead: { label: "Lead", color: "#64748b" },
-        mql: { label: "MQL", color: "#0ea5e9" },
-        sql: { label: "SQL", color: "#6366f1" },
-        opportunity: { label: "Opportunity", color: "#f59e0b" },
-        customer: { label: "Customer", color: "#10b981" },
+        lead: { label: "Lead - Potansiyel", color: "#64748b" },
+        mql: { label: "MQL - Pazarlama Nitelikli", color: "#0ea5e9" },
+        sql: { label: "SQL - Satış Nitelikli", color: "#6366f1" },
+        opportunity: { label: "Opportunity - Fırsat", color: "#f59e0b" },
+        customer: { label: "Customer - Müşteri", color: "#10b981" },
     };
     const info = stage ? map[stage] : { label: "Stage Yok", color: "#94a3b8" };
     return (

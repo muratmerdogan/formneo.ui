@@ -3506,6 +3506,14 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
           }
         ],
         "responses": {
@@ -7703,6 +7711,134 @@
         }
       }
     },
+    "/api/crm/Opportunities/paged": {
+      "get": {
+        "tags": [
+          "Opportunities"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/crm/Opportunities": {
+      "get": {
+        "tags": [
+          "Opportunities"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Opportunities"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityInsertDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityInsertDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityInsertDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/crm/Opportunities/dashboard": {
+      "get": {
+        "tags": [
+          "Opportunities"
+        ],
+        "parameters": [
+          {
+            "name": "months",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/crm/Opportunities/{id}": {
       "get": {
         "tags": [
@@ -7725,6 +7861,46 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "Opportunities"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Opportunities"
@@ -7740,66 +7916,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/crm/Opportunities": {
-      "post": {
-        "tags": [
-          "Opportunities"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Opportunities"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/OpportunityDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success"
@@ -25293,7 +25409,80 @@
         "type": "integer",
         "format": "int32"
       },
-      "OpportunityDto": {
+      "OpportunityInsertDto": {
+        "required": [
+          "customerId",
+          "ownerUserId",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
+          },
+          "stage": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "currency": {
+            "maxLength": 8,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "probability": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "expectedCloseDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "source": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "ownerUserId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 2000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpportunityUpdateDto": {
+        "required": [
+          "customerId",
+          "id",
+          "ownerUserId",
+          "rowVersion",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -25305,23 +25494,31 @@
             "format": "uuid"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "stage": {
+            "maximum": 5,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
           "amount": {
+            "minimum": 0,
             "type": "number",
             "format": "double",
             "nullable": true
           },
           "currency": {
+            "maxLength": 8,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "probability": {
+            "maximum": 100,
+            "minimum": 0,
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -25332,21 +25529,24 @@
             "nullable": true
           },
           "source": {
+            "maxLength": 128,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "ownerUserId": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "description": {
+            "maxLength": 2000,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "rowVersion": {
             "type": "string",
-            "format": "byte",
-            "nullable": true
+            "format": "byte"
           }
         },
         "additionalProperties": false
