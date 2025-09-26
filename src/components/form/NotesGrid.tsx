@@ -3,9 +3,8 @@ import { IconButton } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DateField from "components/form/DateField";
-// NotesApi henüz implement edilmemiş
-// import { CustomerNotesApi } from "api/generated/api";
-// import getConfiguration from "confiuration";
+import { CustomerNotesApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 
 export type NoteRow = {
     id: string;
@@ -31,7 +30,7 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    // const api = useMemo(() => new CustomerNotesApi(getConfiguration()), []);
+    const api = useMemo(() => new CustomerNotesApi(getConfiguration()), []);
 
     const openModal = () => { setEditingId(null); setForm({ id: "", date: today(), title: "", note: "" }); setError(null); setIsModalOpen(true); };
     const openEdit = (row: NoteRow) => { setEditingId(row.id); setForm({ ...row }); setError(null); setIsModalOpen(true); };
@@ -41,8 +40,7 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
         if (autoSave && customerId) {
             setLoading(true);
             try {
-                // Notes API henüz implement edilmemiş
-                console.log(`DELETE /api/customers/${customerId}/notes/${id}`);
+                await api.apiCustomerNotesIdDelete(id);
                 onChange((rows || []).filter(r => r.id !== id));
             } catch (err) {
                 setError("Not silinemedi");
@@ -72,8 +70,15 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
             if (autoSave && customerId) {
                 setLoading(true);
                 try {
-                    // Notes API henüz implement edilmemiş
-                    console.log(`PUT /api/customers/${customerId}/notes/${editingId}`, noteData);
+                    const updateDto = {
+                        id: editingId,
+                        customerId: customerId,
+                        date: form.date,
+                        title: form.title.trim(),
+                        content: form.note.trim(),
+                        rowVersion: noteData.rowVersion
+                    };
+                    await api.apiCustomerNotesPut(updateDto);
 
                     const updated = (rows || []).map(r => r.id === editingId ? { ...r, ...noteData } : r);
                     onChange(updated);
@@ -96,12 +101,18 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
         if (autoSave && customerId) {
             setLoading(true);
             try {
-                // Notes API henüz implement edilmemiş
-                console.log(`POST /api/customers/${customerId}/notes`, noteData);
-                const response = { data: { id: crypto.randomUUID() } }; // Temporary mock response
+                const insertDto = {
+                    customerId: customerId,
+                    date: form.date,
+                    title: form.title.trim(),
+                    content: form.note.trim()
+                };
+                const response: any = await api.apiCustomerNotesPost(insertDto);
                 const newRow: NoteRow = {
                     id: response.data?.id || crypto.randomUUID(),
-                    ...noteData
+                    date: form.date,
+                    title: form.title.trim(),
+                    note: form.note.trim()
                 };
 
                 onChange([...(rows || []), newRow]);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CustomersApi } from "api/generated/api";
+import { CustomersApi, CustomerEmailsApi, CustomerPhonesApi, CustomerAddressesApi, CustomerNotesApi } from "api/generated/api";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useCustomerReferences } from "hooks/useCustomerReferences";
 import { 
@@ -256,11 +256,14 @@ export default function CustomerFormPage(): JSX.Element {
             };
             
             if (isEdit && (customerId || customerIdFromState)) {
-                // Update existing customer
+                // Update existing customer (sadece temel bilgiler)
                 const idToUse = customerId || customerIdFromState;
                 const updateDto = createUpdateDto(idToUse, formData);
                 
                 await api.apiCustomersPut(updateDto);
+                
+                // TODO: Email, phone, address, notes için ayrı API çağrıları yapılabilir
+                // Şu an sadece temel müşteri bilgileri güncelleniyor
                 
                 // Başarılı güncelleme toast'ı
                 setSuccessMessage("Müşteri bilgileri başarıyla güncellendi!");
@@ -425,7 +428,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 label="E-Postalar"
                                 rows={emailRows}
                                 onChange={setEmailRows}
-                                customerId={isEdit ? id : undefined}
+                                customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                             />
                         </DraggableSection>
@@ -434,7 +437,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 label="Adresler"
                                 rows={addressRows}
                                 onChange={setAddressRows}
-                                customerId={isEdit ? id : undefined}
+                                customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                             />
                         </DraggableSection>
@@ -443,7 +446,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 label="Telefonlar"
                                 rows={phoneRows}
                                 onChange={setPhoneRows}
-                                customerId={isEdit ? id : undefined}
+                                customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                             />
                         </DraggableSection>
@@ -468,7 +471,7 @@ export default function CustomerFormPage(): JSX.Element {
                                     errors={errors}
                                     rows={noteRows}
                                     onChange={setNoteRows}
-                                    customerId={isEdit ? id : undefined}
+                                    customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                     autoSave={isEdit}
                                 />}
                                 {activeTab === 1 && <SocialMediaSection register={register} errors={errors} />}
