@@ -85,7 +85,11 @@ export default function CustomerFormPage(): JSX.Element {
     
     // State'den gelen customer ID'si
     const customerIdFromState = location.state?.customerId;
-    const isEdit = Boolean(customerIdFromState) || location.pathname === '/customers/edit';
+    const [customerId, setCustomerId] = useState<string>("");
+    
+    // Edit modu: state'den ID, local customerId veya URL path'e göre
+    const isEdit = Boolean(customerIdFromState) || Boolean(customerId) || location.pathname === '/customers/edit';
+    
     
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch, trigger, getValues } = useForm<FormValues>({
         resolver: zodResolver(schema),
@@ -109,7 +113,6 @@ export default function CustomerFormPage(): JSX.Element {
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
     const [noteRows, setNoteRows] = useState<NoteRow[]>([]);
     const [loading, setLoading] = useState(false);
-    const [customerId, setCustomerId] = useState<string>("");
     
     // Toast state'leri
     const [successSB, setSuccessSB] = useState(false);
@@ -137,7 +140,6 @@ export default function CustomerFormPage(): JSX.Element {
     const setCustomerTypeId = (id: string) => {
         setValue("customerTypeId", id);
         trigger("customerTypeId");
-        console.log("customerTypeId set edildi:", id);
     };
 
     const loadCustomerData = async (customerId: string) => {
@@ -158,9 +160,8 @@ export default function CustomerFormPage(): JSX.Element {
                 setValue("customerTypeId", customer.customerTypeId?.toString() || undefined);
                 setValue("categoryId", customer.categoryId?.toString() || undefined);
                 
-                // RowVersion'ı form'a set et (Optimistic locking için)
-                console.log("API'den gelen rowVersion:", customer.rowVersion);
-                setValue("rowVersion", customer.rowVersion || undefined);
+            // RowVersion'ı form'a set et (Optimistic locking için)
+            setValue("rowVersion", customer.rowVersion || undefined);
                 setValue("status", convertApiStatusToForm(customer.status === 1 ? 1 : 0));
                 setValue("lifecycleStage", convertApiLifecycleStageToForm(customer.lifecycleStage || 0));
                 setValue("ownerId", customer.ownerId || "");
@@ -246,14 +247,6 @@ export default function CustomerFormPage(): JSX.Element {
 
     const onSubmit = async (values: FormValues) => {
         try {
-            console.log("=== FORM SUBMISSION DEBUG ===");
-            console.log("values.customerTypeId:", values.customerTypeId);
-            console.log("values.categoryId:", values.categoryId);
-            console.log("typeof customerTypeId:", typeof values.customerTypeId);
-            
-            // Test için alert
-           
-      
             const api = new CustomersApi(getConfiguration());
             
             // Prepare form data
@@ -262,13 +255,10 @@ export default function CustomerFormPage(): JSX.Element {
                 status: values.status as "active" | "inactive",
             };
             
-            if (isEdit && customerId) {
+            if (isEdit && (customerId || customerIdFromState)) {
                 // Update existing customer
-                const updateDto = createUpdateDto(customerId, formData);
-                console.log("Update DTO:", updateDto);
-                console.log("Update DTO customerTypeId:", updateDto.customerTypeId);
-                console.log("Update DTO rowVersion:", updateDto.rowVersion);
-                console.log("Form rowVersion:", formData.rowVersion);
+                const idToUse = customerId || customerIdFromState;
+                const updateDto = createUpdateDto(idToUse, formData);
                 
                 await api.apiCustomersPut(updateDto);
                 
@@ -322,8 +312,6 @@ export default function CustomerFormPage(): JSX.Element {
                 };
                 
                 const insertDto = createInsertDto(formData, additionalData);
-                console.log("Insert DTO:", insertDto);
-                console.log("Insert DTO customerTypeId:", insertDto.customerTypeId);
                 
                 const res: any = await api.apiCustomersPost(insertDto);
                 const createdId = String(res?.data?.id ?? "");

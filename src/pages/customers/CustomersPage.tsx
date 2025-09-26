@@ -57,11 +57,6 @@ export default function CustomersPage(): JSX.Element {
         // Search parametresi direkt API'ye geçiliyor (case-insensitive için küçük harfe çevir)
         const searchParam = q ? q.toLowerCase().trim() : undefined;
         
-        console.log("=== API CALL DEBUG ===");
-        console.log("Search param:", searchParam);
-        console.log("Page:", page);
-        console.log("PageSize:", pageSize);
-        console.log("API URL will be:", `/api/customers/paged?page=${page}&pageSize=${pageSize}&includeDetails=true${searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''}`);
         
         // Diğer filtreler şimdilik ignore edilecek (backend desteklemiyorsa)
         // TODO: Backend'de sector, tag, status, sort parametreleri eklenmeli
@@ -350,7 +345,11 @@ function normalizeCustomerFromDto(dto: any): Customer {
     const country = String(firstAddress?.country ?? dto?.country ?? "");
     const city = (firstAddress?.city ?? dto?.city) ? String(firstAddress?.city ?? dto?.city) : undefined;
     const website = (dto?.website ?? dto?.webSite) ? String(dto?.website ?? dto?.webSite) : undefined;
-    const email = (dto?.emailPrimary ?? dto?.email) ? String(dto?.emailPrimary ?? dto?.email) : undefined;
+    // Email'i farklı kaynaklardan al (emails array'den de bakabilir)
+    const primaryEmail = Array.isArray(dto?.emails) && dto.emails.length 
+        ? dto.emails.find((e: any) => e.isPrimary)?.email || dto.emails[0]?.email
+        : undefined;
+    const email = (dto?.emailPrimary ?? dto?.email ?? primaryEmail) ? String(dto?.emailPrimary ?? dto?.email ?? primaryEmail) : undefined;
     const phone = (dto?.phone ?? dto?.mobile) ? String(dto?.phone ?? dto?.mobile) : undefined;
     const statusNum = typeof dto?.status === "number" ? dto.status : undefined;
     const status = (dto?.status === "active" || dto?.status === "inactive")
