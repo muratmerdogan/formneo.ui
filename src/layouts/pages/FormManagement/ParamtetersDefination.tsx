@@ -215,6 +215,7 @@ const ParamtetersDefination = (): JSX.Element => {
         if (areEqual) {
           await formRepo.apiFormDataPut({
             id: id,
+            concurrencyToken: values.concurrencyToken || 0,
             formName: values.formName,
             canEdit: true,
             parentFormId: values.parentFormId,
@@ -232,6 +233,7 @@ const ParamtetersDefination = (): JSX.Element => {
         } else {
           await formRepo.apiFormDataPut({
             id: id,
+            concurrencyToken: values.concurrencyToken || 0,
             formName: values.formName,
             canEdit: false,
             parentFormId: values.parentFormId,

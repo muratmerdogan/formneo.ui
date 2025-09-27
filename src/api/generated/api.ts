@@ -35,7 +35,6 @@ export interface ActivityDto {
     'assignedToUserId'?: string | null;
     'startTime'?: string | null;
     'endTime'?: string | null;
-    'rowVersion'?: string | null;
 }
 
 export const AddressType = {
@@ -789,7 +788,6 @@ export interface Customer {
     'customFields'?: Array<CustomerCustomField> | null;
     'phones'?: Array<CustomerPhone> | null;
     'notes'?: Array<CustomerNote> | null;
-    'rowVersion'?: string | null;
 }
 
 
@@ -817,7 +815,6 @@ export interface CustomerAddress {
     'isShipping'?: boolean;
     'isActive'?: boolean;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 
 
@@ -836,7 +833,6 @@ export interface CustomerAddressDto {
     'isBilling'?: boolean;
     'isShipping'?: boolean;
     'isActive'?: boolean;
-    'rowVersion'?: string | null;
 }
 export interface CustomerAddressInsertDto {
     'customerId'?: string;
@@ -868,7 +864,6 @@ export interface CustomerAddressUpdateDto {
     'isShipping'?: boolean;
     'isActive'?: boolean;
     'id'?: string;
-    'rowVersion'?: string | null;
 }
 export interface CustomerCustomField {
     'id'?: string;
@@ -886,7 +881,6 @@ export interface CustomerCustomField {
     'label'?: string | null;
     'valueJson'?: string | null;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerDocument {
     'id'?: string;
@@ -906,14 +900,12 @@ export interface CustomerDocument {
     'description'?: string | null;
     'category'?: string | null;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerDocumentUpdateDto {
     'id'?: string;
     'fileName'?: string | null;
     'description'?: string | null;
     'category'?: string | null;
-    'rowVersion'?: string | null;
 }
 export interface CustomerEmail {
     'id'?: string;
@@ -933,7 +925,6 @@ export interface CustomerEmail {
     'isActive'?: boolean;
     'isPrimary'?: boolean;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerEmailDto {
     'id'?: string;
@@ -944,7 +935,6 @@ export interface CustomerEmailDto {
     'bulk'?: boolean;
     'isActive'?: boolean;
     'isPrimary'?: boolean;
-    'rowVersion'?: string | null;
 }
 export interface CustomerEmailInsertDto {
     'customerId'?: string;
@@ -964,7 +954,6 @@ export interface CustomerEmailUpdateDto {
     'isActive'?: boolean;
     'isPrimary'?: boolean;
     'id'?: string;
-    'rowVersion'?: string | null;
 }
 export interface CustomerInsertDto {
     'logoFilePath'?: string | null;
@@ -982,7 +971,7 @@ export interface CustomerInsertDto {
     'linkedinUrl'?: string | null;
     'instagramUrl'?: string | null;
     'ownerId'?: string | null;
-    'lifecycleStage'?: number;
+    'lifecycleStage'?: number | null;
     'nextActivityDate'?: string | null;
     'status'?: number;
     'defaultNotificationEmail'?: string | null;
@@ -1013,14 +1002,12 @@ export interface CustomerNote {
     'title'?: string | null;
     'content'?: string | null;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerNoteDto {
     'id'?: string;
     'date'?: string;
     'title'?: string | null;
     'content'?: string | null;
-    'rowVersion'?: string | null;
 }
 export interface CustomerNoteInsertDto {
     'customerId'?: string;
@@ -1034,7 +1021,6 @@ export interface CustomerNoteUpdateDto {
     'date'?: string;
     'title'?: string | null;
     'content'?: string | null;
-    'rowVersion'?: string | null;
 }
 export interface CustomerOfficial {
     'id'?: string;
@@ -1056,7 +1042,6 @@ export interface CustomerOfficial {
     'isPrimary'?: boolean;
     'kvkkConsent'?: boolean;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 
 
@@ -1070,7 +1055,6 @@ export interface CustomerOfficialDto {
     'role'?: number;
     'isPrimary'?: boolean;
     'kvkkConsent'?: boolean;
-    'rowVersion'?: string | null;
 }
 export interface CustomerPhone {
     'id'?: string;
@@ -1088,7 +1072,6 @@ export interface CustomerPhone {
     'isPrimary'?: boolean;
     'isActive'?: boolean;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerPhoneDto {
     'id'?: string;
@@ -1097,7 +1080,6 @@ export interface CustomerPhoneDto {
     'number'?: string | null;
     'isPrimary'?: boolean;
     'isActive'?: boolean;
-    'rowVersion'?: string | null;
 }
 export interface CustomerPhoneInsertDto {
     'customerId'?: string;
@@ -1113,7 +1095,6 @@ export interface CustomerPhoneUpdateDto {
     'isPrimary'?: boolean;
     'isActive'?: boolean;
     'id'?: string;
-    'rowVersion'?: string | null;
 }
 export interface CustomerSector {
     'id'?: string;
@@ -1128,7 +1109,6 @@ export interface CustomerSector {
     'customerId'?: string;
     'sector'?: string | null;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerTag {
     'id'?: string;
@@ -1143,21 +1123,20 @@ export interface CustomerTag {
     'customerId'?: string;
     'tag'?: string | null;
     'customer'?: Customer;
-    'rowVersion'?: string | null;
 }
 export interface CustomerUpdateDto {
+    'id': string;
+    'concurrencyToken': number;
     'logoFilePath'?: string | null;
-    'id'?: string;
-    'rowVersion'?: string | null;
-    'name'?: string | null;
-    'legalName'?: string | null;
-    'code'?: string | null;
+    'name': string;
+    'legalName': string;
+    'code': string;
     'customerTypeId'?: string | null;
     'categoryId'?: string | null;
     'status'?: number;
-    'website'?: string | null;
-    'taxOffice'?: string | null;
-    'taxNumber'?: string | null;
+    'website': string;
+    'taxOffice': string;
+    'taxNumber': string;
     'isReferenceCustomer'?: boolean;
     'twitterUrl'?: string | null;
     'facebookUrl'?: string | null;
@@ -1451,7 +1430,6 @@ export interface FormColumnDto {
     'key'?: string | null;
 }
 export interface FormDataInsertDto {
-    'createdDate'?: string;
     'formName'?: string | null;
     'formDescription'?: string | null;
     'revision'?: number;
@@ -1469,8 +1447,12 @@ export interface FormDataInsertDto {
 
 
 export interface FormDataListDto {
-    'createdDate'?: string;
     'id'?: string;
+    'createdDate'?: string;
+    'createdBy'?: string | null;
+    'updatedDate'?: string | null;
+    'updatedBy'?: string | null;
+    'concurrencyToken'?: number;
     'formName'?: string | null;
     'formDescription'?: string | null;
     'revision'?: number;
@@ -1492,8 +1474,8 @@ export interface FormDataListDto {
 
 
 export interface FormDataUpdateDto {
-    'createdDate'?: string;
-    'id'?: string;
+    'id': string;
+    'concurrencyToken': number;
     'formName'?: string | null;
     'formDescription'?: string | null;
     'revision'?: number;
@@ -1527,8 +1509,12 @@ export interface FormRuleEngineDto {
     'rulejson'?: string | null;
 }
 export interface FormRuntimeDto {
-    'createdDate'?: string;
     'id'?: string;
+    'createdDate'?: string;
+    'createdBy'?: string | null;
+    'updatedDate'?: string | null;
+    'updatedBy'?: string | null;
+    'concurrencyToken'?: number;
     'formId'?: string;
     'valuesJson'?: string | null;
     'valuesJsonData'?: string | null;
@@ -2025,7 +2011,6 @@ export interface MeetingDto {
     'description'?: string | null;
     'organizerUserId'?: string | null;
     'attendeesJson'?: string | null;
-    'rowVersion'?: string | null;
 }
 export interface Menu {
     'id'?: string;
@@ -2150,7 +2135,6 @@ export interface OpportunityUpdateDto {
     'source'?: string | null;
     'ownerUserId': string;
     'description'?: string | null;
-    'rowVersion': string;
 }
 export interface OrganizationDto {
     'id'?: string | null;
@@ -2368,7 +2352,6 @@ export interface QuoteDto {
     'grandTotal'?: number;
     'notes'?: string | null;
     'lines'?: Array<QuoteLineDto> | null;
-    'rowVersion'?: string | null;
 }
 export interface QuoteLineDto {
     'id'?: string;
@@ -2380,7 +2363,6 @@ export interface QuoteLineDto {
     'discountRate'?: number;
     'taxRate'?: number;
     'lineTotal'?: number;
-    'rowVersion'?: string | null;
 }
 export interface RefreshTokenDto {
     'token'?: string | null;
@@ -2393,7 +2375,6 @@ export interface ReminderDto {
     'message'?: string | null;
     'channel'?: string | null;
     'isSent'?: boolean;
-    'rowVersion'?: string | null;
 }
 
 export const RequestType = {
@@ -2655,6 +2636,18 @@ export interface SFUSerList {
     'email'?: string | null;
     'username'?: string | null;
 }
+export interface SendBulkEmailRequest {
+    'to': Array<string>;
+    'subject': string;
+    'body': string;
+    'isHtml'?: boolean;
+}
+export interface SendEmailRequest {
+    'to': string;
+    'subject': string;
+    'body': string;
+    'isHtml'?: boolean;
+}
 export interface SpecialDayDto {
     'id'?: string;
     'customerId'?: string;
@@ -2664,7 +2657,6 @@ export interface SpecialDayDto {
     'advanceNotifyDays'?: number;
     'channel'?: string | null;
     'messageTemplate'?: string | null;
-    'rowVersion'?: string | null;
 }
 
 export const SsoType = {
@@ -19953,6 +19945,236 @@ export class LookupModuleApi extends BaseAPI {
      */
     public apiLookupModulePost(lookupModuleDto?: LookupModuleDto, options?: RawAxiosRequestConfig) {
         return LookupModuleApiFp(this.configuration).apiLookupModulePost(lookupModuleDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * MailApi - axios parameter creator
+ */
+export const MailApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {SendBulkEmailRequest} [sendBulkEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendBulkPost: async (sendBulkEmailRequest?: SendBulkEmailRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Mail/send-bulk`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sendBulkEmailRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {SendEmailRequest} [sendEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendPost: async (sendEmailRequest?: SendEmailRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Mail/send`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sendEmailRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendTestPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Mail/send-test`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MailApi - functional programming interface
+ */
+export const MailApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MailApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {SendBulkEmailRequest} [sendBulkEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMailSendBulkPost(sendBulkEmailRequest?: SendBulkEmailRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMailSendBulkPost(sendBulkEmailRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MailApi.apiMailSendBulkPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {SendEmailRequest} [sendEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMailSendPost(sendEmailRequest?: SendEmailRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMailSendPost(sendEmailRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MailApi.apiMailSendPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMailSendTestPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMailSendTestPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MailApi.apiMailSendTestPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * MailApi - factory interface
+ */
+export const MailApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MailApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {SendBulkEmailRequest} [sendBulkEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendBulkPost(sendBulkEmailRequest?: SendBulkEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiMailSendBulkPost(sendBulkEmailRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {SendEmailRequest} [sendEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendPost(sendEmailRequest?: SendEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiMailSendPost(sendEmailRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMailSendTestPost(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiMailSendTestPost(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MailApi - object-oriented interface
+ */
+export class MailApi extends BaseAPI {
+    /**
+     * 
+     * @param {SendBulkEmailRequest} [sendBulkEmailRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMailSendBulkPost(sendBulkEmailRequest?: SendBulkEmailRequest, options?: RawAxiosRequestConfig) {
+        return MailApiFp(this.configuration).apiMailSendBulkPost(sendBulkEmailRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {SendEmailRequest} [sendEmailRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMailSendPost(sendEmailRequest?: SendEmailRequest, options?: RawAxiosRequestConfig) {
+        return MailApiFp(this.configuration).apiMailSendPost(sendEmailRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMailSendTestPost(options?: RawAxiosRequestConfig) {
+        return MailApiFp(this.configuration).apiMailSendTestPost(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

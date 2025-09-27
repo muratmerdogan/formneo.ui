@@ -64,7 +64,6 @@ export function createUpdateDto(
         source: formData.source,
         ownerUserId: formData.ownerUserId,
         description: formData.description,
-        rowVersion,
     };
 }
 

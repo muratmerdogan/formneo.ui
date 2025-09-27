@@ -7132,6 +7132,80 @@
         }
       }
     },
+    "/api/Mail/send-test": {
+      "post": {
+        "tags": [
+          "Mail"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Mail/send": {
+      "post": {
+        "tags": [
+          "Mail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Mail/send-bulk": {
+      "post": {
+        "tags": [
+          "Mail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendBulkEmailRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendBulkEmailRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendBulkEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/crm/Meetings/customer/{customerId}": {
       "get": {
         "tags": [
@@ -18045,11 +18119,6 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -20680,11 +20749,6 @@
               "$ref": "#/components/schemas/CustomerNote"
             },
             "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -20776,11 +20840,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -20838,11 +20897,6 @@
           },
           "isActive": {
             "type": "boolean"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -20953,11 +21007,6 @@
           "id": {
             "type": "string",
             "format": "uuid"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21023,11 +21072,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21101,11 +21145,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21127,11 +21166,6 @@
           },
           "category": {
             "type": "string",
-            "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
             "nullable": true
           }
         },
@@ -21202,11 +21236,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21241,11 +21270,6 @@
           },
           "isPrimary": {
             "type": "boolean"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21310,11 +21334,6 @@
           "id": {
             "type": "string",
             "format": "uuid"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21418,7 +21437,8 @@
             "maximum": 4,
             "minimum": 0,
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "nextActivityDate": {
             "type": "string",
@@ -21561,11 +21581,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21587,11 +21602,6 @@
           },
           "content": {
             "type": "string",
-            "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
             "nullable": true
           }
         },
@@ -21640,11 +21650,6 @@
           },
           "content": {
             "type": "string",
-            "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
             "nullable": true
           }
         },
@@ -21724,11 +21729,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21769,11 +21769,6 @@
           },
           "kvkkConsent": {
             "type": "boolean"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21837,11 +21832,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21870,11 +21860,6 @@
           },
           "isActive": {
             "type": "boolean"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21927,11 +21912,6 @@
           "id": {
             "type": "string",
             "format": "uuid"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -21985,11 +21965,6 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -22043,42 +22018,51 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "CustomerUpdateDto": {
+        "required": [
+          "code",
+          "concurrencyToken",
+          "id",
+          "legalName",
+          "name",
+          "taxNumber",
+          "taxOffice",
+          "website"
+        ],
         "type": "object",
         "properties": {
-          "logoFilePath": {
-            "type": "string",
-            "nullable": true
-          },
           "id": {
             "type": "string",
             "format": "uuid"
           },
-          "rowVersion": {
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "logoFilePath": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
-            "format": "byte",
             "nullable": true
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "legalName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
           },
           "code": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string"
           },
           "customerTypeId": {
             "type": "string",
@@ -22091,45 +22075,67 @@
             "nullable": true
           },
           "status": {
+            "maximum": 2147483647,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
           "website": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
-            "nullable": true
+            "format": "uri"
           },
           "taxOffice": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
           },
           "taxNumber": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string"
           },
           "isReferenceCustomer": {
             "type": "boolean"
           },
           "twitterUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "facebookUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "linkedinUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "instagramUrl": {
+            "maxLength": 512,
+            "minLength": 0,
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "ownerId": {
+            "maxLength": 256,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "lifecycleStage": {
+            "maximum": 4,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
@@ -23116,10 +23122,6 @@
       "FormDataInsertDto": {
         "type": "object",
         "properties": {
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
           "formName": {
             "type": "string",
             "nullable": true
@@ -23175,13 +23177,30 @@
       "FormDataListDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
           },
-          "id": {
+          "createdBy": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           },
           "formName": {
             "type": "string",
@@ -23252,15 +23271,19 @@
         "additionalProperties": false
       },
       "FormDataUpdateDto": {
+        "required": [
+          "concurrencyToken",
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           },
           "formName": {
             "type": "string",
@@ -23348,13 +23371,30 @@
       "FormRuntimeDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
           },
-          "id": {
+          "createdBy": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           },
           "formId": {
             "type": "string",
@@ -24947,11 +24987,6 @@
           "attendeesJson": {
             "type": "string",
             "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -25353,7 +25388,6 @@
           "customerId",
           "id",
           "ownerUserId",
-          "rowVersion",
           "title"
         ],
         "type": "object",
@@ -25416,10 +25450,6 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte"
           }
         },
         "additionalProperties": false
@@ -26161,11 +26191,6 @@
               "$ref": "#/components/schemas/QuoteLineDto"
             },
             "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -26208,11 +26233,6 @@
           "lineTotal": {
             "type": "number",
             "format": "double"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -26257,11 +26277,6 @@
           },
           "isSent": {
             "type": "boolean"
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -27201,6 +27216,64 @@
         },
         "additionalProperties": false
       },
+      "SendBulkEmailRequest": {
+        "required": [
+          "body",
+          "subject",
+          "to"
+        ],
+        "type": "object",
+        "properties": {
+          "to": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subject": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isHtml": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendEmailRequest": {
+        "required": [
+          "body",
+          "subject",
+          "to"
+        ],
+        "type": "object",
+        "properties": {
+          "to": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "subject": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isHtml": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "SpecialDayDto": {
         "type": "object",
         "properties": {
@@ -27233,11 +27306,6 @@
           },
           "messageTemplate": {
             "type": "string",
-            "nullable": true
-          },
-          "rowVersion": {
-            "type": "string",
-            "format": "byte",
             "nullable": true
           }
         },

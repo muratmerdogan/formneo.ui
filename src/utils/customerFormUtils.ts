@@ -1,5 +1,5 @@
 import { CustomerLifecycleStage, convertFormStatusToApi, convertLifecycleStageToApi } from 'constants/customerConstants';
-import { CustomerInsertDto as ApiCustomerInsertDto, CustomerUpdateDto as ApiCustomerUpdateDto } from 'api/generated/api';
+import { CustomerInsertDto as ApiCustomerInsertDto, CustomerUpdateDto } from 'api/generated/api';
 
 export interface CustomerFormData {
   name: string;
@@ -21,36 +21,11 @@ export interface CustomerFormData {
   linkedinUrl?: string;
   instagramUrl?: string;
   // defaultNotificationEmail alanı kaldırıldı
-  rowVersion?: string; // Optimistic locking için
+  concurrencyToken?: number; // Optimistic locking için
 }
 
 // Reference yapısı kaldırıldı - sadece form değerleri kullanılacak
-
-// API'den gelen CustomerInsertDto tipini kullanıyoruz
-
-export interface CustomerUpdateDto {
-  id: string;
-  rowVersion?: string | null; // Optimistic locking için - API'dan gelir
-  name: string;
-  legalName?: string | null;
-  code?: string | null;
-  customerTypeId?: string | null;
-  categoryId?: string | null;
-  status?: number;
-  lifecycleStage?: number | null;
-  ownerId?: string | null;
-  nextActivityDate?: string | null;
-  isReferenceCustomer?: boolean;
-  website?: string | null;
-  taxOffice?: string | null;
-  taxNumber?: string | null;
-  // defaultNotificationEmail alanı kaldırıldı
-  twitterUrl?: string | null;
-  facebookUrl?: string | null;
-  linkedinUrl?: string | null;
-  instagramUrl?: string | null;
-  logoFilePath?: string | null;
-}
+// API'den gelen DTO tiplerini doğrudan kullanıyoruz
 
 export const createInsertDto = (
   formData: CustomerFormData,
@@ -64,6 +39,7 @@ export const createInsertDto = (
     documents?: any[];
   } = {}
 ): ApiCustomerInsertDto => {
+  // NOT: rowVersion CREATE işleminde gönderilmez (sadece UPDATE'te gerekli)
   return {
     name: formData.name,
     legalName: formData.legalName || "",
@@ -99,10 +75,10 @@ export const createUpdateDto = (
 ): CustomerUpdateDto => {
   return {
     id,
-    rowVersion: formData.rowVersion || null, // Optimistic locking için
-    name: formData.name,
-    legalName: formData.legalName || null,
-    code: formData.code || null,
+    concurrencyToken: formData.concurrencyToken || 0,
+    name: formData.name || "",
+    legalName: formData.legalName || "",
+    code: formData.code || "",
     customerTypeId: formData.customerTypeId ? formData.customerTypeId : null,
     categoryId: formData.categoryId ? formData.categoryId : null,
     status: convertFormStatusToApi(formData.status),
