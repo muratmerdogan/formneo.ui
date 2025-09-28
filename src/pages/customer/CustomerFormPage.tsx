@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -119,6 +119,35 @@ export default function CustomerFormPage(): JSX.Element {
     const [addressRows, setAddressRows] = useState<AddressRow[]>([]);
     const [phoneRows, setPhoneRows] = useState<PhoneRow[]>([]);
     const [noteRows, setNoteRows] = useState<NoteRow[]>([]);
+    
+    // REF ile güncel state'leri takip et
+    const emailRowsRef = useRef<EmailRow[]>([]);
+    const addressRowsRef = useRef<AddressRow[]>([]);
+    const phoneRowsRef = useRef<PhoneRow[]>([]);
+    const noteRowsRef = useRef<NoteRow[]>([]);
+    
+    // State değiştiğinde ref'leri güncelle
+    useEffect(() => { emailRowsRef.current = emailRows; }, [emailRows]);
+    useEffect(() => { addressRowsRef.current = addressRows; }, [addressRows]);
+    useEffect(() => { phoneRowsRef.current = phoneRows; }, [phoneRows]);
+    useEffect(() => { noteRowsRef.current = noteRows; }, [noteRows]);
+    
+    // State değişiklik handler'ları
+    const handleEmailRowsChange = useCallback((rows: EmailRow[]) => {
+        setEmailRows(rows);
+    }, []);
+    
+    const handleAddressRowsChange = useCallback((rows: AddressRow[]) => {
+        setAddressRows(rows);
+    }, []);
+    
+    const handlePhoneRowsChange = useCallback((rows: PhoneRow[]) => {
+        setPhoneRows(rows);
+    }, []);
+    
+    const handleNoteRowsChange = useCallback((rows: NoteRow[]) => {
+        setNoteRows(rows);
+    }, []);
     const [loading, setLoading] = useState(false);
     
     // Toast state'leri
@@ -261,7 +290,7 @@ export default function CustomerFormPage(): JSX.Element {
         }
     };
 
-    const onSubmit = async (values: FormValues) => {
+    const onSubmit = useCallback(async (values: FormValues) => {
         try {
             const api = new CustomersApi(getConfiguration());
             
@@ -290,9 +319,14 @@ export default function CustomerFormPage(): JSX.Element {
                     navigate("/customers");
                 }, 1500); // Toast mesajını görmek için kısa bekle
             } else {
-                // Create new customer
+                // Create new customer - REF'lerden güncel verileri al
+                const currentEmailRows = emailRowsRef.current;
+                const currentAddressRows = addressRowsRef.current;
+                const currentPhoneRows = phoneRowsRef.current;
+                const currentNoteRows = noteRowsRef.current;
+                
                 const additionalData = {
-                    emails: emailRows.map(e => ({
+                    emails: currentEmailRows.map(e => ({
                         id: e.id,
                         email: e.email,
                         description: e.description || null,
@@ -301,7 +335,7 @@ export default function CustomerFormPage(): JSX.Element {
                         isActive: e.isActive,
                         isPrimary: e.isPrimary
                     })),
-                    addresses: addressRows.map(a => ({
+                    addresses: currentAddressRows.map(a => ({
                         id: a.id,
                         country: a.country || null,
                         city: a.city || null,
@@ -314,14 +348,14 @@ export default function CustomerFormPage(): JSX.Element {
                         isActive: a.isActive,
                         isPrimary: a.isPrimary
                     })),
-                    phones: phoneRows.map(p => ({
+                    phones: currentPhoneRows.map(p => ({
                         id: p.id,
                         label: p.label || null,
                         number: p.number,
                         isPrimary: p.isPrimary,
                         isActive: p.isActive
                     })),
-                    notes: noteRows.map(n => ({
+                    notes: currentNoteRows.map(n => ({
                         id: n.id,
                         date: n.date,
                         title: n.title,
@@ -365,7 +399,7 @@ export default function CustomerFormPage(): JSX.Element {
             setErrorMessage(errorMessage);
             setErrorSB(true);
         }
-    };
+    }, [emailRowsRef, addressRowsRef, phoneRowsRef, noteRowsRef, isEdit, customerId, customerIdFromState, navigate]);
 
     if (loading) {
         return (
@@ -440,7 +474,7 @@ export default function CustomerFormPage(): JSX.Element {
                             <EmailsGrid
                                 label="E-Postalar"
                                 rows={emailRows}
-                                onChange={setEmailRows}
+                                onChange={handleEmailRowsChange}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                                 onRefresh={refreshCustomerData}
@@ -450,7 +484,7 @@ export default function CustomerFormPage(): JSX.Element {
                             <AddressesGrid
                                 label="Adresler"
                                 rows={addressRows}
-                                onChange={setAddressRows}
+                                onChange={handleAddressRowsChange}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                                 onRefresh={refreshCustomerData}
@@ -460,7 +494,7 @@ export default function CustomerFormPage(): JSX.Element {
                             <PhonesGrid
                                 label="Telefonlar"
                                 rows={phoneRows}
-                                onChange={setPhoneRows}
+                                onChange={handlePhoneRowsChange}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
                                 onRefresh={refreshCustomerData}
@@ -486,7 +520,7 @@ export default function CustomerFormPage(): JSX.Element {
                                     register={register}
                                     errors={errors}
                                     rows={noteRows}
-                                    onChange={setNoteRows}
+                                    onChange={handleNoteRowsChange}
                                     customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                     autoSave={isEdit}
                                     onRefresh={refreshCustomerData}

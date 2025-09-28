@@ -2132,6 +2132,28 @@ export const OfficialRole = {
 export type OfficialRole = typeof OfficialRole[keyof typeof OfficialRole];
 
 
+export interface OnboardAdminDto {
+    'firstName': string;
+    'lastName': string;
+    'email': string;
+    'phone'?: string | null;
+    'password': string;
+}
+export interface OnboardCompanyDto {
+    'companyName': string;
+    'companyEmail': string;
+    'companyPhone'?: string | null;
+    'companyAddress'?: string | null;
+    'taxNumber'?: string | null;
+    'sector'?: string | null;
+    'employeeCount'?: string | null;
+}
+export interface OnboardRegisterRequest {
+    'company': OnboardCompanyDto;
+    'admin': OnboardAdminDto;
+    'plan': string;
+    'agreedToTerms'?: boolean;
+}
 export interface OpportunityInsertDto {
     'customerId': string;
     'title': string;
@@ -21342,6 +21364,176 @@ export class MenuApi extends BaseAPI {
      */
     public apiMenuTenantOnlyGet(options?: RawAxiosRequestConfig) {
         return MenuApiFp(this.configuration).apiMenuTenantOnlyGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * OnboardingApi - axios parameter creator
+ */
+export const OnboardingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} [token] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOnboardingActivateGet: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/onboarding/activate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (token !== undefined) {
+                localVarQueryParameter['token'] = token;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {OnboardRegisterRequest} [onboardRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOnboardingRegisterPost: async (onboardRegisterRequest?: OnboardRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/onboarding/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(onboardRegisterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OnboardingApi - functional programming interface
+ */
+export const OnboardingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OnboardingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [token] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiOnboardingActivateGet(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOnboardingActivateGet(token, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OnboardingApi.apiOnboardingActivateGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {OnboardRegisterRequest} [onboardRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiOnboardingRegisterPost(onboardRegisterRequest?: OnboardRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOnboardingRegisterPost(onboardRegisterRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OnboardingApi.apiOnboardingRegisterPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * OnboardingApi - factory interface
+ */
+export const OnboardingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OnboardingApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [token] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOnboardingActivateGet(token?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiOnboardingActivateGet(token, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OnboardRegisterRequest} [onboardRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiOnboardingRegisterPost(onboardRegisterRequest?: OnboardRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiOnboardingRegisterPost(onboardRegisterRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OnboardingApi - object-oriented interface
+ */
+export class OnboardingApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} [token] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiOnboardingActivateGet(token?: string, options?: RawAxiosRequestConfig) {
+        return OnboardingApiFp(this.configuration).apiOnboardingActivateGet(token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OnboardRegisterRequest} [onboardRegisterRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiOnboardingRegisterPost(onboardRegisterRequest?: OnboardRegisterRequest, options?: RawAxiosRequestConfig) {
+        return OnboardingApiFp(this.configuration).apiOnboardingRegisterPost(onboardRegisterRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

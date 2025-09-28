@@ -7762,6 +7762,58 @@
         }
       }
     },
+    "/api/onboarding/register": {
+      "post": {
+        "tags": [
+          "Onboarding"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardRegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardRegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/onboarding/activate": {
+      "get": {
+        "tags": [
+          "Onboarding"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/crm/Opportunities/customer/{customerId}": {
       "get": {
         "tags": [
@@ -25400,6 +25452,102 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "OnboardAdminDto": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "minLength": 8,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OnboardCompanyDto": {
+        "required": [
+          "companyEmail",
+          "companyName"
+        ],
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "companyEmail": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "companyPhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "sector": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeCount": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OnboardRegisterRequest": {
+        "required": [
+          "admin",
+          "company",
+          "plan"
+        ],
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/OnboardCompanyDto"
+          },
+          "admin": {
+            "$ref": "#/components/schemas/OnboardAdminDto"
+          },
+          "plan": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "agreedToTerms": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "OpportunityInsertDto": {
         "required": [
