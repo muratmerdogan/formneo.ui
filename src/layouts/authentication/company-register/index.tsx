@@ -6,6 +6,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+// OnBoarding API servisi
+import onBoardingService from "api/onboardingService";
+
 // @mui material components
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -28,6 +31,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import MDAlert from "components/MDAlert";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Images
@@ -39,6 +43,13 @@ import PersonIcon from "@mui/icons-material/Person";
 import PaymentIcon from "@mui/icons-material/Payment";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LanguageIcon from "@mui/icons-material/Language";
+import CircularProgress from "@mui/material/CircularProgress";
+
+// Dialog components
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 // Styled components
 const RegisterContainer = styled(MDBox)(({ theme }) => ({
@@ -173,6 +184,9 @@ function CompanyRegister(): JSX.Element {
     };
     const [selectedPlan, setSelectedPlan] = useState<string>("professional");
     const [agreedToTerms, setAgreedToTerms] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [showErrorDialog, setShowErrorDialog] = useState(false);
 
     const [companyData, setCompanyData] = useState<CompanyData>({
         companyName: "",
@@ -279,21 +293,65 @@ function CompanyRegister(): JSX.Element {
     };
 
     const handleSubmit = async () => {
-        // Burada API çağrısı yapılacak
-        console.log("Şirket Kayıt Verileri:", {
-            company: companyData,
-            admin: adminData,
-            plan: selectedPlan,
-            agreedToTerms
-        });
+        setIsLoading(true);
+        setError(null);
 
-        // Başarılı kayıt sonrası login sayfasına yönlendir
-        navigate("/authentication/sign-in/cover", {
-            state: {
-                message: "Kayıt işleminiz başarıyla tamamlandı! Giriş yapabilirsiniz.",
-                email: adminData.email
+        try {
+            // Form verilerini API formatına dönüştür
+            const registrationData = onBoardingService.formatRegistrationData(
+                companyData,
+                adminData,
+                selectedPlan,
+                agreedToTerms
+            );
+
+            // API çağrısı yap
+            await onBoardingService.registerCompany(registrationData);
+
+            // Başarılı kayıt sonrası login sayfasına yönlendir
+            navigate("/authentication/sign-in/cover", {
+                state: {
+                    message: "Kayıt işleminiz başarıyla tamamlandı! E-posta adresinizi kontrol ederek hesabınızı aktive edin.",
+                    email: adminData.email
+                }
+            });
+        } catch (error: any) {
+            console.error("Şirket kayıt hatası:", error);
+            
+            // Hata mesajını kullanıcı dostu hale getir
+            let errorMessage = "Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.";
+            
+            // Backend'den gelen hata formatını kontrol et
+            if (error?.response?.data) {
+                const responseData = error.response.data;
+                
+                // Backend'den gelen errors array'ini kontrol et
+                if (responseData.errors && Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+                    // İlk hata mesajını göster veya tüm hataları birleştir
+                    errorMessage = responseData.errors.join(", ");
+                } else if (responseData.message) {
+                    // Alternatif olarak message field'ını kontrol et
+                    errorMessage = responseData.message;
+                } else if (error?.response?.status === 400) {
+                    errorMessage = "Girilen bilgilerde hata var. Lütfen kontrol edin.";
+                } else if (error?.response?.status === 409) {
+                    errorMessage = "Bu e-posta adresi zaten kayıtlı. Farklı bir e-posta adresi deneyin.";
+                } else if (error?.response?.status >= 500) {
+                    errorMessage = "Sunucu hatası oluştu. Lütfen daha sonra tekrar deneyin.";
+                }
+            } else if (error?.response?.status === 400) {
+                errorMessage = "Girilen bilgilerde hata var. Lütfen kontrol edin.";
+            } else if (error?.response?.status === 409) {
+                errorMessage = "Bu e-posta adresi zaten kayıtlı. Farklı bir e-posta adresi deneyin.";
+            } else if (error?.response?.status >= 500) {
+                errorMessage = "Sunucu hatası oluştu. Lütfen daha sonra tekrar deneyin.";
             }
-        });
+            
+            setError(errorMessage);
+            setShowErrorDialog(true);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const isStepValid = () => {
@@ -764,7 +822,7 @@ function CompanyRegister(): JSX.Element {
                             variant="gradient"
                             color="info"
                             onClick={handleNext}
-                            disabled={!isStepValid()}
+                            disabled={!isStepValid() || isLoading}
                             sx={{
                                 px: 6,
                                 py: 1.5,
@@ -785,7 +843,14 @@ function CompanyRegister(): JSX.Element {
                                 }
                             }}
                         >
-                            {activeStep === steps.length - 1 ? "Kayıt Ol" : "İleri"}
+                            {isLoading ? (
+                                <MDBox display="flex" alignItems="center" gap={1}>
+                                    <CircularProgress size={20} color="inherit" />
+                                    <span>Kayıt Oluşturuluyor...</span>
+                                </MDBox>
+                            ) : (
+                                activeStep === steps.length - 1 ? "Kayıt Ol" : "İleri"
+                            )}
                         </MDButton>
                     </MDBox>
 
@@ -825,6 +890,64 @@ function CompanyRegister(): JSX.Element {
                     </MDBox>
                 </Container>
             </RegisterContainer>
+
+            {/* Hata Dialog'u */}
+            <Dialog
+                open={showErrorDialog}
+                onClose={() => setShowErrorDialog(false)}
+                maxWidth="sm"
+                fullWidth
+                PaperProps={{
+                    sx: {
+                        borderRadius: "16px",
+                        padding: "8px"
+                    }
+                }}
+            >
+                <DialogTitle
+                    sx={{
+                        color: "#d32f2f",
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        textAlign: "center",
+                        pb: 1
+                    }}
+                >
+                    Kayıt Hatası
+                </DialogTitle>
+                <DialogContent
+                    sx={{
+                        textAlign: "center",
+                        py: 3
+                    }}
+                >
+                    <MDTypography variant="body1" color="text" sx={{ fontSize: "16px", lineHeight: 1.6 }}>
+                        {error}
+                    </MDTypography>
+                </DialogContent>
+                <DialogActions
+                    sx={{
+                        justifyContent: "center",
+                        pb: 3
+                    }}
+                >
+                    <MDButton
+                        variant="gradient"
+                        color="error"
+                        onClick={() => setShowErrorDialog(false)}
+                        sx={{
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: "12px",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            textTransform: "none"
+                        }}
+                    >
+                        Tamam
+                    </MDButton>
+                </DialogActions>
+            </Dialog>
         </PageLayout>
     );
 }
