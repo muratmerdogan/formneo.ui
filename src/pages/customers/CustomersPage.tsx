@@ -341,6 +341,9 @@ export default function CustomersPage(): JSX.Element {
 function normalizeCustomerFromDto(dto: any): Customer {
     const id = String(dto?.id ?? dto?.cusid ?? dto?.customerId ?? "");
     const name = String(dto?.name ?? dto?.custx ?? dto?.title ?? "");
+    
+    // Debug: Backend'den gelen status ve isActive değerlerini logla
+    console.log("Customer DTO:", { id, name, status: dto?.status, isActive: dto?.isActive });
     const firstAddress = Array.isArray(dto?.addresses) && dto.addresses.length ? dto.addresses[0] : undefined;
     const country = String(firstAddress?.country ?? dto?.country ?? "");
     const city = (firstAddress?.city ?? dto?.city) ? String(firstAddress?.city ?? dto?.city) : undefined;
@@ -351,10 +354,25 @@ function normalizeCustomerFromDto(dto: any): Customer {
         : undefined;
     const email = (dto?.emailPrimary ?? dto?.email ?? primaryEmail) ? String(dto?.emailPrimary ?? dto?.email ?? primaryEmail) : undefined;
     const phone = (dto?.phone ?? dto?.mobile) ? String(dto?.phone ?? dto?.mobile) : undefined;
+    // Status hesaplama: önce isActive boolean değerini kontrol et, sonra status string/number değerini
+    const isActiveBoolean = dto?.isActive !== undefined ? !!dto.isActive : undefined;
+    const statusString = (dto?.status === "active" || dto?.status === "inactive") ? dto.status : undefined;
     const statusNum = typeof dto?.status === "number" ? dto.status : undefined;
-    const status = (dto?.status === "active" || dto?.status === "inactive")
-        ? dto.status
-        : (statusNum !== undefined ? (statusNum > 0 ? "active" : "inactive") : "active");
+    
+    let status: "active" | "inactive";
+    if (isActiveBoolean !== undefined) {
+        // isActive boolean değeri varsa onu kullan
+        status = isActiveBoolean ? "active" : "inactive";
+    } else if (statusString) {
+        // status string değeri varsa onu kullan
+        status = statusString;
+    } else if (statusNum !== undefined) {
+        // status number değeri varsa onu kullan (>0 = active)
+        status = statusNum > 0 ? "active" : "inactive";
+    } else {
+        // Hiçbiri yoksa varsayılan olarak active
+        status = "active";
+    }
     const sectors = Array.isArray(dto?.sectors) ? dto.sectors : (dto?.sector ? [dto.sector] : []);
     const sector = sectors.length ? String(sectors[0]) : "";
     const tags = Array.isArray(dto?.tags) ? dto.tags as string[] : [];

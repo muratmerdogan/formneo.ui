@@ -836,6 +836,7 @@ export interface CustomerAddressDto {
     'isBilling'?: boolean;
     'isShipping'?: boolean;
     'isActive'?: boolean;
+    'concurrencyToken'?: number;
 }
 export interface CustomerAddressInsertDto {
     'customerId'?: string;
@@ -867,6 +868,7 @@ export interface CustomerAddressUpdateDto {
     'isShipping'?: boolean;
     'isActive'?: boolean;
     'id'?: string;
+    'concurrencyToken'?: number;
 }
 export interface CustomerCustomField {
     'id'?: string;
@@ -1017,6 +1019,7 @@ export interface CustomerNoteDto {
     'date'?: string;
     'title'?: string | null;
     'content'?: string | null;
+    'concurrencyToken'?: number;
 }
 export interface CustomerNoteInsertDto {
     'customerId'?: string;
@@ -1030,6 +1033,7 @@ export interface CustomerNoteUpdateDto {
     'date'?: string;
     'title'?: string | null;
     'content'?: string | null;
+    'concurrencyToken'?: number;
 }
 export interface CustomerOfficial {
     'id'?: string;
@@ -1091,6 +1095,7 @@ export interface CustomerPhoneDto {
     'number'?: string | null;
     'isPrimary'?: boolean;
     'isActive'?: boolean;
+    'concurrencyToken'?: number;
 }
 export interface CustomerPhoneInsertDto {
     'customerId'?: string;
@@ -1106,6 +1111,7 @@ export interface CustomerPhoneUpdateDto {
     'isPrimary'?: boolean;
     'isActive'?: boolean;
     'id'?: string;
+    'concurrencyToken'?: number;
 }
 export interface CustomerSector {
     'id'?: string;

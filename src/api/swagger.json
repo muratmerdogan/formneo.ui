@@ -20909,6 +20909,10 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21019,6 +21023,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21639,6 +21647,10 @@
           "content": {
             "type": "string",
             "nullable": true
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21687,6 +21699,10 @@
           "content": {
             "type": "string",
             "nullable": true
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21904,6 +21920,10 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21956,6 +21976,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

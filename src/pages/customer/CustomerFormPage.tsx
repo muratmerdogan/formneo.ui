@@ -252,12 +252,7 @@ export default function CustomerFormPage(): JSX.Element {
                 }
 
                 // Owner'ı set et
-                if (customer.ownerId) {
-                    const ownerUser = mockOwners.find(u => u.id === customer.ownerId);
-                    if (ownerUser) {
-                        setOwner(ownerUser);
-                    }
-                }
+        
             }
         } catch (error) {
             console.error("Müşteri verisi yüklenemedi:", error);
@@ -565,10 +560,10 @@ function lifecyclePill(stage?: "lead" | "mql" | "sql" | "opportunity" | "custome
     );
 }
 
-const mockOwners = [
-    { id: "1", name: "Ahmet Yılmaz" },
-    { id: "2", name: "Ayşe Demir" },
-    { id: "3", name: "Mehmet Kaya" },
-];
+// const mockOwners = [
+//     { id: "1", name: "Ahmet Yılmaz" },
+//     { id: "2", name: "Ayşe Demir" },
+//     { id: "3", name: "Mehmet Kaya" },
+// ];
 
 
