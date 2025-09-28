@@ -80,6 +80,7 @@ export interface ApproveItems {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'workflowItemId'?: string;
     'approveUser'?: string | null;
     'approveUserNameSurname'?: string | null;
@@ -757,6 +758,7 @@ export interface Customer {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerTypeId'?: string | null;
     'customerTypeItem'?: LookupItem;
     'categoryId'?: string | null;
@@ -801,6 +803,7 @@ export interface CustomerAddress {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'type'?: AddressType;
     'country'?: string | null;
@@ -875,6 +878,7 @@ export interface CustomerCustomField {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'fieldId'?: string | null;
     'fieldType'?: string | null;
@@ -892,6 +896,7 @@ export interface CustomerDocument {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'fileName'?: string | null;
     'filePath'?: string | null;
@@ -917,6 +922,7 @@ export interface CustomerEmail {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'email'?: string | null;
     'description'?: string | null;
@@ -935,6 +941,7 @@ export interface CustomerEmailDto {
     'bulk'?: boolean;
     'isActive'?: boolean;
     'isPrimary'?: boolean;
+    'concurrencyToken'?: number;
 }
 export interface CustomerEmailInsertDto {
     'customerId'?: string;
@@ -954,6 +961,7 @@ export interface CustomerEmailUpdateDto {
     'isActive'?: boolean;
     'isPrimary'?: boolean;
     'id'?: string;
+    'concurrencyToken'?: number;
 }
 export interface CustomerInsertDto {
     'logoFilePath'?: string | null;
@@ -997,6 +1005,7 @@ export interface CustomerNote {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'date'?: string;
     'title'?: string | null;
@@ -1032,6 +1041,7 @@ export interface CustomerOfficial {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'fullName'?: string | null;
     'title'?: string | null;
@@ -1066,6 +1076,7 @@ export interface CustomerPhone {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'label'?: string | null;
     'number'?: string | null;
@@ -1106,6 +1117,7 @@ export interface CustomerSector {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'sector'?: string | null;
     'customer'?: Customer;
@@ -1120,6 +1132,7 @@ export interface CustomerTag {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'customerId'?: string;
     'tag'?: string | null;
     'customer'?: Customer;
@@ -1156,6 +1169,7 @@ export interface DepartmentUser {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketDepartmentId'?: string;
     'ticketDepartment'?: TicketDepartment;
     'userId'?: string | null;
@@ -1369,6 +1383,7 @@ export interface Form {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'formName'?: string | null;
     'formDescription'?: string | null;
     'revision'?: number;
@@ -2213,6 +2228,7 @@ export interface Positions {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'name'?: string | null;
     'description'?: string | null;
     'customerRefId'?: string | null;
@@ -2238,6 +2254,7 @@ export interface Project {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'userId'?: string | null;
     'userApp'?: UserApp;
     'name'?: string | null;
@@ -2263,6 +2280,7 @@ export interface ProjectCategories {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'name'?: string | null;
 }
 export interface ProjectCategoriesInsertDto {
@@ -2686,6 +2704,7 @@ export interface TicketApprove {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketsId': string;
     'tickets'?: Tickets;
     'userAppId'?: string | null;
@@ -2701,6 +2720,7 @@ export interface TicketAssigne {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketsId': string;
     'tickets'?: Tickets;
     'userAppId'?: string | null;
@@ -2745,6 +2765,7 @@ export interface TicketComment {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketId': string;
     'ticket'?: Tickets;
     'body'?: string | null;
@@ -2812,6 +2833,7 @@ export interface TicketDepartment {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'deparmentCode'?: string | null;
     'departmentText'?: string | null;
     'isActive'?: boolean;
@@ -2841,6 +2863,7 @@ export interface TicketFile {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketCommentId': string;
     'ticketComment'?: TicketComment;
     'base64'?: string | null;
@@ -2979,6 +3002,7 @@ export interface TicketProjects {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'name'?: string | null;
     'subProjectName'?: string | null;
     'description'?: string | null;
@@ -3132,6 +3156,7 @@ export interface TicketTeam {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'name'?: string | null;
     'departmentId'?: string | null;
     'department'?: TicketDepartment;
@@ -3177,6 +3202,7 @@ export interface TicketTeamUserApp {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketTeamId'?: string;
     'ticketTeam'?: TicketTeam;
     'userAppId'?: string | null;
@@ -3230,6 +3256,7 @@ export interface Tickets {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'ticketCode': string;
     'title': string;
     'description': string;
@@ -3628,6 +3655,7 @@ export interface WorkCompany {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'id'?: string;
     'name'?: string | null;
     'approveWorkDesign'?: ApproveWorkDesign;
@@ -3670,6 +3698,7 @@ export interface WorkCompanySystemInfo {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'name'?: string | null;
     'workCompanyId'?: string | null;
     'workCompany'?: WorkCompany;
@@ -3732,6 +3761,7 @@ export interface WorkFlowDefination {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'workflowName'?: string | null;
     'defination'?: string | null;
     'isActive'?: boolean;
@@ -3839,6 +3869,7 @@ export interface WorkflowHead {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'workflowName'?: string | null;
     'currentNodeId'?: string | null;
     'currentNodeName'?: string | null;
@@ -3862,6 +3893,7 @@ export interface WorkflowItem {
     'updatedDate'?: string | null;
     'isDelete'?: boolean;
     'uniqNumber'?: number;
+    'concurrencyToken'?: number;
     'workflowHeadId'?: string;
     'workflowHead'?: WorkflowHead;
     'nodeId'?: string | null;

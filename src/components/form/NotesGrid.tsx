@@ -11,7 +11,7 @@ export type NoteRow = {
     date: string; // ISO yyyy-MM-dd
     title: string; // Açıklama
     note: string;  // Not metni
-    rowVersion?: string; // Optimistic concurrency control için
+    concurrencyToken?: number; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -62,7 +62,7 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
             date: form.date,
             title: form.title.trim(),
             note: form.note.trim(),
-            rowVersion: editingId ? (rows || []).find(r => r.id === editingId)?.rowVersion : undefined // RowVersion alanı eklendi
+            concurrencyToken: editingId ? (rows || []).find(r => r.id === editingId)?.concurrencyToken || 0 : 0 // ConcurrencyToken alanı eklendi
         };
 
         if (editingId) {
@@ -76,7 +76,7 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
                         date: form.date,
                         title: form.title.trim(),
                         content: form.note.trim(),
-                        rowVersion: noteData.rowVersion
+                        concurrencyToken: noteData.concurrencyToken || 0
                     };
                     await api.apiCustomerNotesPut(updateDto);
 

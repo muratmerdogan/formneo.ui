@@ -13,7 +13,7 @@ export type PhoneRow = {
     number: string;
     isPrimary: boolean;
     isActive: boolean;
-    rowVersion?: string; // Optimistic concurrency control için
+    concurrencyToken?: number; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -88,7 +88,7 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
             number: value,
             isPrimary: !!form.isPrimary,
             isActive: !!form.isActive,
-            rowVersion: editingId ? rows.find(r => r.id === editingId)?.rowVersion : undefined // RowVersion alanı eklendi
+            concurrencyToken: editingId ? rows.find(r => r.id === editingId)?.concurrencyToken || 0 : 0 // ConcurrencyToken alanı eklendi
         };
 
         if (editingId) {

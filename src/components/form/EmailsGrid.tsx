@@ -15,7 +15,7 @@ export type EmailRow = {
     bulk: boolean;
     isActive: boolean;
     isPrimary: boolean;
-    rowVersion?: string; // Optimistic concurrency control için
+    concurrencyToken?: number; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -104,7 +104,7 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                         bulk: !!form.bulk,
                         isActive: !!form.isActive,
                         isPrimary: !!form.isPrimary,
-                        rowVersion: currentEmail?.rowVersion // RowVersion alanı eklendi
+                        concurrencyToken: currentEmail?.concurrencyToken || 0 // ConcurrencyToken alanı eklendi
                     };
                     await api.apiCustomersCustomerIdEmailsEmailIdPut(customerId, editingId, updatedEmail);
 

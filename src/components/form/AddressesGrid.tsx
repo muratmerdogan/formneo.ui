@@ -19,7 +19,7 @@ export type AddressRow = {
     isShipping: boolean;
     isActive: boolean;
     isPrimary: boolean;
-    rowVersion?: string; // Optimistic concurrency control için
+    concurrencyToken?: number; // Optimistic concurrency control için
 };
 
 type Props = {
@@ -99,7 +99,7 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
             isShipping: !!form.isShipping,
             isActive: !!form.isActive,
             isPrimary: !!form.isPrimary,
-            rowVersion: editingId ? rows.find(r => r.id === editingId)?.rowVersion : undefined // RowVersion alanı eklendi
+            concurrencyToken: editingId ? rows.find(r => r.id === editingId)?.concurrencyToken || 0 : 0 // ConcurrencyToken alanı eklendi
         };
 
         if (editingId) {

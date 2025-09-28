@@ -18232,6 +18232,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "workflowItemId": {
             "type": "string",
             "format": "uuid"
@@ -20569,6 +20573,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerTypeId": {
             "type": "string",
             "format": "uuid",
@@ -20789,6 +20797,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -21050,6 +21062,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerId": {
             "type": "string",
             "format": "uuid"
@@ -21112,6 +21128,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -21210,6 +21230,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerId": {
             "type": "string",
             "format": "uuid"
@@ -21270,6 +21294,10 @@
           },
           "isPrimary": {
             "type": "boolean"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21334,6 +21362,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -21563,6 +21595,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerId": {
             "type": "string",
             "format": "uuid"
@@ -21694,6 +21730,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerId": {
             "type": "string",
             "format": "uuid"
@@ -21809,6 +21849,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -21955,6 +21999,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "customerId": {
             "type": "string",
             "format": "uuid"
@@ -22005,6 +22053,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -22183,6 +22235,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -22926,6 +22982,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -25669,6 +25729,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -25739,6 +25803,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -25827,6 +25895,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -27390,6 +27462,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "ticketsId": {
             "type": "string",
             "format": "uuid"
@@ -27446,6 +27522,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -27590,6 +27670,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -27863,6 +27947,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "deparmentCode": {
             "type": "string",
             "nullable": true
@@ -27987,6 +28075,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -28475,6 +28567,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -28952,6 +29048,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -29137,6 +29237,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "ticketTeamId": {
             "type": "string",
             "format": "uuid"
@@ -29310,6 +29414,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -30757,6 +30865,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -30886,6 +30998,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -31122,6 +31238,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
@@ -31465,6 +31585,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
           "workflowName": {
             "type": "string",
             "nullable": true
@@ -31545,6 +31669,10 @@
             "type": "boolean"
           },
           "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
             "type": "integer",
             "format": "int32"
           },
