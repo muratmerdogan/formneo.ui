@@ -6,6 +6,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { CustomerEmailsApi } from "api/generated/api";
 import getConfiguration from "confiuration";
+import { extractErrorMessage } from "utils/errorUtils";
 
 export type EmailRow = {
     id: string;
@@ -25,11 +26,12 @@ type Props = {
     disabled?: boolean;
     customerId?: string; // API calls için müşteri ID'si
     autoSave?: boolean; // Otomatik kaydet (varsayılan: false)
+    onRefresh?: () => void; // Kayıt sonrası grid yenileme callback'i
 };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function EmailsGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props) {
+export default function EmailsGrid({ label, rows, onChange, disabled, customerId, autoSave = false, onRefresh }: Props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState<{ email: string; description: string; notify: boolean; bulk: boolean; isActive: boolean; isPrimary: boolean }>({ email: "", description: "", notify: false, bulk: false, isActive: true, isPrimary: false });
     const [error, setError] = useState<string | null>(null);
@@ -49,8 +51,10 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                 await api.apiCustomersCustomerIdEmailsEmailIdDelete(customerId, id);
                 const updated = rows.filter(r => r.id !== id);
                 onChange(updated);
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Email silinemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -70,9 +74,11 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                     await api.apiCustomersCustomerIdEmailsEmailIdSetPrimaryPut(customerId, id);
                     const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
                     onChange(updated);
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 }
             } catch (err) {
-                setError("Primary email güncellenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -114,8 +120,10 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                     }
                     onChange(updated);
                     closeModal();
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 } catch (err) {
-                    setError("Email güncellenemedi");
+                    setError(extractErrorMessage(err));
                     console.error(err);
                 } finally {
                     setLoading(false);
@@ -159,8 +167,10 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                 }
                 onChange(updated);
                 closeModal();
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Email eklenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -198,13 +208,13 @@ export default function EmailsGrid({ label, rows, onChange, disabled, customerId
                                 <td className="px-3 py-2 border-b">{r.email}</td>
                                 <td className="px-3 py-2 border-b">{r.description || "-"}</td>
                                 <td className="px-3 py-2 border-b">
-                                    <input type="checkbox" checked={!!r.notify} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, notify: e.target.checked } : x))} disabled={disabled} />
+                                    <input type="checkbox" checked={!!r.notify} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, notify: e.target.checked } : x))} disabled={disabled || autoSave} />
                                 </td>
                                 <td className="px-3 py-2 border-b">
-                                    <input type="checkbox" checked={!!r.bulk} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, bulk: e.target.checked } : x))} disabled={disabled} />
+                                    <input type="checkbox" checked={!!r.bulk} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, bulk: e.target.checked } : x))} disabled={disabled || autoSave} />
                                 </td>
                                 <td className="px-3 py-2 border-b">
-                                    <input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled} />
+                                    <input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled || autoSave} />
                                 </td>
                                 <td className="px-3 py-2 border-b">{r.isPrimary ? "Evet" : "Hayır"}</td>
                                 <td className="px-3 py-2 border-b text-right">

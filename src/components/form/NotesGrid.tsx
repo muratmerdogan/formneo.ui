@@ -5,6 +5,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DateField from "components/form/DateField";
 import { CustomerNotesApi } from "api/generated/api";
 import getConfiguration from "confiuration";
+import { extractErrorMessage } from "utils/errorUtils";
 
 export type NoteRow = {
     id: string;
@@ -21,9 +22,10 @@ type Props = {
     disabled?: boolean;
     customerId?: string;
     autoSave?: boolean;
+    onRefresh?: () => void; // Kayıt sonrası grid yenileme callback'i
 };
 
-export default function NotesGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props): JSX.Element {
+export default function NotesGrid({ label, rows, onChange, disabled, customerId, autoSave = false, onRefresh }: Props): JSX.Element {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [form, setForm] = useState<NoteRow>({ id: "", date: "", title: "", note: "" });
@@ -42,8 +44,10 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
             try {
                 await api.apiCustomerNotesIdDelete(id);
                 onChange((rows || []).filter(r => r.id !== id));
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Not silinemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -83,8 +87,10 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
                     const updated = (rows || []).map(r => r.id === editingId ? { ...r, ...noteData } : r);
                     onChange(updated);
                     closeModal();
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 } catch (err) {
-                    setError("Not güncellenemedi");
+                    setError(extractErrorMessage(err));
                     console.error(err);
                 } finally {
                     setLoading(false);
@@ -117,8 +123,10 @@ export default function NotesGrid({ label, rows, onChange, disabled, customerId,
 
                 onChange([...(rows || []), newRow]);
                 closeModal();
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Not eklenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);

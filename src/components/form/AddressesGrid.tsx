@@ -6,6 +6,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { CustomerAddressesApi } from "api/generated/api";
 import getConfiguration from "confiuration";
+import { extractErrorMessage } from "utils/errorUtils";
 
 export type AddressRow = {
     id: string;
@@ -29,9 +30,10 @@ type Props = {
     disabled?: boolean;
     customerId?: string;
     autoSave?: boolean;
+    onRefresh?: () => void; // Kayıt sonrası grid yenileme callback'i
 };
 
-export default function AddressesGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props): JSX.Element {
+export default function AddressesGrid({ label, rows, onChange, disabled, customerId, autoSave = false, onRefresh }: Props): JSX.Element {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState<AddressRow>({ id: "", country: "", city: "", district: "", postalCode: "", line1: "", line2: "", isBilling: false, isShipping: false, isActive: true, isPrimary: false });
     const [error, setError] = useState<string | null>(null);
@@ -50,8 +52,10 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
             try {
                 await api.apiCustomersCustomerIdAddressesAddressIdDelete(customerId, id);
                 onChange(rows.filter(r => r.id !== id));
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Adres silinemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -72,9 +76,11 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
                     await api.apiCustomersCustomerIdAddressesAddressIdSetDefaultShippingPut(customerId, id);
                     const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
                     onChange(updated);
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 }
             } catch (err) {
-                setError("Primary adres güncellenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -115,8 +121,10 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
                     }
                     onChange(updated);
                     closeModal();
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 } catch (err) {
-                    setError("Adres güncellenemedi");
+                    setError(extractErrorMessage(err));
                     console.error(err);
                 } finally {
                     setLoading(false);
@@ -148,8 +156,10 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
                 }
                 onChange(updated);
                 closeModal();
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Adres eklenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -190,14 +200,14 @@ export default function AddressesGrid({ label, rows, onChange, disabled, custome
                                 <td className="px-3 py-2 border-b">{r.country}</td>
                                 <td className="px-3 py-2 border-b">{r.city}</td>
                                 <td className="px-3 py-2 border-b">{r.district}</td>
-                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isBilling} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isBilling: e.target.checked } : x))} disabled={disabled} /></td>
-                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isShipping} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isShipping: e.target.checked } : x))} disabled={disabled} /></td>
+                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isBilling} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isBilling: e.target.checked } : x))} disabled={disabled || autoSave} /></td>
+                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isShipping} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isShipping: e.target.checked } : x))} disabled={disabled || autoSave} /></td>
                                 <td className="px-3 py-2 border-b">
                                     <IconButton size="small" onClick={() => setPrimary(r.id)} disabled={disabled || loading} title="Birincil Yap">
                                         {r.isPrimary ? <StarIcon fontSize="small" className="text-yellow-500" /> : <StarBorderIcon fontSize="small" />}
                                     </IconButton>
                                 </td>
-                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled} /></td>
+                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled || autoSave} /></td>
                                 <td className="px-3 py-2 border-b text-right">
                                     <IconButton size="small" onClick={() => openEdit(r)} disabled={disabled || loading} title="Düzenle">
                                         <EditOutlinedIcon fontSize="small" />

@@ -152,6 +152,14 @@ export default function CustomerFormPage(): JSX.Element {
         trigger("customerTypeId");
     };
 
+    // Grid'leri yenilemek için kullanılacak fonksiyon
+    const refreshCustomerData = () => {
+        const idToRefresh = customerId || customerIdFromState;
+        if (idToRefresh) {
+            loadCustomerData(idToRefresh);
+        }
+    };
+
     const loadCustomerData = async (customerId: string) => {
         setLoading(true);
         console.log("Loading customer data for ID:", customerId);
@@ -395,11 +403,6 @@ export default function CustomerFormPage(): JSX.Element {
                                 onClick={(e) => setOwnerAnchor(e.currentTarget)}
                                 size="small"
                             />
-                            <Menu anchorEl={ownerAnchor} open={Boolean(ownerAnchor)} onClose={() => setOwnerAnchor(null)}>
-                                {mockOwners.map(u => (
-                                    <MenuItem key={u.id} onClick={() => { setOwner(u); setValue("ownerId", u.id); setOwnerAnchor(null); }}>{u.name}</MenuItem>
-                                ))}
-                            </Menu>
                         </div>
                         <div className="text-sm text-slate-500">CustomerInsertDto ile uyumlu alanlar</div>
                     </div>
@@ -445,6 +448,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 onChange={setEmailRows}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
+                                onRefresh={refreshCustomerData}
                             />
                         </DraggableSection>
                         <DraggableSection id="addresses" title="Adresler">
@@ -454,6 +458,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 onChange={setAddressRows}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
+                                onRefresh={refreshCustomerData}
                             />
                         </DraggableSection>
                         <DraggableSection id="phones" title="Telefonlar">
@@ -463,6 +468,7 @@ export default function CustomerFormPage(): JSX.Element {
                                 onChange={setPhoneRows}
                                 customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                 autoSave={isEdit}
+                                onRefresh={refreshCustomerData}
                             />
                         </DraggableSection>
 
@@ -488,6 +494,7 @@ export default function CustomerFormPage(): JSX.Element {
                                     onChange={setNoteRows}
                                     customerId={isEdit ? (customerId || customerIdFromState) : undefined}
                                     autoSave={isEdit}
+                                    onRefresh={refreshCustomerData}
                                 />}
                                 {activeTab === 1 && <SocialMediaSection register={register} errors={errors} />}
                             </Box>

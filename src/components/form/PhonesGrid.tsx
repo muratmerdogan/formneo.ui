@@ -6,6 +6,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { CustomerPhonesApi } from "api/generated/api";
 import getConfiguration from "confiuration";
+import { extractErrorMessage } from "utils/errorUtils";
 
 export type PhoneRow = {
     id: string;
@@ -23,11 +24,12 @@ type Props = {
     disabled?: boolean;
     customerId?: string;
     autoSave?: boolean;
+    onRefresh?: () => void; // Kayıt sonrası grid yenileme callback'i
 };
 
 const phoneRegex = /^[0-9 +()-]{6,}$/;
 
-export default function PhonesGrid({ label, rows, onChange, disabled, customerId, autoSave = false }: Props): JSX.Element {
+export default function PhonesGrid({ label, rows, onChange, disabled, customerId, autoSave = false, onRefresh }: Props): JSX.Element {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState<PhoneRow>({ id: "", label: "", number: "", isPrimary: false, isActive: true });
     const [error, setError] = useState<string | null>(null);
@@ -46,8 +48,10 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
             try {
                 await api.apiCustomersCustomerIdPhonesPhoneIdDelete(customerId, id);
                 onChange(rows.filter(r => r.id !== id));
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Telefon silinemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -66,9 +70,11 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
                     await api.apiCustomersCustomerIdPhonesPhoneIdSetPrimaryPut(customerId, id);
                     const updated = rows.map(r => ({ ...r, isPrimary: r.id === id }));
                     onChange(updated);
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 }
             } catch (err) {
-                setError("Primary telefon güncellenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -104,8 +110,10 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
                     }
                     onChange(updated);
                     closeModal();
+                    // Grid'i veritabanından yenile
+                    if (onRefresh) onRefresh();
                 } catch (err) {
-                    setError("Telefon güncellenemedi");
+                    setError(extractErrorMessage(err));
                     console.error(err);
                 } finally {
                     setLoading(false);
@@ -137,8 +145,10 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
                 }
                 onChange(updated);
                 closeModal();
+                // Grid'i veritabanından yenile
+                if (onRefresh) onRefresh();
             } catch (err) {
-                setError("Telefon eklenemedi");
+                setError(extractErrorMessage(err));
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -178,7 +188,7 @@ export default function PhonesGrid({ label, rows, onChange, disabled, customerId
                                         {r.isPrimary ? <StarIcon fontSize="small" className="text-yellow-500" /> : <StarBorderIcon fontSize="small" />}
                                     </IconButton>
                                 </td>
-                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled} /></td>
+                                <td className="px-3 py-2 border-b"><input type="checkbox" checked={!!r.isActive} onChange={(e) => onChange(rows.map(x => x.id === r.id ? { ...x, isActive: e.target.checked } : x))} disabled={disabled || autoSave} /></td>
                                 <td className="px-3 py-2 border-b text-right">
                                     <IconButton size="small" onClick={() => openEdit(r)} disabled={disabled || loading} title="Düzenle">
                                         <EditOutlinedIcon fontSize="small" />
