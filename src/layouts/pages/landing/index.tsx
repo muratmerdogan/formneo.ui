@@ -38,6 +38,15 @@ import WorkflowIcon from "@mui/icons-material/AccountTree";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LanguageIcon from "@mui/icons-material/Language";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SyncIcon from "@mui/icons-material/Sync";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import LaunchIcon from "@mui/icons-material/Launch";
+import EmailIcon from "@mui/icons-material/Email";
 
 // Styled components
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -154,6 +163,50 @@ const Dot = styled(Box)(({ active }: { active: boolean }) => ({
     }
 }));
 
+const OrderManagementSection = styled(Box)(({ theme }) => ({
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    color: "white",
+    padding: theme.spacing(12, 0),
+    position: "relative",
+    "&::before": {
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"dots\" width=\"20\" height=\"20\" patternUnits=\"userSpaceOnUse\"><circle cx=\"10\" cy=\"10\" r=\"1\" fill=\"%23ffffff\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23dots)\"/></svg>') repeat",
+        opacity: 0.3,
+    }
+}));
+
+const PlatformCard = styled(Card)(({ theme }) => ({
+    padding: theme.spacing(3),
+    textAlign: "center",
+    height: "100%",
+    background: "rgba(255, 255, 255, 0.95)",
+    backdropFilter: "blur(10px)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    transition: "all 0.3s ease",
+    "&:hover": {
+        transform: "translateY(-8px)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+        background: "white",
+    }
+}));
+
+const IntegrationBadge = styled(Box)(({ theme }) => ({
+    display: "inline-flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    padding: theme.spacing(0.5, 2),
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: "20px",
+    fontSize: "14px",
+    fontWeight: "500",
+    margin: theme.spacing(0.5),
+}));
+
 function LandingPage(): JSX.Element {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
@@ -164,6 +217,60 @@ function LandingPage(): JSX.Element {
         const newLang = i18n.language === 'tr' ? 'en' : 'tr';
         i18n.changeLanguage(newLang);
     };
+
+    const deliveryPlatforms = [
+        {
+            name: "Getir",
+            icon: <DeliveryDiningIcon sx={{ fontSize: 48, color: "#5d4fb3" }} />,
+            url: "https://getir.com",
+            description: "Hızlı teslimat platformu entegrasyonu",
+            color: "#5d4fb3"
+        },
+        {
+            name: "Trendyol Yemek",
+            icon: <RestaurantIcon sx={{ fontSize: 48, color: "#f27a1a" }} />,
+            url: "https://www.trendyolyemek.com",
+            description: "Türkiye&apos;nin lider yemek sipariş platformu",
+            color: "#f27a1a"
+        },
+        {
+            name: "Yemeksepeti",
+            icon: <ShoppingCartIcon sx={{ fontSize: 48, color: "#ff6600" }} />,
+            url: "https://yemeksepeti.com",
+            description: "Kapsamlı yemek sipariş çözümleri",
+            color: "#ff6600"
+        },
+        {
+            name: "Migros Hemen",
+            icon: <ShoppingCartIcon sx={{ fontSize: 48, color: "#00a651" }} />,
+            url: "https://migros.com.tr",
+            description: "Market alışveriş entegrasyonu",
+            color: "#00a651"
+        }
+    ];
+
+    const orderManagementFeatures = [
+        {
+            icon: <DashboardIcon sx={{ fontSize: 48, color: "#667eea" }} />,
+            title: "Tek Panel Yönetimi",
+            description: "Tüm platformlardan gelen siparişleri tek bir panelde görüntüleyin ve yönetin"
+        },
+        {
+            icon: <SyncIcon sx={{ fontSize: 48, color: "#667eea" }} />,
+            title: "Otomatik Senkronizasyon",
+            description: "Siparişler gerçek zamanlı olarak otomatik senkronize edilir"
+        },
+        {
+            icon: <NotificationsIcon sx={{ fontSize: 48, color: "#667eea" }} />,
+            title: "Anlık Bildirimler",
+            description: "Yeni siparişler için anında bildirim alın"
+        },
+        {
+            icon: <AnalyticsIcon sx={{ fontSize: 48, color: "#667eea" }} />,
+            title: "Detaylı Raporlama",
+            description: "Platform bazlı satış analizi ve performans raporları"
+        }
+    ];
 
     const features = [
         {
@@ -199,6 +306,18 @@ function LandingPage(): JSX.Element {
     ];
 
     const carouselSlides = [
+        {
+            icon: <DashboardIcon sx={{ fontSize: 80, color: "#667eea" }} />,
+            title: "Sipariş Yönetim Modülü",
+            description: "Getir, Trendyol Yemek, Yemeksepeti gibi platformlardan gelen siparişlerinizi tek yerden yönetin. İşletmenizin operasyonel verimliliğini maksimuma çıkarın.",
+            features: [
+                "Tüm platformları tek panelde birleştirin",
+                "Gerçek zamanlı sipariş senkronizasyonu",
+                "Otomatik bildirim ve uyarı sistemi",
+                "Platform bazlı satış analiz raporları",
+                "Stok ve menü yönetimi entegrasyonu"
+            ]
+        },
         {
             icon: <DragIndicatorIcon sx={{ fontSize: 80, color: "#667eea" }} />,
             title: t('ns1:LandingPage.AdvancedFeatures.DragDrop.Title'),
@@ -337,7 +456,51 @@ function LandingPage(): JSX.Element {
                                 style={{ height: "150px" }}
                             />
                         </MDBox>
-                        <MDBox display="flex" alignItems="center" gap={2}>
+                        <MDBox display="flex" alignItems="center" gap={2} flexWrap="wrap">
+                            {/* E-posta İletişim */}
+                            <Tooltip title="info@formneo.com - İletişime Geç">
+                                <MDBox 
+                                    display="flex" 
+                                    alignItems="center" 
+                                    gap={1}
+                                    sx={{
+                                        backgroundColor: "rgba(102, 126, 234, 0.15)",
+                                        borderRadius: "30px",
+                                        padding: { xs: "8px 14px", md: "10px 20px" },
+                                        cursor: "pointer",
+                                        transition: "all 0.3s ease",
+                                        border: "2px solid rgba(102, 126, 234, 0.3)",
+                                        boxShadow: "0 2px 10px rgba(102, 126, 234, 0.2)",
+                                        "&:hover": {
+                                            backgroundColor: "#667eea",
+                                            transform: "translateY(-3px)",
+                                            boxShadow: "0 6px 20px rgba(102, 126, 234, 0.4)",
+                                            "& .email-text": {
+                                                color: "white"
+                                            },
+                                            "& .email-icon": {
+                                                color: "white"
+                                            }
+                                        }
+                                    }}
+                                    onClick={() => window.open('mailto:info@formneo.com?subject=FormNeo Hakkında Bilgi Talebi')}
+                                >
+                                    <EmailIcon className="email-icon" sx={{ fontSize: { xs: 20, md: 22 }, color: "#667eea" }} />
+                                    <MDTypography 
+                                        className="email-text"
+                                        variant="body2" 
+                                        sx={{ 
+                                            color: "#667eea", 
+                                            fontWeight: "700",
+                                            fontSize: { xs: "13px", md: "15px" },
+                                            display: { xs: "none", sm: "block" }
+                                        }}
+                                    >
+                                        info@formneo.com
+                                    </MDTypography>
+                                </MDBox>
+                            </Tooltip>
+                            
                             <Tooltip title={i18n.language === 'tr' ? 'Switch to English' : 'Türkçe\'ye Geç'}>
                                 <IconButton
                                     onClick={toggleLanguage}
@@ -471,6 +634,138 @@ function LandingPage(): JSX.Element {
                     </Grid>
                 </MDBox>
             </Container>
+
+            {/* Order Management Section */}
+            <OrderManagementSection>
+                <Container maxWidth="lg">
+                    <MDBox position="relative" zIndex={1}>
+                        <MDBox textAlign="center" mb={8}>
+                            <MDTypography variant="h2" fontWeight="bold" mb={3}>
+                                🚀 Yeni Özellik: Sipariş Yönetim Modülü
+                            </MDTypography>
+                            <MDTypography variant="h5" sx={{ opacity: 0.9, maxWidth: "800px", mx: "auto", mb: 4 }}>
+                                Getir, Trendyol Yemek, Yemeksepeti ve daha fazla platformdan gelen siparişlerinizi 
+                                tek bir yerden yönetin. Operasyonel verimliliğinizi artırın!
+                            </MDTypography>
+                            
+                            <MDBox display="flex" justifyContent="center" flexWrap="wrap" gap={1} mb={6}>
+                                <IntegrationBadge>
+                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
+                                    Gerçek Zamanlı Senkronizasyon
+                                </IntegrationBadge>
+                                <IntegrationBadge>
+                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
+                                    Tek Panel Kontrolü
+                                </IntegrationBadge>
+                                <IntegrationBadge>
+                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
+                                    Otomatik Bildirimler
+                                </IntegrationBadge>
+                                <IntegrationBadge>
+                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
+                                    Detaylı Raporlama
+                                </IntegrationBadge>
+                            </MDBox>
+                        </MDBox>
+
+                        {/* Platform Integrations */}
+                        <MDBox mb={8}>
+                            <MDTypography variant="h4" fontWeight="bold" textAlign="center" mb={2}>
+                                Entegre Platformlar
+                            </MDTypography>
+                            <MDTypography variant="body1" textAlign="center" sx={{ opacity: 0.8, mb: 4 }}>
+                                Türkiye&apos;nin en popüler teslimat ve sipariş platformlarıyla sorunsuz entegrasyon
+                            </MDTypography>
+                            
+                            <Grid container spacing={3} justifyContent="center">
+                                {deliveryPlatforms.map((platform, index) => (
+                                    <Grid item xs={12} sm={6} md={3} key={index}>
+                                        <PlatformCard
+                                            sx={{
+                                                cursor: "pointer",
+                                                "&:hover": {
+                                                    "& .platform-icon": {
+                                                        transform: "scale(1.1)",
+                                                        color: platform.color
+                                                    }
+                                                }
+                                            }}
+                                            onClick={() => window.open(platform.url, '_blank')}
+                                        >
+                                            <MDBox mb={2} className="platform-icon" sx={{ transition: "all 0.3s ease" }}>
+                                                {platform.icon}
+                                            </MDBox>
+                                            <MDTypography variant="h6" fontWeight="bold" color="dark" mb={1}>
+                                                {platform.name}
+                                            </MDTypography>
+                                            <MDTypography variant="body2" color="text" mb={2}>
+                                                {platform.description}
+                                            </MDTypography>
+                                            <MDBox display="flex" alignItems="center" justifyContent="center" gap={1}>
+                                                <LaunchIcon sx={{ fontSize: 16, color: platform.color }} />
+                                                <MDTypography variant="body2" sx={{ color: platform.color, fontWeight: "bold" }}>
+                                                    Platformu Ziyaret Et
+                                                </MDTypography>
+                                            </MDBox>
+                                        </PlatformCard>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </MDBox>
+
+                        {/* Order Management Features */}
+                        <Grid container spacing={4}>
+                            {orderManagementFeatures.map((feature, index) => (
+                                <Grid item xs={12} md={6} lg={3} key={index}>
+                                    <MDBox textAlign="center" p={3}>
+                                        <MDBox mb={3}>
+                                            {feature.icon}
+                                        </MDBox>
+                                        <MDTypography variant="h6" fontWeight="bold" mb={2}>
+                                            {feature.title}
+                                        </MDTypography>
+                                        <MDTypography variant="body2" sx={{ opacity: 0.9 }}>
+                                            {feature.description}
+                                        </MDTypography>
+                                    </MDBox>
+                                </Grid>
+                            ))}
+                        </Grid>
+
+                        {/* CTA for Order Management */}
+                        <MDBox textAlign="center" mt={8}>
+                            <MDTypography variant="h4" fontWeight="bold" mb={3}>
+                                Sipariş Yönetimini Deneyin
+                            </MDTypography>
+                            <MDTypography variant="body1" sx={{ opacity: 0.8, maxWidth: "600px", mx: "auto", mb: 4 }}>
+                                FormNeo&apos;nun güçlü sipariş yönetim modülü ile işletmenizin verimliliğini artırın. 
+                                Ücretsiz deneme ile hemen başlayın!
+                            </MDTypography>
+                            <MDButton
+                                variant="contained"
+                                color="white"
+                                size="large"
+                                onClick={handleRegister}
+                                sx={{
+                                    px: 4,
+                                    py: 1.5,
+                                    fontSize: "1.1rem",
+                                    textTransform: "none",
+                                    color: "#667eea",
+                                    fontWeight: "bold",
+                                    boxShadow: "0 8px 25px rgba(255, 255, 255, 0.3)",
+                                    "&:hover": {
+                                        transform: "translateY(-2px)",
+                                        boxShadow: "0 12px 35px rgba(255, 255, 255, 0.4)"
+                                    }
+                                }}
+                            >
+                                🎯 Ücretsiz Deneyin - Sipariş Yönetimi
+                            </MDButton>
+                        </MDBox>
+                    </MDBox>
+                </Container>
+            </OrderManagementSection>
 
             {/* Advanced Features Carousel */}
             <Container maxWidth="lg">
@@ -659,6 +954,7 @@ function LandingPage(): JSX.Element {
                             variant="outlined"
                             color="info"
                             size="large"
+                            onClick={() => window.open('mailto:info@formneo.com?subject=FormNeo Hakkında Bilgi Talebi')}
                             sx={{
                                 px: 4,
                                 py: 1.5,
@@ -666,7 +962,7 @@ function LandingPage(): JSX.Element {
                                 textTransform: "none"
                             }}
                         >
-                            {t('ns1:LandingPage.CTA.ContactSales')}
+                            📧 {t('ns1:LandingPage.CTA.ContactSales')}
                         </MDButton>
                     </MDBox>
                 </MDBox>
@@ -690,6 +986,25 @@ function LandingPage(): JSX.Element {
                             <MDTypography variant="body2" sx={{ opacity: 0.8, maxWidth: "400px" }}>
                                 {t('ns1:LandingPage.Footer.Description')}
                             </MDTypography>
+                            <MDBox mt={3}>
+                                <MDTypography variant="h6" fontWeight="bold" mb={1}>
+                                    📧 İletişim
+                                </MDTypography>
+                                <MDTypography 
+                                    variant="body2" 
+                                    sx={{ 
+                                        opacity: 0.9, 
+                                        cursor: "pointer",
+                                        "&:hover": { color: "#667eea" }
+                                    }}
+                                    onClick={() => window.open('mailto:info@formneo.com')}
+                                >
+                                    info@formneo.com
+                                </MDTypography>
+                                <MDTypography variant="body2" sx={{ opacity: 0.7, fontSize: "12px", mt: 0.5 }}>
+                                    Sorularınız için bize ulaşın
+                                </MDTypography>
+                            </MDBox>
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <MDBox display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} gap={4}>
