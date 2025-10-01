@@ -221,8 +221,8 @@ const OrganizationalChartPage = () => {
               pdf.setProperties({
                 title: "Organizasyon Şeması",
                 subject: "Şirket organizasyon yapısı",
-                creator: "Vesa Support UI",
-                author: "Vesa System",
+                creator: "Formneo Support UI",
+                author: "Formneo System",
               });
 
               setExportProgress(80);

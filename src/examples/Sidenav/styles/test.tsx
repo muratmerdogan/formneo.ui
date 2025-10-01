@@ -46,7 +46,7 @@
 //         >
 //           <img
 //             src={logo}
-//             alt="Vesa Solutions"
+//             alt="Formmeno Solutions"
 //             style={{
 //               width: "120px",
 //             }} // Logo boyutu ve yuvarlak köşeler

@@ -761,7 +761,7 @@ const routes = [
   { type: "title", title: "Pages", key: "title-pages" },
   {
     type: "collapse",
-    name: "Vesa Destek Yönetim",
+    name: "Formneo Destek Yönetim",
     key: "pages",
     icon: <Icon fontSize="medium">image</Icon>,
     collapse: [

@@ -402,7 +402,7 @@ const ParamtetersDefination = (): JSX.Element => {
       // data: false, // Varsayılan "Data" bileşenlerini gizler
       premium: false,
       custom: {
-        title: "Vesa Design System",
+        title: "Formneo Design System",
         Key: "dscomponents",
         weight: 10,
         components: {

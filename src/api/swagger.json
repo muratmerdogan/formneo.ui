@@ -17005,7 +17005,7 @@
     "/api/VesaSupport": {
       "get": {
         "tags": [
-          "VesaSupport"
+          "Formmneo"
         ],
         "responses": {
           "200": {
@@ -17017,7 +17017,7 @@
     "/api/VesaSupport/GetAll": {
       "get": {
         "tags": [
-          "VesaSupport"
+          "formneo"
         ],
         "responses": {
           "200": {
@@ -17055,7 +17055,7 @@
     "/api/VesaSupport/GetSelectList": {
       "get": {
         "tags": [
-          "VesaSupport"
+          "Formmeno"
         ],
         "responses": {
           "200": {
