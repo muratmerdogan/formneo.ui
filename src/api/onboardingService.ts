@@ -59,7 +59,6 @@ class OnBoardingService {
             lastName: string;
             email: string;
             phone: string;
-            password: string;
         },
         selectedPlan: string,
         agreedToTerms: boolean
@@ -79,7 +78,6 @@ class OnBoardingService {
                 lastName: adminData.lastName,
                 email: adminData.email,
                 phone: adminData.phone || null,
-                password: adminData.password,
             },
             plan: selectedPlan,
             agreedToTerms: agreedToTerms,

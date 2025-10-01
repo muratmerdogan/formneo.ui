@@ -424,6 +424,18 @@ function LandingPage(): JSX.Element {
         setCurrentSlide(index);
     };
 
+    // JivoChat: sadece Landing'de yükle
+    useEffect(() => {
+        const id = "MEsAWeIA00";
+        const existing = document.querySelector(`script[src*="jivosite.com/widget/${id}"]`);
+        if (existing) return;
+        const s = document.createElement("script");
+        s.src = `//code.jivosite.com/widget/${id}`;
+        s.async = true;
+        document.head.appendChild(s);
+        return () => { try { s.remove(); } catch { /* noop */ } };
+    }, []);
+
     // Otomatik carousel
     useEffect(() => {
         const interval = setInterval(() => {

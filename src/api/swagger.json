@@ -25457,8 +25457,7 @@
         "required": [
           "email",
           "firstName",
-          "lastName",
-          "password"
+          "lastName"
         ],
         "type": "object",
         "properties": {
@@ -25478,10 +25477,6 @@
           "phone": {
             "type": "string",
             "nullable": true
-          },
-          "password": {
-            "minLength": 8,
-            "type": "string"
           }
         },
         "additionalProperties": false

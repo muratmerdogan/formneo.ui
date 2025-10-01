@@ -109,6 +109,7 @@ const CustomerDashboardPage = lazy(() => import("pages/customer/CustomerDashboar
 const CustomerFormPage = lazy(() => import("pages/customer/CustomerFormPage"));
 const OpportunitiesPage = lazy(() => import("pages/opportunities/OpportunitiesPage"));
 const OpportunityFormPage = lazy(() => import("pages/opportunity/OpportunityFormPage"));
+const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
@@ -241,6 +242,7 @@ export default function App() {
             <Route path="/LogOut" element={<Logout />} />
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
+            <Route path="/orders/console" element={<OrdersConsolePage />} />
             {/* Dashboard Routes - Genel erişim */}
             <Route path="/dashboards/analytics" element={
               <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>

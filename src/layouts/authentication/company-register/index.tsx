@@ -169,8 +169,6 @@ interface AdminData {
     lastName: string;
     email: string;
     phone: string;
-    password: string;
-    confirmPassword: string;
 }
 
 function CompanyRegister(): JSX.Element {
@@ -202,9 +200,7 @@ function CompanyRegister(): JSX.Element {
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
-        password: "",
-        confirmPassword: ""
+        phone: ""
     });
 
     const steps = [
@@ -311,7 +307,7 @@ function CompanyRegister(): JSX.Element {
             // Başarılı kayıt sonrası login sayfasına yönlendir
             navigate("/authentication/sign-in/cover", {
                 state: {
-                    message: "Kayıt işleminiz başarıyla tamamlandı! E-posta adresinizi kontrol ederek hesabınızı aktive edin.",
+                    message: "Kayıt işleminiz başarıyla tamamlandı! Şifreniz e-posta adresinize gönderildi. E-postanızı kontrol ederek hesabınızı aktive edin.",
                     email: adminData.email
                 }
             });
@@ -365,10 +361,7 @@ function CompanyRegister(): JSX.Element {
             case 1:
                 return adminData.firstName &&
                     adminData.lastName &&
-                    adminData.email &&
-                    adminData.password &&
-                    adminData.confirmPassword &&
-                    adminData.password === adminData.confirmPassword;
+                    adminData.email;
             case 2:
                 return selectedPlan && agreedToTerms;
             default:
@@ -566,29 +559,31 @@ function CompanyRegister(): JSX.Element {
                                     onChange={(e: any) => setAdminData({ ...adminData, phone: e.target.value })}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <StyledMDInput
-                                    label="Şifre *"
-                                    type="password"
-                                    fullWidth
-                                    value={adminData.password}
-                                    onChange={(e: any) => setAdminData({ ...adminData, password: e.target.value })}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <StyledMDInput
-                                    label="Şifre Tekrar *"
-                                    type="password"
-                                    fullWidth
-                                    value={adminData.confirmPassword}
-                                    onChange={(e: any) => setAdminData({ ...adminData, confirmPassword: e.target.value })}
-                                    error={adminData.confirmPassword && adminData.password !== adminData.confirmPassword}
-                                />
-                                {adminData.confirmPassword && adminData.password !== adminData.confirmPassword && (
-                                    <MDTypography variant="caption" color="error" mt={1}>
-                                        Şifreler eşleşmiyor
-                                    </MDTypography>
-                                )}
+                            
+                            {/* Şifre Bilgi Kutusu */}
+                            <Grid item xs={12}>
+                                <MDBox
+                                    p={3}
+                                    borderRadius="12px"
+                                    sx={{
+                                        backgroundColor: "rgba(76, 175, 80, 0.1)",
+                                        border: "1px solid rgba(76, 175, 80, 0.3)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 2
+                                    }}
+                                >
+                                    <CheckCircleIcon sx={{ color: "#4caf50", fontSize: 24 }} />
+                                    <MDBox>
+                                        <MDTypography variant="h6" fontWeight="bold" color="success" mb={1}>
+                                            🔐 Güvenli Şifre Otomatik Oluşturulacak
+                                        </MDTypography>
+                                        <MDTypography variant="body2" color="text">
+                                            Hesabınız için güçlü bir şifre otomatik olarak oluşturulacak ve 
+                                            e-posta adresinize gönderilecektir. İlk girişten sonra şifrenizi değiştirebilirsiniz.
+                                        </MDTypography>
+                                    </MDBox>
+                                </MDBox>
                             </Grid>
                         </Grid>
                     </StepCard>
@@ -752,6 +747,7 @@ function CompanyRegister(): JSX.Element {
                         backgroundColor: "white",
                         border: "1px solid rgba(25, 118, 210, 0.1)"
                     }}>
+
                         <Stepper
                             activeStep={activeStep}
                             alternativeLabel

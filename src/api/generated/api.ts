@@ -2137,7 +2137,6 @@ export interface OnboardAdminDto {
     'lastName': string;
     'email': string;
     'phone'?: string | null;
-    'password': string;
 }
 export interface OnboardCompanyDto {
     'companyName': string;

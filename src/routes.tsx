@@ -56,6 +56,7 @@ const Kanban = lazy(() => import("layouts/applications/kanban"));
 const Wizard = lazy(() => import("layouts/applications/wizard"));
 
 const Calendar = lazy(() => import("layouts/applications/calendar"));
+const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
 const NewProduct = lazy(() => import("layouts/ecommerce/products/new-product"));
 const EditProduct = lazy(() => import("layouts/ecommerce/products/edit-product"));
 const ProductPage = lazy(() => import("layouts/ecommerce/products/product-page"));
@@ -900,6 +901,12 @@ const routes = [
         key: "calendar",
         route: "/applications/calendar",
         component: <Calendar />,
+      },
+      {
+        name: "Orders Console",
+        key: "orders-console",
+        route: "/orders/console",
+        component: <OrdersConsolePage />,
       },
     ],
   },

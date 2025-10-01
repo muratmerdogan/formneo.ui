@@ -71,8 +71,8 @@ function Settings(): JSX.Element {
   const handleSubmit = async (values: any, actions: any) => {
     console.log("isMailSender Geliyor mu", values.isMailSender);
     
-    // State'den ID al
-    if (!userId) {
+    // Edit modunda userId kontrolü (create modunda engelleme yapma)
+    if (formGudid && !userId) {
       dispatchAlert({
         message: "Geçersiz kullanıcı ID'si. İşlem iptal edildi.",
         type: MessageBoxType.Error,
@@ -187,33 +187,29 @@ function Settings(): JSX.Element {
 
 
   useEffect(() => {
-    // State'den userId al
-    const id = location.state?.userId;
-    
-    if (id) {
+    // State veya query'den userId al (hem state hem query desteklenir)
+    const idFromState = location.state?.userId as string | undefined;
+    const idFromQuery = new URLSearchParams(location.search).get('id') || undefined;
+    const rawId = idFromState || idFromQuery;
+
+    if (rawId !== undefined) {
       // XSS koruması için basit sanitizasyon
-      const sanitizedId = id.replace(/[<>\"'&]/g, '');
-      
-      // Boş string kontrolü
+      const sanitizedId = rawId.replace(/[<>\"'&]/g, '');
+
+      // Boş string kontrolü → create modu
       if (sanitizedId.trim() === '') {
-        dispatchAlert({
-          message: "Geçersiz kullanıcı ID'si. Lütfen geçerli bir kullanıcı seçin.",
-          type: MessageBoxType.Error,
-        });
-        navigate("/users");
+        setIsValidUser(true);
+        setIsLoading(false);
         return;
       }
-      
-      // ID'yi state'e kaydet
+
+      // Edit modu: detay çek
       setUserId(sanitizedId);
       fetchDetail(sanitizedId);
     } else {
-      // Geçersiz veya eksik ID
-      dispatchAlert({
-        message: "Geçersiz kullanıcı ID'si. Lütfen geçerli bir kullanıcı seçin.",
-        type: MessageBoxType.Error,
-      });
-      navigate("/users");
+      // ID yok → create modu
+      setIsValidUser(true);
+      setIsLoading(false);
     }
   }, []);
 
