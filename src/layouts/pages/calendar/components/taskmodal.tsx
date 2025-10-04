@@ -85,7 +85,7 @@ export default function TaskModal({
     const fetchUserAppData = async () => {
       let conf = getConfiguration();
       let api = new UserApi(conf);
-      let data = await api.apiUserVesaUsersWithoutPhotoGet();
+      let data = await api.apiUserGetAllWithOuthPhotoGet();
       setUserAppFetchData(data.data);
     };
 

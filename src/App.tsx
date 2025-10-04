@@ -57,7 +57,6 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 
 const NewUser = lazy(() => import("layouts/pages/users/new-user"));
 const UserDetail = lazy(() => import("layouts/pages/users/userDetail/settings/index"));
-const ActivityReports = lazy(() => import("layouts/pages/reports/activityReports/analytics/index"));
 const AllDemos = lazy(() => import("layouts/pages/demos/all-projects"));
 const Logout = lazy(() => import("layouts/authentication/sign-in/cover/Logout"));
 import PrivateRoute from "layouts/authentication/sign-in/cover/PrivateRoute";
@@ -107,12 +106,11 @@ const CustomerDetail = lazy(() => import("layouts/pages/customer/detail"));
 const CustomersPage = lazy(() => import("pages/customers/CustomersPage"));
 const CustomerDashboardPage = lazy(() => import("pages/customer/CustomerDashboardPage"));
 const CustomerFormPage = lazy(() => import("pages/customer/CustomerFormPage"));
-const OpportunitiesPage = lazy(() => import("pages/opportunities/OpportunitiesPage"));
-const OpportunityFormPage = lazy(() => import("pages/opportunity/OpportunityFormPage"));
 const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
+import OpportunityFormPage from "./pages/opportunities/OpportunityFormPage";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -261,7 +259,6 @@ export default function App() {
               <Route path="/dashboard" element={<Navigate to="/dashboards/analytics" />} />
               <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
               <Route path="/users/detail" element={<UserDetail />} />
-              <Route path="/ActivityReports" element={<ActivityReports />} />
               <Route path="/Messages" element={<MessagePage />} />
               <Route path="/Menus" element={<MenuList />} />
               <Route path="/MenuDetail" element={<MenuDetail />} />
@@ -269,7 +266,6 @@ export default function App() {
               <Route path="/customers" element={<CustomersPage />} />
               <Route path="/customers/new" element={<CustomerFormPage />} />
               <Route path="/customers/edit" element={<CustomerFormPage />} />
-              <Route path="/opportunities" element={<OpportunitiesPage />} />
               <Route path="/opportunities/new" element={<OpportunityFormPage />} />
               <Route path="/opportunities/:id" element={<OpportunityFormPage />} />
               

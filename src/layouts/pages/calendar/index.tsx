@@ -267,7 +267,7 @@ function CalendarPage(): JSX.Element {
     const fetchDepartmentData = async () => {
       let conf = getConfiguration();
       let api3 = new TicketDepartmentsApi(conf);    
-      let response = await api3.apiTicketDepartmentsGetOnlyVesaDepartmentsGet();
+      let response = await api3.apiTicketDepartmentsAllOnlyNameGet();
       setDepartmentData(response.data);
     };
     const fetchLevelData = async () => {
@@ -279,7 +279,7 @@ function CalendarPage(): JSX.Element {
     const fetchUserData = async () => {
       let conf = getConfiguration();
       let api = new UserApi(conf);
-      let data = await api.apiUserVesaUsersWithoutPhotoGet();
+      let data = await api.apiUserGetAllWithOuthPhotoGet();
       setUserData(data.data as any);
     };
     const fetchUserDepartmentData = async () => {

@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Input } from '@ui5/webcomponents-react';
-import { Configuration, PickListDto } from 'api/generated';
+import { Configuration } from 'api/generated';
 
 interface CustomInputComponentProps {
     value?: string;

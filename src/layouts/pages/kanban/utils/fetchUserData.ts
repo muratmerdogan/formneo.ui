@@ -6,7 +6,7 @@ const fetchUserData = async (): Promise<UserAppDtoWithoutPhoto[]> => {
     try {
         let config = getConfiguration();
         let api = new UserApi(config);
-        let response = await api.apiUserVesaUsersWithoutPhotoGet();
+        let response = await api.apiUserGetAllWithOuthPhotoGet();
        
 
         return response.data;

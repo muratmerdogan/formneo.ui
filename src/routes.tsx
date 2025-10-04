@@ -56,6 +56,9 @@ const Kanban = lazy(() => import("layouts/applications/kanban"));
 const Wizard = lazy(() => import("layouts/applications/wizard"));
 
 const Calendar = lazy(() => import("layouts/applications/calendar"));
+const OpportunitiesListPage = lazy(() => import("pages/opportunities/OpportunitiesListPage"));
+const OpportunityFormPage = lazy(() => import("pages/opportunities/OpportunityFormPage"));
+const SeedOpportunityStagesPage = lazy(() => import("pages/settings/SeedOpportunityStagesPage"));
 const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
 const NewProduct = lazy(() => import("layouts/ecommerce/products/new-product"));
 const EditProduct = lazy(() => import("layouts/ecommerce/products/edit-product"));
@@ -855,6 +858,18 @@ const routes = [
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
       {
+        name: "Fırsatlar",
+        key: "opportunities",
+        route: "/opportunities",
+        component: <OpportunitiesListPage />,
+      },
+      {
+        name: "Fırsat Formu",
+        key: "opportunity-form",
+        route: "/opportunities/:id",
+        component: <OpportunityFormPage />,
+      },
+      {
         name: "Parameters",
         key: "parameters",
         route: "/settings/parameters",
@@ -865,6 +880,12 @@ const routes = [
         key: "parameters-admin",
         route: "/settings/parameters/admin",
         component: <ParametersAdminPage />,
+      },
+      {
+        name: "Seed Opportunity Stages",
+        key: "seed-opportunity-stages",
+        route: "/settings/seed/opportunity-stages",
+        component: <SeedOpportunityStagesPage />,
       },
       {
         name: "Lookup Admin",

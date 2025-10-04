@@ -1,7 +1,7 @@
 import React, { ForwardedRef, useEffect, useRef, useState } from 'react';
 import { SelectDialog, AnalyticalTable, FlexBox, Button, TextAlign, Input, Icon, Label } from '@ui5/webcomponents-react';
 import ReactPaginate from 'react-paginate';
-import { Configuration, FOJobCodeDto, FOLocationGroupList, GenericList, GenericListApi, IGenericListDto, SFFOJobCodeApi, SFUserApi, SFUSerList } from 'api/generated';
+import { Configuration, GenericList, GenericListApi, IGenericListDto } from 'api/generated';
 import ReactDOM from 'react-dom';
 import { Setter } from 'date-fns/parse/_lib/Setter';
 import { opendir } from 'fs';

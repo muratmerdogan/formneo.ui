@@ -48,16 +48,16 @@ const queryClient = new QueryClient({
 const msalConfig = isLocalhost
   ? {
     auth: {
-      clientId: "28116fc8-fd64-4ccb-ab4d-96d2f3653846", // Uygulama (istemci) kimliği
-      authority: "https://login.microsoftonline.com/8b3326df-62dc-4c93-84c2-db8f6f28f4bb", // Kiracı ID'si (authority)
-      redirectUri: "http://localhost:3000", // Azure portalda tanımlı geri dönüş URI'si
+      clientId: "", // Uygulama (istemci) kimliği
+      authority: "", // Kiracı ID'si (authority)
+      redirectUri: "", // Azure portalda tanımlı geri dönüş URI'si
     },
   }
   : {
     auth: {
-      clientId: "1a4e7070-9c88-4097-9805-caf72e245e79", // Uygulama (istemci) kimliği
-      authority: "https://login.microsoftonline.com/8b3326df-62dc-4c93-84c2-db8f6f28f4bb", // Dizin (kiracı) kimliği
-      redirectUri: "https://support.vesa-tech.com", // Azure portalda tanımlı SPA geri dönüş URI'si
+      clientId: "", // Uygulama (istemci) kimliği
+      authority: "", // Dizin (kiracı) kimliği
+      redirectUri: "", // Azure portalda tanımlı SPA geri dönüş URI'si
     },
     cache: {
       cacheLocation: "localStorage", // Token'ları saklamak için kullanılacak yer (localStorage veya sessionStorage)

@@ -31,7 +31,6 @@ import MDAvatar from "components/MDAvatar";
 import burceMars from "assets/images/bruce-mars.jpg";
 import { useFormikContext } from "formik";
 import getConfiguration from "confiuration";
-import { SAPReportsApi } from "api/generated";
 
 function Header({ formData }: any): JSX.Element {
   const [visible, setVisible] = useState<boolean>(true);

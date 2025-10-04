@@ -164,7 +164,7 @@ function FilterCalendar({ initialWeek, initialYear, onFilterApply }: FilterCalen
       let conf = getConfiguration();
 
       let api3 = new TicketDepartmentsApi(conf);
-      let response = await api3.apiTicketDepartmentsGetOnlyVesaDepartmentsGet();     
+      let response = await api3.apiTicketDepartmentsAllOnlyNameGet();     
       setDepartmentData(response.data);
       let api1 = new UserCalendarApi(conf);
       const permData = await api1.apiUserCalendarCheckOtherDeptpermGet();

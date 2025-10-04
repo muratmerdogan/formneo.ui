@@ -125,7 +125,7 @@ function UserProjects() {
     try {
       let config = getConfiguration();
       let api = new UserApi(config);
-      let response = await api.apiUserVesaUsersWithoutPhotoGet();
+      let response = await api.apiUserGetAllWithOuthPhotoGet();
       setUserData(response.data);
     } catch (error) {
       console.log("error", error);
@@ -136,7 +136,7 @@ function UserProjects() {
     try {
       let config = getConfiguration();
       let api = new UserApi(config);
-      let response = await api.apiUserVesaUsersWithoutPhotoGet(departmentId);
+      let response = await api.apiUserGetAllUsersAsyncWitNameGet(departmentId);
       setUserData(response.data);
     } catch (error) {
       console.log("error", error);
@@ -148,7 +148,7 @@ function UserProjects() {
     try {
       let config = getConfiguration();
       let api = new TicketDepartmentsApi(config);
-      let response = await api.apiTicketDepartmentsGetOnlyVesaDepartmentsGet();
+      let response = await api.apiTicketDepartmentsAllOnlyNameGet();
       setDepartmentsData(response.data);
     } catch (error) {
       console.log("error", error);

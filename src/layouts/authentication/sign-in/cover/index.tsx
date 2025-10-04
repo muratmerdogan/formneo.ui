@@ -39,7 +39,7 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 // Images
 import formNeoLogo from "assets/images/logoson.svg";
 
-import { AuthApi, LoginDto, SAPReportsApi, UserApi } from "api/generated";
+import { AuthApi, LoginDto, UserApi } from "api/generated";
 import getConfiguration, { getConfigurationLogin } from "confiuration";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useAlert } from "layouts/pages/hooks/useAlert";

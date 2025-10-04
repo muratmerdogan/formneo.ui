@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { SelectDialog, AnalyticalTable, FlexBox, Button, TextAlign, TimelineItem, Timeline } from '@ui5/webcomponents-react';
 import ReactPaginate from 'react-paginate';
-import { ApproveItemsApi, Configuration, SFUserApi, SFUSerList, WorkFlowApi, WorkFlowItemApi, WorkFlowItemDtoWithApproveItems } from 'api/generated';
+import { ApproveItemsApi, Configuration, WorkFlowApi, WorkFlowItemApi, WorkFlowItemDtoWithApproveItems } from 'api/generated';
 import "@ui5/webcomponents-icons/dist/hr-approval";
 import { useBusy } from '../hooks/useBusy';
 import { convertToGmtPlus3, formatDateTime } from '../utils/utils';

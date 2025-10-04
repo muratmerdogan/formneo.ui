@@ -57,12 +57,6 @@ export const AdminLevel = {
 export type AdminLevel = typeof AdminLevel[keyof typeof AdminLevel];
 
 
-export interface AllList {
-    'id'?: number;
-    'list_id'?: number;
-    'status'?: number;
-    'value'?: string | null;
-}
 export interface ApproveHeadInfo {
     'pendingCount'?: number;
     'rejectCount'?: number;
@@ -715,33 +709,6 @@ export interface CreateUserDto {
 }
 
 
-export interface CustCompanyGroupDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'cust_companyGroupList'?: Array<CustCompanyGroupList> | null;
-}
-export interface CustCompanyGroupList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface CustLegalEntityDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'cust_legalEntityList'?: Array<CustLegalEntityList> | null;
-}
-export interface CustLegalEntityList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface CustSubDivisioList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface CustSubDivisionDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'cust_sub_divisioList'?: Array<CustSubDivisioList> | null;
-}
 export interface CustomFieldDto {
     'id'?: string | null;
     'type'?: string | null;
@@ -993,10 +960,6 @@ export interface CustomerInsertDto {
     'notes'?: Array<CustomerNoteDto> | null;
     'documents'?: Array<CustomerDocument> | null;
 }
-export interface CustomerListDto {
-    'cusid'?: number;
-    'custx'?: string | null;
-}
 export interface CustomerNote {
     'id'?: string;
     'mainClientId'?: string | null;
@@ -1232,13 +1195,6 @@ export const DiskType = {
 export type DiskType = typeof DiskType[keyof typeof DiskType];
 
 
-export interface EmployeeDto {
-    'ename'?: string | null;
-    'photo'?: string | null;
-    'pernr'?: number;
-    'email'?: string | null;
-    'stext'?: string | null;
-}
 export interface EnumDto {
     'name'?: string | null;
     'description'?: string | null;
@@ -1251,128 +1207,6 @@ export interface EnumListDto {
 export interface ExcelAndGraphicData {
     'excelData'?: File | null;
     'graphicData'?: Array<TicketListDto> | null;
-}
-export interface ExcelList {
-    'id'?: string | null;
-    'team'?: string | null;
-    'project'?: string | null;
-    'consultant'?: string | null;
-    'customer'?: string | null;
-    'task'?: string | null;
-    'status'?: string | null;
-    'completion'?: string | null;
-    'note'?: string | null;
-    'duration'?: number;
-}
-export interface FOBusinessUnitDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foBusinessUnitList'?: Array<FOBusinessUnitList> | null;
-}
-export interface FOBusinessUnitList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOCompanyDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foCompanyDtoList'?: Array<FOCompanyDtoList> | null;
-}
-export interface FOCompanyDtoList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FODepartmentList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FODepartmentSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foDepartmentList'?: Array<FODepartmentList> | null;
-}
-export interface FODivisionDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foDivisionList'?: Array<FODivisionList> | null;
-}
-export interface FODivisionList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOGeozoneDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foGeozoneDtoList'?: Array<FOGeozoneDtoList> | null;
-}
-export interface FOGeozoneDtoList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOJobCodeDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foJobCodeList'?: Array<FOJobCodeList> | null;
-}
-export interface FOJobCodeList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-    'cust_ronesanskademe'?: string | null;
-    'cust_joblevelgroup'?: string | null;
-    'grade'?: string | null;
-    'name_ru_RU'?: string | null;
-    'name_tr_TR'?: string | null;
-    'name_en_US'?: string | null;
-    'cust_haykademe'?: string | null;
-    'employeeClass'?: string | null;
-    'jobFunction'?: string | null;
-    'startDate'?: string;
-    'endDate'?: string;
-}
-export interface FOJobFunctionList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOJobFunctionSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foJobFunctionList'?: Array<FOJobFunctionList> | null;
-}
-export interface FOLocationGroupList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOLocationGroupSFDTO {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foLocationGroupList'?: Array<FOLocationGroupList> | null;
-}
-export interface FOLocationList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOLocationSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foLocationList'?: Array<FOLocationList> | null;
-}
-export interface FOPayGradeList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface FOPayGradeSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foPayGradeList'?: Array<FOPayGradeList> | null;
-}
-export interface FOPayGroupSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'foPayGroupSFList'?: Array<FOPayGroupSFList> | null;
-}
-export interface FOPayGroupSFList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
 }
 export interface FieldInfoDto {
     'label'?: string | null;
@@ -2106,9 +1940,6 @@ export interface MenuUpdateDto {
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
 }
-export interface Metadata {
-    'uri'?: string | null;
-}
 
 export const OfficeLocation = {
     NUMBER_0: 0,
@@ -2198,33 +2029,6 @@ export const Permission = {
 export type Permission = typeof Permission[keyof typeof Permission];
 
 
-
-export const PickList = {
-    NUMBER_1: 1,
-    NUMBER_2: 2,
-    NUMBER_3: 3,
-    NUMBER_4: 4,
-    NUMBER_5: 5,
-    NUMBER_6: 6,
-    NUMBER_7: 7,
-    NUMBER_8: 8,
-    NUMBER_9: 9,
-    NUMBER_10: 10,
-    NUMBER_11: 11,
-    NUMBER_12: 12,
-    NUMBER_13: 13,
-    NUMBER_14: 14,
-    NUMBER_15: 15
-} as const;
-
-export type PickList = typeof PickList[keyof typeof PickList];
-
-
-export interface PickListDto {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-    'label_tr_TR'?: string | null;
-}
 export interface Plant {
     'id'?: string;
     'name': string;
@@ -2239,11 +2043,6 @@ export interface PositionListDto {
     'description'?: string | null;
     'customerRefId'?: string | null;
     'customerName'?: string | null;
-}
-export interface PositionSFDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'sfPositionList'?: Array<SFPositionList> | null;
 }
 export interface Positions {
     'id'?: string;
@@ -2326,16 +2125,6 @@ export interface ProjectInfoDto {
     'startDate'?: string;
     'duration'?: number | null;
     'progress'?: number | null;
-}
-export interface ProjectLastYearInvoiceList {
-    'month'?: string | null;
-    'act'?: number;
-}
-export interface ProjectListDto {
-    'vprid'?: number;
-    'vprtx'?: string | null;
-    'cusid'?: number;
-    'custx'?: string | null;
 }
 export interface ProjectTasksInsertDto {
     'name'?: string | null;
@@ -2525,161 +2314,6 @@ export interface RoleWithMenusItemDto {
     'isLocked'?: boolean;
     'selected'?: boolean;
     'menuPermissions'?: Array<MenuPermissionDto> | null;
-}
-export interface SFEmpJobDto {
-    'name'?: string | null;
-    'code'?: string | null;
-    'userId'?: string | null;
-    'managerId'?: string | null;
-}
-export interface SFFOCostCenterDto {
-    'list'?: Array<any> | null;
-    'count'?: number;
-    'sffoCostCenterList'?: Array<SFFOCostCenterList> | null;
-}
-export interface SFFOCostCenterList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-}
-export interface SFPositionAllPropertyDto {
-    'name'?: string | null;
-    'code'?: string | null;
-    'effectiveStartDate'?: string | null;
-}
-export interface SFPositionDto {
-    '__metadata'?: Metadata;
-    'code'?: string | null;
-    'effectiveStartDate'?: string | null;
-    'cust_jobfunction'?: string | null;
-    'cust_calismaYeriTuru'?: any | null;
-    'cust_customlegalEntity'?: string | null;
-    'cust_integrationCheck'?: any | null;
-    'createdDateTime'?: string | null;
-    'jobCode'?: string | null;
-    'mdfSystemVersionId'?: any | null;
-    'type'?: string | null;
-    'division'?: string | null;
-    'cust_EmpGroup'?: string | null;
-    'cust_plannedEndDate'?: any | null;
-    'costCenter'?: string | null;
-    'legacyPositionId'?: any | null;
-    'externalName_localized'?: string | null;
-    'mdfSystemRecordStatus'?: string | null;
-    'cust_CompanyGroup8'?: any | null;
-    'vacant'?: boolean | null;
-    'cust_locationGroup'?: string | null;
-    'externalName_tr_TR'?: string | null;
-    'cust_IseBaslamaTarihi'?: any | null;
-    'positionTitle'?: string | null;
-    'cust_legalEntityOrgCount'?: string | null;
-    'externalName_defaultValue'?: string | null;
-    'cust_incumbent'?: any | null;
-    'payGrade'?: any | null;
-    'cust_ticket'?: any | null;
-    'cust_orgChartNameText'?: string | null;
-    'mdfSystemObjectType'?: string | null;
-    'creationSource'?: string | null;
-    'cust_actualhiredate'?: any | null;
-    'cust_customORGLabel_tr_TR'?: string | null;
-    'targetFTE'?: string | null;
-    'externalName_ru_RU'?: string | null;
-    'cust_customORGLabel_defaultValue'?: string | null;
-    'cust_hasChildPosition'?: string | null;
-    'jobLevel'?: any | null;
-    'createdDate'?: string | null;
-    'mdfSystemRecordId'?: string | null;
-    'cust_CompanyGroup6Org'?: any | null;
-    'multipleIncumbentsAllowed'?: boolean | null;
-    'businessUnit'?: string | null;
-    'cust_parentDepartment'?: any | null;
-    'lastModifiedDateTime'?: string | null;
-    'cust_businessUnitOrg'?: any | null;
-    'jobTitle'?: string | null;
-    'criticality'?: any | null;
-    'cust_customORGLabel_en_DEBUG'?: string | null;
-    'cust_ronesansjoblevel'?: string | null;
-    'incumbent'?: any | null;
-    'cust_subDivisionOrg'?: any | null;
-    'cust_phisicalLocation'?: any | null;
-    'mdfSystemEntityId'?: string | null;
-    'cust_companyGroup'?: string | null;
-    'payRange'?: any | null;
-    'cust_DivisionOrg'?: any | null;
-    'regularTemporary'?: string | null;
-    'cust_customORG'?: string | null;
-    'cust_legalEntityOrg'?: any | null;
-    'cust_sub_division'?: string | null;
-    'standardHours'?: string | null;
-    'cust_departmentOrgCount'?: string | null;
-    'cust_businessUnitOrgCount'?: string | null;
-    'effectiveStatus'?: string | null;
-    'cust_sidebenefit'?: any | null;
-    'technicalParameters'?: any | null;
-    'cust_incumbentName'?: string | null;
-    'cust_PlanlananIseGiris'?: any | null;
-    'cust_ChiefPosition'?: any | null;
-    'cust_CompanyGroup4Org'?: any | null;
-    'cust_empSubGroup'?: string | null;
-    'cust_customORGLabel_en_US'?: string | null;
-    'cust_customORGLabel_ru_RU'?: string | null;
-    'cust_payGroup'?: any | null;
-    'effectiveEndDate'?: string | null;
-    'positionCriticality'?: any | null;
-    'cust_positionstartdate'?: any | null;
-    'description'?: any | null;
-    'cust_parentDepartment2'?: string | null;
-    'positionControlled'?: any | null;
-    'cust_parentDepartmentOrg'?: any | null;
-    'cust_GeoZone'?: any | null;
-    'cust_HayKademe'?: any | null;
-    'company'?: string | null;
-    'cust_departmentOrg'?: any | null;
-    'department'?: string | null;
-    'cust_ronesansKademe'?: any | null;
-    'employeeClass'?: string | null;
-    'cust_isAlani'?: any | null;
-    'cust_parentDepartmentOrgCount'?: string | null;
-    'cust_subDivisionOrgCount'?: string | null;
-    'changeReason'?: string | null;
-    'cust_workArea'?: any | null;
-    'lastModifiedDate'?: string | null;
-    'lastModifiedBy'?: string | null;
-    'lastModifiedDateWithTZ'?: string | null;
-    'transactionSequence'?: string | null;
-    'cust_customORGLabel_localized'?: string | null;
-    'createdBy'?: string | null;
-    'cust_divisonOrgCount'?: string | null;
-    'mdfSystemOptimisticLockUUID'?: string | null;
-    'comment'?: string | null;
-    'location'?: any | null;
-    'cust_jobFamily'?: any | null;
-    'externalName_en_US'?: string | null;
-    'externalName_en_DEBUG'?: any | null;
-    'parentPositionTxt'?: string | null;
-    'parentPositionValue'?: string | null;
-}
-export interface SFPositionList {
-    'name'?: string | null;
-    'externalCode'?: string | null;
-    'vacant'?: boolean;
-    'userId'?: string | null;
-    'userName'?: string | null;
-    'cust_plannedEndDate'?: string | null;
-    'cust_IseBaslamaTarihi'?: string | null;
-    'businessUnit'?: string | null;
-    'cust_customlegalEntity'?: string | null;
-    'cust_sub_division'?: string | null;
-    'department'?: string | null;
-}
-export interface SFUSerList {
-    'userId'?: string | null;
-    'firstName'?: string | null;
-    'lastName'?: string | null;
-    'defaultFullName'?: string | null;
-    'location'?: string | null;
-    'department'?: string | null;
-    'email'?: string | null;
-    'username'?: string | null;
 }
 export interface SendBulkEmailRequest {
     'to': Array<string>;
@@ -3599,10 +3233,6 @@ export interface UserRoleAssignmentSaveItemDto {
 export interface UserRoleDto {
     'roleId'?: string | null;
     'roleName'?: string | null;
-}
-export interface UserSFListDto {
-    'count'?: number;
-    'sfuSerList'?: Array<SFUSerList> | null;
 }
 export interface UserTenantBulkAssignUsersDto {
     'tenantId'?: string;
@@ -17763,6 +17393,508 @@ export class GenericListApi extends BaseAPI {
 
 
 /**
+ * GetirWebhookApi - axios parameter creator
+ */
+export const GetirWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirCancelOrderPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/cancelOrder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirCourierArrivalPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/courierArrival`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirNewOrderPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/newOrder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirPingGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/ping`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirRestaurantStatusPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/restaurantStatus`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirTestCancelOrderPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/test/cancelOrder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirTestNewOrderPost: async (body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhooks/getir/test/newOrder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GetirWebhookApi - functional programming interface
+ */
+export const GetirWebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GetirWebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirCancelOrderPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirCancelOrderPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirCancelOrderPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirCourierArrivalPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirCourierArrivalPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirCourierArrivalPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirNewOrderPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirNewOrderPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirNewOrderPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirPingGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirPingGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirPingGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirRestaurantStatusPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirRestaurantStatusPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirRestaurantStatusPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirTestCancelOrderPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirTestCancelOrderPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirTestCancelOrderPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhooksGetirTestNewOrderPost(body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhooksGetirTestNewOrderPost(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirWebhookApi.webhooksGetirTestNewOrderPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * GetirWebhookApi - factory interface
+ */
+export const GetirWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GetirWebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirCancelOrderPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirCancelOrderPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirCourierArrivalPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirCourierArrivalPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirNewOrderPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirNewOrderPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirPingGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirPingGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirRestaurantStatusPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirRestaurantStatusPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirTestCancelOrderPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirTestCancelOrderPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {any} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhooksGetirTestNewOrderPost(body?: any, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhooksGetirTestNewOrderPost(body, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GetirWebhookApi - object-oriented interface
+ */
+export class GetirWebhookApi extends BaseAPI {
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirCancelOrderPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirCancelOrderPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirCourierArrivalPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirCourierArrivalPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirNewOrderPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirNewOrderPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirPingGet(options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirPingGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirRestaurantStatusPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirRestaurantStatusPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirTestCancelOrderPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirTestCancelOrderPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {any} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public webhooksGetirTestNewOrderPost(body?: any, options?: RawAxiosRequestConfig) {
+        return GetirWebhookApiFp(this.configuration).webhooksGetirTestNewOrderPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * InventoryApi - axios parameter creator
  */
 export const InventoryApiAxiosParamCreator = function (configuration?: Configuration) {
@@ -21733,6 +21865,43 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdLostPost: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCrmOpportunitiesIdLostPost', 'id', id)
+            const localVarPath = `/api/crm/Opportunities/{id}/lost`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21765,6 +21934,84 @@ export const OpportunitiesApiAxiosParamCreator = function (configuration?: Confi
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(opportunityUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdStagePost: async (id: string, body?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCrmOpportunitiesIdStagePost', 'id', id)
+            const localVarPath = `/api/crm/Opportunities/{id}/stage`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdWonPost: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiCrmOpportunitiesIdWonPost', 'id', id)
+            const localVarPath = `/api/crm/Opportunities/{id}/won`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -21938,6 +22185,18 @@ export const OpportunitiesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesIdLostPost(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesIdLostPost(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesIdLostPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21946,6 +22205,31 @@ export const OpportunitiesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesIdStagePost(id: string, body?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesIdStagePost(id, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesIdStagePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCrmOpportunitiesIdWonPost(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiCrmOpportunitiesIdWonPost(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpportunitiesApi.apiCrmOpportunitiesIdWonPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22033,12 +22317,40 @@ export const OpportunitiesApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdLostPost(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesIdLostPost(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         apiCrmOpportunitiesIdPut(id: string, opportunityUpdateDto?: OpportunityUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {number} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdStagePost(id: string, body?: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesIdStagePost(id, body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCrmOpportunitiesIdWonPost(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiCrmOpportunitiesIdWonPost(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -22122,12 +22434,43 @@ export class OpportunitiesApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesIdLostPost(id: string, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdLostPost(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
      * @param {OpportunityUpdateDto} [opportunityUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     public apiCrmOpportunitiesIdPut(id: string, opportunityUpdateDto?: OpportunityUpdateDto, options?: RawAxiosRequestConfig) {
         return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdPut(id, opportunityUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {number} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesIdStagePost(id: string, body?: number, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdStagePost(id, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiCrmOpportunitiesIdWonPost(id: string, options?: RawAxiosRequestConfig) {
+        return OpportunitiesApiFp(this.configuration).apiCrmOpportunitiesIdWonPost(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -22425,108 +22768,6 @@ export class PdksApi extends BaseAPI {
      */
     public apiPdksGet(fileName?: string, passKey?: string, options?: RawAxiosRequestConfig) {
         return PdksApiFp(this.configuration).apiPdksGet(fileName, passKey, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * PickListApi - axios parameter creator
- */
-export const PickListApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {PickList} [pc] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPickListGet: async (pc?: PickList, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/PickList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (pc !== undefined) {
-                localVarQueryParameter['pc'] = pc;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * PickListApi - functional programming interface
- */
-export const PickListApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = PickListApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {PickList} [pc] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPickListGet(pc?: PickList, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PickListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPickListGet(pc, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PickListApi.apiPickListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * PickListApi - factory interface
- */
-export const PickListApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = PickListApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {PickList} [pc] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPickListGet(pc?: PickList, options?: RawAxiosRequestConfig): AxiosPromise<Array<PickListDto>> {
-            return localVarFp.apiPickListGet(pc, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * PickListApi - object-oriented interface
- */
-export class PickListApi extends BaseAPI {
-    /**
-     * 
-     * @param {PickList} [pc] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiPickListGet(pc?: PickList, options?: RawAxiosRequestConfig) {
-        return PickListApiFp(this.configuration).apiPickListGet(pc, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -27257,4344 +27498,6 @@ export class RolesTenantsApi extends BaseAPI {
 
 
 /**
- * SAPReportsApi - axios parameter creator
- */
-export const SAPReportsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsCustomerLast12MonthInvoiceListPost: async (cusId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/CustomerLast12MonthInvoiceList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (cusId !== undefined) {
-                localVarQueryParameter['cusId'] = cusId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {string} [employeId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsEmoloyeeLast12MonthInvoiceListPost: async (cusId?: string, employeId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/EmoloyeeLast12MonthInvoiceList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (cusId !== undefined) {
-                localVarQueryParameter['cusId'] = cusId;
-            }
-
-            if (employeId !== undefined) {
-                localVarQueryParameter['employeId'] = employeId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetCustomerListGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetCustomerList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetDepartmentListGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetDepartmentList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeeListGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetEmployeeList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [userId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeePictureAsBase64ByUserGet: async (userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetEmployeePictureAsBase64ByUser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (userId !== undefined) {
-                localVarQueryParameter['userId'] = userId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeePictureAsBase64Get: async (email?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetEmployeePictureAsBase64`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetProjectListGet: async (custId?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/GetProjectList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (custId !== undefined) {
-                localVarQueryParameter['custId'] = custId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetSapInfoGet: async (email?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/getSapInfo`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (email !== undefined) {
-                localVarQueryParameter['email'] = email;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [projectId] 
-         * @param {string} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsProjectLast12MonthInvoicePost: async (projectId?: string, custId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/ProjectLast12MonthInvoice`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (projectId !== undefined) {
-                localVarQueryParameter['projectId'] = projectId;
-            }
-
-            if (custId !== undefined) {
-                localVarQueryParameter['custId'] = custId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTeamActivityOrgehPost: async (orgeh: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgeh' is not null or undefined
-            assertParamExists('apiSAPReportsTeamActivityOrgehPost', 'orgeh', orgeh)
-            const localVarPath = `/api/SAPReports/TeamActivity/{orgeh}`
-                .replace(`{${"orgeh"}}`, encodeURIComponent(String(orgeh)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTeamLastSixInvoiceOrgehPost: async (orgeh: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgeh' is not null or undefined
-            assertParamExists('apiSAPReportsTeamLastSixInvoiceOrgehPost', 'orgeh', orgeh)
-            const localVarPath = `/api/SAPReports/TeamLastSixInvoice/{orgeh}`
-                .replace(`{${"orgeh"}}`, encodeURIComponent(String(orgeh)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [pernr] 
-         * @param {string} [begda] 
-         * @param {string} [endda] 
-         * @param {string} [cusid] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTopManagementActivityReportPost: async (pernr?: string, begda?: string, endda?: string, cusid?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SAPReports/TopManagementActivityReport`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-            if (pernr !== undefined) { 
-                localVarFormParams.append('Pernr', pernr as any);
-            }
-    
-            if (begda !== undefined) { 
-                localVarFormParams.append('Begda', begda as any);
-            }
-    
-            if (endda !== undefined) { 
-                localVarFormParams.append('Endda', endda as any);
-            }
-    
-            if (cusid !== undefined) { 
-                localVarFormParams.append('Cusid', cusid as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SAPReportsApi - functional programming interface
- */
-export const SAPReportsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SAPReportsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectLastYearInvoiceList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsCustomerLast12MonthInvoiceListPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {string} [employeId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId?: string, employeId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectLastYearInvoiceList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId, employeId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsEmoloyeeLast12MonthInvoiceListPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetCustomerListGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CustomerListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetCustomerListGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetCustomerListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetDepartmentListGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetDepartmentListGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetDepartmentListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetEmployeeListGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EmployeeDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetEmployeeListGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetEmployeeListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [userId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetEmployeePictureAsBase64ByUserGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetEmployeePictureAsBase64Get(email?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetEmployeePictureAsBase64Get(email, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetEmployeePictureAsBase64Get']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetProjectListGet(custId?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetProjectListGet(custId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetProjectListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsGetSapInfoGet(email?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmployeeDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsGetSapInfoGet(email, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsGetSapInfoGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [projectId] 
-         * @param {string} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsProjectLast12MonthInvoicePost(projectId?: string, custId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectLastYearInvoiceList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsProjectLast12MonthInvoicePost(projectId, custId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsProjectLast12MonthInvoicePost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsTeamActivityOrgehPost(orgeh: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsTeamActivityOrgehPost(orgeh, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsTeamActivityOrgehPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsTeamLastSixInvoiceOrgehPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [pernr] 
-         * @param {string} [begda] 
-         * @param {string} [endda] 
-         * @param {string} [cusid] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSAPReportsTopManagementActivityReportPost(pernr?: string, begda?: string, endda?: string, cusid?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSAPReportsTopManagementActivityReportPost(pernr, begda, endda, cusid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SAPReportsApi.apiSAPReportsTopManagementActivityReportPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SAPReportsApi - factory interface
- */
-export const SAPReportsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SAPReportsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectLastYearInvoiceList>> {
-            return localVarFp.apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [cusId] 
-         * @param {string} [employeId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId?: string, employeId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectLastYearInvoiceList>> {
-            return localVarFp.apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId, employeId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetCustomerListGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<CustomerListDto>> {
-            return localVarFp.apiSAPReportsGetCustomerListGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetDepartmentListGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiSAPReportsGetDepartmentListGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeeListGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<EmployeeDto>> {
-            return localVarFp.apiSAPReportsGetEmployeeListGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [userId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetEmployeePictureAsBase64Get(email?: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSAPReportsGetEmployeePictureAsBase64Get(email, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetProjectListGet(custId?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectListDto>> {
-            return localVarFp.apiSAPReportsGetProjectListGet(custId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [email] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsGetSapInfoGet(email?: string, options?: RawAxiosRequestConfig): AxiosPromise<EmployeeDto> {
-            return localVarFp.apiSAPReportsGetSapInfoGet(email, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [projectId] 
-         * @param {string} [custId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsProjectLast12MonthInvoicePost(projectId?: string, custId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectLastYearInvoiceList>> {
-            return localVarFp.apiSAPReportsProjectLast12MonthInvoicePost(projectId, custId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTeamActivityOrgehPost(orgeh: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiSAPReportsTeamActivityOrgehPost(orgeh, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} orgeh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [pernr] 
-         * @param {string} [begda] 
-         * @param {string} [endda] 
-         * @param {string} [cusid] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSAPReportsTopManagementActivityReportPost(pernr?: string, begda?: string, endda?: string, cusid?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiSAPReportsTopManagementActivityReportPost(pernr, begda, endda, cusid, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SAPReportsApi - object-oriented interface
- */
-export class SAPReportsApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} [cusId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsCustomerLast12MonthInvoiceListPost(cusId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [cusId] 
-     * @param {string} [employeId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId?: string, employeId?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsEmoloyeeLast12MonthInvoiceListPost(cusId, employeId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetCustomerListGet(options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetCustomerListGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetDepartmentListGet(options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetDepartmentListGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetEmployeeListGet(options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeeListGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [userId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeePictureAsBase64ByUserGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [email] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetEmployeePictureAsBase64Get(email?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetEmployeePictureAsBase64Get(email, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [custId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetProjectListGet(custId?: number, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetProjectListGet(custId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [email] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsGetSapInfoGet(email?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsGetSapInfoGet(email, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [projectId] 
-     * @param {string} [custId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsProjectLast12MonthInvoicePost(projectId?: string, custId?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsProjectLast12MonthInvoicePost(projectId, custId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} orgeh 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsTeamActivityOrgehPost(orgeh: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsTeamActivityOrgehPost(orgeh, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} orgeh 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsTeamLastSixInvoiceOrgehPost(orgeh, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [pernr] 
-     * @param {string} [begda] 
-     * @param {string} [endda] 
-     * @param {string} [cusid] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSAPReportsTopManagementActivityReportPost(pernr?: string, begda?: string, endda?: string, cusid?: string, options?: RawAxiosRequestConfig) {
-        return SAPReportsApiFp(this.configuration).apiSAPReportsTopManagementActivityReportPost(pernr, begda, endda, cusid, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFCustCompanyGroupApi - axios parameter creator
- */
-export const SFCustCompanyGroupApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFCustCompanyGroupGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFCust_companyGroup`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFCustCompanyGroupApi - functional programming interface
- */
-export const SFCustCompanyGroupApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFCustCompanyGroupApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFCustCompanyGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustCompanyGroupDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFCustCompanyGroupGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFCustCompanyGroupApi.apiSFCustCompanyGroupGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFCustCompanyGroupApi - factory interface
- */
-export const SFCustCompanyGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFCustCompanyGroupApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFCustCompanyGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<CustCompanyGroupDto> {
-            return localVarFp.apiSFCustCompanyGroupGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFCustCompanyGroupApi - object-oriented interface
- */
-export class SFCustCompanyGroupApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFCustCompanyGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFCustCompanyGroupApiFp(this.configuration).apiSFCustCompanyGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFCustLegalEntityApi - axios parameter creator
- */
-export const SFCustLegalEntityApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFCustLegalEntityGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFCust_legalEntity`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFCustLegalEntityApi - functional programming interface
- */
-export const SFCustLegalEntityApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFCustLegalEntityApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFCustLegalEntityGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustLegalEntityDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFCustLegalEntityGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFCustLegalEntityApi.apiSFCustLegalEntityGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFCustLegalEntityApi - factory interface
- */
-export const SFCustLegalEntityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFCustLegalEntityApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFCustLegalEntityGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<CustLegalEntityDto> {
-            return localVarFp.apiSFCustLegalEntityGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFCustLegalEntityApi - object-oriented interface
- */
-export class SFCustLegalEntityApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFCustLegalEntityGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFCustLegalEntityApiFp(this.configuration).apiSFCustLegalEntityGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOBusinessUnitApi - axios parameter creator
- */
-export const SFFOBusinessUnitApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [grupBaskanlik] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOBusinessUnitAllByGrupBaskanlikGet: async (skip?: number, top?: number, name?: string, grupBaskanlik?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOBusinessUnit/AllByGrupBaskanlik`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (grupBaskanlik !== undefined) {
-                localVarQueryParameter['grupBaskanlik'] = grupBaskanlik;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOBusinessUnitGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOBusinessUnit`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOBusinessUnitApi - functional programming interface
- */
-export const SFFOBusinessUnitApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOBusinessUnitApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [grupBaskanlik] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip?: number, top?: number, name?: string, grupBaskanlik?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOBusinessUnitDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip, top, name, grupBaskanlik, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOBusinessUnitApi.apiSFFOBusinessUnitAllByGrupBaskanlikGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOBusinessUnitGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOBusinessUnitDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOBusinessUnitGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOBusinessUnitApi.apiSFFOBusinessUnitGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOBusinessUnitApi - factory interface
- */
-export const SFFOBusinessUnitApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOBusinessUnitApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [grupBaskanlik] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip?: number, top?: number, name?: string, grupBaskanlik?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOBusinessUnitDto> {
-            return localVarFp.apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip, top, name, grupBaskanlik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOBusinessUnitGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOBusinessUnitDto> {
-            return localVarFp.apiSFFOBusinessUnitGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOBusinessUnitApi - object-oriented interface
- */
-export class SFFOBusinessUnitApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {string} [grupBaskanlik] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip?: number, top?: number, name?: string, grupBaskanlik?: string, options?: RawAxiosRequestConfig) {
-        return SFFOBusinessUnitApiFp(this.configuration).apiSFFOBusinessUnitAllByGrupBaskanlikGet(skip, top, name, grupBaskanlik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOBusinessUnitGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOBusinessUnitApiFp(this.configuration).apiSFFOBusinessUnitGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOCompanyApi - axios parameter creator
- */
-export const SFFOCompanyApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOCompanyGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOCompany`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOCompanyApi - functional programming interface
- */
-export const SFFOCompanyApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOCompanyApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOCompanyGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOCompanyDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOCompanyGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOCompanyApi.apiSFFOCompanyGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOCompanyApi - factory interface
- */
-export const SFFOCompanyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOCompanyApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOCompanyGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOCompanyDto> {
-            return localVarFp.apiSFFOCompanyGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOCompanyApi - object-oriented interface
- */
-export class SFFOCompanyApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOCompanyGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOCompanyApiFp(this.configuration).apiSFFOCompanyGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOCostCenterApi - axios parameter creator
- */
-export const SFFOCostCenterApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOCostCenterGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOCostCenter`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOCostCenterApi - functional programming interface
- */
-export const SFFOCostCenterApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOCostCenterApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOCostCenterGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SFFOCostCenterDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOCostCenterGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOCostCenterApi.apiSFFOCostCenterGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOCostCenterApi - factory interface
- */
-export const SFFOCostCenterApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOCostCenterApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOCostCenterGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<SFFOCostCenterDto> {
-            return localVarFp.apiSFFOCostCenterGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOCostCenterApi - object-oriented interface
- */
-export class SFFOCostCenterApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOCostCenterGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOCostCenterApiFp(this.configuration).apiSFFOCostCenterGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFODepartmentApi - axios parameter creator
- */
-export const SFFODepartmentApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODepartmentGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFODepartment`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFODepartmentApi - functional programming interface
- */
-export const SFFODepartmentApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFODepartmentApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFODepartmentGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FODepartmentSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFODepartmentGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFODepartmentApi.apiSFFODepartmentGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFODepartmentApi - factory interface
- */
-export const SFFODepartmentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFODepartmentApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODepartmentGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FODepartmentSFDto> {
-            return localVarFp.apiSFFODepartmentGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFODepartmentApi - object-oriented interface
- */
-export class SFFODepartmentApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFODepartmentGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFODepartmentApiFp(this.configuration).apiSFFODepartmentGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFODivisionApi - axios parameter creator
- */
-export const SFFODivisionApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [businessUnit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODivisionAllByBusinessUnitGet: async (skip?: number, top?: number, name?: string, businessUnit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFODivision/AllByBusinessUnit`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (businessUnit !== undefined) {
-                localVarQueryParameter['businessUnit'] = businessUnit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODivisionGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFODivision`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFODivisionApi - functional programming interface
- */
-export const SFFODivisionApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFODivisionApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [businessUnit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFODivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, businessUnit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FODivisionDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFODivisionAllByBusinessUnitGet(skip, top, name, businessUnit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFODivisionApi.apiSFFODivisionAllByBusinessUnitGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFODivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FODivisionDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFODivisionGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFODivisionApi.apiSFFODivisionGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFODivisionApi - factory interface
- */
-export const SFFODivisionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFODivisionApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [businessUnit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, businessUnit?: string, options?: RawAxiosRequestConfig): AxiosPromise<FODivisionDto> {
-            return localVarFp.apiSFFODivisionAllByBusinessUnitGet(skip, top, name, businessUnit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFODivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FODivisionDto> {
-            return localVarFp.apiSFFODivisionGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFODivisionApi - object-oriented interface
- */
-export class SFFODivisionApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {string} [businessUnit] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFODivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, businessUnit?: string, options?: RawAxiosRequestConfig) {
-        return SFFODivisionApiFp(this.configuration).apiSFFODivisionAllByBusinessUnitGet(skip, top, name, businessUnit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFODivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFODivisionApiFp(this.configuration).apiSFFODivisionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOFOPayGroupApi - axios parameter creator
- */
-export const SFFOFOPayGroupApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOFOPayGroupGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOFOPayGroup`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOFOPayGroupApi - functional programming interface
- */
-export const SFFOFOPayGroupApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOFOPayGroupApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOFOPayGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOPayGroupSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOFOPayGroupGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOFOPayGroupApi.apiSFFOFOPayGroupGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOFOPayGroupApi - factory interface
- */
-export const SFFOFOPayGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOFOPayGroupApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOFOPayGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOPayGroupSFDto> {
-            return localVarFp.apiSFFOFOPayGroupGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOFOPayGroupApi - object-oriented interface
- */
-export class SFFOFOPayGroupApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOFOPayGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOFOPayGroupApiFp(this.configuration).apiSFFOFOPayGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOGeozoneApi - axios parameter creator
- */
-export const SFFOGeozoneApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOGeozoneGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOGeozone`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOGeozoneApi - functional programming interface
- */
-export const SFFOGeozoneApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOGeozoneApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOGeozoneGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOGeozoneDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOGeozoneGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOGeozoneApi.apiSFFOGeozoneGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOGeozoneApi - factory interface
- */
-export const SFFOGeozoneApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOGeozoneApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOGeozoneGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOGeozoneDto> {
-            return localVarFp.apiSFFOGeozoneGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOGeozoneApi - object-oriented interface
- */
-export class SFFOGeozoneApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOGeozoneGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOGeozoneApiFp(this.configuration).apiSFFOGeozoneGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOJobCodeApi - axios parameter creator
- */
-export const SFFOJobCodeApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeCheckRecruitmentCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFFOJobCodeCheckRecruitmentCodeGet', 'code', code)
-            const localVarPath = `/api/SFFOJobCode/checkRecruitment/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFFOJobCodeCodeGet', 'code', code)
-            const localVarPath = `/api/SFFOJobCode/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOJobCode`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodePost: async (workFlowId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOJobCode`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (workFlowId !== undefined) {
-                localVarQueryParameter['workFlowId'] = workFlowId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOJobCodeApi - functional programming interface
- */
-export const SFFOJobCodeApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOJobCodeApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOJobCodeCheckRecruitmentCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOJobCodeCheckRecruitmentCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOJobCodeApi.apiSFFOJobCodeCheckRecruitmentCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOJobCodeCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOJobCodeDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOJobCodeCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOJobCodeApi.apiSFFOJobCodeCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOJobCodeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOJobCodeDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOJobCodeGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOJobCodeApi.apiSFFOJobCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOJobCodePost(workFlowId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOJobCodePost(workFlowId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOJobCodeApi.apiSFFOJobCodePost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOJobCodeApi - factory interface
- */
-export const SFFOJobCodeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOJobCodeApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeCheckRecruitmentCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
-            return localVarFp.apiSFFOJobCodeCheckRecruitmentCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<FOJobCodeDto> {
-            return localVarFp.apiSFFOJobCodeCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOJobCodeDto> {
-            return localVarFp.apiSFFOJobCodeGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobCodePost(workFlowId?: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSFFOJobCodePost(workFlowId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOJobCodeApi - object-oriented interface
- */
-export class SFFOJobCodeApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOJobCodeCheckRecruitmentCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeCheckRecruitmentCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOJobCodeCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOJobCodeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodeGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [workFlowId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOJobCodePost(workFlowId?: string, options?: RawAxiosRequestConfig) {
-        return SFFOJobCodeApiFp(this.configuration).apiSFFOJobCodePost(workFlowId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOJobFunctionApi - axios parameter creator
- */
-export const SFFOJobFunctionApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobFunctionGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOJobFunction`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOJobFunctionApi - functional programming interface
- */
-export const SFFOJobFunctionApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOJobFunctionApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOJobFunctionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOJobFunctionSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOJobFunctionGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOJobFunctionApi.apiSFFOJobFunctionGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOJobFunctionApi - factory interface
- */
-export const SFFOJobFunctionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOJobFunctionApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOJobFunctionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOJobFunctionSFDto> {
-            return localVarFp.apiSFFOJobFunctionGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOJobFunctionApi - object-oriented interface
- */
-export class SFFOJobFunctionApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOJobFunctionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOJobFunctionApiFp(this.configuration).apiSFFOJobFunctionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOLocationApi - axios parameter creator
- */
-export const SFFOLocationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [parentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOLocationGet: async (skip?: number, top?: number, name?: string, parentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOLocation`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (parentId !== undefined) {
-                localVarQueryParameter['parentId'] = parentId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOLocationApi - functional programming interface
- */
-export const SFFOLocationApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOLocationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [parentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOLocationGet(skip?: number, top?: number, name?: string, parentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOLocationSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOLocationGet(skip, top, name, parentId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOLocationApi.apiSFFOLocationGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOLocationApi - factory interface
- */
-export const SFFOLocationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOLocationApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [parentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOLocationGet(skip?: number, top?: number, name?: string, parentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOLocationSFDto> {
-            return localVarFp.apiSFFOLocationGet(skip, top, name, parentId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOLocationApi - object-oriented interface
- */
-export class SFFOLocationApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {string} [parentId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOLocationGet(skip?: number, top?: number, name?: string, parentId?: string, options?: RawAxiosRequestConfig) {
-        return SFFOLocationApiFp(this.configuration).apiSFFOLocationGet(skip, top, name, parentId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOLocationGroupApi - axios parameter creator
- */
-export const SFFOLocationGroupApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOLocationGroupGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOLocationGroup`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOLocationGroupApi - functional programming interface
- */
-export const SFFOLocationGroupApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOLocationGroupApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOLocationGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOLocationGroupSFDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOLocationGroupGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOLocationGroupApi.apiSFFOLocationGroupGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOLocationGroupApi - factory interface
- */
-export const SFFOLocationGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOLocationGroupApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOLocationGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOLocationGroupSFDTO> {
-            return localVarFp.apiSFFOLocationGroupGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOLocationGroupApi - object-oriented interface
- */
-export class SFFOLocationGroupApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOLocationGroupGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOLocationGroupApiFp(this.configuration).apiSFFOLocationGroupGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFFOPayGradeApi - axios parameter creator
- */
-export const SFFOPayGradeApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOPayGradeGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFFOPayGrade`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFFOPayGradeApi - functional programming interface
- */
-export const SFFOPayGradeApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFFOPayGradeApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFFOPayGradeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FOPayGradeSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFFOPayGradeGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFFOPayGradeApi.apiSFFOPayGradeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFFOPayGradeApi - factory interface
- */
-export const SFFOPayGradeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFFOPayGradeApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFFOPayGradeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<FOPayGradeSFDto> {
-            return localVarFp.apiSFFOPayGradeGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFFOPayGradeApi - object-oriented interface
- */
-export class SFFOPayGradeApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFFOPayGradeGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFFOPayGradeApiFp(this.configuration).apiSFFOPayGradeGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFPositionsApi - axios parameter creator
- */
-export const SFPositionsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByPositionCodeUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsByPositionCodeUserIdGet', 'userId', userId)
-            const localVarPath = `/api/SFPositions/byPositionCode/{UserId}`
-                .replace(`{${"UserId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {PositionSFDto} [positionSFDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByUserIdAllUserIdPost: async (userId: string, positionSFDto?: PositionSFDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsByUserIdAllUserIdPost', 'userId', userId)
-            const localVarPath = `/api/SFPositions/byUserIdAll/{UserId}`
-                .replace(`{${"UserId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(positionSFDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByUserIdUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsByUserIdUserIdGet', 'userId', userId)
-            const localVarPath = `/api/SFPositions/byUserId/{UserId}`
-                .replace(`{${"UserId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFPositionsCodeGet', 'code', code)
-            const localVarPath = `/api/SFPositions/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailByPositionCodeCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFPositionsDetailByPositionCodeCodeGet', 'code', code)
-            const localVarPath = `/api/SFPositions/detailByPositionCode/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailByUserIdUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsDetailByUserIdUserIdGet', 'userId', userId)
-            const localVarPath = `/api/SFPositions/detailByUserId/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFPositionsDetailCodeGet', 'code', code)
-            const localVarPath = `/api/SFPositions/detail/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsEmpCodeGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('apiSFPositionsEmpCodeGet', 'code', code)
-            const localVarPath = `/api/SFPositions/emp/{code}`
-                .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGet: async (skip?: number, top?: number, firstName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFPositions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (firstName !== undefined) {
-                localVarQueryParameter['firstName'] = firstName;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} positioncode 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet: async (positioncode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'positioncode' is not null or undefined
-            assertParamExists('apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet', 'positioncode', positioncode)
-            const localVarPath = `/api/SFPositions/getMngByCodeFromEmpJob/{positioncode}`
-                .replace(`{${"positioncode"}}`, encodeURIComponent(String(positioncode)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet', 'userId', userId)
-            const localVarPath = `/api/SFPositions/getMngDisplayNameFromEmpUser/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngFromEmpJobUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('apiSFPositionsGetMngFromEmpJobUserIdGet', 'userId', userId)
-            const localVarPath = `/api/SFPositions/getMngFromEmpJob/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsPost: async (workFlowId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFPositions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (workFlowId !== undefined) {
-                localVarQueryParameter['workFlowId'] = workFlowId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFPositionsApi - functional programming interface
- */
-export const SFPositionsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFPositionsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsByPositionCodeUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsByPositionCodeUserIdGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsByPositionCodeUserIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {PositionSFDto} [positionSFDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsByUserIdAllUserIdPost(userId: string, positionSFDto?: PositionSFDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PositionSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsByUserIdAllUserIdPost(userId, positionSFDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsByUserIdAllUserIdPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PositionSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsByUserIdUserIdGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsByUserIdUserIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SFPositionAllPropertyDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsDetailByPositionCodeCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FOJobCodeList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsDetailByPositionCodeCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsDetailByPositionCodeCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsDetailByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SFPositionDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsDetailByUserIdUserIdGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsDetailByUserIdUserIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsDetailCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SFPositionDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsDetailCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsDetailCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsEmpCodeGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SFEmpJobDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsEmpCodeGet(code, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsEmpCodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PositionSFDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsGet(skip, top, firstName, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} positioncode 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsGetMngFromEmpJobUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsGetMngFromEmpJobUserIdGet(userId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsGetMngFromEmpJobUserIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFPositionsPost(workFlowId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFPositionsPost(workFlowId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFPositionsApi.apiSFPositionsPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFPositionsApi - factory interface
- */
-export const SFPositionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFPositionsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByPositionCodeUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSFPositionsByPositionCodeUserIdGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {PositionSFDto} [positionSFDto] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByUserIdAllUserIdPost(userId: string, positionSFDto?: PositionSFDto, options?: RawAxiosRequestConfig): AxiosPromise<PositionSFDto> {
-            return localVarFp.apiSFPositionsByUserIdAllUserIdPost(userId, positionSFDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<PositionSFDto> {
-            return localVarFp.apiSFPositionsByUserIdUserIdGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SFPositionAllPropertyDto>> {
-            return localVarFp.apiSFPositionsCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailByPositionCodeCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<FOJobCodeList>> {
-            return localVarFp.apiSFPositionsDetailByPositionCodeCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SFPositionDto>> {
-            return localVarFp.apiSFPositionsDetailByUserIdUserIdGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsDetailCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SFPositionDto>> {
-            return localVarFp.apiSFPositionsDetailCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} code 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsEmpCodeGet(code: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SFEmpJobDto>> {
-            return localVarFp.apiSFPositionsEmpCodeGet(code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig): AxiosPromise<PositionSFDto> {
-            return localVarFp.apiSFPositionsGet(skip, top, firstName, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} positioncode 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsGetMngFromEmpJobUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.apiSFPositionsGetMngFromEmpJobUserIdGet(userId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [workFlowId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFPositionsPost(workFlowId?: string, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
-            return localVarFp.apiSFPositionsPost(workFlowId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFPositionsApi - object-oriented interface
- */
-export class SFPositionsApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} userId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsByPositionCodeUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsByPositionCodeUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {PositionSFDto} [positionSFDto] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsByUserIdAllUserIdPost(userId: string, positionSFDto?: PositionSFDto, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsByUserIdAllUserIdPost(userId, positionSFDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsByUserIdUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsDetailByPositionCodeCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsDetailByPositionCodeCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsDetailByUserIdUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsDetailByUserIdUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsDetailCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsDetailCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} code 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsEmpCodeGet(code: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsEmpCodeGet(code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [firstName] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsGet(skip, top, firstName, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} positioncode 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngByCodeFromEmpJobPositioncodeGet(positioncode, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngDisplayNameFromEmpUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsGetMngFromEmpJobUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsGetMngFromEmpJobUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [workFlowId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFPositionsPost(workFlowId?: string, options?: RawAxiosRequestConfig) {
-        return SFPositionsApiFp(this.configuration).apiSFPositionsPost(workFlowId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFUserApi - axios parameter creator
- */
-export const SFUserApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFUserGet: async (skip?: number, top?: number, firstName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFUser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (firstName !== undefined) {
-                localVarQueryParameter['firstName'] = firstName;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} userid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFUserUserUseridGet: async (userid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userid' is not null or undefined
-            assertParamExists('apiSFUserUserUseridGet', 'userid', userid)
-            const localVarPath = `/api/SFUser/user/{userid}`
-                .replace(`{${"userid"}}`, encodeURIComponent(String(userid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFUserApi - functional programming interface
- */
-export const SFUserApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFUserApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFUserGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSFListDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFUserGet(skip, top, firstName, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFUserApi.apiSFUserGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} userid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFUserUserUseridGet(userid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSFListDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFUserUserUseridGet(userid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFUserApi.apiSFUserUserUseridGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFUserApi - factory interface
- */
-export const SFUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFUserApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [firstName] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFUserGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig): AxiosPromise<UserSFListDto> {
-            return localVarFp.apiSFUserGet(skip, top, firstName, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFUserUserUseridGet(userid: string, options?: RawAxiosRequestConfig): AxiosPromise<UserSFListDto> {
-            return localVarFp.apiSFUserUserUseridGet(userid, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFUserApi - object-oriented interface
- */
-export class SFUserApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [firstName] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFUserGet(skip?: number, top?: number, firstName?: string, options?: RawAxiosRequestConfig) {
-        return SFUserApiFp(this.configuration).apiSFUserGet(skip, top, firstName, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userid 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFUserUserUseridGet(userid: string, options?: RawAxiosRequestConfig) {
-        return SFUserApiFp(this.configuration).apiSFUserUserUseridGet(userid, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * SFcustSubDivisionApi - axios parameter creator
- */
-export const SFcustSubDivisionApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [division] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFcustSubDivisionAllByBusinessUnitGet: async (skip?: number, top?: number, name?: string, division?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFcust_sub_division/AllByBusinessUnit`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (division !== undefined) {
-                localVarQueryParameter['division'] = division;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFcustSubDivisionGet: async (skip?: number, top?: number, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/SFcust_sub_division`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (top !== undefined) {
-                localVarQueryParameter['top'] = top;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * SFcustSubDivisionApi - functional programming interface
- */
-export const SFcustSubDivisionApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SFcustSubDivisionApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [division] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFcustSubDivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, division?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustSubDivisionDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFcustSubDivisionAllByBusinessUnitGet(skip, top, name, division, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFcustSubDivisionApi.apiSFcustSubDivisionAllByBusinessUnitGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSFcustSubDivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustSubDivisionDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSFcustSubDivisionGet(skip, top, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SFcustSubDivisionApi.apiSFcustSubDivisionGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * SFcustSubDivisionApi - factory interface
- */
-export const SFcustSubDivisionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SFcustSubDivisionApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {string} [division] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFcustSubDivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, division?: string, options?: RawAxiosRequestConfig): AxiosPromise<CustSubDivisionDto> {
-            return localVarFp.apiSFcustSubDivisionAllByBusinessUnitGet(skip, top, name, division, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [top] 
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSFcustSubDivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig): AxiosPromise<CustSubDivisionDto> {
-            return localVarFp.apiSFcustSubDivisionGet(skip, top, name, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * SFcustSubDivisionApi - object-oriented interface
- */
-export class SFcustSubDivisionApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {string} [division] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFcustSubDivisionAllByBusinessUnitGet(skip?: number, top?: number, name?: string, division?: string, options?: RawAxiosRequestConfig) {
-        return SFcustSubDivisionApiFp(this.configuration).apiSFcustSubDivisionAllByBusinessUnitGet(skip, top, name, division, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [top] 
-     * @param {string} [name] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiSFcustSubDivisionGet(skip?: number, top?: number, name?: string, options?: RawAxiosRequestConfig) {
-        return SFcustSubDivisionApiFp(this.configuration).apiSFcustSubDivisionGet(skip, top, name, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * SpecialDaysApi - axios parameter creator
  */
 export const SpecialDaysApiAxiosParamCreator = function (configuration?: Configuration) {
@@ -34384,39 +30287,6 @@ export const TicketDepartmentsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiTicketDepartmentsGetOnlyVesaDepartmentsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/TicketDepartments/GetOnlyVesaDepartments`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -34667,17 +30537,6 @@ export const TicketDepartmentsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TicketDepartmensListDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TicketDepartmentsApi.apiTicketDepartmentsGetOnlyVesaDepartmentsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -34788,14 +30647,6 @@ export const TicketDepartmentsApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<TicketDepartmensListDto>> {
-            return localVarFp.apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -34890,15 +30741,6 @@ export class TicketDepartmentsApi extends BaseAPI {
      */
     public apiTicketDepartmentsGetAllWithUsersGet(options?: RawAxiosRequestConfig) {
         return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetAllWithUsersGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options?: RawAxiosRequestConfig) {
-        return TicketDepartmentsApiFp(this.configuration).apiTicketDepartmentsGetOnlyVesaDepartmentsGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37237,44 +33079,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} [departmentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiUserVesaUsersWithoutPhotoGet: async (departmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/User/VesaUsersWithoutPhoto`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (departmentId !== undefined) {
-                localVarQueryParameter['departmentId'] = departmentId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -37550,18 +33354,6 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UserApi.apiUserValidatetokenAndUserGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @param {string} [departmentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiUserVesaUsersWithoutPhotoGet(departmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserAppDtoWithoutPhoto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserVesaUsersWithoutPhotoGet(departmentId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.apiUserVesaUsersWithoutPhotoGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -37767,15 +33559,6 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          */
         apiUserValidatetokenAndUserGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiUserValidatetokenAndUserGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [departmentId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiUserVesaUsersWithoutPhotoGet(departmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserAppDtoWithoutPhoto>> {
-            return localVarFp.apiUserVesaUsersWithoutPhotoGet(departmentId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -38002,16 +33785,6 @@ export class UserApi extends BaseAPI {
      */
     public apiUserValidatetokenAndUserGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).apiUserValidatetokenAndUserGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} [departmentId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiUserVesaUsersWithoutPhotoGet(departmentId?: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).apiUserVesaUsersWithoutPhotoGet(departmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -39841,222 +35614,6 @@ export class UserTenantsApi extends BaseAPI {
      */
     public apiUserTenantsPut(userTenantUpdateDto?: UserTenantUpdateDto, options?: RawAxiosRequestConfig) {
         return UserTenantsApiFp(this.configuration).apiUserTenantsPut(userTenantUpdateDto, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * VesaSupportApi - axios parameter creator
- */
-export const VesaSupportApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/VesaSupport`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGetAllGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/VesaSupport/GetAll`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGetSelectListGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/VesaSupport/GetSelectList`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * VesaSupportApi - functional programming interface
- */
-export const VesaSupportApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = VesaSupportApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiVesaSupportGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiVesaSupportGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VesaSupportApi.apiVesaSupportGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiVesaSupportGetAllGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ExcelList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiVesaSupportGetAllGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VesaSupportApi.apiVesaSupportGetAllGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiVesaSupportGetSelectListGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AllList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiVesaSupportGetSelectListGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VesaSupportApi.apiVesaSupportGetSelectListGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * VesaSupportApi - factory interface
- */
-export const VesaSupportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = VesaSupportApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiVesaSupportGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGetAllGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<ExcelList>> {
-            return localVarFp.apiVesaSupportGetAllGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiVesaSupportGetSelectListGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<AllList>> {
-            return localVarFp.apiVesaSupportGetSelectListGet(options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * VesaSupportApi - object-oriented interface
- */
-export class VesaSupportApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiVesaSupportGet(options?: RawAxiosRequestConfig) {
-        return VesaSupportApiFp(this.configuration).apiVesaSupportGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiVesaSupportGetAllGet(options?: RawAxiosRequestConfig) {
-        return VesaSupportApiFp(this.configuration).apiVesaSupportGetAllGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public apiVesaSupportGetSelectListGet(options?: RawAxiosRequestConfig) {
-        return VesaSupportApiFp(this.configuration).apiVesaSupportGetSelectListGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
