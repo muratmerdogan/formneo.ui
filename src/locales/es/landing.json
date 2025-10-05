@@ -1,0 +1,101 @@
+{
+  "Slogan": {
+    "Title": "Formneo Tasks — Gestiona el trabajo, automatiza los flujos",
+    "Short": "Del formulario a la tarea, de la tarea al resultado."
+  },
+  "Sections": {
+    "Tasks": {
+      "Title": "Gestión de tareas",
+      "Bullets": [
+        "Crear, asignar, establecer fechas límite",
+        "Estados: Pendiente, En progreso, Completado",
+        "Prioridad, fecha y etiquetas",
+        "Comentarios y uso compartido de archivos"
+      ]
+    },
+    "Builder": {
+      "Title": "Creador de formularios de arrastrar y soltar",
+      "Bullets": [
+        "Texto, número, fecha, selección, carga de archivos",
+        "Campos condicionales",
+        "Formulario guardado → tarea automática",
+        "Plantillas: gastos, compras, incidencias"
+      ]
+    },
+    "Workflow": {
+      "Title": "Aprobaciones y gestión de flujos",
+      "Bullets": [
+        "Flujo basado en reglas SI/ENTONCES",
+        "Aprobaciones multinivel",
+        "Transferencia automática",
+        "Notificación por correo o Telegram"
+      ]
+    },
+    "Calendar": {
+      "Title": "Calendario y recordatorios",
+      "Bullets": [
+        "Calendario diario/semanal/mensual",
+        "Recordatorios de vencimiento (correo / in-app)",
+        "Alertas por retraso"
+      ]
+    },
+    "Files": {
+      "Title": "Archivos y documentos",
+      "Bullets": [
+        "Cargas y versionado por tarea",
+        "Estructura de carpetas compartidas",
+        "Vista previa de documentos"
+      ]
+    },
+    "Roles": {
+      "Title": "Usuarios, roles y permisos",
+      "Bullets": [
+        "Visibilidad basada en roles (Administrador / Personal / Aprobador)",
+        "Invitaciones de usuarios y equipos",
+        "Soporte multi-equipo"
+      ]
+    },
+    "Notifications": {
+      "Title": "Sistema de notificaciones",
+      "Bullets": [
+        "Notificaciones por correo e in-app",
+        "Integración con Telegram o Microsoft Teams",
+        "Informe resumen diario"
+      ]
+    },
+    "Reports": {
+      "Title": "Informes y análisis",
+      "Bullets": [
+        "Ratios de completado/retraso",
+        "Rendimiento por usuario y departamento",
+        "Exportación a PDF / Excel"
+      ]
+    },
+    "Mobile": {
+      "Title": "Preparado para móvil",
+      "Bullets": [
+        "Interfaz responsive",
+        "Soporte PWA",
+        "Notificaciones push"
+      ]
+    },
+    "Integrations": {
+      "Title": "Integraciones y API",
+      "Bullets": [
+        "REST API + Webhooks",
+        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
+        "Integraciones empresariales"
+      ]
+    },
+    "Projects": {
+      "Title": "Gestión de proyectos",
+      "Bullets": [
+        "Jerarquía Proyecto → épica → tarea",
+        "Vistas Kanban y cronología",
+        "Visibilidad de recursos y capacidad"
+      ]
+    }
+  }
+}
+
+

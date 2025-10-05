@@ -1,0 +1,101 @@
+{
+  "Slogan": {
+    "Title": "Formneo Tasks — Manage work, automate flows",
+    "Short": "From form to task, from task to result."
+  },
+  "Sections": {
+    "Tasks": {
+      "Title": "Task Management",
+      "Bullets": [
+        "Create, assign, set due dates",
+        "Statuses: Pending, In Progress, Done",
+        "Priority, date and tags",
+        "Comments and file sharing"
+      ]
+    },
+    "Builder": {
+      "Title": "Drag-and-drop Form Builder",
+      "Bullets": [
+        "Text, number, date, select, file upload",
+        "Conditional fields",
+        "Saved form → auto task",
+        "Templates for expenses, purchase, incident"
+      ]
+    },
+    "Workflow": {
+      "Title": "Approval & Workflow",
+      "Bullets": [
+        "IF/THEN rule-based flow",
+        "Multi-level approvals",
+        "Auto handover",
+        "Email or Telegram notification"
+      ]
+    },
+    "Calendar": {
+      "Title": "Calendar & Reminders",
+      "Bullets": [
+        "Daily/weekly/monthly task calendar",
+        "Due date reminders (email / in-app)",
+        "Overdue alerts"
+      ]
+    },
+    "Files": {
+      "Title": "Files & Documents",
+      "Bullets": [
+        "Task-based uploads and versioning",
+        "Shared folder structure",
+        "Document preview"
+      ]
+    },
+    "Roles": {
+      "Title": "Users, Roles & Permissions",
+      "Bullets": [
+        "Role-based visibility (Admin / Staff / Approver)",
+        "User invites and teams",
+        "Multi-team support"
+      ]
+    },
+    "Notifications": {
+      "Title": "Notification System",
+      "Bullets": [
+        "Email and in-app notifications",
+        "Telegram or Microsoft Teams integration",
+        "Daily summary report"
+      ]
+    },
+    "Reports": {
+      "Title": "Reports & Insights",
+      "Bullets": [
+        "Completion / overdue ratios",
+        "User & department performance",
+        "Export to PDF / Excel"
+      ]
+    },
+    "Mobile": {
+      "Title": "Mobile Ready",
+      "Bullets": [
+        "Responsive UI",
+        "PWA support",
+        "Push notifications"
+      ]
+    },
+    "Integrations": {
+      "Title": "Integrations & API",
+      "Bullets": [
+        "REST API + Webhooks",
+        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
+        "Enterprise integrations"
+      ]
+    },
+    "Projects": {
+      "Title": "Project Management",
+      "Bullets": [
+        "Project → epic → task hierarchy",
+        "Kanban and timeline views",
+        "Resource & capacity visibility"
+      ]
+    }
+  }
+}
+
+

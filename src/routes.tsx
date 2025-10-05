@@ -863,7 +863,7 @@ const routes = [
         name: "Fırsatlar",
         key: "opportunities",
         route: "/opportunities",
-        component: <OpportunitiesListPage />,
+        component: <OpportunitiesKanbanBoard />,
       },
       {
         name: "Fırsatlar Kanban",

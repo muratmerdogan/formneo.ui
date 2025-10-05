@@ -12,7 +12,8 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import getConfiguration from "confiuration";
-import { LookupApi, LookupItemDto, OpportunitiesApi } from "api/generated/api";
+import { LookupApi, LookupItemDto, OpportunitiesApi, OpportunityInsertDto, UserApi } from "api/generated/api";
+import CustomerSelectDialog from "components/customers/CustomerSelectDialog";
 
 type Card = {
   id: string;
@@ -37,9 +38,8 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
   const [stageItems, setStageItems] = useState<LookupItemDto[]>([]);
   const [addOpen, setAddOpen] = useState(false);
   const [addColumnId, setAddColumnId] = useState<string>("");
-  const [form, setForm] = useState<{ title: string; customerName: string; amount?: string; currency?: string; probability?: string; tags?: string }>(
-    { title: "", customerName: "", amount: "", currency: "TRY", probability: "50", tags: "" }
-  );
+  const [form, setForm] = useState<{ title: string; customerId?: string; customerName: string; amount?: string; currency?: string; probability?: string; tags?: string }>({ title: "", customerName: "", amount: "", currency: "TRY", probability: "50", tags: "" });
+  const [openCustomerDlg, setOpenCustomerDlg] = useState(false);
 
   const openAddDialog = (columnId: string) => {
     setAddColumnId(columnId);
@@ -47,8 +47,9 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
     setAddOpen(true);
   };
   const closeAddDialog = () => setAddOpen(false);
-  const submitAddDialog = () => {
+  const submitAddDialog = async () => {
     if (!form.title.trim()) return;
+    // Önce lokal ekle
     setBoard((prev) => {
       const cols = prev.columns.map((c) => ({ ...c, cards: [...c.cards] }));
       const idx = cols.findIndex((c) => String(c.id) === String(addColumnId));
@@ -65,7 +66,36 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
       }
       return { columns: cols };
     });
-    setAddOpen(false);
+    // İsteğe bağlı: API ile kaydet (owner ve customer zorunlu)
+    try {
+      if (form.customerId) {
+        const userApi = new UserApi(getConfiguration());
+        let ownerId = "";
+        try {
+          const me: any = await userApi.apiUserGetLoginUserDetailGet();
+          ownerId = String(me?.data?.id || me?.data?.userId || "");
+        } catch {}
+        const stages = stageItems;
+        const codes = stages.map((s: any) => String(s?.code ?? s?.name ?? ""));
+        const stageIndex = Math.max(0, codes.indexOf(String(addColumnId)));
+        const dto: OpportunityInsertDto = {
+          customerId: form.customerId,
+          title: form.title.trim(),
+          ownerUserId: ownerId,
+          stage: stageIndex >= 0 ? stageIndex : 0,
+          amount: form.amount ? Number(form.amount) : null,
+          currency: form.currency || null,
+          probability: form.probability ? Number(form.probability) : null,
+          source: null,
+          expectedCloseDate: null,
+          description: null,
+        };
+        await api.apiCrmOpportunitiesPost(dto);
+        await fetchBoard(stageItems);
+      }
+    } finally {
+      setAddOpen(false);
+    }
   };
 
   const moveCardLocal = (b: BoardModel, source: any, destination: any): BoardModel => {
@@ -117,26 +147,6 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
     }
   }, [lookupApi]);
 
-  const buildDemoBoard = (stages: LookupItemDto[]) => {
-    const codes = stages.map((s: any) => String(s?.code ?? s?.name ?? ""));
-    const cols: Column[] = stages.map((s: any, i: number) => ({
-      id: codes[i] ?? String(i),
-      title: String(s?.name ?? s?.code ?? ""),
-      cards: [] as Card[],
-    }));
-    const demo: Card[] = [
-      { id: "d1", title: "ERP Entegrasyonu", customerName: "Vesa Yazılım", amount: 450000, currency: "TRY", probability: 40, tags: ["ERP", "Demo"], ownerInitials: "VY" },
-      { id: "d2", title: "SF Modül Lisansı", customerName: "Acme AŞ", amount: 12000, currency: "USD", probability: 60, tags: ["Lisans"], ownerInitials: "AA" },
-      { id: "d3", title: "Mobil Uygulama", customerName: "Globex", amount: 180000, currency: "TRY", probability: 35, tags: ["Mobil", "React"], ownerInitials: "GL" },
-      { id: "d4", title: "Destek Paketi", customerName: "Initech", amount: 3000, currency: "USD", probability: 75, tags: ["Destek"], ownerInitials: "IT" },
-    ];
-    demo.forEach((c, idx) => {
-      const target = cols[idx % cols.length];
-      target.cards.push(c);
-    });
-    return { columns: cols } as BoardModel;
-  };
-
   const fetchBoard = useCallback(async (stages: LookupItemDto[]) => {
     const codes = stages.map((s: any) => String(s?.code ?? s?.name ?? ""));
     const cols: Column[] = stages.map((s: any, i: number) => ({
@@ -164,15 +174,13 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
         }
       });
     } finally {
-      const total = cols.reduce((sum, c) => sum + (c.cards?.length || 0), 0);
-      setBoard((prev) => (total > 0 ? { columns: cols } : (prev.columns.length ? prev : buildDemoBoard(stages))));
+      setBoard({ columns: cols });
     }
   }, [api]);
 
   useEffect(() => {
     (async () => {
       const stages = await fetchStages();
-      setBoard(buildDemoBoard(stages));
       await fetchBoard(stages);
     })();
   }, [fetchStages, fetchBoard]);
@@ -283,7 +291,7 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
           <DialogContent>
             <MDBox sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, mt: 1 }}>
               <TextField label="Başlık" fullWidth value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-              <TextField label="Müşteri" fullWidth value={form.customerName} onChange={(e) => setForm({ ...form, customerName: e.target.value })} />
+              <TextField label="Müşteri" fullWidth value={form.customerName} onClick={() => setOpenCustomerDlg(true)} placeholder="Müşteri seçmek için tıklayın" />
               <TextField label="Tutar" fullWidth value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
               <TextField label="Para Birimi" fullWidth value={form.currency} onChange={(e) => setForm({ ...form, currency: e.target.value })} />
               <TextField label="Olasılık %" fullWidth value={form.probability} onChange={(e) => setForm({ ...form, probability: e.target.value })} />
@@ -295,6 +303,11 @@ export default function OpportunitiesKanbanBoard(): JSX.Element {
             <MDButton variant="gradient" color="info" onClick={submitAddDialog}>Ekle</MDButton>
           </DialogActions>
         </Dialog>
+        <CustomerSelectDialog
+          open={openCustomerDlg}
+          onClose={() => setOpenCustomerDlg(false)}
+          onSelect={(c: any) => { setForm({ ...form, customerId: c.id, customerName: c.name }); setOpenCustomerDlg(false); }}
+        />
       </MDBox>
     </DashboardLayout>
   );

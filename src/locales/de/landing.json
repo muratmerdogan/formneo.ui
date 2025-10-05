@@ -1,0 +1,101 @@
+{
+  "Slogan": {
+    "Title": "Formneo Tasks — Arbeit verwalten, Abläufe automatisieren",
+    "Short": "Vom Formular zur Aufgabe, von der Aufgabe zum Ergebnis."
+  },
+  "Sections": {
+    "Tasks": {
+      "Title": "Aufgabenmanagement",
+      "Bullets": [
+        "Aufgaben erstellen, zuweisen, Fälligkeit festlegen",
+        "Status: Offen, In Arbeit, Erledigt",
+        "Priorität, Datum, Tags",
+        "Kommentare und Dateifreigabe"
+      ]
+    },
+    "Builder": {
+      "Title": "Drag-and-Drop Form Builder",
+      "Bullets": [
+        "Text, Zahl, Datum, Auswahl, Datei-Upload",
+        "Bedingte Felder",
+        "Gespeichertes Formular → automatische Aufgabe",
+        "Vorlagen: Ausgaben, Einkauf, Störung"
+      ]
+    },
+    "Workflow": {
+      "Title": "Genehmigungs- & Workflow-Management",
+      "Bullets": [
+        "IF/THEN regelbasierter Ablauf",
+        "Mehrstufige Genehmigungen",
+        "Automatische Übergabe",
+        "E-Mail oder Telegram-Benachrichtigung"
+      ]
+    },
+    "Calendar": {
+      "Title": "Kalender & Erinnerungen",
+      "Bullets": [
+        "Tages-/Wochen-/Monatskalender",
+        "Fälligkeits-Erinnerungen (E-Mail / in-app)",
+        "Verspätungswarnungen"
+      ]
+    },
+    "Files": {
+      "Title": "Dateien & Dokumente",
+      "Bullets": [
+        "Aufgabenbasierte Uploads und Versionierung",
+        "Gemeinsame Ordnerstruktur",
+        "Dokumentvorschau"
+      ]
+    },
+    "Roles": {
+      "Title": "Benutzer, Rollen & Berechtigungen",
+      "Bullets": [
+        "Rollenbasierte Sichtbarkeit (Admin / Mitarbeiter / Genehmiger)",
+        "Einladungen und Teams",
+        "Unterstützung für mehrere Teams"
+      ]
+    },
+    "Notifications": {
+      "Title": "Benachrichtigungssystem",
+      "Bullets": [
+        "E-Mail und In-App-Benachrichtigungen",
+        "Integration mit Telegram oder Microsoft Teams",
+        "Täglicher Zusammenfassungsbericht"
+      ]
+    },
+    "Reports": {
+      "Title": "Berichte & Analysen",
+      "Bullets": [
+        "Abschluss- / Überfälligkeitsraten",
+        "Leistung nach Benutzer & Abteilung",
+        "Export als PDF / Excel"
+      ]
+    },
+    "Mobile": {
+      "Title": "Mobil bereit",
+      "Bullets": [
+        "Responsives UI",
+        "PWA-Unterstützung",
+        "Push-Benachrichtigungen"
+      ]
+    },
+    "Integrations": {
+      "Title": "Integrationen & API",
+      "Bullets": [
+        "REST API + Webhooks",
+        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
+        "Enterprise-Integrationen"
+      ]
+    },
+    "Projects": {
+      "Title": "Projektmanagement",
+      "Bullets": [
+        "Projekt → Epic → Aufgabe Hierarchie",
+        "Kanban- und Zeitachsenansichten",
+        "Ressourcen- & Kapazitätssichtbarkeit"
+      ]
+    }
+  }
+}
+
+

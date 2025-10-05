@@ -14,6 +14,8 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -90,6 +92,35 @@ const PricingCard = styled(Card)(({ theme }) => ({
         boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
     }
 }));
+const ModulesNav = styled(Box)(({ theme }) => ({
+    position: "sticky",
+    top: 90,
+    zIndex: 3,
+    background: "rgba(255,255,255,.9)",
+    border: "1px solid #e2e8f0",
+    borderRadius: 16,
+    padding: theme.spacing(1.25),
+    boxShadow: "0 12px 28px rgba(2,6,23,0.08)",
+    backdropFilter: "blur(8px)",
+    overflowX: 'auto',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+    '::-webkit-scrollbar': { display: 'none' },
+}));
+
+const ModuleCard = styled(Card)(({ theme }) => ({
+    padding: theme.spacing(3),
+    height: "100%",
+    border: "1px solid #e2e8f0",
+    borderRadius: 16,
+    transition: "transform .25s ease, box-shadow .25s ease, border-color .25s ease",
+    '&:hover': {
+        transform: 'translateY(-6px)',
+        boxShadow: '0 20px 40px rgba(2,6,23,.10)',
+        borderColor: '#94a3b8'
+    }
+}));
+
 
 const PopularBadge = styled(Box)(({ theme }) => ({
     position: "absolute",
@@ -212,11 +243,15 @@ function LandingPage(): JSX.Element {
     const { t, i18n } = useTranslation();
     const [selectedPlan, setSelectedPlan] = useState<string>("professional");
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [activeKey, setActiveKey] = useState<string>("Tasks");
 
-    const toggleLanguage = () => {
-        const newLang = i18n.language === 'tr' ? 'en' : 'tr';
-        i18n.changeLanguage(newLang);
-    };
+    const [langAnchor, setLangAnchor] = useState<null | HTMLElement>(null);
+    const openLang = Boolean(langAnchor);
+    const handleOpenLang = (e: any) => setLangAnchor(e.currentTarget);
+    const handleCloseLang = () => setLangAnchor(null);
+    const changeLang = (lng: string) => { i18n.changeLanguage(lng); handleCloseLang(); };
+    const langFlag: Record<string, string> = { tr: '🇹🇷', en: '🇬🇧', de: '🇩🇪', fr: '🇫🇷', es: '🇪🇸' };
+    const currentFlag = langFlag[i18n.language] || '🌐';
 
     const deliveryPlatforms = [
         {
@@ -272,38 +307,63 @@ function LandingPage(): JSX.Element {
         }
     ];
 
-    const features = [
-        {
-            icon: <BusinessIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.CustomerManagement.Title'),
-            description: t('ns1:LandingPage.Features.CustomerManagement.Description')
-        },
-        {
-            icon: <SpeedIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.ActivityTracking.Title'),
-            description: t('ns1:LandingPage.Features.ActivityTracking.Description')
-        },
-        {
-            icon: <SecurityIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.SalesProcess.Title'),
-            description: t('ns1:LandingPage.Features.SalesProcess.Description')
-        },
-        {
-            icon: <CloudIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.Reporting.Title'),
-            description: t('ns1:LandingPage.Features.Reporting.Description')
-        },
-        {
-            icon: <SupportIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.UserManagement.Title'),
-            description: t('ns1:LandingPage.Features.UserManagement.Description')
-        },
-        {
-            icon: <IntegrationInstructionsIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: t('ns1:LandingPage.Features.DataSecurity.Title'),
-            description: t('ns1:LandingPage.Features.DataSecurity.Description')
-        }
+    const sectionKeys = [
+        "Tasks",
+        "Builder",
+        "Workflow",
+        "Calendar",
+        "Files",
+        "Roles",
+        "Notifications",
+        "Reports",
+        "Mobile",
+        "Integrations",
+        "Projects",
     ];
+
+    const iconFor = (key: string) => {
+        switch (key) {
+            case "Tasks": return <DashboardIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            case "Builder": return <DragIndicatorIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            case "Workflow": return <WorkflowIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            case "Notifications": return <NotificationsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            case "Reports": return <AnalyticsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            case "Integrations": return <IntegrationInstructionsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+            default: return <CheckCircleIcon sx={{ fontSize: 48, color: "#667eea" }} />;
+        }
+    };
+
+    const sections = sectionKeys.map((k) => {
+        const titleKey = `landing:Sections.${k}.Title` as any;
+        const bulletsKey = `landing:Sections.${k}.Bullets` as any;
+        const bullets = (t(bulletsKey, { returnObjects: true }) as unknown as string[]) || [];
+        return {
+            key: k,
+            icon: iconFor(k),
+            title: t(titleKey) as unknown as string,
+            bullets,
+        };
+    });
+
+    // Aktif modülü takip etmek için IntersectionObserver
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (visible?.target?.id) {
+                const id = visible.target.id.replace('mod-', '');
+                if (sectionKeys.includes(id)) setActiveKey(id);
+            }
+        }, { rootMargin: '-40% 0px -50% 0px', threshold: [0.1, 0.25, 0.5, 0.75, 1] });
+
+        sectionKeys.forEach((k) => {
+            const el = document.getElementById(`mod-${k}`);
+            if (el) observer.observe(el);
+        });
+        return () => observer.disconnect();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sectionKeys.join('|')]);
 
     const carouselSlides = [
         {
@@ -513,20 +573,26 @@ function LandingPage(): JSX.Element {
                                 </MDBox>
                             </Tooltip>
                             
-                            <Tooltip title={i18n.language === 'tr' ? 'Switch to English' : 'Türkçe\'ye Geç'}>
+                            <Tooltip title="Dil / Language">
                                 <IconButton
-                                    onClick={toggleLanguage}
+                                    onClick={handleOpenLang}
                                     sx={{
                                         color: "#1976d2",
                                         backgroundColor: "rgba(25, 118, 210, 0.1)",
-                                        "&:hover": {
-                                            backgroundColor: "rgba(25, 118, 210, 0.2)",
-                                        }
+                                        "&:hover": { backgroundColor: "rgba(25, 118, 210, 0.2)" }
                                     }}
                                 >
+                                    <span style={{ marginRight: 6 }}>{currentFlag}</span>
                                     <LanguageIcon />
                                 </IconButton>
                             </Tooltip>
+                            <Menu anchorEl={langAnchor} open={openLang} onClose={handleCloseLang}>
+                                <MenuItem onClick={() => changeLang('tr')}><span style={{ marginRight: 8 }}>🇹🇷</span>Türkçe</MenuItem>
+                                <MenuItem onClick={() => changeLang('en')}><span style={{ marginRight: 8 }}>🇬🇧</span>English</MenuItem>
+                                <MenuItem onClick={() => changeLang('de')}><span style={{ marginRight: 8 }}>🇩🇪</span>Deutsch</MenuItem>
+                                <MenuItem onClick={() => changeLang('fr')}><span style={{ marginRight: 8 }}>🇫🇷</span>Français</MenuItem>
+                                <MenuItem onClick={() => changeLang('es')}><span style={{ marginRight: 8 }}>🇪🇸</span>Español</MenuItem>
+                            </Menu>
                             <MDButton
                                 variant="text"
                                 color="dark"
@@ -553,13 +619,11 @@ function LandingPage(): JSX.Element {
                 <Container maxWidth="lg">
                     <MDBox position="relative" zIndex={1}>
                         <MDTypography variant="h1" fontWeight="bold" mb={3} sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" } }}>
-                            {t('ns1:LandingPage.Hero.Title')}
-                            <br />
-                            <Box component="span" sx={{ color: "#1976d2" }}>{t('ns1:LandingPage.Hero.Subtitle')}</Box>
+                            {t('landing:Slogan.Title')}
                         </MDTypography>
 
-                        <MDTypography variant="h5" mb={5} sx={{ opacity: 0.9, maxWidth: "600px", mx: "auto" }}>
-                            {t('ns1:LandingPage.Hero.Description')}
+                        <MDTypography variant="h5" mb={5} sx={{ opacity: 0.9, maxWidth: "800px", mx: "auto" }}>
+                            {t('landing:Slogan.Short')}
                         </MDTypography>
 
                         <MDBox display="flex" gap={3} justifyContent="center" flexWrap="wrap">
@@ -615,32 +679,92 @@ function LandingPage(): JSX.Element {
                 </Container>
             </HeroSection>
 
-            {/* Features Section */}
+            {/* Modules Quick Nav */}
+            <Container maxWidth="lg">
+                <ModulesNav>
+                    <MDBox display="flex" gap={1} flexWrap="wrap" alignItems="center">
+                        {sections.map((s) => {
+                            const isActive = s.key === activeKey;
+                            const colorMap: Record<string, string> = {
+                                Tasks: '#6366f1',
+                                Builder: '#22c55e',
+                                Workflow: '#a855f7',
+                                Calendar: '#f59e0b',
+                                Files: '#0ea5e9',
+                                Roles: '#ef4444',
+                                Notifications: '#06b6d4',
+                                Reports: '#84cc16',
+                                Mobile: '#f43f5e',
+                                Integrations: '#8b5cf6',
+                                Projects: '#10b981',
+                            };
+                            const base = colorMap[s.key] || '#667eea';
+                            return (
+                                <button
+                                    key={s.key}
+                                    onClick={() => {
+                                        const el = document.getElementById(`mod-${s.key}`);
+                                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }}
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 8,
+                                        border: isActive ? '1px solid transparent' : `1px solid ${base}33`,
+                                        background: isActive ? `linear-gradient(135deg, ${base} 0%, ${base} 100%)` : '#ffffff',
+                                        color: isActive ? '#ffffff' : '#0f172a',
+                                        borderRadius: 999,
+                                        padding: '8px 14px',
+                                        fontWeight: 800,
+                                        cursor: 'pointer',
+                                        boxShadow: isActive ? `0 8px 20px ${base}40` : '0 2px 8px rgba(2,6,23,0.06)'
+                                    }}
+                                >
+                                    <span style={{ width: 8, height: 8, borderRadius: 999, background: isActive ? 'rgba(255,255,255,.9)' : base }} />
+                                    {s.title}
+                                </button>
+                            );
+                        })}
+                    </MDBox>
+                </ModulesNav>
+            </Container>
+
+            {/* Features Section (Formneo Tasks) */}
             <Container maxWidth="lg">
                 <MDBox py={12}>
                     <MDBox textAlign="center" mb={8}>
                         <MDTypography variant="h2" fontWeight="bold" color="dark" mb={3}>
-                            {t('ns1:LandingPage.Features.Title')}
+                            {t('landing:Slogan.Title')}
                         </MDTypography>
                         <MDTypography variant="h6" color="text" sx={{ maxWidth: "600px", mx: "auto" }}>
-                            {t('ns1:LandingPage.Features.Subtitle')}
+                            {t('landing:Slogan.Short')}
                         </MDTypography>
                     </MDBox>
 
-                    <Grid container spacing={4}>
-                        {features.map((feature, index) => (
-                            <Grid item xs={12} md={6} lg={4} key={index}>
-                                <FeatureCard>
-                                    <MDBox mb={3}>
-                                        {feature.icon}
+                    <Grid container spacing={3}>
+                        {sections.map((feature, index) => (
+                            <Grid item xs={12} md={6} key={index} id={`mod-${feature.key}`}>
+                                <ModuleCard>
+                                    <MDBox display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                                        <MDBox display="flex" alignItems="center" gap={1.5}>
+                                            {feature.icon}
+                                            <MDTypography variant="h4" fontWeight="bold">{feature.title}</MDTypography>
+                                        </MDBox>
+                                        <a href={`#mod-${feature.key}`} style={{ fontSize: 12, color: '#64748b', textDecoration: 'none' }}>#{feature.key}</a>
                                     </MDBox>
-                                    <MDTypography variant="h5" fontWeight="bold" mb={2}>
-                                        {feature.title}
-                                    </MDTypography>
-                                    <MDTypography variant="body1" color="text">
-                                        {feature.description}
-                                    </MDTypography>
-                                </FeatureCard>
+                                    <MDBox component="ul" sx={{ m: 0, pl: 3, lineHeight: 1.8 }}>
+                                        {(feature.bullets || []).map((b: any, i: number) => (
+                                            <li key={i}>
+                                                <MDTypography variant="body1" color="text">{b}</MDTypography>
+                                            </li>
+                                        ))}
+                                    </MDBox>
+                                    <MDBox mt={2}>
+                                        <MDButton variant="text" color="info" sx={{ textTransform: 'none', fontWeight: 700 }}>
+                                            {t('ns1:LandingPage.CTA.ContactSales')}
+                                        </MDButton>
+                                    </MDBox>
+                                </ModuleCard>
                             </Grid>
                         ))}
                     </Grid>

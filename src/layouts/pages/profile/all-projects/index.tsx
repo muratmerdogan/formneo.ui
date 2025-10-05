@@ -17,9 +17,8 @@ import React, { useEffect, useState } from "react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import index0png from "assets/images/sapfiori.jpg";
-import index1png from "assets/images/SAP-HR.jpg";
+
 import index2png from "assets/images/btplogo.jpg";
-import index3png from "assets/images/SAP-SuccessFactors.png";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -159,18 +158,13 @@ function AllProjects(): JSX.Element {
     let image: string;
     if (indexOfCategory === 0) image = index0png;
     else if (indexOfCategory === 1) image = index2png;
-    else if (indexOfCategory === 2) image = index3png;
-    else if (indexOfCategory === 3) image = index1png;
 
     const imageWidth = () => {
       switch (image) {
         case index0png:
           return "150px";
-        case index1png:
-          return "80px";
+
         case index2png:
-          return "80px";
-        case index3png:
           return "80px";
         default:
           return "60px"; // Varsayılan değer
@@ -180,13 +174,9 @@ function AllProjects(): JSX.Element {
     const imageHeight = () => {
       switch (image) {
         case index0png:
-          return "82px";
-        case index1png:
-          return "50px";
-        case index2png:
+          return "82px";        case index2png:
           return "80px";
-        case index3png:
-          return "55px";
+
         default:
           return "60px"; // Varsayılan değer
       }

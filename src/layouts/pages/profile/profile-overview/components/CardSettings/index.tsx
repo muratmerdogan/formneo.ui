@@ -4,9 +4,9 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import React, { useEffect, useState } from "react";
 import index0png from "assets/images/sapfiori.jpg";
-import index1png from "assets/images/SAP-HR.jpg";
+
 import index2png from "assets/images/btplogo.jpg";
-import index3png from "assets/images/SAP-SuccessFactors.png";
+
 import getConfiguration from "confiuration";
 import { ProjectsApi } from "api/generated";
 import { Category } from "layouts/pages/profile/all-projects";
@@ -40,18 +40,12 @@ function CardSettings({ name, description, id, userId, categoryName }: Category)
   let image: string;
   if (indexOfCategory === 0) image = index0png;
   else if (indexOfCategory === 1) image = index2png;
-  else if (indexOfCategory === 2) image = index3png;
-  else if (indexOfCategory === 3) image = index1png;
 
   const imageWidth = () => {
     switch (image) {
       case index0png:
         return "80px";
-      case index1png:
-        return "80px";
       case index2png:
-        return "80px";
-      case index3png:
         return "80px";
       default:
         return "60px"; // Varsayılan değer
@@ -62,12 +56,8 @@ function CardSettings({ name, description, id, userId, categoryName }: Category)
     switch (image) {
       case index0png:
         return "80px";
-      case index1png:
-        return "50px";
       case index2png:
         return "80px";
-      case index3png:
-        return "55px";
       default:
         return "60px"; // Varsayılan değer
     }

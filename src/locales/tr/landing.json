@@ -1,0 +1,99 @@
+{
+  "Slogan": {
+    "Title": "Formneo Tasks — İşlerinizi yönetin, akışı otomatikleştirin",
+    "Short": "Formdan göreve, görevden sonuca. Hepsi tek platformda."
+  },
+  "Sections": {
+    "Tasks": {
+      "Title": "Görev Yönetimi",
+      "Bullets": [
+        "Görev oluşturma, atama, son tarih",
+        "Durumlar: Bekliyor, Devam Ediyor, Tamamlandı",
+        "Öncelik, tarih, etiket",
+        "Yorum ve dosya paylaşımı"
+      ]
+    },
+    "Builder": {
+      "Title": "Sürükle–Bırak Form Oluşturucu",
+      "Bullets": [
+        "Metin, sayı, tarih, seçim, dosya",
+        "Koşullu alanlar",
+        "Kaydedilen form → otomatik görev",
+        "Masraf, satın alma, arıza şablonları"
+      ]
+    },
+    "Workflow": {
+      "Title": "Onay ve Akış Yönetimi",
+      "Bullets": [
+        "Eğer/ise kural tabanlı akış",
+        "Çok seviyeli onay",
+        "Otomatik devir",
+        "E-posta veya Telegram bildirim"
+      ]
+    },
+    "Calendar": {
+      "Title": "Takvim ve Hatırlatıcılar",
+      "Bullets": [
+        "Günlük/haftalık/aylık görev takvimi",
+        "Son tarih hatırlatmaları (e-posta / sistem içi)",
+        "Geciken görev uyarıları"
+      ]
+    },
+    "Files": {
+      "Title": "Dosya ve Doküman Yönetimi",
+      "Bullets": [
+        "Görev bazlı dosya yükleme ve versiyonlama",
+        "Ortak klasör yapısı",
+        "Doküman önizleme"
+      ]
+    },
+    "Roles": {
+      "Title": "Kullanıcı, Rol ve Yetki",
+      "Bullets": [
+        "Rol bazlı görünürlük (Yönetici / Personel / Onaylayıcı)",
+        "Kullanıcı daveti ve ekipler",
+        "Çoklu ekip desteği"
+      ]
+    },
+    "Notifications": {
+      "Title": "Bildirim Sistemi",
+      "Bullets": [
+        "E-posta ve sistem içi bildirimler",
+        "Telegram veya Microsoft Teams entegrasyonu",
+        "Günlük özet raporu"
+      ]
+    },
+    "Reports": {
+      "Title": "Raporlama ve Analiz",
+      "Bullets": [
+        "Tamamlanan / geciken görev oranı",
+        "Kullanıcı ve departman bazlı performans",
+        "PDF / Excel dışa aktarma"
+      ]
+    },
+    "Mobile": {
+      "Title": "Mobil Uyumluluk",
+      "Bullets": [
+        "Responsive arayüz",
+        "PWA desteği",
+        "Anlık bildirimler"
+      ]
+    },
+    "Integrations": {
+      "Title": "Entegrasyon ve API",
+      "Bullets": [
+        "REST API + Webhook",
+        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
+        "Kurumsal entegrasyonlar"
+      ]
+    },
+    "Projects": {
+      "Title": "Proje Yönetimi",
+      "Bullets": [
+        "Proje → epik → görev hiyerarşisi",
+        "Kanban ve zaman çizelgesi",
+        "Kaynak ve kapasite görünürlüğü"
+      ]
+    }
+  }
+}

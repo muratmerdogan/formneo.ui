@@ -1,0 +1,101 @@
+{
+  "Slogan": {
+    "Title": "Formneo Tasks — Gérez le travail, automatisez les flux",
+    "Short": "Du formulaire à la tâche, de la tâche au résultat."
+  },
+  "Sections": {
+    "Tasks": {
+      "Title": "Gestion des tâches",
+      "Bullets": [
+        "Créer, assigner, définir des échéances",
+        "Statuts : En attente, En cours, Terminé",
+        "Priorité, date, tags",
+        "Commentaires et partage de fichiers"
+      ]
+    },
+    "Builder": {
+      "Title": "Constructeur de formulaires par glisser-déposer",
+      "Bullets": [
+        "Texte, nombre, date, sélection, téléversement",
+        "Champs conditionnels",
+        "Formulaire enregistré → tâche automatique",
+        "Modèles : frais, achat, incident"
+      ]
+    },
+    "Workflow": {
+      "Title": "Gestion des validations & workflows",
+      "Bullets": [
+        "Flux basé sur des règles SI/ALORS",
+        "Chaînes d'approbation multi-niveaux",
+        "Transfert automatique",
+        "Notification par e-mail ou Telegram"
+      ]
+    },
+    "Calendar": {
+      "Title": "Calendrier & Rappels",
+      "Bullets": [
+        "Calendrier quotidien/hebdomadaire/mensuel",
+        "Rappels d'échéance (e-mail / in-app)",
+        "Alertes de retard"
+      ]
+    },
+    "Files": {
+      "Title": "Fichiers & Documents",
+      "Bullets": [
+        "Téléversements et versions par tâche",
+        "Structure de dossier partagée",
+        "Aperçu des documents"
+      ]
+    },
+    "Roles": {
+      "Title": "Utilisateurs, Rôles & Permissions",
+      "Bullets": [
+        "Visibilité basée sur les rôles (Admin / Personnel / Validateur)",
+        "Invitations et équipes",
+        "Support multi-équipes"
+      ]
+    },
+    "Notifications": {
+      "Title": "Système de notifications",
+      "Bullets": [
+        "Notifications e-mail et in-app",
+        "Intégration Telegram ou Microsoft Teams",
+        "Rapport récapitulatif quotidien"
+      ]
+    },
+    "Reports": {
+      "Title": "Rapports & Analyses",
+      "Bullets": [
+        "Taux d'achèvement / de retard",
+        "Performance par utilisateur & département",
+        "Export PDF / Excel"
+      ]
+    },
+    "Mobile": {
+      "Title": "Compatible mobile",
+      "Bullets": [
+        "Interface responsive",
+        "Support PWA",
+        "Notifications push"
+      ]
+    },
+    "Integrations": {
+      "Title": "Intégrations & API",
+      "Bullets": [
+        "REST API + Webhooks",
+        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
+        "Intégrations d'entreprise"
+      ]
+    },
+    "Projects": {
+      "Title": "Gestion de projet",
+      "Bullets": [
+        "Hiérarchie Projet → Épopée → Tâche",
+        "Vues Kanban et chronologie",
+        "Visibilité des ressources & capacités"
+      ]
+    }
+  }
+}
+
+
