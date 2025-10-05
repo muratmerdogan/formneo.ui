@@ -58,6 +58,8 @@ const Wizard = lazy(() => import("layouts/applications/wizard"));
 const Calendar = lazy(() => import("layouts/applications/calendar"));
 const OpportunitiesListPage = lazy(() => import("pages/opportunities/OpportunitiesListPage"));
 const OpportunityFormPage = lazy(() => import("pages/opportunities/OpportunityFormPage"));
+const OpportunitiesKanbanBoard = lazy(() => import("pages/opportunities/OpportunitiesKanbanBoard"));
+const OpportunitiesKanbanPage = lazy(() => import("pages/opportunities/OpportunitiesKanbanPage"));
 const SeedOpportunityStagesPage = lazy(() => import("pages/settings/SeedOpportunityStagesPage"));
 const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
 const NewProduct = lazy(() => import("layouts/ecommerce/products/new-product"));
@@ -862,6 +864,12 @@ const routes = [
         key: "opportunities",
         route: "/opportunities",
         component: <OpportunitiesListPage />,
+      },
+      {
+        name: "Fırsatlar Kanban",
+        key: "opportunities-kanban",
+        route: "/opportunities/kanban",
+        component: <OpportunitiesKanbanBoard />,
       },
       {
         name: "Fırsat Formu",

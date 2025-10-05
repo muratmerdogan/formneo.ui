@@ -61,6 +61,7 @@ const MenuDetail = () => {
     icon: "",
     showMenu: false,
     isTenantOnly: false,
+    isGlobalOnly: false,
   });
   const { id } = useParams();
 
@@ -83,6 +84,7 @@ const MenuDetail = () => {
           icon: data.data.icon || "",
           showMenu: data.data.showMenu,
           isTenantOnly: data.data.isTenantOnly || false,
+          isGlobalOnly: (data as any)?.data?.isGlobalOnly || false,
         });
       };
       fetchIdData();
@@ -115,6 +117,7 @@ const MenuDetail = () => {
           icon: item.icon,
           showMenu: item.showMenu,
           isTenantOnly: item.isTenantOnly || false,
+          isGlobalOnly: (item as any)?.isGlobalOnly || false,
         });
       });
     }
@@ -133,6 +136,7 @@ const MenuDetail = () => {
       icon: "database",
       showMenu: false,
       isTenantOnly: false,
+      isGlobalOnly: false,
     };
   };
 
@@ -199,6 +203,7 @@ const MenuDetail = () => {
         icon: formData.icon,
         showMenu: formData.showMenu,
         isTenantOnly: formData.isTenantOnly,
+        isGlobalOnly: (formData as any).isGlobalOnly,
       });
       dispatchBusy({ isBusy: false });
       dispatchAlert({
@@ -245,6 +250,7 @@ const MenuDetail = () => {
         icon: formData.icon,
         showMenu: formData.showMenu,
         isTenantOnly: formData.isTenantOnly,
+        isGlobalOnly: (formData as any).isGlobalOnly,
       });
       dispatchBusy({ isBusy: false });
       dispatchAlert({
@@ -393,6 +399,22 @@ const MenuDetail = () => {
                           setFormData((prev) => ({
                             ...prev,
                             isTenantOnly: newValue,
+                          }));
+                        }}
+                      />
+                    </FormControl>
+                    <FormControl sx={{ marginLeft: "6px" }}>
+                      <FormControlLabel
+                        control={<Checkbox id="isGlobalOnly" checked={(formData as any).isGlobalOnly} />}
+                        label={
+                          <MDTypography fontWeight="medium" variant="caption" color="text">
+                            Global Modu
+                          </MDTypography>
+                        }
+                        onChange={(event, newValue) => {
+                          setFormData((prev: any) => ({
+                            ...prev,
+                            isGlobalOnly: newValue,
                           }));
                         }}
                       />

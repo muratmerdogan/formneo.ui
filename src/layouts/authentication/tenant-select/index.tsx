@@ -65,6 +65,18 @@ function TenantSelect(): JSX.Element {
                 });
                 setAllTenants(opts);
                 setFiltered(opts);
+                // Kullanıcının sadece tek tenant'ı varsa otomatik seç ve devam et
+                if (opts.length === 1) {
+                    const only = opts[0];
+                    try {
+                        localStorage.setItem("selectedTenantId", only.id);
+                        localStorage.setItem("selectedTenantLabel", only.label || "-");
+                        setSelectedTenantId(dispatch as any, only.id);
+                    } finally {
+                        window.location.href = "/dashboards/analytics";
+                        return;
+                    }
+                }
             } finally {
                 dispatchBusy({ isBusy: false });
             }

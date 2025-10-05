@@ -38,6 +38,7 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Images
 import formNeoLogo from "assets/images/logoson.svg";
+import loginLeft from "assets/images/loginleft.png";
 
 import { AuthApi, LoginDto, UserApi } from "api/generated";
 import getConfiguration, { getConfigurationLogin } from "confiuration";
@@ -45,7 +46,11 @@ import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { MessageBoxType } from "@ui5/webcomponents-react";
 import { useUser } from "layouts/pages/hooks/userName";
-import { Typography, IconButton, Tooltip } from "@mui/material";
+import { Typography, IconButton, Tooltip, InputAdornment } from "@mui/material";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LanguageIcon from "@mui/icons-material/Language";
 
 // Styled components for Metronic-style layout
@@ -66,9 +71,14 @@ const LoginCard = styled(Card)(({ theme }) => ({
 }));
 
 const LeftSection = styled(Box)(({ theme }) => ({
-  background: "linear-gradient(135deg, #3e5d8f 0%, #2c4a7a 100%)",
-  color: "white",
-  padding: theme.spacing(6),
+  // Beyaz zemin + küçük sol alt köşe görseli (overlay yok)
+  backgroundColor: "#ffffff",
+  backgroundImage: `url(${loginLeft})`,
+  backgroundSize: "min(28vw, 320px) auto",
+  backgroundPosition: "center center",
+  backgroundRepeat: "no-repeat",
+  color: "inherit",
+  padding: 0,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -78,7 +88,7 @@ const LeftSection = styled(Box)(({ theme }) => ({
 }));
 
 const RightSection = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(6),
+  padding: theme.spacing(4.5),
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -114,6 +124,8 @@ function Cover(): JSX.Element {
   const dispatchAlert = useAlert();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const isEmailValid = /[^\s@]+@[^\s@]+\.[^\s@]+/.test(email || "");
   const [alert, setAlert] = useState<{
     alertType: string;
     message: string;
@@ -209,89 +221,18 @@ function Cover(): JSX.Element {
 
           <LoginCard>
             <Grid container>
-              {/* Sol Bölüm - Marka ve Açıklama */}
+              {/* Sol Bölüm - Görsel */}
               <Grid item xs={12} md={6}>
-                <LeftSection>
-                  <MDBox
-                    mb={3}
-                    sx={{
-                      backgroundColor: "rgba(255, 255, 255, 0.95)",
-                      borderRadius: "16px",
-                      padding: "20px",
-                      display: "inline-block",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                      backdropFilter: "blur(10px)"
-                    }}
-                  >
-                    <img
-                      src={formNeoLogo}
-                      alt="FormNeo Logo"
-                      style={{
-                        height: "120px",
-                        width: "auto",
-                        display: "block"
-                      }}
-                    />
-                  </MDBox>
-
-                  <MDTypography variant="h3" fontWeight="bold" color="white" mb={2}>
-                    FormNeo
-                  </MDTypography>
-
-                  <MDTypography variant="h6" color="white" mb={4} textAlign="center" sx={{ opacity: 0.8 }}>
-                    Modern form yönetimi ve iş akışı çözümünüz
-                  </MDTypography>
-
-                  <MDTypography variant="body1" color="white" textAlign="center" lineHeight={1.6} sx={{ opacity: 0.7 }}>
-                    Güçlü form builder, otomatik iş akışları ve detaylı raporlama
-                    özellikleri ile işlerinizi dijitalleştirin.
-                  </MDTypography>
-
-                  <Box mt={4}>
-                    <Box display="flex" alignItems="center" mb={2}>
-                      <Box
-                        width="8px"
-                        height="8px"
-                        borderRadius="50%"
-                        bgcolor="rgba(255,255,255,0.8)"
-                        mr={2}
-                      />
-                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
-                        Sürükle-bırak form editörü
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center" mb={2}>
-                      <Box
-                        width="8px"
-                        height="8px"
-                        borderRadius="50%"
-                        bgcolor="rgba(255,255,255,0.8)"
-                        mr={2}
-                      />
-                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
-                        Gerçek zamanlı işbirliği
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      <Box
-                        width="8px"
-                        height="8px"
-                        borderRadius="50%"
-                        bgcolor="rgba(255,255,255,0.8)"
-                        mr={2}
-                      />
-                      <Typography variant="body2" color="white" sx={{ opacity: 0.8 }}>
-                        Gelişmiş analitik ve raporlar
-                      </Typography>
-                    </Box>
-                  </Box>
-                </LeftSection>
+                <LeftSection />
               </Grid>
 
-              {/* Sağ Bölüm - Login Formu */}
+              {/* Sağ Bölüm - Logo + Login Formu */}
               <Grid item xs={12} md={6}>
                 <RightSection>
-                  <MDBox mb={4}>
+                  <Box display="flex" justifyContent="center" mb={2.5}>
+                    <img src={formNeoLogo} alt="FormNeo Logo" style={{ height: "140px", width: "auto" }} />
+                  </Box>
+                  <MDBox mb={3}>
                     <MDTypography variant="h4" fontWeight="bold" color="dark" mb={1}>
                       Hoş Geldiniz
                     </MDTypography>
@@ -301,89 +242,106 @@ function Cover(): JSX.Element {
                   </MDBox>
 
                   <MDBox component="form" role="form">
-                    <MDBox mb={3}>
+                    <MDBox mb={2}>
                       <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
                         E-posta Adresi
                       </MDTypography>
-                      <MDInput
-                        type="email"
-                        value={email}
-                        onChange={(e: any) => setEmail(e.target.value)}
-                        variant="outlined"
-                        fullWidth
-                        placeholder="ornek@sirket.com"
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            backgroundColor: "#f8f9fa",
-                            border: "1px solid #e9ecef",
-                            "&:hover": {
-                              borderColor: "#3e5d8f",
-                            },
-                            "&.Mui-focused": {
-                              borderColor: "#3e5d8f",
-                              boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
-                            }
+                    <MDInput
+                      type="email"
+                      value={email}
+                      onChange={(e: any) => setEmail(e.target.value)}
+                      variant="outlined"
+                      fullWidth
+                      placeholder="ornek@sirket.com"
+                      error={!!email && !isEmailValid}
+                      helperText={!!email && !isEmailValid ? "Geçerli bir e-posta girin" : ""}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailOutlinedIcon fontSize="small" />
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: "12px",
+                          backgroundColor: "#f8f9fa",
+                          border: "1px solid #e9ecef",
+                          "&:hover": {
+                            borderColor: "#3e5d8f",
+                          },
+                          "&.Mui-focused": {
+                            borderColor: "#3e5d8f",
+                            boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
                           }
-                        }}
-                      />
+                        }
+                      }}
+                    />
                     </MDBox>
 
-                    <MDBox mb={3}>
+                    <MDBox mb={2}>
                       <MDTypography variant="body2" fontWeight="medium" color="dark" mb={1}>
                         Şifre
                       </MDTypography>
-                      <MDInput
-                        value={password}
-                        onChange={(e: any) => setPassword(e.target.value)}
-                        onKeyDown={(e: any) => {
-                          if (e.key === "Enter") {
-                            if (email && password) {
-                              handleLoginWithVesa();
-                            } else {
-                              if (!email) {
-                                setAlert({
-                                  alertType: "error",
-                                  message: "Devam edebilmek için mail adresinizi giriniz",
-                                });
-                              }
-                              if (!password) {
-                                setAlert({
-                                  alertType: "error",
-                                  message: "Devam edebilmek için şifrenizi giriniz",
-                                });
-                              }
-                              if (!email && !password) {
-                                setAlert({
-                                  alertType: "error",
-                                  message: "Devam edebilmek için mail adresinizi ve şifrenizi giriniz",
-                                });
-                              }
+                    <MDInput
+                      value={password}
+                      onChange={(e: any) => setPassword(e.target.value)}
+                      onKeyDown={(e: any) => {
+                        if (e.key === "Enter") {
+                          if (email && password && isEmailValid) {
+                            handleLoginWithVesa();
+                          } else {
+                            if (!email || !isEmailValid) {
+                              setAlert({
+                                alertType: "error",
+                                message: "Geçerli bir e-posta ve şifre giriniz",
+                              });
+                            }
+                            if (!password) {
+                              setAlert({
+                                alertType: "error",
+                                message: "Devam edebilmek için şifrenizi giriniz",
+                              });
                             }
                           }
-                        }}
-                        type="password"
-                        variant="outlined"
-                        fullWidth
-                        placeholder="••••••••••"
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: "12px",
-                            backgroundColor: "#f8f9fa",
-                            border: "1px solid #e9ecef",
-                            "&:hover": {
-                              borderColor: "#3e5d8f",
-                            },
-                            "&.Mui-focused": {
-                              borderColor: "#3e5d8f",
-                              boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
-                            }
+                        }
+                      }}
+                      type={showPassword ? "text" : "password"}
+                      variant="outlined"
+                      fullWidth
+                      placeholder="••••••••••"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockOutlinedIcon fontSize="small" />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton aria-label="toggle password visibility" onClick={() => setShowPassword((p) => !p)} edge="end">
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: "12px",
+                          backgroundColor: "#f8f9fa",
+                          border: "1px solid #e9ecef",
+                          "&:hover": {
+                            borderColor: "#3e5d8f",
+                          },
+                          "&.Mui-focused": {
+                            borderColor: "#3e5d8f",
+                            boxShadow: "0 0 0 3px rgba(62, 93, 143, 0.1)",
                           }
-                        }}
-                      />
+                        }
+                      }}
+                    />
                     </MDBox>
 
-                    <MDBox display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+                    <MDBox display="flex" justifyContent="space-between" alignItems="center" mb={2.5}>
                       <MDBox>
                         {alert.message && (
                           <Typography
@@ -409,9 +367,9 @@ function Cover(): JSX.Element {
                       </MDButton>
                     </MDBox>
 
-                    <MDBox mb={3}>
+                    <MDBox mb={2.5}>
                       <MDButton
-                        disabled={!email || !password}
+                      disabled={!email || !password || !isEmailValid}
                         onClick={handleLoginWithVesa}
                         variant="gradient"
                         color="info"

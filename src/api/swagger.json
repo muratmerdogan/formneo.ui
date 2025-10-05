@@ -6235,6 +6235,215 @@
         }
       }
     },
+    "/integrations/getir/auth/login": {
+      "post": {
+        "tags": [
+          "GetirAuth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirAuthLoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirAuthLoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirAuthLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirAuthLoginResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirAuthLoginResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirAuthLoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/getir/payment-methods": {
+      "get": {
+        "tags": [
+          "GetirPayment"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetirPaymentMethodItem"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetirPaymentMethodItem"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetirPaymentMethodItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/getir/pos-status": {
+      "get": {
+        "tags": [
+          "GetirPos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "GetirPos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirSetPosStatusRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirSetPosStatusRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirSetPosStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/getir/pos-status/auth": {
+      "post": {
+        "tags": [
+          "GetirPos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirPosStatusPostRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirPosStatusPostRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetirPosStatusPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetirPosStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/webhooks/getir/newOrder": {
       "post": {
         "tags": [
@@ -20891,6 +21100,131 @@
         },
         "additionalProperties": false
       },
+      "GetirAuthLoginRequest": {
+        "type": "object",
+        "properties": {
+          "appSecretKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "restaurantSecretKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirAuthLoginResponse": {
+        "type": "object",
+        "properties": {
+          "restaurantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirLocalizedName": {
+        "type": "object",
+        "properties": {
+          "tr": {
+            "type": "string",
+            "nullable": true
+          },
+          "en": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirPaymentMethodItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "$ref": "#/components/schemas/GetirLocalizedName"
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentGroup": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deliveryTypes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirPosStatusPostRequest": {
+        "type": "object",
+        "properties": {
+          "appSecretKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "restaurantSecretKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirPosStatusResponse": {
+        "type": "object",
+        "properties": {
+          "posStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "restaurantSecretKeyStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "restaurantName": {
+            "type": "string",
+            "nullable": true
+          },
+          "restaurantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "restaurantStatus": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetirSetPosStatusRequest": {
+        "type": "object",
+        "properties": {
+          "posStatus": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "HardwareList": {
         "type": "object",
         "properties": {
@@ -22350,6 +22684,9 @@
           },
           "isTenantOnly": {
             "type": "boolean"
+          },
+          "isGlobalOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -22397,6 +22734,9 @@
             "type": "boolean"
           },
           "isTenantOnly": {
+            "type": "boolean"
+          },
+          "isGlobalOnly": {
             "type": "boolean"
           }
         },
@@ -22475,6 +22815,9 @@
           },
           "isTenantOnly": {
             "type": "boolean"
+          },
+          "isGlobalOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -22548,6 +22891,9 @@
             "type": "boolean"
           },
           "isTenantOnly": {
+            "type": "boolean"
+          },
+          "isGlobalOnly": {
             "type": "boolean"
           }
         },

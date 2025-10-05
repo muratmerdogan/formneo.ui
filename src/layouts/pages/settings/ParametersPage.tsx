@@ -7,10 +7,14 @@ import { LookupApi, LookupCategoryDto, LookupItemDto, LookupModuleDto } from "ap
 
 const ParametersPage = (): JSX.Element => {
     const api = useMemo(() => new LookupApi(getConfiguration()), []);
+    // Tenant modu: localStorage'da selectedTenantId varsa tenant modda çalışıyoruz
+    const selectedTenantId = useMemo(() => (typeof window !== "undefined" ? localStorage.getItem("selectedTenantId") : null), []);
+    const isTenantMode = useMemo(() => !!selectedTenantId, [selectedTenantId]);
 
     const [modules, setModules] = useState<LookupModuleDto[]>([]);
     const [selectedModuleKey, setSelectedModuleKey] = useState<string | undefined>(undefined);
     const selectedModule = useMemo(() => modules.find(m => (m.key || "") === (selectedModuleKey || "")), [modules, selectedModuleKey]);
+    const selectedModuleIsGlobal = useMemo(() => !!selectedModule ? !((selectedModule as any)?.tenantId) : false, [selectedModule]);
 
     const [categories, setCategories] = useState<LookupCategoryDto[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<LookupCategoryDto | undefined>(undefined);
@@ -284,7 +288,24 @@ const ParametersPage = (): JSX.Element => {
                                 <div className="text-sm font-medium text-slate-700">Modül Seç</div>
                                 <div className="flex items-center gap-2">
                                     {selectedModule?.id && (
-                                        <button onClick={() => { if (window.confirm("Seçili modül silinsin mi?")) { api.apiLookupModulesIdDelete(selectedModule.id).then(() => { fetchModules(); setCategories([]); setSelectedCategory(undefined); }).catch((e: any) => setError(e?.message || "Modül silinirken hata oluştu")); } }} className="h-8 px-2 rounded-md border bg-rose-600 text-white">Modülü Sil</button>
+                                        <button
+                                            onClick={() => {
+                                                if (isTenantMode && selectedModuleIsGlobal) { return; }
+                                                if (window.confirm("Seçili modül silinsin mi?")) {
+                                                    api.apiLookupModulesIdDelete(selectedModule.id)
+                                                        .then(() => {
+                                                            fetchModules();
+                                                            setCategories([]);
+                                                            setSelectedCategory(undefined);
+                                                        })
+                                                        .catch((e: any) => setError(e?.message || "Modül silinirken hata oluştu"));
+                                                }
+                                            }}
+                                            disabled={isTenantMode && selectedModuleIsGlobal}
+                                            className="h-8 px-2 rounded-md border bg-rose-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            Modülü Sil
+                                        </button>
                                     )}
                                     <button onClick={() => setIsModuleModalOpen(true)} className="h-8 px-2 rounded-md border bg-white">Yeni Modül</button>
                                 </div>
@@ -296,9 +317,13 @@ const ParametersPage = (): JSX.Element => {
                                 disabled={isLoadingModules}
                             >
                                 {modules.length === 0 && <option value="">Modül bulunamadı</option>}
-                                {modules.map((m) => (
-                                    <option key={(m.id || m.key || Math.random()).toString()} value={m.key || ""}>{m.name || m.key}</option>
-                                ))}
+                                {modules.map((m) => {
+                                    const isGlobal = !((m as any)?.tenantId);
+                                    const label = `${m.name || m.key}${isGlobal ? " (Global)" : ""}`;
+                                    return (
+                                        <option key={(m.id || m.key || Math.random()).toString()} value={m.key || ""}>{label}</option>
+                                    );
+                                })}
                             </select>
                             <div className="flex justify-end pt-1">
                                 <button onClick={() => setIsModuleModalOpen(true)} className="h-8 px-2 rounded-md border bg-white">Yeni Modül</button>
@@ -466,19 +491,42 @@ const ParametersPage = (): JSX.Element => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredItems.map((it) => (
-                                            <tr key={it.id || `${it.code}-${it.name}`} className="odd:bg-white even:bg-slate-50">
-                                                <td className="px-3 py-2 border-b">{it.code}</td>
-                                                <td className="px-3 py-2 border-b">{it.name}</td>
-                                                <td className="px-3 py-2 border-b">{typeof it.orderNo === "number" ? it.orderNo : ""}</td>
-                                                <td className="px-3 py-2 border-b">{it.isActive ? "Aktif" : "Pasif"}</td>
-                                                <td className="px-3 py-2 border-b">{it.externalKey}</td>
-                                                <td className="px-3 py-2 border-b text-right">
-                                                    <button onClick={() => onEditItem(it)} className="h-8 px-2 rounded-md border bg-white mr-2">Düzenle</button>
-                                                    <button onClick={() => onDeleteItem(it)} className="h-8 px-2 rounded-md border bg-rose-600 text-white">Sil</button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        {filteredItems.map((it) => {
+                                            const isGlobal = !(it as any)?.tenantId; // tenantId yoksa global kabul et
+                                            const actionsDisabled = isTenantMode && isGlobal;
+                                            return (
+                                                <tr key={it.id || `${it.code}-${it.name}`} className="odd:bg-white even:bg-slate-50">
+                                                    <td className="px-3 py-2 border-b">{it.code}</td>
+                                                    <td className="px-3 py-2 border-b">
+                                                        <div className="flex items-center gap-2">
+                                                            <span>{it.name}</span>
+                                                            {isGlobal && (
+                                                                <span className="text-[10px] px-2 py-0.5 rounded border bg-slate-100 text-slate-700">Global</span>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-3 py-2 border-b">{typeof it.orderNo === "number" ? it.orderNo : ""}</td>
+                                                    <td className="px-3 py-2 border-b">{it.isActive ? "Aktif" : "Pasif"}</td>
+                                                    <td className="px-3 py-2 border-b">{it.externalKey}</td>
+                                                    <td className="px-3 py-2 border-b text-right">
+                                                        <button
+                                                            onClick={() => { if (!actionsDisabled) onEditItem(it); }}
+                                                            disabled={actionsDisabled}
+                                                            className="h-8 px-2 rounded-md border bg-white mr-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        >
+                                                            Düzenle
+                                                        </button>
+                                                        <button
+                                                            onClick={() => { if (!actionsDisabled) onDeleteItem(it); }}
+                                                            disabled={actionsDisabled}
+                                                            className="h-8 px-2 rounded-md border bg-rose-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        >
+                                                            Sil
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                         {!filteredItems.length && (
                                             <tr>
                                                 <td colSpan={6} className="px-3 py-6 text-center text-slate-500">Öğe bulunamadı</td>

@@ -1467,6 +1467,40 @@ export interface GetTicketSubjectInfoDto {
     'subjectName'?: string | null;
     'ticketCount'?: number;
 }
+export interface GetirAuthLoginRequest {
+    'appSecretKey'?: string | null;
+    'restaurantSecretKey'?: string | null;
+}
+export interface GetirAuthLoginResponse {
+    'restaurantId'?: string | null;
+    'token'?: string | null;
+}
+export interface GetirLocalizedName {
+    'tr'?: string | null;
+    'en'?: string | null;
+}
+export interface GetirPaymentMethodItem {
+    'id'?: string | null;
+    'name'?: GetirLocalizedName;
+    'icon'?: string | null;
+    'paymentGroup'?: number;
+    'deliveryTypes'?: Array<number> | null;
+    'type'?: number;
+}
+export interface GetirPosStatusPostRequest {
+    'appSecretKey'?: string | null;
+    'restaurantSecretKey'?: string | null;
+}
+export interface GetirPosStatusResponse {
+    'posStatus'?: number;
+    'restaurantSecretKeyStatus'?: number;
+    'restaurantName'?: string | null;
+    'restaurantId'?: string | null;
+    'restaurantStatus'?: string | null;
+}
+export interface GetirSetPosStatusRequest {
+    'posStatus'?: number;
+}
 export interface HardwareList {
     'name'?: string | null;
     'value'?: string | null;
@@ -1888,6 +1922,7 @@ export interface Menu {
     'description'?: string | null;
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
+    'isGlobalOnly'?: boolean;
 }
 export interface MenuInsertDto {
     'menuCode'?: string | null;
@@ -1901,6 +1936,7 @@ export interface MenuInsertDto {
     'description'?: string | null;
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
+    'isGlobalOnly'?: boolean;
 }
 export interface MenuListDto {
     'id'?: string;
@@ -1918,6 +1954,7 @@ export interface MenuListDto {
     'description'?: string | null;
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
+    'isGlobalOnly'?: boolean;
 }
 export interface MenuPermissionDto {
     'menuId'?: string;
@@ -1939,6 +1976,7 @@ export interface MenuUpdateDto {
     'description'?: string | null;
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
+    'isGlobalOnly'?: boolean;
 }
 
 export const OfficeLocation = {
@@ -17387,6 +17425,431 @@ export class GenericListApi extends BaseAPI {
      */
     public apiGenericListGetLicenceListGet(options?: RawAxiosRequestConfig) {
         return GenericListApiFp(this.configuration).apiGenericListGetLicenceListGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * GetirAuthApi - axios parameter creator
+ */
+export const GetirAuthApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {GetirAuthLoginRequest} [getirAuthLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirAuthLoginPost: async (getirAuthLoginRequest?: GetirAuthLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations/getir/auth/login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getirAuthLoginRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GetirAuthApi - functional programming interface
+ */
+export const GetirAuthApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GetirAuthApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {GetirAuthLoginRequest} [getirAuthLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGetirAuthLoginPost(getirAuthLoginRequest?: GetirAuthLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetirAuthLoginResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGetirAuthLoginPost(getirAuthLoginRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirAuthApi.integrationsGetirAuthLoginPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * GetirAuthApi - factory interface
+ */
+export const GetirAuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GetirAuthApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {GetirAuthLoginRequest} [getirAuthLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirAuthLoginPost(getirAuthLoginRequest?: GetirAuthLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetirAuthLoginResponse> {
+            return localVarFp.integrationsGetirAuthLoginPost(getirAuthLoginRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GetirAuthApi - object-oriented interface
+ */
+export class GetirAuthApi extends BaseAPI {
+    /**
+     * 
+     * @param {GetirAuthLoginRequest} [getirAuthLoginRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public integrationsGetirAuthLoginPost(getirAuthLoginRequest?: GetirAuthLoginRequest, options?: RawAxiosRequestConfig) {
+        return GetirAuthApiFp(this.configuration).integrationsGetirAuthLoginPost(getirAuthLoginRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * GetirPaymentApi - axios parameter creator
+ */
+export const GetirPaymentApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPaymentMethodsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations/getir/payment-methods`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GetirPaymentApi - functional programming interface
+ */
+export const GetirPaymentApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GetirPaymentApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGetirPaymentMethodsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GetirPaymentMethodItem>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGetirPaymentMethodsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirPaymentApi.integrationsGetirPaymentMethodsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * GetirPaymentApi - factory interface
+ */
+export const GetirPaymentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GetirPaymentApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPaymentMethodsGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<GetirPaymentMethodItem>> {
+            return localVarFp.integrationsGetirPaymentMethodsGet(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GetirPaymentApi - object-oriented interface
+ */
+export class GetirPaymentApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public integrationsGetirPaymentMethodsGet(options?: RawAxiosRequestConfig) {
+        return GetirPaymentApiFp(this.configuration).integrationsGetirPaymentMethodsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * GetirPosApi - axios parameter creator
+ */
+export const GetirPosApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {GetirPosStatusPostRequest} [getirPosStatusPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusAuthPost: async (getirPosStatusPostRequest?: GetirPosStatusPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations/getir/pos-status/auth`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getirPosStatusPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations/getir/pos-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {GetirSetPosStatusRequest} [getirSetPosStatusRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusPost: async (getirSetPosStatusRequest?: GetirSetPosStatusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations/getir/pos-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getirSetPosStatusRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GetirPosApi - functional programming interface
+ */
+export const GetirPosApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GetirPosApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {GetirPosStatusPostRequest} [getirPosStatusPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest?: GetirPosStatusPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetirPosStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirPosApi.integrationsGetirPosStatusAuthPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGetirPosStatusGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetirPosStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGetirPosStatusGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirPosApi.integrationsGetirPosStatusGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {GetirSetPosStatusRequest} [getirSetPosStatusRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGetirPosStatusPost(getirSetPosStatusRequest?: GetirSetPosStatusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetirPosStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGetirPosStatusPost(getirSetPosStatusRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GetirPosApi.integrationsGetirPosStatusPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * GetirPosApi - factory interface
+ */
+export const GetirPosApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GetirPosApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {GetirPosStatusPostRequest} [getirPosStatusPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest?: GetirPosStatusPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetirPosStatusResponse> {
+            return localVarFp.integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusGet(options?: RawAxiosRequestConfig): AxiosPromise<GetirPosStatusResponse> {
+            return localVarFp.integrationsGetirPosStatusGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {GetirSetPosStatusRequest} [getirSetPosStatusRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGetirPosStatusPost(getirSetPosStatusRequest?: GetirSetPosStatusRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetirPosStatusResponse> {
+            return localVarFp.integrationsGetirPosStatusPost(getirSetPosStatusRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GetirPosApi - object-oriented interface
+ */
+export class GetirPosApi extends BaseAPI {
+    /**
+     * 
+     * @param {GetirPosStatusPostRequest} [getirPosStatusPostRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest?: GetirPosStatusPostRequest, options?: RawAxiosRequestConfig) {
+        return GetirPosApiFp(this.configuration).integrationsGetirPosStatusAuthPost(getirPosStatusPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public integrationsGetirPosStatusGet(options?: RawAxiosRequestConfig) {
+        return GetirPosApiFp(this.configuration).integrationsGetirPosStatusGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {GetirSetPosStatusRequest} [getirSetPosStatusRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public integrationsGetirPosStatusPost(getirSetPosStatusRequest?: GetirSetPosStatusRequest, options?: RawAxiosRequestConfig) {
+        return GetirPosApiFp(this.configuration).integrationsGetirPosStatusPost(getirSetPosStatusRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
