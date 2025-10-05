@@ -6,6 +6,10 @@ import { CustomersApi } from "api/generated/api";
 import { Customer } from "../../types/customer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import SettingsMenuButton from "components/ui/SettingsMenuButton";
+import { usePermissions } from "lib/permissions/hooks";
+import PermissionSettingsDialog from "components/ui/PermissionSettingsDialog";
+import SettingsIcon from "@mui/icons-material/Settings";
 import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
 import { useRegisterActions } from "context/ActionBarContext";
@@ -16,11 +20,14 @@ import MuiCustomerGrid from "../../components/customers/MuiCustomerGrid";
 
 export default function CustomersPage(): JSX.Element {
     const navigate = useNavigate();
+    // Permissions (design-time only)
+    const { can } = usePermissions("customers", undefined);
     const [params, setParams] = useSearchParams();
     const [all, setAll] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
     const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
+    const [permissionsOpen, setPermissionsOpen] = useState<boolean>(false);
 
     const q = params.get("q") ?? "";
     const sector = params.get("sector") ?? "";
@@ -45,8 +52,15 @@ export default function CustomersPage(): JSX.Element {
             label: "Yeni Müşteri",
             icon: <AddIcon fontSize="small" />,
             onClick: () => navigate("/customers/new"),
+            disabled: !can.create,
         },
-    ], [navigate]);
+        {
+            id: "permissions",
+            label: "İşlemler",
+            icon: <SettingsIcon fontSize="small" />,
+            onClick: () => setPermissionsOpen(true),
+        },
+    ], [navigate, can.create]);
 
     useEffect(() => {
         let isMounted = true;
@@ -262,7 +276,8 @@ export default function CustomersPage(): JSX.Element {
                             {viewMode === 'grid' ? 'Kart görünümünde grid liste' : 'Tablo görünümünde liste'}
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
+                        <SettingsMenuButton screenId="customers" />
                         {/* View Mode Toggle */}
                         <div className="flex bg-gray-100 rounded-lg p-1">
                             <button

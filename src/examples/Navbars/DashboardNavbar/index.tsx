@@ -697,7 +697,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
             zIndex: 2,
             cursor: "pointer",
           }}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboards/analytics")}
         >
           <MDBox
             component="img"
