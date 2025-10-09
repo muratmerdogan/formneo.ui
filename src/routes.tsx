@@ -59,6 +59,8 @@ const Calendar = lazy(() => import("layouts/applications/calendar"));
 const OpportunitiesListPage = lazy(() => import("pages/opportunities/OpportunitiesListPage"));
 const OpportunityFormPage = lazy(() => import("pages/opportunities/OpportunityFormPage"));
 const OpportunitiesKanbanBoard = lazy(() => import("pages/opportunities/OpportunitiesKanbanBoard"));
+const ProjectsDashboard = lazy(() => import("layouts/pages/projects/Dashboard"));
+const ProjectShell = lazy(() => import("layouts/pages/projects/ProjectShell"));
 const OpportunitiesKanbanPage = lazy(() => import("pages/opportunities/OpportunitiesKanbanPage"));
 const SeedOpportunityStagesPage = lazy(() => import("pages/settings/SeedOpportunityStagesPage"));
 const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
@@ -860,6 +862,12 @@ const routes = [
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
       {
+        name: "Projeler",
+        key: "projects-dashboard",
+        route: "/projects",
+        component: <ProjectsDashboard />,
+      },
+      {
         name: "Fırsatlar",
         key: "opportunities",
         route: "/opportunities",
@@ -930,6 +938,18 @@ const routes = [
         key: "calendar",
         route: "/applications/calendar",
         component: <Calendar />,
+      },
+      {
+        name: "Proje",
+        key: "project-shell-tab",
+        route: "/projects/:id/:tab",
+        component: <ProjectShell />,
+      },
+      {
+        name: "Proje (root)",
+        key: "project-shell-root",
+        route: "/projects/:id",
+        component: <ProjectShell />,
       },
       {
         name: "Orders Console",

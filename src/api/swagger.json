@@ -7577,6 +7577,47 @@
         }
       }
     },
+    "/api/Me/permissions": {
+      "get": {
+        "tags": [
+          "Me"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Me/permissions/{resourceKey}": {
+      "get": {
+        "tags": [
+          "Me"
+        ],
+        "parameters": [
+          {
+            "name": "resourceKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/crm/Meetings/customer/{customerId}": {
       "get": {
         "tags": [
@@ -8629,6 +8670,143 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Permissions/resource": {
+      "post": {
+        "tags": [
+          "Permissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateResourcePermissionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateResourcePermissionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateResourcePermissionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Permissions/users": {
+      "post": {
+        "tags": [
+          "Permissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertUserPermissionsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertUserPermissionsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertUserPermissionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Permissions/by-resource/{resourceKey}": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "resourceKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Permissions/by-user/{userId}": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Permissions/upsertAll": {
+      "post": {
+        "tags": [
+          "Permissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertAllPermissionsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertAllPermissionsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertAllPermissionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -16009,6 +16187,19 @@
   },
   "components": {
     "schemas": {
+      "Actions": {
+        "enum": [
+          0,
+          1,
+          2,
+          4,
+          8,
+          16,
+          31
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "ActivityDto": {
         "type": "object",
         "properties": {
@@ -18501,7 +18692,7 @@
             "nullable": true
           },
           "customerTypeItem": {
-            "$ref": "#/components/schemas/LookupItem"
+            "$ref": "#/components/schemas/TenantLookupItem"
           },
           "categoryId": {
             "type": "string",
@@ -18509,7 +18700,7 @@
             "nullable": true
           },
           "categoryItem": {
-            "$ref": "#/components/schemas/LookupItem"
+            "$ref": "#/components/schemas/TenantLookupItem"
           },
           "status": {
             "maxLength": 64,
@@ -21951,73 +22142,6 @@
         },
         "additionalProperties": false
       },
-      "LookupCategory": {
-        "required": [
-          "key"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createdBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "updatedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "isDelete": {
-            "type": "boolean"
-          },
-          "uniqNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "key": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "description": {
-            "maxLength": 512,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "isTenantScoped": {
-            "type": "boolean"
-          },
-          "isReadOnly": {
-            "type": "boolean"
-          },
-          "tenantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "moduleId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "module": {
-            "$ref": "#/components/schemas/LookupModule"
-          }
-        },
-        "additionalProperties": false
-      },
       "LookupCategoryDto": {
         "type": "object",
         "properties": {
@@ -22042,81 +22166,6 @@
           "moduleId": {
             "type": "string",
             "format": "uuid",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LookupItem": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createdBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "updatedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "isDelete": {
-            "type": "boolean"
-          },
-          "uniqNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "categoryId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "category": {
-            "$ref": "#/components/schemas/LookupCategory"
-          },
-          "tenantId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "code": {
-            "maxLength": 64,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "maxLength": 256,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "nameLocalizedJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "orderNo": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "externalKey": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string",
             "nullable": true
           }
         },
@@ -22155,60 +22204,6 @@
           "externalKey": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LookupModule": {
-        "required": [
-          "key"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createdBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "updatedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "isDelete": {
-            "type": "boolean"
-          },
-          "uniqNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "key": {
-            "maxLength": 128,
-            "minLength": 0,
-            "type": "string"
-          },
-          "name": {
-            "maxLength": 256,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "isTenantScoped": {
-            "type": "boolean"
-          },
-          "isReadOnly": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -24380,6 +24375,225 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TenantLookupCategory": {
+        "required": [
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 512,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          },
+          "moduleId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "module": {
+            "$ref": "#/components/schemas/TenantLookupModule"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TenantLookupItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TenantLookupCategory"
+          },
+          "code": {
+            "maxLength": 64,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "nameLocalizedJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "externalKey": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TenantLookupModule": {
+        "required": [
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "isTenantScoped": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -26628,6 +26842,28 @@
         },
         "additionalProperties": false
       },
+      "UpdateResourcePermissionDto": {
+        "type": "object",
+        "properties": {
+          "resourceKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mask": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Actions"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateUserDto": {
         "type": "object",
         "properties": {
@@ -26768,6 +27004,44 @@
           "resetCodeExpiry": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpsertAllPermissionsDto": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "$ref": "#/components/schemas/UpdateResourcePermissionDto"
+          },
+          "resourceKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPermissionItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpsertUserPermissionsDto": {
+        "type": "object",
+        "properties": {
+          "resourceKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPermissionItem"
+            },
             "nullable": true
           }
         },
@@ -27428,6 +27702,24 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "UserPermissionItem": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "allowedMask": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deniedMask": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "UserRoleAssignmentGetDto": {
         "type": "object",

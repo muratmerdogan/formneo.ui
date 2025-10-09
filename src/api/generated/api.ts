@@ -23,6 +23,20 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
+
+export const Actions = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_4: 4,
+    NUMBER_8: 8,
+    NUMBER_16: 16,
+    NUMBER_31: 31
+} as const;
+
+export type Actions = typeof Actions[keyof typeof Actions];
+
+
 export interface ActivityDto {
     'id'?: string;
     'customerId'?: string;
@@ -727,9 +741,9 @@ export interface Customer {
     'uniqNumber'?: number;
     'concurrencyToken'?: number;
     'customerTypeId'?: string | null;
-    'customerTypeItem'?: LookupItem;
+    'customerTypeItem'?: TenantLookupItem;
     'categoryId'?: string | null;
-    'categoryItem'?: LookupItem;
+    'categoryItem'?: TenantLookupItem;
     'status'?: string | null;
     'name': string;
     'legalName'?: string | null;
@@ -1718,22 +1732,6 @@ export interface LoginUserDto {
     'email'?: string | null;
     'password'?: string | null;
 }
-export interface LookupCategory {
-    'id'?: string;
-    'createdBy'?: string | null;
-    'updatedBy'?: string | null;
-    'createdDate'?: string;
-    'updatedDate'?: string | null;
-    'isDelete'?: boolean;
-    'uniqNumber'?: number;
-    'key': string;
-    'description'?: string | null;
-    'isTenantScoped'?: boolean;
-    'isReadOnly'?: boolean;
-    'tenantId'?: string | null;
-    'moduleId'?: string | null;
-    'module'?: LookupModule;
-}
 export interface LookupCategoryDto {
     'id'?: string;
     'key'?: string | null;
@@ -1741,24 +1739,6 @@ export interface LookupCategoryDto {
     'isTenantScoped'?: boolean;
     'isReadOnly'?: boolean;
     'moduleId'?: string | null;
-}
-export interface LookupItem {
-    'id'?: string;
-    'createdBy'?: string | null;
-    'updatedBy'?: string | null;
-    'createdDate'?: string;
-    'updatedDate'?: string | null;
-    'isDelete'?: boolean;
-    'uniqNumber'?: number;
-    'categoryId'?: string;
-    'category'?: LookupCategory;
-    'tenantId'?: string | null;
-    'code'?: string | null;
-    'name'?: string | null;
-    'nameLocalizedJson'?: string | null;
-    'orderNo'?: number;
-    'isActive'?: boolean;
-    'externalKey'?: string | null;
 }
 export interface LookupItemDto {
     'id'?: string;
@@ -1769,19 +1749,6 @@ export interface LookupItemDto {
     'orderNo'?: number;
     'isActive'?: boolean;
     'externalKey'?: string | null;
-}
-export interface LookupModule {
-    'id'?: string;
-    'createdBy'?: string | null;
-    'updatedBy'?: string | null;
-    'createdDate'?: string;
-    'updatedDate'?: string | null;
-    'isDelete'?: boolean;
-    'uniqNumber'?: number;
-    'key': string;
-    'name'?: string | null;
-    'isTenantScoped'?: boolean;
-    'isReadOnly'?: boolean;
 }
 export interface LookupModuleDto {
     'id'?: string;
@@ -2392,6 +2359,59 @@ export interface TaskUsersDto {
     'lastName'?: string | null;
     'userName'?: string | null;
     'unit'?: number | null;
+}
+export interface TenantLookupCategory {
+    'id'?: string;
+    'mainClientId'?: string | null;
+    'mainClient'?: MainClient;
+    'createdBy'?: string | null;
+    'updatedBy'?: string | null;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+    'isDelete'?: boolean;
+    'uniqNumber'?: number;
+    'concurrencyToken'?: number;
+    'key': string;
+    'description'?: string | null;
+    'isReadOnly'?: boolean;
+    'moduleId'?: string | null;
+    'module'?: TenantLookupModule;
+}
+export interface TenantLookupItem {
+    'id'?: string;
+    'mainClientId'?: string | null;
+    'mainClient'?: MainClient;
+    'createdBy'?: string | null;
+    'updatedBy'?: string | null;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+    'isDelete'?: boolean;
+    'uniqNumber'?: number;
+    'concurrencyToken'?: number;
+    'categoryId'?: string;
+    'category'?: TenantLookupCategory;
+    'code'?: string | null;
+    'name'?: string | null;
+    'nameLocalizedJson'?: string | null;
+    'orderNo'?: number;
+    'isActive'?: boolean;
+    'externalKey'?: string | null;
+}
+export interface TenantLookupModule {
+    'id'?: string;
+    'mainClientId'?: string | null;
+    'mainClient'?: MainClient;
+    'createdBy'?: string | null;
+    'updatedBy'?: string | null;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+    'isDelete'?: boolean;
+    'uniqNumber'?: number;
+    'concurrencyToken'?: number;
+    'key': string;
+    'name'?: string | null;
+    'isTenantScoped'?: boolean;
+    'isReadOnly'?: boolean;
 }
 export interface TicketApprove {
     'id'?: string;
@@ -3021,6 +3041,11 @@ export interface UpdateProjectDto {
     'projectLearn'?: string | null;
     'projectTags'?: string | null;
 }
+export interface UpdateResourcePermissionDto {
+    'resourceKey'?: string | null;
+    'mask'?: number | null;
+    'actions'?: Array<Actions> | null;
+}
 export interface UpdateUserDto {
     'id'?: string | null;
     'company'?: string | null;
@@ -3059,6 +3084,15 @@ export interface UpdateUserDto {
 }
 
 
+export interface UpsertAllPermissionsDto {
+    'resource'?: UpdateResourcePermissionDto;
+    'resourceKey'?: string | null;
+    'users'?: Array<UserPermissionItem> | null;
+}
+export interface UpsertUserPermissionsDto {
+    'resourceKey'?: string | null;
+    'items'?: Array<UserPermissionItem> | null;
+}
 export interface UserApp {
     'id'?: string | null;
     'userName'?: string | null;
@@ -3246,6 +3280,11 @@ export const UserLevel = {
 export type UserLevel = typeof UserLevel[keyof typeof UserLevel];
 
 
+export interface UserPermissionItem {
+    'userId'?: string | null;
+    'allowedMask'?: number;
+    'deniedMask'?: number;
+}
 export interface UserRoleAssignmentGetDto {
     'userId'?: string | null;
     'tenantId'?: string;
@@ -20835,6 +20874,176 @@ export class MailApi extends BaseAPI {
 
 
 /**
+ * MeApi - axios parameter creator
+ */
+export const MeApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMePermissionsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Me/permissions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {string} [action] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMePermissionsResourceKeyGet: async (resourceKey: string, action?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resourceKey' is not null or undefined
+            assertParamExists('apiMePermissionsResourceKeyGet', 'resourceKey', resourceKey)
+            const localVarPath = `/api/Me/permissions/{resourceKey}`
+                .replace(`{${"resourceKey"}}`, encodeURIComponent(String(resourceKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (action !== undefined) {
+                localVarQueryParameter['action'] = action;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MeApi - functional programming interface
+ */
+export const MeApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MeApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMePermissionsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMePermissionsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeApi.apiMePermissionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {string} [action] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiMePermissionsResourceKeyGet(resourceKey: string, action?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMePermissionsResourceKeyGet(resourceKey, action, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeApi.apiMePermissionsResourceKeyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * MeApi - factory interface
+ */
+export const MeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MeApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMePermissionsGet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiMePermissionsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {string} [action] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiMePermissionsResourceKeyGet(resourceKey: string, action?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiMePermissionsResourceKeyGet(resourceKey, action, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MeApi - object-oriented interface
+ */
+export class MeApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMePermissionsGet(options?: RawAxiosRequestConfig) {
+        return MeApiFp(this.configuration).apiMePermissionsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} resourceKey 
+     * @param {string} [action] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiMePermissionsResourceKeyGet(resourceKey: string, action?: string, options?: RawAxiosRequestConfig) {
+        return MeApiFp(this.configuration).apiMePermissionsResourceKeyGet(resourceKey, action, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * MeetingsApi - axios parameter creator
  */
 export const MeetingsApiAxiosParamCreator = function (configuration?: Configuration) {
@@ -23231,6 +23440,379 @@ export class PdksApi extends BaseAPI {
      */
     public apiPdksGet(fileName?: string, passKey?: string, options?: RawAxiosRequestConfig) {
         return PdksApiFp(this.configuration).apiPdksGet(fileName, passKey, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PermissionsApi - axios parameter creator
+ */
+export const PermissionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsByResourceResourceKeyGet: async (resourceKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resourceKey' is not null or undefined
+            assertParamExists('apiPermissionsByResourceResourceKeyGet', 'resourceKey', resourceKey)
+            const localVarPath = `/api/Permissions/by-resource/{resourceKey}`
+                .replace(`{${"resourceKey"}}`, encodeURIComponent(String(resourceKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsByUserUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('apiPermissionsByUserUserIdGet', 'userId', userId)
+            const localVarPath = `/api/Permissions/by-user/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UpdateResourcePermissionDto} [updateResourcePermissionDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsResourcePost: async (updateResourcePermissionDto?: UpdateResourcePermissionDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Permissions/resource`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateResourcePermissionDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UpsertAllPermissionsDto} [upsertAllPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsUpsertAllPost: async (upsertAllPermissionsDto?: UpsertAllPermissionsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Permissions/upsertAll`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(upsertAllPermissionsDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UpsertUserPermissionsDto} [upsertUserPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsUsersPost: async (upsertUserPermissionsDto?: UpsertUserPermissionsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Permissions/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(upsertUserPermissionsDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PermissionsApi - functional programming interface
+ */
+export const PermissionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PermissionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPermissionsByResourceResourceKeyGet(resourceKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPermissionsByResourceResourceKeyGet(resourceKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.apiPermissionsByResourceResourceKeyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPermissionsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPermissionsByUserUserIdGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.apiPermissionsByUserUserIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UpdateResourcePermissionDto} [updateResourcePermissionDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPermissionsResourcePost(updateResourcePermissionDto?: UpdateResourcePermissionDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPermissionsResourcePost(updateResourcePermissionDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.apiPermissionsResourcePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UpsertAllPermissionsDto} [upsertAllPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPermissionsUpsertAllPost(upsertAllPermissionsDto?: UpsertAllPermissionsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPermissionsUpsertAllPost(upsertAllPermissionsDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.apiPermissionsUpsertAllPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {UpsertUserPermissionsDto} [upsertUserPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPermissionsUsersPost(upsertUserPermissionsDto?: UpsertUserPermissionsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPermissionsUsersPost(upsertUserPermissionsDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.apiPermissionsUsersPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PermissionsApi - factory interface
+ */
+export const PermissionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PermissionsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} resourceKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsByResourceResourceKeyGet(resourceKey: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiPermissionsByResourceResourceKeyGet(resourceKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiPermissionsByUserUserIdGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpdateResourcePermissionDto} [updateResourcePermissionDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsResourcePost(updateResourcePermissionDto?: UpdateResourcePermissionDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiPermissionsResourcePost(updateResourcePermissionDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpsertAllPermissionsDto} [upsertAllPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsUpsertAllPost(upsertAllPermissionsDto?: UpsertAllPermissionsDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiPermissionsUpsertAllPost(upsertAllPermissionsDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpsertUserPermissionsDto} [upsertUserPermissionsDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPermissionsUsersPost(upsertUserPermissionsDto?: UpsertUserPermissionsDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiPermissionsUsersPost(upsertUserPermissionsDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PermissionsApi - object-oriented interface
+ */
+export class PermissionsApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} resourceKey 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiPermissionsByResourceResourceKeyGet(resourceKey: string, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).apiPermissionsByResourceResourceKeyGet(resourceKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiPermissionsByUserUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).apiPermissionsByUserUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpdateResourcePermissionDto} [updateResourcePermissionDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiPermissionsResourcePost(updateResourcePermissionDto?: UpdateResourcePermissionDto, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).apiPermissionsResourcePost(updateResourcePermissionDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpsertAllPermissionsDto} [upsertAllPermissionsDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiPermissionsUpsertAllPost(upsertAllPermissionsDto?: UpsertAllPermissionsDto, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).apiPermissionsUpsertAllPost(upsertAllPermissionsDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpsertUserPermissionsDto} [upsertUserPermissionsDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiPermissionsUsersPost(upsertUserPermissionsDto?: UpsertUserPermissionsDto, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).apiPermissionsUsersPost(upsertUserPermissionsDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

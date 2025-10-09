@@ -9,6 +9,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html, body, #root {
+    margin: 0 !important;
+    padding: 0 !important;
+}
 .overlay {
     position: fixed;
     top: 0;

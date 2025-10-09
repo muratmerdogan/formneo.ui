@@ -5,9 +5,10 @@ import PermissionSettingsDialog from "components/ui/PermissionSettingsDialog";
 
 type Props = {
     screenId: string;
+    resourceKey?: string;
 };
 
-export default function SettingsMenuButton({ screenId }: Props): JSX.Element {
+export default function SettingsMenuButton({ screenId, resourceKey }: Props): JSX.Element {
     const [open, setOpen] = useState(false);
     return (
         <>
@@ -20,7 +21,7 @@ export default function SettingsMenuButton({ screenId }: Props): JSX.Element {
             >
                 İşlemler
             </Button>
-            <PermissionSettingsDialog open={open} onClose={() => setOpen(false)} screenId={screenId} />
+            <PermissionSettingsDialog open={open} onClose={() => setOpen(false)} screenId={screenId} resourceKey={resourceKey} />
         </>
     );
 }

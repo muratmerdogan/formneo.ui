@@ -277,7 +277,7 @@ export default function CustomersPage(): JSX.Element {
                         </div>
                     </div>
                 <div className="flex items-center gap-3">
-                        <SettingsMenuButton screenId="customers" />
+                    <SettingsMenuButton screenId="customers" />
                         {/* View Mode Toggle */}
                         <div className="flex bg-gray-100 rounded-lg p-1">
                             <button

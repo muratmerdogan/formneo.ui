@@ -107,6 +107,8 @@ const CustomersPage = lazy(() => import("pages/customers/CustomersPage"));
 const CustomerDashboardPage = lazy(() => import("pages/customer/CustomerDashboardPage"));
 const CustomerFormPage = lazy(() => import("pages/customer/CustomerFormPage"));
 const OrdersConsolePage = lazy(() => import("layouts/pages/orders/Console"));
+const ProjectsDashboard = lazy(() => import("layouts/pages/projects/Dashboard"));
+const ProjectShell = lazy(() => import("layouts/pages/projects/ProjectShell"));
 // axios interceptors (global) – must be imported once at startup
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
@@ -241,6 +243,10 @@ export default function App() {
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
             <Route path="/orders/console" element={<OrdersConsolePage />} />
+            {/* Projects (Public for now) */}
+            <Route path="/projects" element={<ProjectsDashboard />} />
+            <Route path="/projects/:id" element={<ProjectsDashboard />} />
+            <Route path="/projects/:id/:tab" element={<ProjectsDashboard />} />
             {/* Dashboard Routes - Genel erişim */}
             <Route path="/dashboards/analytics" element={
               <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
