@@ -22,7 +22,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import MDEditor from "components/MDEditor";
 import getConfiguration from "confiuration";
-import { CustomersApi, ProjectTaskItemsApi, ProjectTaskInsertDto, ProjectTaskUpdateDto } from "api/generated/api";
+import { CustomersApi, ProjectTaskItemsApi, ProjectTaskInsertDto, ProjectTaskUpdateDto, ProjectTaskStatusUpdateDto } from "api/generated/api";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import parse from "html-react-parser";
+import IconButton from "@mui/material/IconButton";
 import { useParams } from "react-router-dom";
 
 function TasksTab(): JSX.Element {
@@ -52,6 +56,10 @@ function TasksTab(): JSX.Element {
   const [currentColumn, setCurrentColumn] = useState<string>("bekliyor");
   const [loading, setLoading] = useState<boolean>(false);
   const [editorSeed, setEditorSeed] = useState<number>(0);
+  const [historyOpen, setHistoryOpen] = useState<boolean>(false);
+  const [historyLoading, setHistoryLoading] = useState<boolean>(false);
+  const [historyRows, setHistoryRows] = useState<any[]>([]);
+  const [historyTaskId, setHistoryTaskId] = useState<string>("");
 
   // Demo seçenekleri (sonra API'den beslenecek)
   const [musteriOptions, setMusteriOptions] = useState<string[]>([]);
@@ -98,13 +106,40 @@ function TasksTab(): JSX.Element {
   // using shared MDEditor across app for consistent behavior
 
   // Backend integration: load tasks
-  const mapStatusToColumn = (s: string): keyof KanbanState => {
+  // Enum mapping (ProjectTaskStatus)
+  // 0: Bekliyor, 1: Islemde, 2: BeklemeyeAlindi, 3: Tamamlandi, 4: IptalEdildi
+  const enumCodeToColumn = (code: number): keyof KanbanState => {
+    switch (Number(code)) {
+      case 1: return "islemde";
+      case 2: return "beklemeye-alindi";
+      case 3: return "tamamlandi";
+      case 4: return "iptal";
+      case 0:
+      default: return "bekliyor";
+    }
+  };
+
+  const mapStatusToColumn = (s: string | number): keyof KanbanState => {
+    if (typeof s === 'number' || /^\d+$/.test(String(s))) {
+      return enumCodeToColumn(Number(s));
+    }
     const x = String(s || "").toLowerCase();
     if (x.includes("işlem") || x.includes("progress") || x.includes("doing")) return "islemde" as any;
     if (x.includes("beklemeye")) return "beklemeye-alindi" as any;
     if (x.includes("tamam")) return "tamamlandi" as any;
     if (x.includes("iptal") || x.includes("cancel")) return "iptal" as any;
     return "bekliyor" as any;
+  };
+
+  const columnToEnumCode = (col: string): number => {
+    switch (col) {
+      case "islemde": return 1;
+      case "beklemeye-alindi": return 2;
+      case "tamamlandi": return 3;
+      case "iptal": return 4;
+      case "bekliyor":
+      default: return 0;
+    }
   };
 
   const fetchTasks = async () => {
@@ -116,7 +151,10 @@ function TasksTab(): JSX.Element {
       const items: any[] = (res as any)?.data || [];
       const next: KanbanState = { bekliyor: [], islemde: [], "beklemeye-alindi": [], tamamlandi: [], iptal: [] } as any;
       for (const it of items) {
-        const col = mapStatusToColumn(it?.statusText || it?.status || it?.state || "");
+        // Prefer numeric status if provided; fallback to text
+        const col = mapStatusToColumn(
+          (it?.statusCode ?? it?.status ?? it?.stateCode) as any || (it?.statusText || it?.status || it?.state || "")
+        );
         next[col].push({
           id: String(it?.id || it?.taskId || it?.uid || Math.random()),
           title: String(it?.title || it?.name || "(Başlıksız)"),
@@ -174,6 +212,23 @@ function TasksTab(): JSX.Element {
     }
   };
 
+  const openHistory = async (taskId: string) => {
+    try {
+      setHistoryTaskId(taskId);
+      setHistoryLoading(true);
+      const api = new ProjectTaskItemsApi(getConfiguration());
+      const res: any = await api.apiProjectTaskItemsIdHistoryGet(taskId);
+      const rows: any[] = Array.isArray(res?.data) ? res.data : (res?.data?.items || []);
+      setHistoryRows(rows || []);
+      setHistoryOpen(true);
+    } catch (e) {
+      setHistoryRows([]);
+      setHistoryOpen(true);
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
+
   const handleSave = async () => {
     try {
       const api = new ProjectTaskItemsApi(getConfiguration());
@@ -184,7 +239,7 @@ function TasksTab(): JSX.Element {
           description: draft.description || "",
           startDate: draft.startDate || null,
           endDate: draft.dueDate || null,
-          status: 0,
+          status: columnToEnumCode(currentColumn),
           assigneeId: null,
           customerId: (draft.customerId as any) || (customerNameToId[draft.customer || ""] as any) || null,
         };
@@ -198,7 +253,7 @@ function TasksTab(): JSX.Element {
           description: draft.description || "",
           startDate: draft.startDate || null,
           endDate: draft.dueDate || null,
-          status: undefined,
+          status: columnToEnumCode(currentColumn),
           assigneeId: null,
           customerId: (draft.customerId as any) || (customerNameToId[draft.customer || ""] as any) || null,
         };
@@ -247,16 +302,34 @@ function TasksTab(): JSX.Element {
             }
             if (movedId && toCol && projectId) {
               const api = new ProjectTaskItemsApi(getConfiguration());
-              const dto: ProjectTaskUpdateDto = { id: movedId as any, // guessing status field name
-                // try common names; backend will map appropriately
-                statusText: toCol as any,
+              const dto: ProjectTaskStatusUpdateDto = {
+                id: movedId as any,
+                status: columnToEnumCode(toCol),
               } as any;
-              await api.apiProjectTaskItemsPut(dto);
+              await api.apiProjectTaskItemsStatusPatch(dto);
               await fetchTasks();
             }
           } catch {}
         }}
         onCardClick={handleCardClick}
+        renderCard={(card) => (
+          <Card sx={{ mb: 1, boxShadow: "0 1px 2px rgba(0,0,0,0.08)" }}>
+            <CardContent sx={{ p: 1.25 }}>
+              <MDTypography variant="button" sx={{ fontWeight: 600, display: 'block' }}>{card.title}</MDTypography>
+              {!!card.description && (
+                <MDBox sx={{ mt: 0.5, color: 'text.secondary', fontSize: 12, lineHeight: 1.35,
+                  '& p': { m: 0 }, '& ul': { pl: 2, m: 0 }, '& ol': { pl: 2, m: 0 }, '& a': { color: 'primary.main' } }}>
+                  {parse(String(card.description))}
+                </MDBox>
+              )}
+              <MDBox mt={1} display="flex" justifyContent="flex-end">
+                <IconButton size="small" aria-label="Geçmiş" onClick={(e) => { e.stopPropagation(); openHistory(String(card.id)); }}>
+                  <Icon fontSize="small">more_vert</Icon>
+                </IconButton>
+              </MDBox>
+            </CardContent>
+          </Card>
+        )}
       />
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="md">
@@ -388,6 +461,39 @@ function TasksTab(): JSX.Element {
             <Button onClick={() => setDialogOpen(false)}>İptal</Button>
             <Button variant="contained" onClick={handleSave}>Kaydet</Button>
           </MDBox>
+        </MDBox>
+      </Dialog>
+
+      {/* History Dialog */}
+      <Dialog open={historyOpen} onClose={() => setHistoryOpen(false)} fullWidth maxWidth="sm">
+        <MDBox px={2} py={1.5} sx={{ borderBottom: '1px solid', borderColor: 'divider' }}>
+          <MDTypography variant="h6">Görev Geçmişi</MDTypography>
+        </MDBox>
+        <MDBox p={2} sx={{ maxHeight: 420, overflow: 'auto' }}>
+          {historyLoading ? (
+            <MDTypography variant="body2">Yükleniyor…</MDTypography>
+          ) : (
+            <>
+              {(!historyRows || historyRows.length === 0) && (
+                <MDTypography variant="body2" color="text">Kayıt bulunamadı.</MDTypography>
+              )}
+              {Array.isArray(historyRows) && historyRows.map((h: any, idx: number) => (
+                <MDBox key={idx} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 1.5, mb: 1 }}>
+                  <MDTypography variant="button" sx={{ display: 'block' }}>{h?.statusText || h?.statusName || `Durum: ${h?.status ?? ''}`}</MDTypography>
+                  <MDTypography variant="caption" color="text" sx={{ display: 'block' }}>{h?.createdAt || h?.createDate || h?.changedAt || ''}</MDTypography>
+                  {!!(h?.changedBy || h?.createdBy) && (
+                    <MDTypography variant="caption" color="text">{h?.changedBy || h?.createdBy}</MDTypography>
+                  )}
+                  {!!h?.description && (
+                    <MDTypography variant="caption" color="text" sx={{ display: 'block' }}>{h?.description}</MDTypography>
+                  )}
+                </MDBox>
+              ))}
+            </>
+          )}
+        </MDBox>
+        <MDBox px={2} py={1.5} display="flex" justifyContent="flex-end" sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+          <Button onClick={() => setHistoryOpen(false)}>Kapat</Button>
         </MDBox>
       </Dialog>
     </MDBox>

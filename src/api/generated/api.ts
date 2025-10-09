@@ -2143,6 +2143,10 @@ export interface ProjectTaskInsertDto {
     'status'?: number;
     'assigneeId'?: string | null;
 }
+export interface ProjectTaskStatusUpdateDto {
+    'id'?: string;
+    'status'?: number;
+}
 export interface ProjectTaskUpdateDto {
     'id'?: string;
     'projectId'?: string;
@@ -25313,6 +25317,43 @@ export const ProjectTaskItemsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiProjectTaskItemsIdHistoryGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiProjectTaskItemsIdHistoryGet', 'id', id)
+            const localVarPath = `/api/ProjectTaskItems/{id}/history`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {ProjectTaskInsertDto} [projectTaskInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -25385,6 +25426,43 @@ export const ProjectTaskItemsApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {ProjectTaskStatusUpdateDto} [projectTaskStatusUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiProjectTaskItemsStatusPatch: async (projectTaskStatusUpdateDto?: ProjectTaskStatusUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/ProjectTaskItems/status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(projectTaskStatusUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -25432,6 +25510,18 @@ export const ProjectTaskItemsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiProjectTaskItemsIdHistoryGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiProjectTaskItemsIdHistoryGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectTaskItemsApi.apiProjectTaskItemsIdHistoryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {ProjectTaskInsertDto} [projectTaskInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -25452,6 +25542,18 @@ export const ProjectTaskItemsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiProjectTaskItemsPut(projectTaskUpdateDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectTaskItemsApi.apiProjectTaskItemsPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {ProjectTaskStatusUpdateDto} [projectTaskStatusUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto?: ProjectTaskStatusUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectTaskItemsApi.apiProjectTaskItemsStatusPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -25492,6 +25594,15 @@ export const ProjectTaskItemsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiProjectTaskItemsIdHistoryGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiProjectTaskItemsIdHistoryGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {ProjectTaskInsertDto} [projectTaskInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -25507,6 +25618,15 @@ export const ProjectTaskItemsApiFactory = function (configuration?: Configuratio
          */
         apiProjectTaskItemsPut(projectTaskUpdateDto?: ProjectTaskUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiProjectTaskItemsPut(projectTaskUpdateDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ProjectTaskStatusUpdateDto} [projectTaskStatusUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto?: ProjectTaskStatusUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -25547,6 +25667,16 @@ export class ProjectTaskItemsApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiProjectTaskItemsIdHistoryGet(id: string, options?: RawAxiosRequestConfig) {
+        return ProjectTaskItemsApiFp(this.configuration).apiProjectTaskItemsIdHistoryGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {ProjectTaskInsertDto} [projectTaskInsertDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25563,6 +25693,16 @@ export class ProjectTaskItemsApi extends BaseAPI {
      */
     public apiProjectTaskItemsPut(projectTaskUpdateDto?: ProjectTaskUpdateDto, options?: RawAxiosRequestConfig) {
         return ProjectTaskItemsApiFp(this.configuration).apiProjectTaskItemsPut(projectTaskUpdateDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ProjectTaskStatusUpdateDto} [projectTaskStatusUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto?: ProjectTaskStatusUpdateDto, options?: RawAxiosRequestConfig) {
+        return ProjectTaskItemsApiFp(this.configuration).apiProjectTaskItemsStatusPatch(projectTaskStatusUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
