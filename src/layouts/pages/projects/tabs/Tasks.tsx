@@ -27,6 +27,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import parse from "html-react-parser";
 import IconButton from "@mui/material/IconButton";
+import { format } from "date-fns";
+import { tr as localeTR } from "date-fns/locale";
 import { useParams } from "react-router-dom";
 
 function TasksTab(): JSX.Element {
@@ -477,18 +479,30 @@ function TasksTab(): JSX.Element {
               {(!historyRows || historyRows.length === 0) && (
                 <MDTypography variant="body2" color="text">Kayıt bulunamadı.</MDTypography>
               )}
-              {Array.isArray(historyRows) && historyRows.map((h: any, idx: number) => (
-                <MDBox key={idx} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 1.5, mb: 1 }}>
-                  <MDTypography variant="button" sx={{ display: 'block' }}>{h?.statusText || h?.statusName || `Durum: ${h?.status ?? ''}`}</MDTypography>
-                  <MDTypography variant="caption" color="text" sx={{ display: 'block' }}>{h?.createdAt || h?.createDate || h?.changedAt || ''}</MDTypography>
-                  {!!(h?.changedBy || h?.createdBy) && (
-                    <MDTypography variant="caption" color="text">{h?.changedBy || h?.createdBy}</MDTypography>
-                  )}
-                  {!!h?.description && (
-                    <MDTypography variant="caption" color="text" sx={{ display: 'block' }}>{h?.description}</MDTypography>
-                  )}
-                </MDBox>
-              ))}
+              {Array.isArray(historyRows) && historyRows.map((h: any, idx: number) => {
+                const rawDate = h?.createDate;
+                const formatted = rawDate ? (() => { try { return format(new Date(rawDate), 'dd.MM.yyyy HH:mm', { locale: localeTR }); } catch { return String(rawDate); } })() : '';
+                const summary = h?.summary || h?.title || h?.name || '';
+                const statusText = h?.statusText || h?.statusName || (h?.status !== undefined ? `Durum: ${h?.status}` : '');
+                const actor = h?.changedBy || h?.createdBy || '';
+                return (
+                  <MDBox key={idx} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 1.5, mb: 1 }}>
+                    {!!summary && (
+                      <MDTypography variant="button" sx={{ display: 'block', mb: 0.25 }}>{summary}</MDTypography>
+                    )}
+                    {!!statusText && (
+                      <MDTypography variant="caption" color="text" sx={{ display: 'block', mb: 0.25 }}>{statusText}</MDTypography>
+                    )}
+                    <MDBox display="flex" justifyContent="space-between" alignItems="center">
+                      <MDTypography variant="caption" color="text">{formatted}</MDTypography>
+                      {!!actor && <MDTypography variant="caption" color="text">{actor}</MDTypography>}
+                    </MDBox>
+                    {!!h?.description && (
+                      <MDTypography variant="caption" color="text" sx={{ display: 'block', mt: 0.5 }}>{h?.description}</MDTypography>
+                    )}
+                  </MDBox>
+                );
+              })}
             </>
           )}
         </MDBox>
