@@ -58,7 +58,7 @@ export default function ProjectSwitcher({
             {filtered.map((p, idx) => (
               <React.Fragment key={p.id}>
                 <ListItemButton onClick={() => onSelect(p.id)}>
-                  <ListItemText primary={p.name} secondary={`ID: ${p.id}`} />
+                  <ListItemText primary={p.name} />
                 </ListItemButton>
                 {idx !== filtered.length - 1 && <Divider />}
               </React.Fragment>

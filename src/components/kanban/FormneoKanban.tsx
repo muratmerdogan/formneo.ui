@@ -14,6 +14,7 @@ import Icon from "@mui/material/Icon";
 // Local UI
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import parse from "html-react-parser";
 
 export type KanbanColumn = { id: string; title: string; icon?: React.ReactNode; color?: string };
 export type KanbanCard = { id: string; title: string; description?: string; assigneeName?: string; dueDate?: string; tags?: string[] };
@@ -25,7 +26,6 @@ export type FormneoKanbanProps = {
   onChange: (next: KanbanState) => void;
   renderCard?: (card: KanbanCard) => React.ReactNode;
   onCardClick?: (card: KanbanCard, columnId: string) => void;
-  onAddCard?: (columnId: string) => void;
 };
 
 const CARD_PREFIX = "card:";
@@ -45,7 +45,10 @@ function NormalCard({ card }: { card: KanbanCard }) {
       <CardContent sx={{ p: 1.25 }}>
         <MDTypography variant="button" sx={{ fontWeight: 600 }}>{card.title}</MDTypography>
         {card.description && (
-          <MDTypography variant="caption" color="text" sx={{ display: "block", mt: 0.5 }}>{card.description}</MDTypography>
+          <MDBox sx={{ mt: 0.5, color: 'text.secondary', fontSize: 12, lineHeight: 1.35,
+            '& p': { m: 0 }, '& ul': { pl: 2, m: 0 }, '& ol': { pl: 2, m: 0 }, '& a': { color: 'primary.main' } }}>
+            {parse(String(card.description))}
+          </MDBox>
         )}
         <MDBox mt={1} display="flex" alignItems="center" gap={1} flexWrap="wrap">
           {card.tags?.slice(0, 3).map((t) => (
@@ -84,7 +87,7 @@ function DroppableColumn({ columnId, children }: { columnId: string; children: R
   );
 }
 
-export default function FormneoKanban({ columns, itemsByColumn, onChange, renderCard, onCardClick, onAddCard }: FormneoKanbanProps): JSX.Element {
+export default function FormneoKanban({ columns, itemsByColumn, onChange, renderCard, onCardClick }: FormneoKanbanProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const sensors = useSensors(
@@ -166,12 +169,6 @@ export default function FormneoKanban({ columns, itemsByColumn, onChange, render
                     {col.icon}
                     <MDTypography variant="button" sx={{ fontWeight: 700, color: accent }}>{col.title}</MDTypography>
                     <Chip size="small" label={(itemsByColumn[col.id] || []).length} sx={{ ml: 1, bgcolor: accent, color: '#fff' }} />
-                    {onAddCard && (
-                      <MDBox ml="auto" onClick={() => onAddCard(col.id)} sx={{ cursor: "pointer", display: "inline-flex", alignItems: "center", px: 1, py: 0.25, borderRadius: 1, '&:hover': { backgroundColor: 'action.hover' } }}>
-                        <Icon sx={{ fontSize: 18, mr: 0.5 }}>add</Icon>
-                        <MDTypography variant="caption">Ekle</MDTypography>
-                      </MDBox>
-                    )}
                   </MDBox>
                 }
               />

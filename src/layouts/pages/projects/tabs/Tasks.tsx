@@ -20,11 +20,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Avatar from "@mui/material/Avatar";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import "react-quill/dist/quill.snow.css";
+import MDEditor from "components/MDEditor";
 import getConfiguration from "confiuration";
-import { CustomersApi } from "api/generated/api";
+import { CustomersApi, ProjectTaskItemsApi, ProjectTaskInsertDto, ProjectTaskUpdateDto } from "api/generated/api";
+import { useParams } from "react-router-dom";
 
 function TasksTab(): JSX.Element {
+  const { id: projectId } = useParams<{ id: string }>();
+  const toDateOnly = (s?: string | null) => (s ? String(s).split("T")[0] : "");
   const columns: KanbanColumn[] = useMemo(() => [
     { id: "bekliyor", title: "Bekliyor", icon: <Icon>radio_button_unchecked</Icon> },
     { id: "islemde", title: "İşlemde", icon: <Icon>motion_photos_on</Icon> },
@@ -34,17 +37,10 @@ function TasksTab(): JSX.Element {
   ], []);
 
   const [state, setState] = useState<KanbanState>({
-    bekliyor: [
-      { id: "t1", title: "UI tasarımını güncelle", tags: ["UI", "Öncelik:Yüksek"], dueDate: "Cuma" },
-      { id: "t2", title: "API kontratını revize et", tags: ["Backend"], dueDate: "Pzt" },
-    ],
-    islemde: [
-      { id: "t3", title: "Takvim entegrasyonu", tags: ["Özellik"], dueDate: "Bugün" },
-    ],
+    bekliyor: [],
+    islemde: [],
     "beklemeye-alindi": [],
-    tamamlandi: [
-      { id: "t4", title: "Kanban POC", tags: ["POC"] },
-    ],
+    tamamlandi: [],
     iptal: [],
   });
 
@@ -54,6 +50,8 @@ function TasksTab(): JSX.Element {
   const [dialogTab, setDialogTab] = useState(0);
   const [draft, setDraft] = useState<TaskCard>({ id: "", title: "", notify: false, remind: false });
   const [currentColumn, setCurrentColumn] = useState<string>("bekliyor");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [editorSeed, setEditorSeed] = useState<number>(0);
 
   // Demo seçenekleri (sonra API'den beslenecek)
   const [musteriOptions, setMusteriOptions] = useState<string[]>([]);
@@ -89,42 +87,118 @@ function TasksTab(): JSX.Element {
     </li>
   );
 
-  // ReactQuill wrapper to handle default/named export interop
-  const QuillEditor = (props: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const RQ = require("react-quill");
-    const Editor = RQ?.default || RQ;
-    if (!Editor) return null;
-    return <Editor {...props} />;
+  // using shared MDEditor across app for consistent behavior
+
+  // Backend integration: load tasks
+  const mapStatusToColumn = (s: string): keyof KanbanState => {
+    const x = String(s || "").toLowerCase();
+    if (x.includes("işlem") || x.includes("progress") || x.includes("doing")) return "islemde" as any;
+    if (x.includes("beklemeye")) return "beklemeye-alindi" as any;
+    if (x.includes("tamam")) return "tamamlandi" as any;
+    if (x.includes("iptal") || x.includes("cancel")) return "iptal" as any;
+    return "bekliyor" as any;
   };
+
+  const fetchTasks = async () => {
+    if (!projectId) return;
+    setLoading(true);
+    try {
+      const api = new ProjectTaskItemsApi(getConfiguration());
+      const res: any = await api.apiProjectTaskItemsByProjectProjectIdGet(projectId);
+      const items: any[] = (res as any)?.data || [];
+      const next: KanbanState = { bekliyor: [], islemde: [], "beklemeye-alindi": [], tamamlandi: [], iptal: [] } as any;
+      for (const it of items) {
+        const col = mapStatusToColumn(it?.statusText || it?.status || it?.state || "");
+        next[col].push({
+          id: String(it?.id || it?.taskId || it?.uid || Math.random()),
+          title: String(it?.title || it?.name || "(Başlıksız)"),
+          description: it?.description || "",
+          dueDate: toDateOnly(it?.endDate || it?.dueDate || null),
+          tags: Array.isArray(it?.tags) ? it.tags : [],
+        });
+      }
+      setState(next);
+    } catch (e) {
+      // silently ignore for now
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchTasks(); }, [projectId]);
 
   const handleAdd = (columnId: string) => {
     setCurrentColumn(columnId);
     setDraft({ id: "", title: "", description: "", tags: [], dueDate: "", customer: "", notify: false, remind: false });
     setDialogTab(0);
     setDialogOpen(true);
+    setEditorSeed((s) => s + 1);
   };
 
-  const handleCardClick = (card: KanbanCard, columnId: string) => {
+  const handleCardClick = async (card: KanbanCard, columnId: string) => {
     setCurrentColumn(columnId);
-    setDraft(card as TaskCard);
     setDialogTab(0);
     setDialogOpen(true);
+    try {
+      setLoading(true);
+      const api = new ProjectTaskItemsApi(getConfiguration());
+      const res: any = await api.apiProjectTaskItemsIdGet(String(card.id));
+      const item: any = (res && (res.data ?? res)) || {};
+      const latest: TaskCard = {
+        id: String(item.id || item.taskId || card.id),
+        title: String(item.title || item.name || card.title || ""),
+        description: item.description ?? card.description ?? "",
+        startDate: toDateOnly(item.startDate || null),
+        dueDate: toDateOnly(item.endDate || item.dueDate || null),
+        tags: Array.isArray(item.tags) ? item.tags : (card.tags || []),
+        customer: item.customerName || item.customer || (card as any).customer || "",
+        notify: Boolean(item.notify ?? (card as any).notify ?? false),
+        remind: Boolean(item.remind ?? (card as any).remind ?? false),
+      };
+      setDraft(latest);
+      setEditorSeed((s) => s + 1);
+    } catch {
+      setDraft(card as TaskCard);
+      setEditorSeed((s) => s + 1);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSave = () => {
-    const next: KanbanState = JSON.parse(JSON.stringify(state));
-    // create or update
-    if (!draft.id) {
-      const newId = `t${Math.random().toString(36).slice(2, 7)}`;
-      next[currentColumn].unshift({ id: newId, title: draft.title, description: draft.description, dueDate: draft.dueDate, tags: draft.tags });
-    } else {
-      // update in its column
-      const idx = next[currentColumn].findIndex((c) => c.id === draft.id);
-      if (idx >= 0) next[currentColumn][idx] = { id: draft.id, title: draft.title, description: draft.description, dueDate: draft.dueDate, tags: draft.tags };
+  const handleSave = async () => {
+    try {
+      const api = new ProjectTaskItemsApi(getConfiguration());
+      if (!draft.id) {
+        const dto: ProjectTaskInsertDto = {
+          projectId: projectId,
+          name: draft.title,
+          description: draft.description || "",
+          startDate: draft.startDate || null,
+          endDate: draft.dueDate || null,
+          status: 0,
+          assigneeId: null,
+          customerId: null,
+        };
+        await api.apiProjectTaskItemsPost(dto as any);
+      } else {
+        const dto: ProjectTaskUpdateDto = {
+          id: draft.id,
+          projectId: projectId,
+          name: draft.title,
+          description: draft.description || "",
+          startDate: draft.startDate || null,
+          endDate: draft.dueDate || null,
+          status: undefined,
+          assigneeId: null,
+          customerId: null,
+        };
+        await api.apiProjectTaskItemsPut(dto as any);
+      }
+      await fetchTasks();
+      setDialogOpen(false);
+    } catch (e) {
+      setDialogOpen(false);
     }
-    setState(next);
-    setDialogOpen(false);
   };
 
   return (
@@ -137,12 +211,41 @@ function TasksTab(): JSX.Element {
         <Grid item xs={12} md={3}><MDTypography variant="button">İşlemde: {state.islemde.length}</MDTypography></Grid>
       </Grid>
 
+      <Stack direction="row" justifyContent="flex-end" sx={{ mb: 1 }}>
+        <Button variant="contained" color="primary" startIcon={<Icon>add</Icon>} onClick={() => handleAdd('bekliyor')} sx={{ color: '#fff', fontWeight: 600 }}>
+          Yeni Görev
+        </Button>
+      </Stack>
+
       <FormneoKanban
         columns={columns}
         itemsByColumn={state}
-        onChange={setState}
+        onChange={async (next) => {
+          // detect moved card and update backend
+          try {
+            const prev = state;
+            setState(next);
+            let movedId: string | null = null;
+            let toCol: string | null = null;
+            const prevIndex: Record<string, string> = {};
+            Object.entries(prev).forEach(([col, arr]) => arr.forEach((c) => prevIndex[c.id] = col));
+            const nextIndex: Record<string, string> = {};
+            Object.entries(next).forEach(([col, arr]) => arr.forEach((c) => nextIndex[c.id] = col));
+            for (const cid of Object.keys(nextIndex)) {
+              if (prevIndex[cid] && prevIndex[cid] !== nextIndex[cid]) { movedId = cid; toCol = nextIndex[cid]; break; }
+            }
+            if (movedId && toCol && projectId) {
+              const api = new ProjectTaskItemsApi(getConfiguration());
+              const dto: ProjectTaskUpdateDto = { id: movedId as any, // guessing status field name
+                // try common names; backend will map appropriately
+                statusText: toCol as any,
+              } as any;
+              await api.apiProjectTaskItemsPut(dto);
+              await fetchTasks();
+            }
+          } catch {}
+        }}
         onCardClick={handleCardClick}
-        onAddCard={handleAdd}
       />
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth="md">
@@ -188,6 +291,7 @@ function TasksTab(): JSX.Element {
                   isOptionEqualToValue={(o, v) => o === v}
                   renderOption={(props, option) => renderStringOption(props, option)}
                   value={draft.customer || ''}
+                  inputValue={draft.customer || ''}
                   loading={musteriLoading}
                   onChange={(_, v) => setDraft({ ...draft, customer: (v as string) || '' })}
                   onInputChange={(_, v) => {
@@ -201,27 +305,12 @@ function TasksTab(): JSX.Element {
               </Grid>
               <Grid item xs={12}>
                 <MDTypography variant="caption" sx={{ mb: 0.5, display: 'block' }}>Açıklama</MDTypography>
-                <QuillEditor
-                  theme="snow"
-                  value={draft.description || ''}
-                  onChange={(v: any) => setDraft({ ...draft, description: v })}
-                  modules={{
-                    toolbar: [["bold", "italic", "underline"], [{ 'list': 'ordered'}, { 'list': 'bullet' }], ["link"]],
-                    keyboard: {
-                      bindings: {
-                        linebreak: {
-                          key: 13,
-                          handler(this: any, range: any) {
-                            const q = this.quill;
-                            const r = q.getSelection(true);
-                            q.insertText(r.index, "\n", 'user');
-                            q.setSelection(r.index + 1, 'silent');
-                            return false;
-                          }
-                        }
-                      }
-                    }
-                  }}
+                <MDEditor
+                  key={editorSeed}
+                  value={(html: string) => setDraft({ ...draft, description: html })}
+                  initialHtml={String(draft.description || '')}
+                  placeholder="Açıklama yazın..."
+                  editorStyle={{ minHeight: 160 }}
                 />
               </Grid>
 

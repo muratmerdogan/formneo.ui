@@ -86,21 +86,17 @@ const FormRoleDetail = lazy(() => import("layouts/pages/FormManagement/form-role
 import { useTranslation } from "react-i18next";
 const CompanyRelation = lazy(() => import("layouts/pages/companyRelation"));
 const CompanyRelationDetail = lazy(() => import("layouts/pages/companyRelation/detail"));
-const ProjectChart = lazy(() => import("layouts/pages/projectManagement/chart"));
+
 const TicketProjects = lazy(() => import("layouts/pages/ticketProjects"));
 const CreateTicketProject = lazy(() => import("layouts/pages/ticketProjects/createTicketProject"));
 const FormAuth = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuth"));
 const FormAuthDetail = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuthDetail"));
 const FormList = lazy(() => import("layouts/pages/FormManagement/UsersForm/FormList"));
 const ResumeBuild = lazy(() => import("layouts/pages/resumeBuilder"));
-const MainScreen = lazy(() => import("layouts/pages/projectManagement"));
 const Inventory = lazy(() => import("layouts/pages/inventory"));
 const CreateInventory = lazy(() => import("layouts/pages/inventory/createInventory"));
 const VpnDashboard = lazy(() => import("layouts/pages/vpnPage"));
-const UserTasks = lazy(() => import("layouts/pages/userTasks"));
-const UserProjects = lazy(() => import("layouts/pages/userProjects"));
 const KanbanPage = lazy(() => import("layouts/pages/kanban"));
-const TicketProjectProgress = lazy(() => import("layouts/pages/ticketProjectProgress"));
 const CustomerList = lazy(() => import("layouts/pages/customer"));
 const CustomerDetail = lazy(() => import("layouts/pages/customer/detail"));
 const CustomersPage = lazy(() => import("pages/customers/CustomersPage"));
@@ -293,8 +289,6 @@ export default function App() {
               <Route path="/companyRelation" element={<CompanyRelation />} />
               <Route path="/companyRelation/detail" element={<CompanyRelationDetail />} />
               <Route path="/companyRelation/detail/:id" element={<CompanyRelationDetail />} />
-              <Route path="/projectManagement" element={<MainScreen />} />
-              <Route path="/projectManagement/chart" element={<ProjectChart />} />
               <Route path="/ticketProjects" element={<TicketProjects />} />
               <Route path="/ticketProjects/detail" element={<CreateTicketProject />} />
               <Route path="/ticketProjects/detail/:id" element={<CreateTicketProject />} />
@@ -302,12 +296,9 @@ export default function App() {
               <Route path="/inventory/detail" element={<CreateInventory />} />
               <Route path="/inventory/detail/:id" element={<CreateInventory />} />
               <Route path="/resumeBuild" element={<ResumeBuild />} />
-              <Route path="/userTasks" element={<UserTasks />} />
-              <Route path="/userProjects" element={<UserProjects />} />
               <Route path="/vpn" element={<VpnDashboard />} />
               <Route path="/kanban" element={<KanbanPage />} />
-              <Route path="/ticketProjectProgress" element={<TicketProjectProgress />} />
-
+ 
               <Route path="/customer" element={<CustomerList />} />
               <Route path="/customer/detail" element={<CustomerDetail />} />
               <Route path="/customer/detail/:id" element={<CustomerDetail />} />

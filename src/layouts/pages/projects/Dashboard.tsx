@@ -4,10 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
 import Icon from "@mui/material/Icon";
-import Drawer from "@mui/material/Drawer";
-import Chip from "@mui/material/Chip";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -27,11 +24,17 @@ import MDInput from "components/MDInput";
 import { useNavigate, useParams } from "react-router-dom";
 import ProjectShell from "./ProjectShell";
 import ProjectSwitcher from "./ProjectSwitcher";
+import ProjectCreateDialog from "./ProjectCreateDialog";
+import { TenantProjectsApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 
 function ProjectsDashboard(): JSX.Element {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [switcherOpen, setSwitcherOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [switcherProjects, setSwitcherProjects] = useState<{ id: string; name: string }[]>([]);
+  const [search, setSearch] = useState("");
   // Global keyboard shortcut (Cmd/Ctrl+K) to open switcher
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -51,34 +54,21 @@ function ProjectsDashboard(): JSX.Element {
   const navigate = useNavigate();
   const { id } = useParams<{ id?: string }>();
 
-  type ProjectListItem = { id: string; name: string; status: string };
-  const projects = useMemo<ProjectListItem[]>(
-    () => Array.from({ length: 80 }, (_, i) => ({
-      id: String(1000 + i),
-      name: `Proje ${i + 1}`,
-      status: (i % 3 === 0 ? "Aktif" : i % 3 === 1 ? "Beklemede" : "Tamamlandı"),
-    })),
-    []
-  );
-  // Auto-navigate to first project when no id is provided
-  useEffect(() => {
-    if (!id && projects.length > 0) {
-      navigate(`/projects/${projects[0].id}/overview`, { replace: true });
-    }
-  }, [id, projects, navigate]);
+  // Removed mock projects; using real data from switcherProjects
 
-  // Rudimentary virtualization for sidebar list
-  const rowHeight = 56;
-  const viewportRows = 10;
-  const [startIndex, setStartIndex] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const handleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const nextStart = Math.floor(el.scrollTop / rowHeight);
-    setStartIndex(Math.max(0, Math.min(nextStart, Math.max(0, projects.length - viewportRows))));
-  };
-  const endIndex = Math.min(projects.length, startIndex + viewportRows + 3);
+  useEffect(() => {
+    (async () => {
+      try {
+        const api = new TenantProjectsApi(getConfiguration());
+        const res: any = await api.apiTenantProjectsGet();
+        const items: any[] = (res as any)?.data || [];
+        setSwitcherProjects(items.map((p: any) => ({ id: String(p.id || p.projectId || ""), name: String(p.name || p.title || "") })));
+      } catch {
+        setSwitcherProjects([]);
+      }
+    })();
+  }, []);
+  // Auto-redirect removed: stay on /projects until user selects a project
 
   // no right preview drawer in master-detail layout
 
@@ -99,9 +89,6 @@ function ProjectsDashboard(): JSX.Element {
             <Grid container alignItems="center" spacing={2}>
               <Grid item xs={12} md={7}>
                 <MDTypography variant="h4">Projeler</MDTypography>
-                <MDTypography variant="body2" color="text">
-                  Projelerinizi keşfedin, filtreleyin ve hızlıca işlem yapın.
-                </MDTypography>
               </Grid>
               <Grid item xs={12} md={5} sx={{ textAlign: "right" }}>
                 {!isMdUp && (
@@ -109,7 +96,7 @@ function ProjectsDashboard(): JSX.Element {
                     <Icon>menu_open</Icon>&nbsp; Panel
                   </MDButton>
                 )}
-                <MDButton variant="gradient" color="info">
+                <MDButton variant="gradient" color="info" onClick={() => setCreateOpen(true)}>
                   <Icon>add</Icon>&nbsp; Yeni Proje
                 </MDButton>
               </Grid>
@@ -130,8 +117,36 @@ function ProjectsDashboard(): JSX.Element {
                   ) : (
                     <Card>
                       <CardContent>
-                        <MDTypography variant="h6">Bir proje seçin</MDTypography>
-                        <MDTypography variant="body2" color="text">Soldaki listeden bir proje seçildiğinde detay burada açılır.</MDTypography>
+                        <MDBox display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                          <MDTypography variant="h6">Projeler</MDTypography>
+                          <MDButton variant="text" color="info" onClick={() => setSwitcherOpen(true)}>
+                            <Icon>search</Icon>&nbsp; Hızlı Seç (Cmd/Ctrl+K)
+                          </MDButton>
+                        </MDBox>
+                        <MDBox mb={1.5}>
+                          <MDInput
+                            fullWidth
+                            placeholder="Proje ara..."
+                            value={search}
+                            onChange={(e: any) => setSearch(String(e.target.value || ""))}
+                          />
+                        </MDBox>
+                        {switcherProjects.length > 0 ? (
+                          <List>
+                            {switcherProjects
+                              .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
+                              .map((p, idx, arr) => (
+                              <React.Fragment key={p.id}>
+                                <ListItem button onClick={() => openProject(p.id)}>
+                                  <ListItemText primary={p.name} />
+                                </ListItem>
+                                  {idx < arr.length - 1 && <Divider component="li" />}
+                              </React.Fragment>
+                            ))}
+                          </List>
+                        ) : (
+                          <MDTypography variant="body2" color="text">Proje bulunamadı.</MDTypography>
+                        )}
                       </CardContent>
                     </Card>
                   )}
@@ -145,9 +160,10 @@ function ProjectsDashboard(): JSX.Element {
       <ProjectSwitcher
         open={switcherOpen}
         onClose={() => setSwitcherOpen(false)}
-        onSelect={(pid) => { setSwitcherOpen(false); navigate(`/projects/${pid}/overview`); }}
-        projects={projects}
+        onSelect={(pid) => { setSwitcherOpen(false); navigate(`/projects/${pid}/tasks`); }}
+        projects={switcherProjects}
       />
+      <ProjectCreateDialog open={createOpen} onClose={() => setCreateOpen(false)} onCreated={() => { /* optionally refresh list here */ }} />
       <Footer />
     </DashboardLayout>
   );

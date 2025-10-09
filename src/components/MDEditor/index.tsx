@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 // draft-js
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToHTML } from "draft-convert";
+import { convertToHTML, convertFromHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 // Custom styles for the MDEditor
@@ -30,22 +30,57 @@ import MDEditorRoot from "components/MDEditor/MDEditorRoot";
 // Material Dashboard 2 PRO React context
 import { useMaterialUIController } from "context";
 
-function MDEditor({ value }: any) {
+type MDEditorProps = {
+  value?: (html: string) => void;
+  initialHtml?: string;
+  placeholder?: string;
+  toolbar?: any;
+  editorStyle?: React.CSSProperties;
+};
+
+function MDEditor({ value, initialHtml, placeholder, toolbar, editorStyle }: MDEditorProps) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
-  const [convertedContent, setConvertedContent] = React.useState(null);
-  const [editorState, setEditorState] = React.useState(() => EditorState.createEmpty());
+  const [convertedContent, setConvertedContent] = React.useState<string | null>(null);
+  const [editorState, setEditorState] = React.useState(() => {
+    try {
+      if (initialHtml) {
+        const contentState = convertFromHTML(initialHtml);
+        return EditorState.createWithContent(contentState);
+      }
+    } catch {}
+    return EditorState.createEmpty();
+  });
 
   React.useEffect(() => {
     let html = convertToHTML(editorState.getCurrentContent());
     setConvertedContent(html);
   }, [editorState]);
 
+  React.useEffect(() => {
+    if (typeof value === "function") {
+      value(convertedContent || "");
+    }
+  }, [convertedContent, value]);
+
   return (
     <MDEditorRoot ownerState={{ darkMode }}>
-      {value && typeof value === "function" && value(convertedContent)}
-      <Editor editorState={editorState} onEditorStateChange={setEditorState} />
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={setEditorState}
+        placeholder={placeholder}
+        toolbar={toolbar || { options: ["inline", "list", "link"], inline: { options: ["bold", "italic", "underline"] }, list: { options: ["unordered", "ordered"] }, link: { defaultTargetOption: "_blank" } }}
+        toolbarStyle={{ border: "none", background: "transparent", padding: 0, marginBottom: 4 }}
+        editorStyle={{
+          minHeight: 120,
+          border: `1px solid ${darkMode ? "#2d3748" : "#e5e7eb"}`,
+          borderRadius: 8,
+          padding: 10,
+          background: darkMode ? "#0b1220" : "#fff",
+          ...(editorStyle || {}),
+        }}
+      />
     </MDEditorRoot>
   );
 }
@@ -53,6 +88,10 @@ function MDEditor({ value }: any) {
 // Setting default values for the props of MDEditor
 MDEditor.defaultProps = {
   value: () => {},
+  initialHtml: "",
+  placeholder: undefined,
+  toolbar: undefined,
+  editorStyle: undefined,
 };
 
 // Typechecking props for the MDEditor
