@@ -1145,7 +1145,7 @@ function LandingPage(): JSX.Element {
                         <Grid item xs={12} md={6}>
                             <MDBox display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} gap={4}>
                                 <MDBox>
-                                    <MDTypography variant="h6" fontWeight="bold" mb={2}>
+                                <MDTypography variant="h6" fontWeight="bold" mb={2}>
                                         {t('ns1:LandingPage.Footer.Product.Title')}
                                     </MDTypography>
                                     <MDTypography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
@@ -1170,6 +1170,27 @@ function LandingPage(): JSX.Element {
                                     </MDTypography>
                                     <MDTypography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
                                         {t('ns1:LandingPage.Footer.Support.Status')}
+                                    </MDTypography>
+                                </MDBox>
+                                <MDBox>
+                                    <MDTypography variant="h6" fontWeight="bold" mb={2}>
+                                        Faydalı İçerikler
+                                    </MDTypography>
+                                    <MDTypography
+                                        component="a"
+                                        href="/makale/is-takip-yazilimi"
+                                        variant="body2"
+                                        sx={{ opacity: 0.8, mb: 1, display: 'block', textDecoration: 'none', cursor: 'pointer', '&:hover': { color: '#667eea' } }}
+                                    >
+                                        İş Takip Yazılımı Nedir?
+                                    </MDTypography>
+                                    <MDTypography
+                                        component="a"
+                                        href="/makale/proje-yonetimi-yazilimi"
+                                        variant="body2"
+                                        sx={{ opacity: 0.8, mb: 1, display: 'block', textDecoration: 'none', cursor: 'pointer', '&:hover': { color: '#667eea' } }}
+                                    >
+                                        Proje Yönetimi Yazılımı
                                     </MDTypography>
                                 </MDBox>
                             </MDBox>

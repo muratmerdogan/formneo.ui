@@ -81,6 +81,8 @@ const CalendarList = lazy(() => import("layouts/pages/calendar/list"));
 const PositionPage = lazy(() => import("layouts/pages/position"));
 const PositionDetailPage = lazy(() => import("layouts/pages/position/details"));
 const OrganizationalChart = lazy(() => import("layouts/pages/organizational-chart"));
+const IsTakipYazilimi = lazy(() => import("layouts/pages/articles/IsTakipYazilimi"));
+const ProjeYonetimiYazilimi = lazy(() => import("layouts/pages/articles/ProjeYonetimiYazilimi"));
 const FormRoleList = lazy(() => import("layouts/pages/FormManagement/form-role/list"));
 const FormRoleDetail = lazy(() => import("layouts/pages/FormManagement/form-role/detail"));
 import { useTranslation } from "react-i18next";
@@ -239,6 +241,9 @@ export default function App() {
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
             <Route path="/orders/console" element={<OrdersConsolePage />} />
+            {/* SEO Articles */}
+            <Route path="/makale/is-takip-yazilimi" element={<IsTakipYazilimi />} />
+            <Route path="/makale/proje-yonetimi-yazilimi" element={<ProjeYonetimiYazilimi />} />
             {/* Projects (Public for now) */}
             <Route path="/projects" element={<ProjectsDashboard />} />
             <Route path="/projects/:id" element={<ProjectsDashboard />} />

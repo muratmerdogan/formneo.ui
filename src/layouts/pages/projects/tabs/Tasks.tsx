@@ -44,7 +44,7 @@ function TasksTab(): JSX.Element {
     iptal: [],
   });
 
-  type TaskCard = KanbanCard & { customer?: string; startDate?: string; notify?: boolean; remind?: boolean };
+  type TaskCard = KanbanCard & { customerId?: string | null; customer?: string; startDate?: string; notify?: boolean; remind?: boolean };
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogTab, setDialogTab] = useState(0);
@@ -55,6 +55,7 @@ function TasksTab(): JSX.Element {
 
   // Demo seçenekleri (sonra API'den beslenecek)
   const [musteriOptions, setMusteriOptions] = useState<string[]>([]);
+  const [customerNameToId, setCustomerNameToId] = useState<Record<string, string>>({});
   const [musteriLoading, setMusteriLoading] = useState(false);
   const customerQueryRef = useRef<string>("");
   const debounceRef = useRef<any>();
@@ -69,6 +70,13 @@ function TasksTab(): JSX.Element {
       const names: string[] = Array.from(new Set(
         items.map((it: any) => String(it.name || it.customerName || it.title || it.displayName || "")).filter(Boolean)
       ));
+      const map: Record<string, string> = {};
+      for (const it of items) {
+        const nm = String(it.name || it.customerName || it.title || it.displayName || "");
+        const id = String(it.id || it.customerId || it.uid || "");
+        if (nm && id && !map[nm]) map[nm] = id;
+      }
+      setCustomerNameToId(map);
       setMusteriOptions(names);
     } catch {
       setMusteriOptions([]);
@@ -129,7 +137,7 @@ function TasksTab(): JSX.Element {
 
   const handleAdd = (columnId: string) => {
     setCurrentColumn(columnId);
-    setDraft({ id: "", title: "", description: "", tags: [], dueDate: "", customer: "", notify: false, remind: false });
+    setDraft({ id: "", title: "", description: "", tags: [], dueDate: "", customerId: null, customer: "", notify: false, remind: false });
     setDialogTab(0);
     setDialogOpen(true);
     setEditorSeed((s) => s + 1);
@@ -151,6 +159,7 @@ function TasksTab(): JSX.Element {
         startDate: toDateOnly(item.startDate || null),
         dueDate: toDateOnly(item.endDate || item.dueDate || null),
         tags: Array.isArray(item.tags) ? item.tags : (card.tags || []),
+        customerId: (item.customerId as any) || null,
         customer: item.customerName || item.customer || (card as any).customer || "",
         notify: Boolean(item.notify ?? (card as any).notify ?? false),
         remind: Boolean(item.remind ?? (card as any).remind ?? false),
@@ -177,9 +186,10 @@ function TasksTab(): JSX.Element {
           endDate: draft.dueDate || null,
           status: 0,
           assigneeId: null,
-          customerId: null,
+          customerId: (draft.customerId as any) || (customerNameToId[draft.customer || ""] as any) || null,
         };
-        await api.apiProjectTaskItemsPost(dto as any);
+        const payload: any = { ...dto, customerName: draft.customer || undefined };
+        await api.apiProjectTaskItemsPost(payload);
       } else {
         const dto: ProjectTaskUpdateDto = {
           id: draft.id,
@@ -190,9 +200,10 @@ function TasksTab(): JSX.Element {
           endDate: draft.dueDate || null,
           status: undefined,
           assigneeId: null,
-          customerId: null,
+          customerId: (draft.customerId as any) || (customerNameToId[draft.customer || ""] as any) || null,
         };
-        await api.apiProjectTaskItemsPut(dto as any);
+        const payload: any = { ...dto, customerName: draft.customer || undefined };
+        await api.apiProjectTaskItemsPut(payload);
       }
       await fetchTasks();
       setDialogOpen(false);
@@ -293,10 +304,10 @@ function TasksTab(): JSX.Element {
                   value={draft.customer || ''}
                   inputValue={draft.customer || ''}
                   loading={musteriLoading}
-                  onChange={(_, v) => setDraft({ ...draft, customer: (v as string) || '' })}
+                  onChange={(_, v) => setDraft({ ...draft, customer: (v as string) || '', customerId: v ? (customerNameToId[String(v)] || null) : null })}
                   onInputChange={(_, v) => {
                     customerQueryRef.current = v;
-                    setDraft({ ...draft, customer: v });
+                    setDraft({ ...draft, customer: v, customerId: v ? (customerNameToId[String(v)] || draft.customerId || null) : null });
                     if (debounceRef.current) clearTimeout(debounceRef.current);
                     debounceRef.current = setTimeout(() => fetchCustomers(customerQueryRef.current), 300);
                   }}
