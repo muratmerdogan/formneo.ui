@@ -111,6 +111,15 @@ const ProjectShell = lazy(() => import("layouts/pages/projects/ProjectShell"));
 import "api/interceptors";
 import { ActionBarProvider } from "context/ActionBarContext";
 import OpportunityFormPage from "./pages/opportunities/OpportunityFormPage";
+// Publicly exposed WorkFlow & FormManagement pages
+const WorkFlowList = lazy(() => import("layouts/pages/WorkFlow/WorkFlowList"));
+const WorkFlowDetail = lazy(() => import("layouts/pages/WorkFlow/WorkFlowDetail.jsx"));
+const ListFormPublic = lazy(() => import("layouts/pages/FormManagement/listForm"));
+const CreateFormPublic = lazy(() => import("layouts/pages/FormManagement/ParamtetersDefination"));
+const ParameterEditPublic = lazy(() => import("layouts/pages/FormManagement/ParameterEdit"));
+const ParameterViewPublic = lazy(() => import("layouts/pages/FormManagement/listForm/ParameterView"));
+const FormDesigner = lazy(() => import("layouts/pages/FormManagement/FormDesigner"));
+const FormEditor = lazy(() => import("layouts/pages/FormEditor/FormEditorV2"));
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -241,6 +250,17 @@ export default function App() {
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
             <Route path="/orders/console" element={<OrdersConsolePage />} />
+            {/* Public WorkFlow routes */}
+            <Route path="/workflowList" element={<WorkFlowList />} />
+            <Route path="/WorkFlowList/detail" element={<WorkFlowDetail />} />
+            <Route path="/WorkFlowList/detail/:id" element={<WorkFlowDetail />} />
+            {/* Public FormManagement routes (istenen şekilde public) */}
+            <Route path="/forms" element={<ListFormPublic />} />
+            <Route path="/forms/detail" element={<FormDesigner />} />
+            <Route path="/forms/detail/:id" element={<FormDesigner />} />
+            <Route path="/forms/editor" element={<FormEditor />} />
+            <Route path="/ParameterEdit/" element={<ParameterEditPublic />} />
+            <Route path="/forms/view/:formId/:formRunId?/:isVisibility?" element={<ParameterViewPublic />} />
             {/* SEO Articles */}
             <Route path="/makale/is-takip-yazilimi" element={<IsTakipYazilimi />} />
             <Route path="/makale/proje-yonetimi-yazilimi" element={<ProjeYonetimiYazilimi />} />

@@ -43,3 +43,59 @@ div.spacer {
   margin: 0.5rem 0;
   line-height: 0;
 }
+
+/* Form.io builder panel genişlikleri ve scrollbar görünürlüğü */
+.formio-builder .col.builder-components {
+  min-width: 260px !important;
+  max-width: 320px !important;
+}
+.formio-builder .card, .formio-builder .list-group {
+  overflow: visible !important;
+}
+.formio-builder-sidebar {
+  min-width: 280px !important;
+  overflow-y: auto !important;
+  overflow-x: visible !important;
+}
+.builder-sidebar {
+  display: block !important;
+  min-width: 280px !important;
+}
+.formio-builder .builder-group-button {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Form.io scope reset ve görünürlük */
+.formio-scope * { 
+  all: revert; 
+}
+
+.formio-scope .formcomponents {
+  display: block !important;
+  flex: 0 0 300px !important;
+  max-width: 320px !important;
+  background: #fff !important;
+  color: #111 !important;
+  border-right: 1px solid #e5e7eb !important;
+  padding: 8px !important;
+}
+
+.formio-scope .formcomponents .list-group,
+.formio-scope .formcomponents .list-group-item,
+.formio-scope .formcomponents .component-btn {
+  display: block !important;
+  color: #111 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.formio-scope .builder-sidebar,
+.formio-scope .card-header,
+.formio-scope .panel-title,
+.formio-scope .builder-group-header { 
+  color: #111 !important; 
+  background: #f8fafc !important;
+}

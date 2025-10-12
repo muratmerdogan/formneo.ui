@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // MUI
 import Tabs from "@mui/material/Tabs";
@@ -18,6 +18,8 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { TenantProjectsApi } from "api/generated/api";
+import getConfiguration from "confiuration";
 import OverviewTab from "./tabs/Overview";
 import TasksTab from "./tabs/Tasks";
 import CalendarTab from "./tabs/Calendar";
@@ -37,6 +39,22 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
   const { id, tab } = useParams<{ id: string; tab?: string }>();
   const location = useLocation();
 
+  const [projectName, setProjectName] = useState<string>("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!id) { setProjectName(""); return; }
+        const api = new TenantProjectsApi(getConfiguration());
+        const res: any = await api.apiTenantProjectsIdGet(id);
+        const data: any = (res && (res.data ?? res)) || {};
+        setProjectName(String(data.name || data.title || ""));
+      } catch {
+        setProjectName("");
+      }
+    })();
+  }, [id]);
+
   const currentTab = (tab && TABS.includes(tab as any) ? tab : "tasks") as typeof TABS[number];
 
   const handleChange = (_: React.SyntheticEvent, value: string) => {
@@ -46,11 +64,11 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
 
   const Content = (
     <MDBox>
-      {/* Header with KPI and quick actions */}
+      {/* Header with project name and quick actions */}
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md={8}>
           <MDTypography variant="h4">
-            Proje
+            {projectName ? `Proje: ${projectName}` : "Proje"}
             <MDBox component="span" ml={1} onClick={() => { if (onOpenSwitcher) onOpenSwitcher(); else if (id) navigate(`/projects/${id}/tasks`); }} sx={{ cursor: "pointer", display: "inline-flex", alignItems: "center", px: 1.5, py: 0.5, borderRadius: 9999, border: "1px solid", borderColor: "divider", ml: 1 }}>
               <Icon sx={{ fontSize: 18, mr: 0.5 }}>swap_horiz</Icon> Proje Değiştir
             </MDBox>
@@ -58,11 +76,6 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
           <MDTypography variant="body2" color="text">
             Proje detayları ve çalışma alanları arasında hızlı geçiş yapın.
           </MDTypography>
-          <MDBox mt={1} display="flex" gap={1}>
-            <Chip label="%65 Tamamlandı" color="primary" size="small" />
-            <Chip label="12 Açık Görev" variant="outlined" size="small" />
-            <Chip label="2 Risk" color="warning" size="small" />
-          </MDBox>
         </Grid>
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: "left", md: "right" } }}>
           <MDBox sx={{ display: "inline-flex", maxWidth: "100%" }}>

@@ -289,4 +289,308 @@ body {
 
 .font-medium { font-weight: 500; }
 .font-semibold { font-weight: 600; }
-.font-bold { font-weight: 700; } 
+.font-bold { font-weight: 700; }
+
+/* ============================== */
+/* Form.io Builder Styles        */
+/* Profesyonel Modern Tasarım    */
+/* ============================== */
+
+/* Formneo Form Editor - Form.io Builder Wrapper */
+.formio-builder-wrapper {
+  display: block !important;
+  min-height: 500px;
+  height: 100%;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.formio-builder-wrapper .formio.builder.row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+/* ===== Sol Panel - Component Palette ===== */
+.formio-builder-wrapper .formcomponents {
+  display: block !important;
+  visibility: visible !important;
+  flex: 0 0 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-right: 1px solid #e2e8f0;
+  padding: 12px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+}
+
+/* Full Screen Mode - Narrower Sidebar */
+.formio-builder-fullscreen .formcomponents {
+  flex: 0 0 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  padding: 10px !important;
+}
+
+/* Search input styling */
+.formio-builder-wrapper .builder-sidebar_search {
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  margin-bottom: 16px !important;
+  background: #fff !important;
+  transition: all 0.2s ease;
+}
+
+.formio-builder-wrapper .builder-sidebar_search:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  outline: none;
+}
+
+/* ===== Sağ Panel - Form Canvas ===== */
+.formio-builder-wrapper .formio.builder.row > [class*="col-"]:not(.formcomponents) {
+  display: block !important;
+  visibility: visible !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  background: #fafbfc !important;
+  padding: 24px !important;
+  overflow-y: auto !important;
+}
+
+/* Full Screen Mode - More Canvas Space */
+.formio-builder-fullscreen .formio.builder.row > [class*="col-"]:not(.formcomponents) {
+  padding: 32px 48px !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+/* ===== Component Groups (Kategoriler) ===== */
+.formio-builder-wrapper .form-builder-panel {
+  border: none !important;
+  border-radius: 8px !important;
+  margin-bottom: 8px !important;
+  overflow: hidden;
+  background: #fff !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+/* Full Screen Mode - More Compact Panels */
+.formio-builder-fullscreen .form-builder-panel {
+  border-radius: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.formio-builder-wrapper .card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 8px 12px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+}
+
+/* Full Screen Mode - Even More Compact Headers */
+.formio-builder-fullscreen .card-header {
+  font-size: 10px !important;
+  padding: 6px 10px !important;
+  letter-spacing: 0.3px !important;
+}
+
+.formio-builder-wrapper .card-header:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Formneo Design System - Special Styling (Turuncu Gradient) */
+.formio-builder-wrapper .form-builder-panel:first-child .card-header,
+.formio-builder-wrapper [class*="custom"] .card-header,
+.formio-builder-wrapper .panel-group:first-child .card-header {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%) !important;
+}
+
+.formio-builder-wrapper [class*="custom"] .card-header:hover,
+.formio-builder-wrapper .form-builder-panel:first-child .card-header:hover {
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4) !important;
+}
+
+/* ===== Component Buttons (Bileşenler) ===== */
+.formio-builder-wrapper .builder-group-button,
+.formio-builder-wrapper .formcomponent {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 6px 8px !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  cursor: grab !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+}
+
+/* Full Screen Mode - Compact Components */
+.formio-builder-fullscreen .builder-group-button,
+.formio-builder-fullscreen .formcomponent {
+  margin: 4px 6px !important;
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+}
+
+.formio-builder-wrapper .builder-group-button:hover,
+.formio-builder-wrapper .formcomponent:hover {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%) !important;
+  border-color: #667eea !important;
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15) !important;
+}
+
+.formio-builder-wrapper .builder-group-button:active,
+.formio-builder-wrapper .formcomponent:active {
+  cursor: grabbing !important;
+  transform: scale(0.98);
+}
+
+.formio-builder-wrapper .list-group,
+.formio-builder-wrapper .list-group-item {
+  display: block !important;
+  visibility: visible !important;
+  border: none !important;
+  padding: 2px 0 !important;
+}
+
+/* Full Screen Mode - Ultra Compact Lists */
+.formio-builder-fullscreen .list-group,
+.formio-builder-fullscreen .list-group-item {
+  padding: 1px 0 !important;
+}
+
+/* ===== Canvas Area ===== */
+.formio-builder-wrapper .formio.builder.row > [class*="col-"]:not(.formcomponents) > * {
+  display: block !important;
+  visibility: visible !important;
+  min-height: 500px;
+  background: #fff !important;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* Drop Area Placeholder - Profesyonel */
+.formio-builder-wrapper .drag-container:empty::before,
+.formio-builder-wrapper [class*="col-"]:not(.formcomponents) > div:empty::before {
+  content: "🎯 Formunuzu Oluşturmaya Başlayın\A\ASoldan bir bileşen seçip buraya sürükleyin" !important;
+  white-space: pre-line !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 450px;
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
+  border: 3px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 64px 32px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  transition: all 0.3s ease;
+}
+
+/* Full Screen Mode - Larger Drop Area */
+.formio-builder-fullscreen .drag-container:empty::before,
+.formio-builder-fullscreen [class*="col-"]:not(.formcomponents) > div:empty::before {
+  min-height: 600px;
+  font-size: 18px;
+  padding: 96px 48px;
+}
+
+.formio-builder-wrapper .drag-container:empty:hover::before,
+.formio-builder-wrapper [class*="col-"]:not(.formcomponents) > div:empty:hover::before {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+  color: #667eea;
+  transform: scale(1.01);
+}
+
+/* ===== Form Components in Canvas ===== */
+.formio-builder-wrapper .formio-component {
+  margin-bottom: 20px !important;
+  padding: 16px !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.formio-builder-wrapper .formio-component:hover {
+  border-color: #667eea !important;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.formio-builder-wrapper .formio-component::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 10px 0 0 10px;
+}
+
+.formio-builder-wrapper .formio-component:hover::before {
+  opacity: 1;
+}
+
+/* Drag Handle - Modern */
+.formio-builder-wrapper .formio-drag-button {
+  cursor: move !important;
+  color: #94a3b8 !important;
+  transition: all 0.2s ease;
+  padding: 4px !important;
+  border-radius: 4px;
+}
+
+.formio-builder-wrapper .formio-drag-button:hover {
+  color: #667eea !important;
+  background: rgba(102, 126, 234, 0.1) !important;
+}
+
+/* ===== Scrollbar Styling ===== */
+.formio-builder-wrapper .formcomponents::-webkit-scrollbar {
+  width: 8px;
+}
+
+.formio-builder-wrapper .formcomponents::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.formio-builder-wrapper .formcomponents::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+.formio-builder-wrapper .formcomponents::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #5568d3 0%, #664b8f 100%);
+} 

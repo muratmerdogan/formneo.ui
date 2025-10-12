@@ -117,7 +117,7 @@ function FormList() {
     };
 
     const handlePreview = (id: string, formRunId: string, isVisibility?: string) => {
-        navigate("/forms/view/" + id + "/" + formRunId + "/" + isVisibility);
+        navigate("/parameters/view/" + id + "/" + formRunId + "/" + isVisibility);
     };
 
     const handleDelete = async (id: string) => {
@@ -232,7 +232,7 @@ function FormList() {
                                 <MDButton
                                     variant="gradient"
                                     color="info"
-                                    onClick={() => navigate(`/forms/view/${formId}`)}
+                                    onClick={() => navigate(`/parameters/view/${formId}`)}
                                     size="small"
                                     startIcon={<Icon>add</Icon>}
                                     sx={{

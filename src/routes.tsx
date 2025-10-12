@@ -468,13 +468,13 @@ const routes = [
   },
   {
     type: "hidden",
-    name: "Form Management",
+    name: "Form Yönetimi",
     key: "formManagement",
     icon: <Icon fontSize="medium">memory</Icon>,
     collapse: [
       {
-        name: "List Parameters",
-        key: "listParameters",
+        name: "Formlar",
+        key: "forms",
         route: "/forms",
         component: <ListForm />,
       },
@@ -482,12 +482,12 @@ const routes = [
   },
   {
     type: "hidden",
-    name: "Create Form",
+    name: "Form Oluştur",
     key: "createForm",
     icon: <Icon fontSize="medium">memory</Icon>,
     collapse: [
       {
-        name: "Create Form",
+        name: "Yeni Form",
         key: "createForm",
         route: "/forms/detail",
         component: <CreateForm />,
@@ -529,12 +529,12 @@ const routes = [
   },
   {
     type: "hidden",
-    name: "Create Form With Params",
+    name: "Formu Düzenle",
     key: "createFormWithParams",
     icon: <Icon fontSize="medium">memory</Icon>,
     collapse: [
       {
-        name: "Create Form With Params",
+        name: "Form Düzenle",
         key: "createFormWithParams",
         route: "/forms/detail/:id",
         component: <CreateForm />,

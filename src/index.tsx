@@ -22,6 +22,7 @@ import "i18n";
 import { MaterialUIControllerProvider } from "context";
 const root = createRoot(document.getElementById("root"));
 import './index.css';
+import './assets/css/global.css';
 import { BusyProvider } from "layouts/pages/hooks/useBusy";
 import { AlertProvider } from "layouts/pages/hooks/useAlert";
 import { MsalProvider } from "@azure/msal-react";

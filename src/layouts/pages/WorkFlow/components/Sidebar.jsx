@@ -10,6 +10,15 @@ import {
   FaArrowRight,
   FaChevronRight,
   FaChevronDown,
+  FaUserCheck,
+  FaDatabase,
+  FaSearch,
+  FaGlobe,
+  FaEnvelope,
+  FaPlay,
+  FaStop,
+  FaPlug,
+  FaWpforms,
 } from "react-icons/fa";
 
 const CustomMenuList = () => {
@@ -46,13 +55,43 @@ const CustomMenuList = () => {
       </MenuItem>
       <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "approverNode")} draggable>
+          <ListItemIcon>
+            <FaUserCheck />
+          </ListItemIcon>
           <ListItemText inset>Onaycı</ListItemText>
         </MenuItem>
       </Collapse>
 
       <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "sqlConditionNode")} draggable>
+          <ListItemIcon>
+            <FaDatabase />
+          </ListItemIcon>
           <ListItemText inset>Sql Koşul</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "queryConditionNode")} draggable>
+          <ListItemIcon>
+            <FaSearch />
+          </ListItemIcon>
+          <ListItemText inset>Sorgu Kriteri</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "httpPostNode")} draggable>
+          <ListItemIcon>
+            <FaGlobe />
+          </ListItemIcon>
+          <ListItemText inset>Http Post</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "mailNode")} draggable>
+          <ListItemIcon>
+            <FaEnvelope />
+          </ListItemIcon>
+          <ListItemText inset>Mail Gönder</ListItemText>
         </MenuItem>
       </Collapse>
 
@@ -71,11 +110,10 @@ const CustomMenuList = () => {
         )}
       </MenuItem>
       <Collapse in={open.documentOptions} timeout="auto" unmountOnExit>
-        {/* <MenuItem onDragStart={(event) => onDragStart(event, 'serviceNoteNode')} draggable>
-          <ListItemText inset>Nota de Atendimento</ListItemText>
-        </MenuItem> */}
-
         <MenuItem onDragStart={(event) => onDragStart(event, "inputDataNode")} draggable>
+          <ListItemIcon>
+            <FaPlug />
+          </ListItemIcon>
           <ListItemText inset>Api Call</ListItemText>
         </MenuItem>
       </Collapse>
@@ -96,11 +134,24 @@ const CustomMenuList = () => {
       </MenuItem>
       <Collapse in={open.otherOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "startNode")} draggable>
+          <ListItemIcon>
+            <FaPlay />
+          </ListItemIcon>
           <ListItemText inset>Start</ListItemText>
         </MenuItem>
 
         <MenuItem onDragStart={(event) => onDragStart(event, "stopNode")} draggable>
+          <ListItemIcon>
+            <FaStop />
+          </ListItemIcon>
           <ListItemText inset>Stop</ListItemText>
+        </MenuItem>
+        <MenuItem onDragStart={(event) => onDragStart(event, "formStopNode")} draggable>
+          <ListItemIcon>
+            <FaWpforms style={{ marginRight: "2px" }} />
+            <FaStop />
+          </ListItemIcon>
+          <ListItemText inset>Stop (Form)</ListItemText>
         </MenuItem>
       </Collapse>
     </MenuList>

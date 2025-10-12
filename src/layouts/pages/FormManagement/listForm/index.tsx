@@ -155,7 +155,7 @@ function ListForm() {
       Header: <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>İşlemler</div>,
       Cell: ({ row }: any) => (
         <MDBox mx={2}>
-          <Icon sx={{ cursor: "pointer", marginRight: '2px' }} onClick={() => handleOpenQuestionBox(row.original.id)}>
+          <Icon sx={{ cursor: "pointer", marginRight:'2px'}} onClick={() => handleOpenQuestionBox(row.original.id)}>
             delete
           </Icon>
           <Icon
@@ -213,7 +213,7 @@ function ListForm() {
                 <MDButton
                   variant="gradient"
                   color="info"
-                  onClick={() => navigate(`/parameters/detail`)}
+                  onClick={() => navigate(`/forms/detail`)}
                   size="small"
                   startIcon={<Icon>add</Icon>}
                   sx={{
@@ -226,7 +226,7 @@ function ListForm() {
                     },
                   }}
                 >
-                  Yeni Parametre
+                  Yeni Form
                 </MDButton>
               </MDBox>
             }
