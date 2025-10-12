@@ -19,6 +19,7 @@ import { DSTableComponent } from "./DSTable";
 import { DSHtmlElementComponent } from "./DSHTML";
 import { DSTextAreaComponent } from "./DSTextArea";
 import { DSApprovalComponent } from "./DSApproval";
+import { DSUserSelectComponent } from "./DSUserSelect";
 export default {
   HeaderComponent,
   DSInputComponent,
@@ -40,5 +41,6 @@ export default {
   DSTableComponent,
   DSHtmlElementComponent,
   DSTextAreaComponent,
-  DSApprovalComponent
+  DSApprovalComponent,
+  DSUserSelectComponent
 };

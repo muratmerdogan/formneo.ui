@@ -325,6 +325,16 @@ export default function FormEditorV2(): JSX.Element {
               type: "dstable",
               key: "dstable",
             },
+          },
+          dsuserselect: {
+            title: "Kullanıcı Seçici",
+            key: "dsuserselect",
+            icon: "user",
+            schema: {
+              label: "Kullanıcı Seçimi",
+              type: "dsuserselect",
+              key: "userSelect",
+            },
           }
         }
       }
