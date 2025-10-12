@@ -20,6 +20,7 @@ import { DSHtmlElementComponent } from "./DSHTML";
 import { DSTextAreaComponent } from "./DSTextArea";
 import { DSApprovalComponent } from "./DSApproval";
 import { DSUserSelectComponent } from "./DSUserSelect";
+import { DSCustomerSelectComponent } from "./DSCustomerSelect";
 export default {
   HeaderComponent,
   DSInputComponent,
@@ -42,5 +43,6 @@ export default {
   DSHtmlElementComponent,
   DSTextAreaComponent,
   DSApprovalComponent,
-  DSUserSelectComponent
+  DSUserSelectComponent,
+  DSCustomerSelectComponent
 };

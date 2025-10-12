@@ -335,6 +335,16 @@ export default function FormEditorV2(): JSX.Element {
               type: "dsuserselect",
               key: "userSelect",
             },
+          },
+          dscustomerselect: {
+            title: "Müşteri Seçici",
+            key: "dscustomerselect",
+            icon: "briefcase",
+            schema: {
+              label: "Müşteri Seçimi",
+              type: "dscustomerselect",
+              key: "customerSelect",
+            },
           }
         }
       }
