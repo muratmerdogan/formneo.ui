@@ -481,6 +481,13 @@ body {
 }
 
 /* ===== Canvas Area ===== */
+.formio-builder-wrapper .formio.builder.row > [class*="col-"]:not(.formcomponents) {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  max-height: 100vh !important;
+}
+
 .formio-builder-wrapper .formio.builder.row > [class*="col-"]:not(.formcomponents) > * {
   display: block !important;
   visibility: visible !important;
@@ -489,6 +496,7 @@ body {
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  flex: 1 !important;
 }
 
 /* Drop Area Placeholder - Profesyonel */

@@ -174,7 +174,7 @@ function ListForm() {
           </Icon>
           <Icon
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/forms/detail/${row.original.id}`)}
+            onClick={() => navigate(`/forms/editor/${row.original.id}`)}
             style={{ marginRight: "8px" }}
             hidden={!row.original.canEdit}
           >
@@ -213,7 +213,7 @@ function ListForm() {
                 <MDButton
                   variant="gradient"
                   color="info"
-                  onClick={() => navigate(`/forms/detail`)}
+                  onClick={() => navigate(`/forms/editor`)}
                   size="small"
                   startIcon={<Icon>add</Icon>}
                   sx={{

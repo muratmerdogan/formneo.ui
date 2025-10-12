@@ -1,17 +1,201 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/system";
 import { Button, Dialog, DialogContent, DialogTitle, Icon, IconButton, Tab, Tabs, TextField, Tooltip, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Components, Formio, FormBuilder, Form } from "@formio/react";
 import components from "../FormManagement/Custom";
+import { Editor } from "@monaco-editor/react";
+import { FormDataApi } from "../../../api/generated";
+import getConfiguration from "../../../confiuration";
+import { MessageBoxType } from "@ui5/webcomponents-react";
+import { useAlert } from "../hooks/useAlert";
+import { useBusy } from "../hooks/useBusy";
 import "formiojs/dist/formio.full.min.css";
+
+// Form schema'ya göre dinamik JavaScript template oluştur
+function generateJavaScriptTemplate(schema: any): string {
+  const components = schema.components || [];
+  
+  // Form'daki alanları bul
+  const fields = components
+    .filter((c: any) => c.key && !['button'].includes(c.type))
+    .map((c: any) => ({ key: c.key, label: c.label || c.key, type: c.type }));
+
+  const buttons = components
+    .filter((c: any) => c.key && ['button', 'dsbutton'].includes(c.type))
+    .map((c: any) => ({ key: c.key, label: c.label || c.key }));
+
+  const hasNumericFields = fields.some((f: any) => 
+    ['number', 'dsnumber', 'currency'].includes(f.type)
+  );
+
+  let template = `/**
+ * FormNeo JavaScript Editor
+ * 
+ * 🎯 Kodlarınızı Component'lere Bağlama:
+ * 
+ * 1. BUTTON ACTIONS:
+ *    - Button component'ini seçin
+ *    - "Action" → "Custom"
+ *    - "Custom Action" → "onClick_buttonKey()"
+ * 
+ * 2. CALCULATED VALUES:
+ *    - Field'i seçin → "Data" tab
+ *    - "Calculated Value" → "calculate_fieldKey()"
+ * 
+ * 3. CUSTOM VALIDATION:
+ *    - Field'i seçin → "Validation" tab
+ *    - "Custom Validation" → "validate_fieldKey()"
+ * 
+ * 4. CONDITIONAL (Göster/Gizle):
+ *    - Field'i seçin → "Conditional" tab
+ *    - "Custom Conditional" → "shouldShow_fieldKey()"
+ */
+
+`;
+
+  // Button event handlers
+  if (buttons.length > 0) {
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `// 🎯 BUTTON EVENT HANDLERS\n`;
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    buttons.forEach((btn: any) => {
+      template += `// ${btn.label} button'u için:\n`;
+      template += `// 1. Button'u seçin\n`;
+      template += `// 2. Action → Custom\n`;
+      template += `// 3. Custom Action → "onClick_${btn.key}()"\n`;
+      template += `function onClick_${btn.key}() {\n`;
+      template += `  console.log('${btn.label} clicked!');\n`;
+      template += `  console.log('Form Data:', data);\n`;
+      template += `  \n`;
+      template += `  // Örnek: Form submit\n`;
+      template += `  // instance.submit();\n`;
+      template += `  \n`;
+      template += `  // Örnek: Validasyon\n`;
+      template += `  // if (!data.email) {\n`;
+      template += `  //   alert('Email zorunlu!');\n`;
+      template += `  //   return false;\n`;
+      template += `  // }\n`;
+      template += `}\n\n`;
+    });
+  }
+
+  // Calculated values
+  if (hasNumericFields) {
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `// 📊 CALCULATED VALUES (Otomatik Hesaplama)\n`;
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    const numFields = fields.filter((f: any) => 
+      ['number', 'dsnumber', 'currency'].includes(f.type)
+    ).slice(0, 2);
+    
+    if (numFields.length >= 2) {
+      template += `// Toplam alanı için:\n`;
+      template += `// 1. Total field'i seçin\n`;
+      template += `// 2. Data tab → Calculated Value\n`;
+      template += `// 3. "calculate_total()"\n`;
+      template += `function calculate_total() {\n`;
+      template += `  return (data.${numFields[0].key} || 0) * (data.${numFields[1].key} || 0);\n`;
+      template += `}\n\n`;
+    }
+  }
+
+  // Validation
+  if (fields.length > 0) {
+    const firstField = fields[0];
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `// ✅ CUSTOM VALIDATION (Özel Doğrulama)\n`;
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    template += `// ${firstField.label} için:\n`;
+    template += `// 1. Field'i seçin\n`;
+    template += `// 2. Validation tab → Custom Validation\n`;
+    template += `// 3. "validate_${firstField.key}()"\n`;
+    template += `function validate_${firstField.key}() {\n`;
+    template += `  if (!data.${firstField.key}) {\n`;
+    template += `    return 'Bu alan zorunludur';\n`;
+    template += `  }\n`;
+    template += `  return true; // veya error mesajı\n`;
+    template += `}\n\n`;
+  }
+
+  // Conditional logic
+  if (fields.length > 1) {
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `// 🔍 CONDITIONAL LOGIC (Göster/Gizle)\n`;
+    template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    template += `// Bir field'i göster/gizle:\n`;
+    template += `// 1. Field'i seçin\n`;
+    template += `// 2. Conditional tab → Custom Conditional\n`;
+    template += `// 3. "shouldShow_fieldKey()"\n`;
+    template += `function shouldShow_${fields[1].key}() {\n`;
+    template += `  // Örnek: ${fields[0].key} doluysa göster\n`;
+    template += `  return !!data.${fields[0].key};\n`;
+    template += `}\n\n`;
+  }
+
+  // API Call
+  template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  template += `// 🌐 API CALLS (Backend İletişim)\n`;
+  template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  template += `async function fetchDataFromAPI() {\n`;
+  template += `  try {\n`;
+  template += `    const response = await fetch('/api/your-endpoint');\n`;
+  template += `    const result = await response.json();\n`;
+  if (fields.length > 0) {
+    template += `    \n`;
+    template += `    // Form'u doldur\n`;
+    template += `    data.${fields[0].key} = result.value;\n`;
+  }
+  template += `    \n`;
+  template += `    return result;\n`;
+  template += `  } catch (error) {\n`;
+  template += `    console.error('API Error:', error);\n`;
+  template += `    alert('Veri yüklenemedi!');\n`;
+  template += `  }\n`;
+  template += `}\n\n`;
+
+  template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  template += `// 💡 Kendi kodunuzu buraya ekleyin\n`;
+  template += `// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  return template;
+}
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// JavaScript kodundan fonksiyon isimlerini çıkar
+function extractFunctionNames(code: string): string[] {
+  const functionRegex = /function\s+(\w+)\s*\(/g;
+  const names: string[] = [];
+  let match;
+  
+  while ((match = functionRegex.exec(code)) !== null) {
+    names.push(match[1]);
+  }
+  
+  return names;
+}
 
 export default function FormEditorV2(): JSX.Element {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const dispatchAlert = useAlert();
+  const dispatchBusy = useBusy();
+  
   const [schema, setSchema] = useState<any>({ display: "form", components: [] });
   const [formName, setFormName] = useState<string>("Yeni Form");
+  const [formDescription, setFormDescription] = useState<string>("");
   const [tab, setTab] = useState<number>(0);
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+  const [jsCode, setJsCode] = useState<string>(generateJavaScriptTemplate({ components: [] }));
+  const editorRef = useRef<any>(null);
+  const [jsCodeInitialized, setJsCodeInitialized] = useState<boolean>(false);
 
   // Builder options - Sadece premium component'leri gizle
   const builderOptions = {
@@ -154,7 +338,246 @@ export default function FormEditorV2(): JSX.Element {
     // Base URL ayarla
     Formio.setBaseUrl("https://api.cfapps.us21.hana.ondemand.com/api");
     Formio.setProjectUrl("https://api.cfapps.us21.hana.ondemand.com/api");
-  }, []);
+    
+    // Eğer id varsa formu yükle
+    if (id) {
+      loadFormById(id);
+    }
+  }, [id]);
+  
+  // Form yükleme
+  const loadFormById = async (formId: string) => {
+    try {
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      const response = await api.apiFormDataIdGet(formId);
+      
+      if (response.data) {
+        setFormName(response.data.formName || "Yeni Form");
+        setFormDescription(response.data.formDescription || "");
+        
+        if (response.data.formDesign) {
+          const parsedSchema = JSON.parse(response.data.formDesign);
+          setSchema(parsedSchema);
+          
+          // JavaScript kodunu yükle
+          if (response.data.javaScriptCode) {
+            setJsCode(response.data.javaScriptCode);
+            setJsCodeInitialized(true);
+          }
+        }
+        
+        dispatchAlert({
+          message: "Form başarıyla yüklendi",
+          type: MessageBoxType.Success,
+        });
+      }
+    } catch (error) {
+      console.error("Form yükleme hatası:", error);
+      dispatchAlert({
+        message: "Form yüklenirken bir hata oluştu!",
+        type: MessageBoxType.Error,
+      });
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+  
+  // Form kaydetme
+  const saveForm = async () => {
+    try {
+      if (!formName.trim()) {
+        dispatchAlert({
+          message: "Form adı boş olamaz!",
+          type: MessageBoxType.Warning,
+        });
+        return;
+      }
+      
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      
+      const formDesignJson = JSON.stringify(schema);
+      
+      if (id) {
+        // Güncelleme
+        await api.apiFormDataPut({
+          id,
+          concurrencyToken: 0,
+          formName,
+          formDescription,
+          formDesign: formDesignJson,
+          javaScriptCode: jsCode,
+          isActive: 1,
+          canEdit: true,
+          revision: 1,
+        });
+        
+        dispatchAlert({
+          message: "Form başarıyla güncellendi!",
+          type: MessageBoxType.Success,
+        });
+      } else {
+        // Yeni kayıt
+        await api.apiFormDataPost({
+          formName,
+          formDescription,
+          formDesign: formDesignJson,
+          javaScriptCode: jsCode,
+          isActive: 1,
+          canEdit: true,
+          revision: 1,
+          showInMenu: false,
+        });
+        
+        dispatchAlert({
+          message: "Form başarıyla oluşturuldu!",
+          type: MessageBoxType.Success,
+        });
+      }
+      
+      // Liste sayfasına dön
+      setTimeout(() => {
+        navigate("/forms");
+      }, 1000);
+      
+    } catch (error) {
+      console.error("Form kaydetme hatası:", error);
+      dispatchAlert({
+        message: "Form kaydedilirken bir hata oluştu!",
+        type: MessageBoxType.Error,
+      });
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+
+  // Form schema'dan otomatik TypeScript definitions oluştur
+  const generateTypeDefinitions = () => {
+    const components = schema.components || [];
+    
+    // Form Data interface'i oluştur
+    let dataInterface = "interface FormData {\n";
+    components.forEach((comp: any) => {
+      if (comp.key) {
+        const type = getTypeForComponent(comp.type);
+        dataInterface += `  /** ${comp.label || comp.key} */\n`;
+        dataInterface += `  ${comp.key}: ${type};\n`;
+      }
+    });
+    dataInterface += "}";
+
+    return `
+      /**
+       * Form data object - Tüm form alanlarına erişim
+       * Form'unuzdaki alanlar otomatik olarak tanımlanmıştır.
+       */
+      ${dataInterface}
+      declare const data: FormData;
+      
+      /**
+       * Active component reference
+       */
+      declare const component: {
+        setValue(value: any): void;
+        getValue(): any;
+        show(): void;
+        hide(): void;
+        disable(): void;
+        enable(): void;
+        validate(): boolean;
+      };
+      
+      /**
+       * Form instance - Global form kontrolleri
+       */
+      declare const instance: {
+        submit(): Promise<any>;
+        reset(): void;
+        get(key: string): any;
+        set(key: string, value: any): void;
+        components: any[];
+      };
+      
+      /**
+       * Utility fonksiyonlar
+       */
+      declare const utils: {
+        format(value: any, format: string): string;
+        validate(value: any, rules: any): boolean;
+      };
+    `;
+  };
+
+  // Component type'ına göre TypeScript type döndür
+  const getTypeForComponent = (componentType: string): string => {
+    const typeMap: any = {
+      textfield: "string",
+      textarea: "string",
+      number: "number",
+      email: "string",
+      password: "string",
+      checkbox: "boolean",
+      select: "string",
+      selectboxes: "{ [key: string]: boolean }",
+      radio: "string",
+      button: "any",
+      datetime: "string",
+      day: "string",
+      time: "string",
+      currency: "number",
+      phoneNumber: "string",
+      // DS components
+      dsinput: "string",
+      dstextarea: "string",
+      dsnumber: "number",
+      dsemail: "string",
+      dspassword: "string",
+      dscheckbox: "boolean",
+      dsselect: "string",
+      dsradio: "string",
+      dsphone: "string",
+      dsdatetime: "string",
+    };
+    return typeMap[componentType] || "any";
+  };
+
+  // Monaco Editor'e IntelliSense için type definitions ekle
+  const handleEditorDidMount = (editor: any, monaco: any) => {
+    editorRef.current = editor;
+
+    // Form schema'ya göre otomatik type definitions
+    const typeDefinitions = generateTypeDefinitions();
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(typeDefinitions, 'formio.d.ts');
+
+    // Editor shortcuts
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      console.log('JavaScript kaydedildi');
+    });
+  };
+
+  // Schema değiştiğinde type definitions ve template'i güncelle
+  useEffect(() => {
+    if (editorRef.current && (window as any).monaco) {
+      const monaco = (window as any).monaco;
+      const typeDefinitions = generateTypeDefinitions();
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(typeDefinitions, 'formio.d.ts');
+    }
+
+    // İlk kez component eklendiğinde veya kullanıcı kodu değiştirmediyse template'i güncelle
+    if (!jsCodeInitialized && schema.components && schema.components.length > 0) {
+      const newTemplate = generateJavaScriptTemplate(schema);
+      setJsCode(newTemplate);
+      setJsCodeInitialized(true);
+    }
+  }, [schema]);
+
+  const handleJsCodeChange = (value: string | undefined) => {
+    setJsCode(value || "");
+    setJsCodeInitialized(true); // Kullanıcı kodu değiştirdi
+  };
 
   const handleTabChange = (_e: React.SyntheticEvent, value: number) => setTab(value);
 
@@ -162,7 +585,7 @@ export default function FormEditorV2(): JSX.Element {
     setSchema({ ...updatedSchema, components: [...updatedSchema.components] });
   };
 
-  const saveForm = () => {
+  const downloadForm = () => {
     const blob = new Blob([JSON.stringify(schema, null, 2)], { type: "application/json" });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -318,52 +741,154 @@ export default function FormEditorV2(): JSX.Element {
             }}
           >
             <Tab icon={<Icon fontSize="small">edit_note</Icon>} iconPosition="start" label="Form Tasarımı" />
-            <Tab icon={<Icon fontSize="small">code</Icon>} iconPosition="start" label="JSON Görünümü" />
+            <Tab icon={<Icon fontSize="small">code</Icon>} iconPosition="start" label="JavaScript" />
+            <Tab icon={<Icon fontSize="small">data_object</Icon>} iconPosition="start" label="JSON" />
           </Tabs>
         </Box>
 
         {/* Tab 0: Form Builder - FULL HEIGHT */}
-        {tab === 0 && (
-          <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#fafbfc" }}>
-            <Box 
-              className="formio-builder-wrapper formio-builder-fullscreen"
-              sx={{ 
-                height: "100%",
-                width: "100%",
-                display: "flex"
+        <Box sx={{ 
+          flex: 1, 
+          overflow: "auto", 
+          bgcolor: "#fafbfc",
+          display: tab === 0 ? "block" : "none"
+        }}>
+          <Box 
+            className="formio-builder-wrapper formio-builder-fullscreen"
+            sx={{ 
+              height: "100%",
+              minHeight: "600px",
+              width: "100%",
+              display: "flex"
+            }}
+          >
+            <FormBuilder options={builderOptions} form={schema} onChange={onFormChange} />
+          </Box>
+        </Box>
+
+        {/* Tab 1: JavaScript Editor - FULL HEIGHT */}
+        {tab === 1 && (
+          <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", p: 0, display: "flex", flexDirection: "column" }}>
+            {/* JavaScript Toolbar */}
+            <Box sx={{ 
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "space-between",
+              px: 2, 
+              py: 1, 
+              bgcolor: "#0f172a",
+              borderBottom: "1px solid #334155"
+            }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Icon sx={{ color: "#fbbf24", fontSize: 18 }}>lightbulb</Icon>
+                <Typography variant="caption" sx={{ color: "#94a3b8", fontWeight: 600 }}>
+                  Yeni component eklediyseniz template&apos;i güncelleyin
+                </Typography>
+              </Box>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  const newTemplate = generateJavaScriptTemplate(schema);
+                  setJsCode(newTemplate);
+                  setJsCodeInitialized(true);
+                }}
+                sx={{ 
+                  minWidth: "auto",
+                  px: 2,
+                  py: 0.5,
+                  fontSize: "0.75rem",
+                  background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+                  color: "#fff",
+                  boxShadow: "none",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  "&:hover": {
+                    background: "linear-gradient(135deg, #d97706 0%, #b45309 100%)",
+                    boxShadow: "0 4px 12px rgba(251, 191, 36, 0.3)"
+                  }
+                }}
+              >
+                <Icon sx={{ mr: 0.5, fontSize: 16 }}>refresh</Icon>
+                Template&apos;i Güncelle
+              </Button>
+            </Box>
+            
+            {/* Editor */}
+            <Box sx={{ flex: 1, overflow: "hidden" }}>
+              <Editor
+                height="100%"
+                language="javascript"
+                theme="vs-dark"
+                value={jsCode}
+                onChange={handleJsCodeChange}
+                onMount={handleEditorDidMount}
+              options={{
+                minimap: { enabled: true },
+                fontSize: 14,
+                lineNumbers: "on",
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+                tabSize: 2,
+                wordWrap: "on",
+                formatOnPaste: true,
+                formatOnType: true,
+                autoIndent: "full",
+                quickSuggestions: true,
+                suggestOnTriggerCharacters: true,
+                acceptSuggestionOnEnter: "on",
+                snippetSuggestions: "top",
+                padding: { top: 16, bottom: 16 },
+                renderLineHighlight: "all",
+                cursorBlinking: "smooth",
+                cursorSmoothCaretAnimation: "on",
+                smoothScrolling: true,
               }}
-            >
-              <FormBuilder options={builderOptions} form={schema} onChange={onFormChange} />
+              />
             </Box>
           </Box>
         )}
 
-        {/* Tab 1: JSON View - FULL HEIGHT */}
-        {tab === 1 && (
-          <Box sx={{ flex: 1, overflow: "hidden", p: 2, bgcolor: "#fafbfc" }}>
-            <Box 
-              sx={{ 
-                height: "100%",
-                bgcolor: "#1e293b", 
-                color: "#e2e8f0", 
-                p: 3, 
-                borderRadius: 2, 
-                overflow: "auto", 
-                fontFamily: "'Fira Code', 'Consolas', 'Monaco', monospace", 
-                fontSize: 13,
-                boxShadow: "inset 0 2px 8px rgba(0,0,0,0.3)",
-                border: "1px solid #334155"
+        {/* Tab 2: JSON View - Monaco Editor */}
+        {tab === 2 && (
+          <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", p: 0 }}>
+            <Editor
+              height="100%"
+              language="json"
+              theme="vs-dark"
+              value={JSON.stringify(schema, null, 2)}
+              onChange={(value) => {
+                try {
+                  if (value) {
+                    const parsed = JSON.parse(value);
+                    setSchema(parsed);
+                  }
+                } catch (e) {
+                  // Invalid JSON - don't update schema
+                  console.warn("Invalid JSON:", e);
+                }
               }}
-            >
-              <pre style={{ 
-                margin: 0, 
-                whiteSpace: "pre-wrap",
-                lineHeight: 1.6,
-                color: "#94a3b8"
-              }}>
-                {JSON.stringify(schema, null, 2)}
-              </pre>
-            </Box>
+              options={{
+                minimap: { enabled: true },
+                fontSize: 14,
+                lineNumbers: "on",
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+                tabSize: 2,
+                wordWrap: "on",
+                formatOnPaste: true,
+                formatOnType: true,
+                autoIndent: "full",
+                readOnly: false,
+                padding: { top: 16, bottom: 16 },
+                renderLineHighlight: "all",
+                cursorBlinking: "smooth",
+                cursorSmoothCaretAnimation: "on",
+                smoothScrolling: true,
+              }}
+            />
           </Box>
         )}
       </Box>
@@ -386,6 +911,15 @@ export default function FormEditorV2(): JSX.Element {
         zIndex: 999
       }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Icon sx={{ color: "#667eea", fontSize: 18 }}>
+            {tab === 0 ? "edit_note" : tab === 1 ? "code" : "data_object"}
+          </Icon>
+          <Typography variant="caption" sx={{ color: "#64748b", fontWeight: 600 }}>
+            {tab === 0 ? "Form Builder" : tab === 1 ? "JavaScript" : "JSON"}
+          </Typography>
+        </Box>
+        <Box sx={{ width: 1, height: 20, bgcolor: "#e5e7eb" }} />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Icon sx={{ color: "#667eea", fontSize: 18 }}>widgets</Icon>
           <Typography variant="caption" sx={{ color: "#64748b", fontWeight: 600 }}>
             <strong style={{ color: "#667eea" }}>{schema.components?.length || 0}</strong> bileşen
@@ -393,9 +927,11 @@ export default function FormEditorV2(): JSX.Element {
         </Box>
         <Box sx={{ width: 1, height: 20, bgcolor: "#e5e7eb" }} />
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-          <Icon sx={{ color: "#64748b", fontSize: 18 }}>schedule</Icon>
+          <Icon sx={{ color: tab === 1 ? "#10b981" : "#64748b", fontSize: 18 }}>
+            {tab === 1 ? "check_circle" : "schedule"}
+          </Icon>
           <Typography variant="caption" sx={{ color: "#64748b", fontWeight: 600 }}>
-            {new Date().toLocaleTimeString("tr-TR", { hour: '2-digit', minute: '2-digit' })}
+            {tab === 1 ? "IntelliSense Active" : new Date().toLocaleTimeString("tr-TR", { hour: '2-digit', minute: '2-digit' })}
           </Typography>
         </Box>
       </Box>
@@ -449,11 +985,42 @@ export default function FormEditorV2(): JSX.Element {
               minHeight: 300
             }}
           >
-            <Form 
-              form={schema} 
-              onSubmit={(submission: any) => {
-                console.log("Form submission:", submission);
-                alert("✅ Form başarıyla gönderildi! Konsolu kontrol edin.");
+            <Box 
+              ref={(el: HTMLDivElement | null) => {
+                if (el && previewOpen) {
+                  // Önceki içeriği temizle
+                  el.innerHTML = "";
+                  
+                  // JavaScript kodlarını global scope'a inject et
+                  try {
+                    // Fonksiyonları direkt window objesine ekle
+                    const scriptContent = `
+                      ${jsCode}
+                      
+                      // Fonksiyonları window'a ekle (Form.io için)
+                      ${extractFunctionNames(jsCode).map(name => `window.${name} = ${name};`).join('\n')}
+                      
+                      console.log('✅ JavaScript kodları yüklendi:', ${JSON.stringify(extractFunctionNames(jsCode))});
+                    `;
+                    
+                    const script = document.createElement('script');
+                    script.textContent = scriptContent;
+                    document.head.appendChild(script);
+                    
+                  } catch (error) {
+                    console.error('❌ JavaScript kodu hatalı:', error);
+                  }
+                  
+                  // Form'u render et
+                  if ((window as any).Formio) {
+                    (window as any).Formio.createForm(el, schema).then((form: any) => {
+                      form.on("submit", (submission: any) => {
+                        console.log("Form submission:", submission);
+                        alert("✅ Form başarıyla gönderildi! Konsolu kontrol edin.");
+                      });
+                    });
+                  }
+                }
               }}
             />
           </Box>

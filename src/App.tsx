@@ -259,6 +259,7 @@ export default function App() {
             <Route path="/forms/detail" element={<FormDesigner />} />
             <Route path="/forms/detail/:id" element={<FormDesigner />} />
             <Route path="/forms/editor" element={<FormEditor />} />
+            <Route path="/forms/editor/:id" element={<FormEditor />} />
             <Route path="/ParameterEdit/" element={<ParameterEditPublic />} />
             <Route path="/forms/view/:formId/:formRunId?/:isVisibility?" element={<ParameterViewPublic />} />
             {/* SEO Articles */}
