@@ -1254,6 +1254,7 @@ export interface Form {
     'parentFormId'?: string | null;
     'canEdit'?: boolean;
     'showInMenu'?: boolean;
+    'publicationStatus': FormPublicationStatus;
 }
 
 
@@ -1314,6 +1315,7 @@ export interface FormDataInsertDto {
     'parentFormId'?: string | null;
     'canEdit'?: boolean;
     'showInMenu'?: boolean;
+    'publicationStatus'?: FormPublicationStatus;
 }
 
 
@@ -1341,6 +1343,8 @@ export interface FormDataListDto {
     'parentFormId'?: string | null;
     'canEdit'?: boolean;
     'showInMenu'?: boolean;
+    'publicationStatus'?: FormPublicationStatus;
+    'publicationStatusText'?: string | null;
 }
 
 
@@ -1360,6 +1364,7 @@ export interface FormDataUpdateDto {
     'parentFormId'?: string | null;
     'canEdit'?: boolean;
     'showInMenu'?: boolean;
+    'publicationStatus'?: FormPublicationStatus;
 }
 
 
@@ -1371,6 +1376,16 @@ export const FormPriority = {
 } as const;
 
 export type FormPriority = typeof FormPriority[keyof typeof FormPriority];
+
+
+
+export const FormPublicationStatus = {
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3
+} as const;
+
+export type FormPublicationStatus = typeof FormPublicationStatus[keyof typeof FormPublicationStatus];
 
 
 export interface FormRuleEngineDto {
@@ -15063,6 +15078,43 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataCreateRevisionIdPost: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiFormDataCreateRevisionIdPost', 'id', id)
+            const localVarPath = `/api/FormData/CreateRevision/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15376,6 +15428,43 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataPublishIdPost: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiFormDataPublishIdPost', 'id', id)
+            const localVarPath = `/api/FormData/Publish/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {FormDataUpdateDto} [formDataUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15448,6 +15537,43 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataVersionsParentIdGet: async (parentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'parentId' is not null or undefined
+            assertParamExists('apiFormDataVersionsParentIdGet', 'parentId', parentId)
+            const localVarPath = `/api/FormData/Versions/{parentId}`
+                .replace(`{${"parentId"}}`, encodeURIComponent(String(parentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -15467,6 +15593,18 @@ export const FormDataApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataAddFormRuleEnginePost(formRuleEngineDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataAddFormRuleEnginePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormDataCreateRevisionIdPost(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataCreateRevisionIdPost(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataCreateRevisionIdPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -15574,6 +15712,18 @@ export const FormDataApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormDataPublishIdPost(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataPublishIdPost(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataPublishIdPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {FormDataUpdateDto} [formDataUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15596,6 +15746,18 @@ export const FormDataApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataUpdateFormRuleEnginePut']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormDataVersionsParentIdGet(parentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormDataListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataVersionsParentIdGet(parentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataVersionsParentIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -15613,6 +15775,15 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
          */
         apiFormDataAddFormRuleEnginePost(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiFormDataAddFormRuleEnginePost(formRuleEngineDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataCreateRevisionIdPost(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiFormDataCreateRevisionIdPost(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -15692,6 +15863,15 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataPublishIdPost(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiFormDataPublishIdPost(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {FormDataUpdateDto} [formDataUpdateDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15708,6 +15888,15 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
         apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataVersionsParentIdGet(parentId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<FormDataListDto>> {
+            return localVarFp.apiFormDataVersionsParentIdGet(parentId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -15723,6 +15912,16 @@ export class FormDataApi extends BaseAPI {
      */
     public apiFormDataAddFormRuleEnginePost(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataAddFormRuleEnginePost(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormDataCreateRevisionIdPost(id: string, options?: RawAxiosRequestConfig) {
+        return FormDataApiFp(this.configuration).apiFormDataCreateRevisionIdPost(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15812,6 +16011,16 @@ export class FormDataApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormDataPublishIdPost(id: string, options?: RawAxiosRequestConfig) {
+        return FormDataApiFp(this.configuration).apiFormDataPublishIdPost(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {FormDataUpdateDto} [formDataUpdateDto] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15828,6 +16037,16 @@ export class FormDataApi extends BaseAPI {
      */
     public apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto?: FormRuleEngineDto, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataUpdateFormRuleEnginePut(formRuleEngineDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} parentId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormDataVersionsParentIdGet(parentId: string, options?: RawAxiosRequestConfig) {
+        return FormDataApiFp(this.configuration).apiFormDataVersionsParentIdGet(parentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

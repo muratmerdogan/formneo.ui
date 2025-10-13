@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/system";
-import { Button, Dialog, DialogContent, DialogTitle, Icon, IconButton, Tab, Tabs, TextField, Tooltip, Typography } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle, Drawer, Icon, IconButton, List, ListItem, ListItemText, Tab, Tabs, TextField, Tooltip, Typography, Chip } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Components, Formio, FormBuilder, Form } from "@formio/react";
 import components from "../FormManagement/Custom";
@@ -196,132 +196,140 @@ export default function FormEditorV2(): JSX.Element {
   const [jsCode, setJsCode] = useState<string>(generateJavaScriptTemplate({ components: [] }));
   const editorRef = useRef<any>(null);
   const [jsCodeInitialized, setJsCodeInitialized] = useState<boolean>(false);
+  const [publicationStatus, setPublicationStatus] = useState<number>(1); // 1: Draft, 2: Published
+  const [revision, setRevision] = useState<number | undefined>(undefined);
+  const [parentFormId, setParentFormId] = useState<string | undefined>(undefined);
+  const [versionsOpen, setVersionsOpen] = useState<boolean>(false);
+  const [versions, setVersions] = useState<any[]>([]);
+  const [formType, setFormType] = useState<number>(1);
+  const [formCategory, setFormCategory] = useState<number>(1);
+  const [formPriority, setFormPriority] = useState<number>(1);
 
   // Builder options - Sadece premium component'leri gizle
   const builderOptions = {
     builder: {
       premium: false,
       custom: {
-        title: "FormNeo Design System",
+        title: "FormNeo Components",
         Key: "dscomponents",
         weight: 0,
         components: {
           dsinput: {
-            title: "DS Input",
+            title: "Input",
             key: "dsinput",
             icon: "terminal",
             schema: {
-              label: "dsinput",
+              label: "Input",
               type: "dsinput",
               key: "dsinput",
             },
           },
           dstextarea: {
-            title: "DS Textarea",
+            title: "Textarea",
             key: "dstextarea",
             icon: "align-left",
             schema: {
-              label: "dstextarea",
+              label: "Textarea",
               type: "dstextarea",
               key: "dstextarea",
             },
           },
           dsbutton: {
-            title: "DS Button",
+            title: "Button",
             key: "dsbutton",
             icon: "stop",
             schema: {
-              label: "dsbutton",
+              label: "Button",
               type: "dsbutton",
               key: "dsbutton",
             },
           },
           dsselect: {
-            title: "DS Select",
+            title: "Select",
             key: "dsselect",
             icon: "list",
             schema: {
-              label: "dsselect",
+              label: "Select",
               type: "dsselect",
               key: "dsselect",
             },
           },
           dscheckbox: {
-            title: "DS Checkbox",
+            title: "Checkbox",
             key: "dscheckbox",
             icon: "check-square",
             schema: {
-              label: "dscheckbox",
+              label: "Checkbox",
               type: "dscheckbox",
               key: "dscheckbox",
             },
           },
           dsradio: {
-            title: "DS Radio",
+            title: "Radio",
             key: "dsradio",
             icon: "dot-circle-o",
             schema: {
-              label: "dsradio",
+              label: "Radio",
               type: "dsradio",
               key: "dsradio",
             },
           },
           dsnumber: {
-            title: "DS Number",
+            title: "Number",
             key: "dsnumber",
             icon: "hashtag",
             schema: {
-              label: "dsnumber",
+              label: "Number",
               type: "dsnumber",
               key: "dsnumber",
             },
           },
           dsemail: {
-            title: "DS Email",
+            title: "Email",
             key: "dsemail",
             icon: "envelope",
             schema: {
-              label: "dsemail",
+              label: "Email",
               type: "dsemail",
               key: "dsemail",
             },
           },
           dsphone: {
-            title: "DS Phone",
+            title: "Phone",
             key: "dsphone",
             icon: "phone",
             schema: {
-              label: "dsphone",
+              label: "Phone",
               type: "dsphone",
               key: "dsphone",
             },
           },
           dspassword: {
-            title: "DS Password",
+            title: "Password",
             key: "dspassword",
             icon: "lock",
             schema: {
-              label: "dspassword",
+              label: "Password",
               type: "dspassword",
               key: "dspassword",
             },
           },
           dsdatetime: {
-            title: "DS Datetime",
+            title: "Datetime",
             key: "dsdatetime",
             icon: "calendar",
             schema: {
-              label: "dsdatetime",
+              label: "Datetime",
               type: "dsdatetime",
               key: "dsdatetime",
             },
           },
           dstable: {
-            title: "DS Table",
+            title: "Table",
             key: "dstable",
             icon: "table",
             schema: {
-              label: "dstable",
+              label: "Table",
               type: "dstable",
               key: "dstable",
             },
@@ -344,6 +352,18 @@ export default function FormEditorV2(): JSX.Element {
               label: "Müşteri Seçimi",
               type: "dscustomerselect",
               key: "customerSelect",
+            },
+          },
+          dsparameterselect: {
+            title: "Parametre Seçici",
+            key: "dsparameterselect",
+            icon: "database",
+            schema: {
+              label: "Parametre Seçimi",
+              type: "dsparameterselect",
+              key: "parameterSelect",
+              parameterModule: "",
+              parameterCategory: "",
             },
           }
         }
@@ -376,6 +396,12 @@ export default function FormEditorV2(): JSX.Element {
       if (response.data) {
         setFormName(response.data.formName || "Yeni Form");
         setFormDescription(response.data.formDescription || "");
+        if ((response.data as any).parentFormId) setParentFormId((response.data as any).parentFormId);
+        if (typeof response.data.publicationStatus === "number") setPublicationStatus(response.data.publicationStatus);
+        if (typeof response.data.revision === "number") setRevision(response.data.revision);
+        if (typeof (response.data as any).formType === "number") setFormType((response.data as any).formType);
+        if (typeof (response.data as any).formCategory === "number") setFormCategory((response.data as any).formCategory);
+        if (typeof (response.data as any).formPriority === "number") setFormPriority((response.data as any).formPriority);
         
         if (response.data.formDesign) {
           const parsedSchema = JSON.parse(response.data.formDesign);
@@ -405,7 +431,7 @@ export default function FormEditorV2(): JSX.Element {
   };
   
   // Form kaydetme
-  const saveForm = async () => {
+  const saveForm = async (statusOverride?: number) => {
     try {
       if (!formName.trim()) {
         dispatchAlert({
@@ -420,6 +446,7 @@ export default function FormEditorV2(): JSX.Element {
       const api = new FormDataApi(conf);
       
       const formDesignJson = JSON.stringify(schema);
+      const statusToSend = typeof statusOverride === "number" ? statusOverride : publicationStatus || 1;
       
       if (id) {
         // Güncelleme
@@ -430,9 +457,13 @@ export default function FormEditorV2(): JSX.Element {
           formDescription,
           formDesign: formDesignJson,
           javaScriptCode: jsCode,
-          isActive: 1,
+          isActive: 1 as any,
           canEdit: true,
-          revision: 1,
+          revision: revision,
+          publicationStatus: statusToSend as any,
+          formType: formType as any,
+          formCategory: formCategory as any,
+          formPriority: formPriority as any,
         });
         
         dispatchAlert({
@@ -446,10 +477,14 @@ export default function FormEditorV2(): JSX.Element {
           formDescription,
           formDesign: formDesignJson,
           javaScriptCode: jsCode,
-          isActive: 1,
+          isActive: 1 as any,
           canEdit: true,
-          revision: 1,
+          revision: revision,
+          publicationStatus: statusToSend as any,
           showInMenu: false,
+          formType: formType as any,
+          formCategory: formCategory as any,
+          formPriority: formPriority as any,
         });
         
         dispatchAlert({
@@ -458,10 +493,8 @@ export default function FormEditorV2(): JSX.Element {
         });
       }
       
-      // Liste sayfasına dön
-      setTimeout(() => {
-        navigate("/forms");
-      }, 1000);
+      // Durumu güncelle
+      setPublicationStatus(statusToSend);
       
     } catch (error) {
       console.error("Form kaydetme hatası:", error);
@@ -469,6 +502,115 @@ export default function FormEditorV2(): JSX.Element {
         message: "Form kaydedilirken bir hata oluştu!",
         type: MessageBoxType.Error,
       });
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+
+  const publishForm = async () => {
+    try {
+      if (!id) {
+        dispatchAlert({ message: "Önce formu taslak olarak kaydedin, sonra yayınlayın.", type: MessageBoxType.Warning });
+        return;
+      }
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      // Önce mevcut durumu kaydet (taslak olarak)
+      await saveForm(1);
+      // Ardından yayınla
+      await api.apiFormDataPublishIdPost(id);
+      setPublicationStatus(2);
+      dispatchAlert({ message: "Form yayınlandı.", type: MessageBoxType.Success });
+      await openRevisions(true);
+    } catch (e: any) {
+      console.error("Yayınlama hatası:", e);
+      const msg = e?.response?.data?.message || e?.message || "Form yayınlanırken hata oluştu.";
+      if (msg.includes("Only Draft forms can be published") || msg.includes("Only the latest revision can be published")) {
+        dispatchAlert({ message: msg, type: MessageBoxType.Error });
+        await openRevisions(true);
+      } else {
+        dispatchAlert({ message: msg, type: MessageBoxType.Error });
+      }
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+
+  const createRevision = async () => {
+    try {
+      if (!id) {
+        dispatchAlert({ message: "Önce formu kaydedin.", type: MessageBoxType.Warning });
+        return;
+      }
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      await api.apiFormDataCreateRevisionIdPost(id);
+      const parent = parentFormId || id;
+      const resList = await api.apiFormDataVersionsParentIdGet(parent);
+      const list = (resList?.data || []) as any[];
+      const drafts = list.filter((x: any) => x.publicationStatus === 1);
+      const latestDraft = drafts.sort((a: any, b: any) => (b.revision || 0) - (a.revision || 0))[0];
+      if (latestDraft?.id) {
+        dispatchAlert({ message: `Revizyon #${latestDraft.revision} oluşturuldu.`, type: MessageBoxType.Success });
+        navigate(`/forms/editor/${latestDraft.id}`);
+      } else {
+        await openRevisions(true);
+        dispatchAlert({ message: "Revizyon oluşturuldu.", type: MessageBoxType.Success });
+      }
+    } catch (e) {
+      console.error("Revizyon oluşturma hatası:", e);
+      dispatchAlert({ message: "Revizyon oluşturulamadı.", type: MessageBoxType.Error });
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+
+  const openRevisions = async (silent?: boolean) => {
+    try {
+      if (!id) {
+        dispatchAlert({ message: "Önce formu kaydedin.", type: MessageBoxType.Warning });
+        return;
+      }
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      const parent = parentFormId || id;
+      const res = await api.apiFormDataVersionsParentIdGet(parent);
+      const list = (res?.data || []) as any[];
+      setVersions(list);
+      if (!silent) setVersionsOpen(true);
+    } catch (e) {
+      console.error("Revizyonlar yüklenemedi:", e);
+      dispatchAlert({ message: "Revizyonlar yüklenemedi.", type: MessageBoxType.Error });
+    } finally {
+      dispatchBusy({ isBusy: false });
+    }
+  };
+
+  const loadRevision = async (ver: any) => {
+    try {
+      if (!ver?.id) return;
+      dispatchBusy({ isBusy: true });
+      const conf = getConfiguration();
+      const api = new FormDataApi(conf);
+      const response = await api.apiFormDataIdGet(ver.id as string);
+      if (response.data) {
+        setFormName(response.data.formName || formName);
+        setFormDescription(response.data.formDescription || "");
+        if (response.data.formDesign) {
+          try { setSchema(JSON.parse(response.data.formDesign)); } catch {}
+        }
+        if (response.data.javaScriptCode) setJsCode(response.data.javaScriptCode);
+        if (typeof response.data.publicationStatus === "number") setPublicationStatus(response.data.publicationStatus);
+        if (typeof response.data.revision === "number") setRevision(response.data.revision);
+      }
+      setVersionsOpen(false);
+      dispatchAlert({ message: "Revizyon yüklendi.", type: MessageBoxType.Success });
+    } catch (e) {
+      console.error("Revizyon yükleme hatası:", e);
+      dispatchAlert({ message: "Revizyon yüklenemedi.", type: MessageBoxType.Error });
     } finally {
       dispatchBusy({ isBusy: false });
     }
@@ -698,6 +840,10 @@ export default function FormEditorV2(): JSX.Element {
           />
         </Box>
         <Box sx={{ display: "flex", gap: 1 }}>
+          {/* Enum kısa alanları */}
+          <TextField size="small" type="number" label="Tür" value={formType} onChange={(e) => setFormType(parseInt(e.target.value || '1'))} sx={{ width: 90 }} />
+          <TextField size="small" type="number" label="Kategori" value={formCategory} onChange={(e) => setFormCategory(parseInt(e.target.value || '1'))} sx={{ width: 110 }} />
+          <TextField size="small" type="number" label="Öncelik" value={formPriority} onChange={(e) => setFormPriority(parseInt(e.target.value || '1'))} sx={{ width: 110 }} />
           <Button 
             variant="contained" 
             onClick={() => setPreviewOpen(true)}
@@ -705,12 +851,38 @@ export default function FormEditorV2(): JSX.Element {
           >
             <Icon sx={{ mr: 0.5 }}>visibility</Icon>Önizle
           </Button>
+          <Chip size="small" color={publicationStatus === 2 ? "success" : publicationStatus === 3 ? "default" : "default"} label={publicationStatus === 2 ? "Yayınlandı" : publicationStatus === 3 ? "Arşiv" : "Taslak"} sx={{ bgcolor: publicationStatus === 2 ? "#10b981" : publicationStatus === 3 ? "#9ca3af" : "#e5e7eb", color: publicationStatus === 2 ? "#fff" : "#111827", fontWeight: 600 }} />
           <Button 
             variant="contained" 
-            onClick={saveForm}
-            sx={{ background: "#10b981", color: "#fff", fontWeight: 600, "&:hover": { background: "#059669" } }}
+            onClick={() => saveForm(1)}
+            disabled={publicationStatus !== 1}
+            sx={{ background: publicationStatus !== 1 ? "#9ca3af" : "#10b981", color: "#fff", fontWeight: 600, "&:hover": { background: publicationStatus !== 1 ? "#9ca3af" : "#059669" } }}
           >
-            <Icon sx={{ mr: 0.5 }}>save</Icon>Kaydet
+            <Icon sx={{ mr: 0.5 }}>save</Icon>Taslak Kaydet
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={publishForm}
+            disabled={publicationStatus !== 1}
+            sx={{ background: publicationStatus !== 1 ? "#9ca3af" : "#7c3aed", color: "#fff", fontWeight: 600, "&:hover": { background: publicationStatus !== 1 ? "#9ca3af" : "#6d28d9" } }}
+          >
+            <Icon sx={{ mr: 0.5 }}>publish</Icon>Yayınla
+          </Button>
+          {(publicationStatus === 2 || publicationStatus === 3) && (
+            <Button 
+              variant="outlined" 
+              onClick={createRevision}
+              sx={{ borderColor: "rgba(255,255,255,0.5)", color: "#fff", "&:hover": { borderColor: "#fff", background: "rgba(255,255,255,0.1)" } }}
+            >
+              <Icon sx={{ mr: 0.5 }}>post_add</Icon>Revizyon Oluştur
+            </Button>
+          )}
+          <Button 
+            variant="outlined" 
+            onClick={() => openRevisions()}
+            sx={{ borderColor: "rgba(255,255,255,0.5)", color: "#fff", "&:hover": { borderColor: "#fff", background: "rgba(255,255,255,0.1)" } }}
+          >
+            <Icon sx={{ mr: 0.5 }}>history</Icon>Revizyonlar
           </Button>
           <Button 
             variant="outlined" 
@@ -766,24 +938,35 @@ export default function FormEditorV2(): JSX.Element {
           </Tabs>
         </Box>
 
-        {/* Tab 0: Form Builder - FULL HEIGHT */}
+        {/* Tab 0: Builder veya Read-Only Görünüm - FULL HEIGHT */}
         <Box sx={{ 
           flex: 1, 
           overflow: "auto", 
           bgcolor: "#fafbfc",
           display: tab === 0 ? "block" : "none"
         }}>
-          <Box 
-            className="formio-builder-wrapper formio-builder-fullscreen"
-            sx={{ 
-              height: "100%",
-              minHeight: "600px",
-              width: "100%",
-              display: "flex"
-            }}
-          >
-            <FormBuilder options={builderOptions} form={schema} onChange={onFormChange} />
-          </Box>
+          {publicationStatus === 1 ? (
+            <Box 
+              className="formio-builder-wrapper formio-builder-fullscreen"
+              sx={{ 
+                height: "100%",
+                minHeight: "600px",
+                width: "100%",
+                display: "flex"
+              }}
+            >
+              <FormBuilder options={builderOptions} form={schema} onChange={onFormChange} />
+            </Box>
+          ) : (
+            <Box sx={{ p: 2 }}>
+              <Box sx={{ mb: 2, px: 2, py: 1, bgcolor: "#111827", color: "#fff", borderRadius: 1, display: "inline-flex" }}>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Bu sürüm salt okunur. Düzenlemek için &quot;Revizyon Oluştur&quot; seçeneğini kullanın.
+                </Typography>
+              </Box>
+              <Form form={schema} options={{ readOnly: true }} />
+            </Box>
+          )}
         </Box>
 
         {/* Tab 1: JavaScript Editor - FULL HEIGHT */}
@@ -912,6 +1095,29 @@ export default function FormEditorV2(): JSX.Element {
           </Box>
         )}
       </Box>
+
+      {/* Revisions Drawer */}
+      <Drawer anchor="right" open={versionsOpen} onClose={() => setVersionsOpen(false)}>
+        <Box sx={{ width: 360, p: 2 }}>
+          <Typography variant="h6" sx={{ mb: 1, fontWeight: 700 }}>Revizyon Geçmişi</Typography>
+          <Typography variant="body2" sx={{ color: '#6b7280', mb: 2 }}>Önceki sürümlerden birini yüklemek için tıklayın.</Typography>
+          <List dense>
+            {versions.length === 0 && (
+              <ListItem>
+                <ListItemText primary="Kayıtlı revizyon bulunamadı" />
+              </ListItem>
+            )}
+            {versions.map((v: any, idx: number) => (
+              <ListItem key={v.id || idx} button onClick={() => loadRevision(v)}>
+                <ListItemText 
+                  primary={`Revizyon #${v.revision ?? idx + 1} ${v.publicationStatus === 2 ? '(Yayın)' : '(Taslak)'}`}
+                  secondary={v.updatedDate || v.createdDate}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
 
       {/* Bottom Status Bar - Floating */}
       <Box sx={{ 

@@ -21,6 +21,7 @@ import { DSTextAreaComponent } from "./DSTextArea";
 import { DSApprovalComponent } from "./DSApproval";
 import { DSUserSelectComponent } from "./DSUserSelect";
 import { DSCustomerSelectComponent } from "./DSCustomerSelect";
+import { DSParameterSelectComponent } from "./DSParameterSelect";
 export default {
   HeaderComponent,
   DSInputComponent,
@@ -44,5 +45,6 @@ export default {
   DSTextAreaComponent,
   DSApprovalComponent,
   DSUserSelectComponent,
-  DSCustomerSelectComponent
+  DSCustomerSelectComponent,
+  DSParameterSelectComponent
 };
