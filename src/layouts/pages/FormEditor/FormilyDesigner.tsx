@@ -128,7 +128,7 @@ export default function FormilyDesigner(): JSX.Element {
       <div style={{ padding: 16 }}>
         <FormProvider form={previewForm}>
           <AntdFormily.Form>
-            <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="middle">
+            <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
               <SchemaField schema={result.schema || {}} />
             </AntdFormily.FormLayout>
           </AntdFormily.Form>
@@ -143,7 +143,7 @@ export default function FormilyDesigner(): JSX.Element {
         <StudioPanelAny
           logo={
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <img src={formNeoLogo} alt="FormNeo" style={{ height: 28 }} />
+              <img src={formNeoLogo} alt="FormNeo" style={{ height: 32, width: "auto", display: "block" }} />
               <Typography.Text strong>FormNeo Designer</Typography.Text>
             </div>
           }
