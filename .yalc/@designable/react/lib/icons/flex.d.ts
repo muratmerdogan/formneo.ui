@@ -1,0 +1,22 @@
+/// <reference types="react" />
+export declare const FlexDirectionRow: JSX.Element;
+export declare const FlexDirectionColumn: JSX.Element;
+export declare const FlexAlignContentCenter: JSX.Element;
+export declare const FlexAlignContentStart: JSX.Element;
+export declare const FlexAlignContentEnd: JSX.Element;
+export declare const FlexAlignContentSpaceAround: JSX.Element;
+export declare const FlexAlignContentSpaceBetween: JSX.Element;
+export declare const FlexAlignContentStretch: JSX.Element;
+export declare const FlexJustifyCenter: JSX.Element;
+export declare const FlexJustifyStart: JSX.Element;
+export declare const FlexJustifyEnd: JSX.Element;
+export declare const FlexJustifySpaceBetween: JSX.Element;
+export declare const FlexJustifySpaceAround: JSX.Element;
+export declare const FlexJustifySpaceEvenly: JSX.Element;
+export declare const FlexAlignItemsCenter: JSX.Element;
+export declare const FlexAlignItemsStart: JSX.Element;
+export declare const FlexAlignItemsEnd: JSX.Element;
+export declare const FlexAlignItemsStretch: JSX.Element;
+export declare const FlexAlignItemsBaseline: JSX.Element;
+export declare const FlexNoWrap: JSX.Element;
+export declare const FlexWrap: JSX.Element;

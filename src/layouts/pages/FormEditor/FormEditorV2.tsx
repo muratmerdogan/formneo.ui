@@ -1045,7 +1045,7 @@ export default function FormEditorV2(): JSX.Element {
                 padding: { top: 16, bottom: 16 },
                 renderLineHighlight: "all",
                 cursorBlinking: "smooth",
-                cursorSmoothCaretAnimation: "on",
+                cursorSmoothCaretAnimation: true,
                 smoothScrolling: true,
               }}
               />
@@ -1088,7 +1088,7 @@ export default function FormEditorV2(): JSX.Element {
                 padding: { top: 16, bottom: 16 },
                 renderLineHighlight: "all",
                 cursorBlinking: "smooth",
-                cursorSmoothCaretAnimation: "on",
+                cursorSmoothCaretAnimation: true,
                 smoothScrolling: true,
               }}
             />

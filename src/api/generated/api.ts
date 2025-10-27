@@ -1417,6 +1417,14 @@ export const FormStatus = {
 export type FormStatus = typeof FormStatus[keyof typeof FormStatus];
 
 
+export interface FormTenantRoleListDto {
+    'id'?: string;
+    'name'?: string | null;
+    'description'?: string | null;
+    'isActive'?: boolean;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+}
 
 export const FormType = {
     NUMBER_1: 1,
@@ -2317,6 +2325,38 @@ export interface RoleTenantBulkItemDto {
 export interface RoleTenantBulkSaveDto {
     'roleId'?: string | null;
     'items'?: Array<RoleTenantBulkItemDto> | null;
+}
+export interface RoleTenantFormInsertDto {
+    'roleName'?: string | null;
+    'roleDescription'?: string | null;
+    'roleIsActive'?: boolean | null;
+    'formPermissions'?: Array<RoleTenantFormPermissionDto> | null;
+}
+export interface RoleTenantFormListDto {
+    'id'?: string;
+    'formTenantRoleId'?: string;
+    'formId'?: string;
+    'canView'?: boolean;
+    'canAdd'?: boolean;
+    'canEdit'?: boolean;
+    'canDelete'?: boolean;
+    'description'?: string | null;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+}
+export interface RoleTenantFormPermissionDto {
+    'formId'?: string;
+    'canView'?: boolean;
+    'canAdd'?: boolean;
+    'canEdit'?: boolean;
+    'canDelete'?: boolean;
+}
+export interface RoleTenantFormUpdateDto {
+    'formTenantRoleId'?: string;
+    'roleName'?: string | null;
+    'roleDescription'?: string | null;
+    'roleIsActive'?: boolean | null;
+    'formPermissions'?: Array<RoleTenantFormPermissionDto> | null;
 }
 export interface RoleTenantInsertDto {
     'roleId'?: string | null;
@@ -15391,6 +15431,39 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataLatestPerFamilyGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/FormData/latest-per-family`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15700,6 +15773,17 @@ export const FormDataApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormDataLatestPerFamilyGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormDataListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataLatestPerFamilyGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataLatestPerFamilyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15854,6 +15938,14 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataLatestPerFamilyGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<FormDataListDto>> {
+            return localVarFp.apiFormDataLatestPerFamilyGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15997,6 +16089,15 @@ export class FormDataApi extends BaseAPI {
      */
     public apiFormDataIdGet(id: string, options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormDataLatestPerFamilyGet(options?: RawAxiosRequestConfig) {
+        return FormDataApiFp(this.configuration).apiFormDataLatestPerFamilyGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16637,6 +16738,43 @@ export const FormRuntimeApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet: async (parentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'parentId' is not null or undefined
+            assertParamExists('apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet', 'parentId', parentId)
+            const localVarPath = `/api/FormRuntime/GetLatestColumnsAndAllRevisionData/{parentId}`
+                .replace(`{${"parentId"}}`, encodeURIComponent(String(parentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} formId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16883,6 +17021,18 @@ export const FormRuntimeApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormRuntimeApi.apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} formId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16988,6 +17138,15 @@ export const FormRuntimeApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
+         * @param {string} parentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} formId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17076,6 +17235,16 @@ export class FormRuntimeApi extends BaseAPI {
      */
     public apiFormRuntimeGetFormDataByIdFormIdGet(formId: string, options?: RawAxiosRequestConfig) {
         return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetFormDataByIdFormIdGet(formId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} parentId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId: string, options?: RawAxiosRequestConfig) {
+        return FormRuntimeApiFp(this.configuration).apiFormRuntimeGetLatestColumnsAndAllRevisionDataParentIdGet(parentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -28218,6 +28387,365 @@ export class RoleMenuApi extends BaseAPI {
      */
     public apiRoleMenuRoleIdDelete(roleId: string, options?: RawAxiosRequestConfig) {
         return RoleMenuApiFp(this.configuration).apiRoleMenuRoleIdDelete(roleId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RoleTenantFormApi - axios parameter creator
+ */
+export const RoleTenantFormApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} formTenantRoleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormFormTenantRoleIdGet: async (formTenantRoleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'formTenantRoleId' is not null or undefined
+            assertParamExists('apiRoleTenantFormFormTenantRoleIdGet', 'formTenantRoleId', formTenantRoleId)
+            const localVarPath = `/api/RoleTenantForm/{formTenantRoleId}`
+                .replace(`{${"formTenantRoleId"}}`, encodeURIComponent(String(formTenantRoleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantForm`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RoleTenantFormInsertDto} [roleTenantFormInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormInsertPost: async (roleTenantFormInsertDto?: RoleTenantFormInsertDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantForm/insert`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(roleTenantFormInsertDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormRolesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantForm/roles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RoleTenantFormUpdateDto} [roleTenantFormUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormUpdatePost: async (roleTenantFormUpdateDto?: RoleTenantFormUpdateDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RoleTenantForm/update`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(roleTenantFormUpdateDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RoleTenantFormApi - functional programming interface
+ */
+export const RoleTenantFormApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoleTenantFormApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} formTenantRoleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantFormListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormFormTenantRoleIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantFormGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantFormListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {RoleTenantFormInsertDto} [roleTenantFormInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantFormInsertPost(roleTenantFormInsertDto?: RoleTenantFormInsertDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormInsertPost(roleTenantFormInsertDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormInsertPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantFormRolesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormTenantRoleListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormRolesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormRolesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {RoleTenantFormUpdateDto} [roleTenantFormUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto?: RoleTenantFormUpdateDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormUpdatePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RoleTenantFormApi - factory interface
+ */
+export const RoleTenantFormApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoleTenantFormApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} formTenantRoleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantFormListDto>> {
+            return localVarFp.apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantFormListDto>> {
+            return localVarFp.apiRoleTenantFormGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RoleTenantFormInsertDto} [roleTenantFormInsertDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormInsertPost(roleTenantFormInsertDto?: RoleTenantFormInsertDto, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.apiRoleTenantFormInsertPost(roleTenantFormInsertDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormRolesGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<FormTenantRoleListDto>> {
+            return localVarFp.apiRoleTenantFormRolesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RoleTenantFormUpdateDto} [roleTenantFormUpdateDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto?: RoleTenantFormUpdateDto, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RoleTenantFormApi - object-oriented interface
+ */
+export class RoleTenantFormApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} formTenantRoleId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig) {
+        return RoleTenantFormApiFp(this.configuration).apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiRoleTenantFormGet(options?: RawAxiosRequestConfig) {
+        return RoleTenantFormApiFp(this.configuration).apiRoleTenantFormGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RoleTenantFormInsertDto} [roleTenantFormInsertDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiRoleTenantFormInsertPost(roleTenantFormInsertDto?: RoleTenantFormInsertDto, options?: RawAxiosRequestConfig) {
+        return RoleTenantFormApiFp(this.configuration).apiRoleTenantFormInsertPost(roleTenantFormInsertDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiRoleTenantFormRolesGet(options?: RawAxiosRequestConfig) {
+        return RoleTenantFormApiFp(this.configuration).apiRoleTenantFormRolesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RoleTenantFormUpdateDto} [roleTenantFormUpdateDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto?: RoleTenantFormUpdateDto, options?: RawAxiosRequestConfig) {
+        return RoleTenantFormApiFp(this.configuration).apiRoleTenantFormUpdatePost(roleTenantFormUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

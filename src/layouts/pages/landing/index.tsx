@@ -40,14 +40,9 @@ import WorkflowIcon from "@mui/icons-material/AccountTree";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LanguageIcon from "@mui/icons-material/Language";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SyncIcon from "@mui/icons-material/Sync";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
-import LaunchIcon from "@mui/icons-material/Launch";
 import EmailIcon from "@mui/icons-material/Email";
 
 // Styled components
@@ -194,22 +189,7 @@ const Dot = styled(Box)(({ active }: { active: boolean }) => ({
     }
 }));
 
-const OrderManagementSection = styled(Box)(({ theme }) => ({
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    color: "white",
-    padding: theme.spacing(12, 0),
-    position: "relative",
-    "&::before": {
-        content: '""',
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"dots\" width=\"20\" height=\"20\" patternUnits=\"userSpaceOnUse\"><circle cx=\"10\" cy=\"10\" r=\"1\" fill=\"%23ffffff\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23dots)\"/></svg>') repeat",
-        opacity: 0.3,
-    }
-}));
+const OrderManagementSection = styled(Box)(({ theme }) => ({ display: 'none' }));
 
 const PlatformCard = styled(Card)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -253,59 +233,7 @@ function LandingPage(): JSX.Element {
     const langFlag: Record<string, string> = { tr: '🇹🇷', en: '🇬🇧', de: '🇩🇪', fr: '🇫🇷', es: '🇪🇸' };
     const currentFlag = langFlag[i18n.language] || '🌐';
 
-    const deliveryPlatforms = [
-        {
-            name: "Getir",
-            icon: <DeliveryDiningIcon sx={{ fontSize: 48, color: "#5d4fb3" }} />,
-            url: "https://getir.com",
-            description: "Hızlı teslimat platformu entegrasyonu",
-            color: "#5d4fb3"
-        },
-        {
-            name: "Trendyol Yemek",
-            icon: <RestaurantIcon sx={{ fontSize: 48, color: "#f27a1a" }} />,
-            url: "https://www.trendyolyemek.com",
-            description: "Türkiye&apos;nin lider yemek sipariş platformu",
-            color: "#f27a1a"
-        },
-        {
-            name: "Yemeksepeti",
-            icon: <ShoppingCartIcon sx={{ fontSize: 48, color: "#ff6600" }} />,
-            url: "https://yemeksepeti.com",
-            description: "Kapsamlı yemek sipariş çözümleri",
-            color: "#ff6600"
-        },
-        {
-            name: "Migros Hemen",
-            icon: <ShoppingCartIcon sx={{ fontSize: 48, color: "#00a651" }} />,
-            url: "https://migros.com.tr",
-            description: "Market alışveriş entegrasyonu",
-            color: "#00a651"
-        }
-    ];
-
-    const orderManagementFeatures = [
-        {
-            icon: <DashboardIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: "Tek Panel Yönetimi",
-            description: "Tüm platformlardan gelen siparişleri tek bir panelde görüntüleyin ve yönetin"
-        },
-        {
-            icon: <SyncIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: "Otomatik Senkronizasyon",
-            description: "Siparişler gerçek zamanlı olarak otomatik senkronize edilir"
-        },
-        {
-            icon: <NotificationsIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: "Anlık Bildirimler",
-            description: "Yeni siparişler için anında bildirim alın"
-        },
-        {
-            icon: <AnalyticsIcon sx={{ fontSize: 48, color: "#667eea" }} />,
-            title: "Detaylı Raporlama",
-            description: "Platform bazlı satış analizi ve performans raporları"
-        }
-    ];
+    // Sipariş yönetimi içerikleri kaldırıldı
 
     const sectionKeys = [
         "Tasks",
@@ -771,137 +699,7 @@ function LandingPage(): JSX.Element {
                 </MDBox>
             </Container>
 
-            {/* Order Management Section */}
-            <OrderManagementSection>
-                <Container maxWidth="lg">
-                    <MDBox position="relative" zIndex={1}>
-                        <MDBox textAlign="center" mb={8}>
-                            <MDTypography variant="h2" fontWeight="bold" mb={3}>
-                                🚀 Yeni Özellik: Sipariş Yönetim Modülü
-                            </MDTypography>
-                            <MDTypography variant="h5" sx={{ opacity: 0.9, maxWidth: "800px", mx: "auto", mb: 4 }}>
-                                Getir, Trendyol Yemek, Yemeksepeti ve daha fazla platformdan gelen siparişlerinizi 
-                                tek bir yerden yönetin. Operasyonel verimliliğinizi artırın!
-                            </MDTypography>
-                            
-                            <MDBox display="flex" justifyContent="center" flexWrap="wrap" gap={1} mb={6}>
-                                <IntegrationBadge>
-                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
-                                    Gerçek Zamanlı Senkronizasyon
-                                </IntegrationBadge>
-                                <IntegrationBadge>
-                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
-                                    Tek Panel Kontrolü
-                                </IntegrationBadge>
-                                <IntegrationBadge>
-                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
-                                    Otomatik Bildirimler
-                                </IntegrationBadge>
-                                <IntegrationBadge>
-                                    <CheckCircleIcon sx={{ fontSize: 16 }} />
-                                    Detaylı Raporlama
-                                </IntegrationBadge>
-                            </MDBox>
-                        </MDBox>
-
-                        {/* Platform Integrations */}
-                        <MDBox mb={8}>
-                            <MDTypography variant="h4" fontWeight="bold" textAlign="center" mb={2}>
-                                Entegre Platformlar
-                            </MDTypography>
-                            <MDTypography variant="body1" textAlign="center" sx={{ opacity: 0.8, mb: 4 }}>
-                                Türkiye&apos;nin en popüler teslimat ve sipariş platformlarıyla sorunsuz entegrasyon
-                            </MDTypography>
-                            
-                            <Grid container spacing={3} justifyContent="center">
-                                {deliveryPlatforms.map((platform, index) => (
-                                    <Grid item xs={12} sm={6} md={3} key={index}>
-                                        <PlatformCard
-                                            sx={{
-                                                cursor: "pointer",
-                                                "&:hover": {
-                                                    "& .platform-icon": {
-                                                        transform: "scale(1.1)",
-                                                        color: platform.color
-                                                    }
-                                                }
-                                            }}
-                                            onClick={() => window.open(platform.url, '_blank')}
-                                        >
-                                            <MDBox mb={2} className="platform-icon" sx={{ transition: "all 0.3s ease" }}>
-                                                {platform.icon}
-                                            </MDBox>
-                                            <MDTypography variant="h6" fontWeight="bold" color="dark" mb={1}>
-                                                {platform.name}
-                                            </MDTypography>
-                                            <MDTypography variant="body2" color="text" mb={2}>
-                                                {platform.description}
-                                            </MDTypography>
-                                            <MDBox display="flex" alignItems="center" justifyContent="center" gap={1}>
-                                                <LaunchIcon sx={{ fontSize: 16, color: platform.color }} />
-                                                <MDTypography variant="body2" sx={{ color: platform.color, fontWeight: "bold" }}>
-                                                    Platformu Ziyaret Et
-                                                </MDTypography>
-                                            </MDBox>
-                                        </PlatformCard>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </MDBox>
-
-                        {/* Order Management Features */}
-                        <Grid container spacing={4}>
-                            {orderManagementFeatures.map((feature, index) => (
-                                <Grid item xs={12} md={6} lg={3} key={index}>
-                                    <MDBox textAlign="center" p={3}>
-                                        <MDBox mb={3}>
-                                            {feature.icon}
-                                        </MDBox>
-                                        <MDTypography variant="h6" fontWeight="bold" mb={2}>
-                                            {feature.title}
-                                        </MDTypography>
-                                        <MDTypography variant="body2" sx={{ opacity: 0.9 }}>
-                                            {feature.description}
-                                        </MDTypography>
-                                    </MDBox>
-                                </Grid>
-                            ))}
-                        </Grid>
-
-                        {/* CTA for Order Management */}
-                        <MDBox textAlign="center" mt={8}>
-                            <MDTypography variant="h4" fontWeight="bold" mb={3}>
-                                Sipariş Yönetimini Deneyin
-                            </MDTypography>
-                            <MDTypography variant="body1" sx={{ opacity: 0.8, maxWidth: "600px", mx: "auto", mb: 4 }}>
-                                FormNeo&apos;nun güçlü sipariş yönetim modülü ile işletmenizin verimliliğini artırın. 
-                                Ücretsiz deneme ile hemen başlayın!
-                            </MDTypography>
-                            <MDButton
-                                variant="contained"
-                                color="white"
-                                size="large"
-                                onClick={handleRegister}
-                                sx={{
-                                    px: 4,
-                                    py: 1.5,
-                                    fontSize: "1.1rem",
-                                    textTransform: "none",
-                                    color: "#667eea",
-                                    fontWeight: "bold",
-                                    boxShadow: "0 8px 25px rgba(255, 255, 255, 0.3)",
-                                    "&:hover": {
-                                        transform: "translateY(-2px)",
-                                        boxShadow: "0 12px 35px rgba(255, 255, 255, 0.4)"
-                                    }
-                                }}
-                            >
-                                🎯 Ücretsiz Deneyin - Sipariş Yönetimi
-                            </MDButton>
-                        </MDBox>
-                    </MDBox>
-                </Container>
-            </OrderManagementSection>
+            {/* Order Management Section kaldırıldı */}
 
             {/* Advanced Features Carousel */}
             <Container maxWidth="lg">

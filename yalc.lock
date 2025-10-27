@@ -1,0 +1,33 @@
+{
+  "version": "v1",
+  "packages": {
+    "@designable/react-settings-form": {
+      "signature": "1146622c6500da60342c4001746e38de",
+      "file": true
+    },
+    "@designable/formily-setters": {
+      "signature": "4485f047d9b7569ffb1089dfaaff4a95",
+      "file": true
+    },
+    "@designable/formily-transformer": {
+      "signature": "c9b10d7828f62353486e3da50fbab015",
+      "file": true
+    },
+    "@designable/formily-antd": {
+      "signature": "86790eec028fae47191f0b38a71f5db4",
+      "file": true
+    },
+    "@designable/shared": {
+      "signature": "345366319d6adcccfcba8e466285ac7d",
+      "file": true
+    },
+    "@designable/core": {
+      "signature": "c5951106cda774811e77393fb84bc3d8",
+      "file": true
+    },
+    "@designable/react": {
+      "signature": "e0c8105456bba9e0b3ab6bf4edf83ecc",
+      "file": true
+    }
+  }
+}

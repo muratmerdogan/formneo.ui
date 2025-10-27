@@ -1,0 +1,42 @@
+import { createSchemaField } from '@formily/react';
+import { FormItem, Input, NumberPicker, DatePicker, TimePicker, Select, Radio, Switch, Space, ArrayItems, ArrayTable, FormCollapse, FormGrid, FormLayout, FormTab, } from '@formily/antd';
+import { Slider } from 'antd';
+import { SizeInput, ColorInput, ImageInput, BackgroundImageInput, PositionInput, CornerInput, MonacoInput, ValueInput, BoxStyleSetter, BorderStyleSetter, BorderRadiusStyleSetter, BackgroundStyleSetter, BoxShadowStyleSetter, FontStyleSetter, DisplayStyleSetter, FlexStyleSetter, DrawerSetter, CollapseItem, } from './components';
+export var SchemaField = createSchemaField({
+    components: {
+        FormItem: FormItem,
+        CollapseItem: CollapseItem,
+        Input: Input,
+        ValueInput: ValueInput,
+        SizeInput: SizeInput,
+        ColorInput: ColorInput,
+        ImageInput: ImageInput,
+        MonacoInput: MonacoInput,
+        PositionInput: PositionInput,
+        CornerInput: CornerInput,
+        BackgroundImageInput: BackgroundImageInput,
+        BackgroundStyleSetter: BackgroundStyleSetter,
+        BoxStyleSetter: BoxStyleSetter,
+        BorderStyleSetter: BorderStyleSetter,
+        BorderRadiusStyleSetter: BorderRadiusStyleSetter,
+        DisplayStyleSetter: DisplayStyleSetter,
+        BoxShadowStyleSetter: BoxShadowStyleSetter,
+        FlexStyleSetter: FlexStyleSetter,
+        FontStyleSetter: FontStyleSetter,
+        DrawerSetter: DrawerSetter,
+        NumberPicker: NumberPicker,
+        DatePicker: DatePicker,
+        TimePicker: TimePicker,
+        Select: Select,
+        Radio: Radio,
+        Slider: Slider,
+        Switch: Switch,
+        Space: Space,
+        ArrayItems: ArrayItems,
+        ArrayTable: ArrayTable,
+        FormCollapse: FormCollapse,
+        FormGrid: FormGrid,
+        FormLayout: FormLayout,
+        FormTab: FormTab,
+    },
+});

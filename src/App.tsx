@@ -94,6 +94,8 @@ const CreateTicketProject = lazy(() => import("layouts/pages/ticketProjects/crea
 const FormAuth = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuth"));
 const FormAuthDetail = lazy(() => import("layouts/pages/FormManagement/FormAuth/FormAuthDetail"));
 const FormList = lazy(() => import("layouts/pages/FormManagement/UsersForm/FormList"));
+const TenantFormRole = lazy(() => import("layouts/pages/FormManagement/tenant-form-role"));
+const TenantFormRoleList = lazy(() => import("layouts/pages/FormManagement/tenant-form-role/list"));
 const ResumeBuild = lazy(() => import("layouts/pages/resumeBuilder"));
 const Inventory = lazy(() => import("layouts/pages/inventory"));
 const CreateInventory = lazy(() => import("layouts/pages/inventory/createInventory"));
@@ -120,6 +122,7 @@ const ParameterEditPublic = lazy(() => import("layouts/pages/FormManagement/Para
 const ParameterViewPublic = lazy(() => import("layouts/pages/FormManagement/listForm/ParameterView"));
 const FormDesigner = lazy(() => import("layouts/pages/FormManagement/FormDesigner"));
 const FormEditor = lazy(() => import("layouts/pages/FormEditor/FormEditorV2"));
+const FormilyDesigner = lazy(() => import("layouts/pages/FormEditor/FormilyDesigner"));
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -242,8 +245,9 @@ export default function App() {
       <ActionBarProvider>
         <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
           <Routes>
-            {/* Public Routes */}
+            {/* Public Routes */}x  
             <Route path="/" element={<LandingPage />} />
+            <Route path="/forms/designer" element={<FormilyDesigner />} />
             <Route path="/authentication/sign-in/cover" element={<Cover />} />
             <Route path="/authentication/company-register" element={<CompanyRegister />} />
             <Route path="/LogOut" element={<Logout />} />
@@ -260,6 +264,7 @@ export default function App() {
             <Route path="/forms/detail/:id" element={<FormDesigner />} />
             <Route path="/forms/editor" element={<FormEditor />} />
             <Route path="/forms/editor/:id" element={<FormEditor />} />
+
             <Route path="/ParameterEdit/" element={<ParameterEditPublic />} />
             <Route path="/forms/view/:formId/:formRunId?/:isVisibility?" element={<ParameterViewPublic />} />
             {/* SEO Articles */}
@@ -333,7 +338,10 @@ export default function App() {
               <Route path="/formAuth/detail" element={<FormAuthDetail />} />
               <Route path="/formAuth/detail/:id" element={<FormAuthDetail />} />
 
-              <Route path="/formlist/:formId" element={<FormList />} />
+              <Route path="/formList/:formId" element={<FormList />} />
+              <Route path="/tenant/form-role" element={<TenantFormRoleList />} />
+              <Route path="/tenant/form-role/detail" element={<TenantFormRole />} />
+              <Route path="/tenant/form-role/detail/:id" element={<TenantFormRole />} />
               {/* <Route path="/mmessages" element={<ChatPage />} /> */}
             </Route>
 

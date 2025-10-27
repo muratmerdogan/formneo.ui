@@ -121,6 +121,7 @@ const WorkFlowList = lazy(() => import("layouts/pages/WorkFlow/WorkFlowList"));
 const WorkFlowDetail = lazy(() => import("layouts/pages/WorkFlow/WorkFlowDetail.jsx"));
 const ApproveList = lazy(() => import("layouts/pages/WorkFlow/ApproveList"));
 const ParameterView = lazy(() => import("layouts/pages/FormManagement/listForm/ParameterView"));
+const FormilyDesigner = lazy(() => import("layouts/pages/FormEditor/FormilyDesigner"));
 const TenantsList = lazy(() => import("layouts/pages/tenants/index"));
 const TenantDetail = lazy(() => import("layouts/pages/tenants/detail"));
 const TenantsManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement"));
@@ -463,6 +464,20 @@ const routes = [
         route: "/roles/detail",
         component: <RoleScreenDefination />,
 
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "Formily Designer",
+    key: "formily-designer",
+    icon: <Icon fontSize="medium">design_services</Icon>,
+    collapse: [
+      {
+        name: "Designer",
+        key: "formily-designer",
+        route: "/forms/designer",
+        component: <FormilyDesigner />,
       },
     ],
   },

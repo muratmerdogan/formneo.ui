@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       fontLigatures: true,
                       renderLineHighlight: "all",
                       cursorBlinking: "smooth",
-                      cursorSmoothCaretAnimation: "on",
+                      cursorSmoothCaretAnimation: true,
                     }}
                   />
                 </Box>
@@ -1422,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   fontLigatures: true,
                   renderLineHighlight: "all",
                   cursorBlinking: "smooth",
-                  cursorSmoothCaretAnimation: "on",
+                  cursorSmoothCaretAnimation: true,
                 }}
               />
             </Box>
