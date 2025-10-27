@@ -248,6 +248,7 @@ export default function App() {
             {/* Public Routes */}x  
             <Route path="/" element={<LandingPage />} />
             <Route path="/forms/designer" element={<FormilyDesigner />} />
+            <Route path="/forms/designer/:id" element={<FormilyDesigner />} />
             <Route path="/authentication/sign-in/cover" element={<Cover />} />
             <Route path="/authentication/company-register" element={<CompanyRegister />} />
             <Route path="/LogOut" element={<Logout />} />
