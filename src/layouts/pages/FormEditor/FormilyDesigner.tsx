@@ -3,6 +3,12 @@ import React, { useMemo } from "react";
 // Styles (LESS yerine derlenmiş CSS kullanıyoruz)
 import "antd/dist/antd.css";
 import "@designable/react/dist/designable.react.umd.production.css";
+import "@designable/react-settings-form/dist/designable.settings-form.umd.production.css";
+
+// Ant Design UI (üst bar için)
+import { Space as AntSpace, Button as AntButton, Typography } from "antd";
+import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined } from "@ant-design/icons";
+import formNeoLogo from "assets/images/logoson.svg";
 
 // Designable React bileşenleri
 import {
@@ -38,6 +44,7 @@ const ResourceWidgetAny = ResourceWidget as any;
 
 // Designable çekirdek
 import { createDesigner } from "@designable/core";
+import { GlobalRegistry } from "@designable/core";
 
 // Ayar formu
 import { SettingsForm } from "@designable/react-settings-form";
@@ -71,6 +78,10 @@ import {
   FormGrid,
   FormLayout,
 } from "@designable/formily-antd";
+import { transformToSchema } from "@designable/formily-transformer";
+import { createForm } from "@formily/core";
+import { FormProvider, createSchemaField } from "@formily/react";
+import * as AntdFormily from "@formily/antd";
 
 export default function FormilyDesigner(): JSX.Element {
   const engine = useMemo(
@@ -80,11 +91,78 @@ export default function FormilyDesigner(): JSX.Element {
       }),
     []
   );
+  // Localization: TR paketi olmadığı için en-US'e sabitle
+  GlobalRegistry.setDesignerLanguage("en-US");
+
+  const previewForm = useMemo(() => createForm(), []);
+  const SchemaField = useMemo(() => createSchemaField({ components: AntdFormily as any }), []);
+
+  const handleSave = () => {
+    try {
+      console.log("[FormNeo] Kaydet tıklandı", engine);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlePublish = () => {
+    try {
+      console.log("[FormNeo] Yayınla tıklandı", engine);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleOpenVersions = () => {
+    try {
+      console.log("[FormNeo] Revizyonlar tıklandı", engine);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderPreview = (tree: any) => {
+    if (!tree) return <div style={{ padding: 16 }}>No schema</div>;
+    const result = transformToSchema(tree);
+    return (
+      <div style={{ padding: 16 }}>
+        <FormProvider form={previewForm}>
+          <SchemaField schema={result.schema || {}} />
+        </FormProvider>
+      </div>
+    );
+  };
 
   return (
     <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
       <DesignerAny engine={engine}>
-        <StudioPanelAny>
+        <StudioPanelAny
+          logo={
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <img src={formNeoLogo} alt="FormNeo" style={{ height: 28 }} />
+              <Typography.Text strong>FormNeo Designer</Typography.Text>
+            </div>
+          }
+          actions={
+            <AntSpace size="small">
+              <AntButton type="primary" size="small" icon={<SaveOutlined />} onClick={handleSave}>
+                Kaydet
+              </AntButton>
+              <AntButton size="small" icon={<RocketOutlined />} onClick={handlePublish}>
+                Yayınla
+              </AntButton>
+              <AntButton size="small" icon={<HistoryOutlined />} onClick={handleOpenVersions}>
+                Revizyonlar
+              </AntButton>
+              <AntButton size="small" icon={<EyeOutlined />} onClick={() => {}}>
+                Preview
+              </AntButton>
+              <AntButton size="small" icon={<CodeOutlined />} onClick={() => {}}>
+                JSON
+              </AntButton>
+            </AntSpace>
+          }
+        >
           <CompositePanelAny>
             <CompositePanelAny.Item title="Bileşenler" icon="Component">
               <ResourceWidgetAny
@@ -120,7 +198,7 @@ export default function FormilyDesigner(): JSX.Element {
             <WorkspacePanelAny>
               <ToolbarPanelAny>
                 <DesignerToolsWidgetAny />
-                <ViewToolsWidgetAny use={["DESIGNABLE"]} />
+                <ViewToolsWidgetAny use={["DESIGNABLE", "JSONTREE", "PREVIEW"]} />
               </ToolbarPanelAny>
               <ViewportPanelAny style={{ height: "100%" }}>
                 <ViewPanelAny type="DESIGNABLE">
@@ -156,6 +234,23 @@ export default function FormilyDesigner(): JSX.Element {
                       }}
                     />
                   )}
+                </ViewPanelAny>
+                <ViewPanelAny type="JSONTREE" scrollable={false}>
+                  {(tree: any) => (
+                    <pre style={{ margin: 0, height: "100%", overflow: "auto", background: "#0b1021", color: "#c6d0f5", padding: 16 }}>
+                      {(() => {
+                        try {
+                          const result = transformToSchema(tree);
+                          return JSON.stringify(result.schema || {}, null, 2);
+                        } catch (e) {
+                          return String(e);
+                        }
+                      })()}
+                    </pre>
+                  )}
+                </ViewPanelAny>
+                <ViewPanelAny type="PREVIEW">
+                  {(tree: any) => renderPreview(tree)}
                 </ViewPanelAny>
               </ViewportPanelAny>
             </WorkspacePanelAny>
