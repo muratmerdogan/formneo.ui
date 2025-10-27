@@ -127,7 +127,11 @@ export default function FormilyDesigner(): JSX.Element {
     return (
       <div style={{ padding: 16 }}>
         <FormProvider form={previewForm}>
-          <SchemaField schema={result.schema || {}} />
+          <AntdFormily.Form>
+            <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="middle">
+              <SchemaField schema={result.schema || {}} />
+            </AntdFormily.FormLayout>
+          </AntdFormily.Form>
         </FormProvider>
       </div>
     );
