@@ -13,13 +13,15 @@ import { MessageBoxType } from "@ui5/webcomponents-react";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { FormDataApi } from "api/generated";
-import { fetchLatestFormsPerFamily, fetchTenantFormAssignments, insertTenantFormAssignments, updateTenantFormAssignments, fetchTenantFormRoleList } from "api/tenantFormRoleService";
+import { fetchLatestFormsPerFamily, fetchTenantFormAssignments, insertTenantFormAssignments, updateTenantFormAssignments, fetchTenantFormRoleList, fetchTenantFormRoleDetail } from "api/tenantFormRoleService";
 import getConfiguration from "confiuration";
 
 type FormItem = {
   id: string;
   formName: string;
   formDescription?: string | null;
+  parentFormId?: string | null;
+  familyKey: string; // parentFormId || id
 };
 
 export default function TenantFormRole(): JSX.Element {
@@ -33,6 +35,7 @@ export default function TenantFormRole(): JSX.Element {
   const [roleDescription, setRoleDescription] = useState<string>("");
   const [source, setSource] = useState<FormItem[]>([]); // Tenant’taki tüm yayınlanmış/aktif formlar
   const [target, setTarget] = useState<FormItem[]>([]); // Role atanacak formlar
+  const [allForms, setAllForms] = useState<FormItem[]>([]);
 
   const storageKey = useMemo(() => `mock:tenantFormAssignments:${tenantId || "__unknown__"}:${roleId || "new"}`, [tenantId, roleId]);
   const roleListKey = useMemo(() => `mock:tenantFormRoles:${tenantId || "__unknown__"}`, [tenantId]);
@@ -56,8 +59,15 @@ export default function TenantFormRole(): JSX.Element {
       dispatchBusy({ isBusy: true });
       // Yeni: latest-per-family ile son revizyonlar
       const latest = await fetchLatestFormsPerFamily();
-      const rootForms: FormItem[] = (latest || []).map((f: any) => ({ id: f.id, formName: f.formName, formDescription: f.formDescription }));
+      const rootForms: FormItem[] = (latest || []).map((f: any) => ({
+        id: String(f.id),
+        formName: f.formName,
+        formDescription: f.formDescription,
+        parentFormId: (f as any).parentFormId || null,
+        familyKey: String((f as any).parentFormId || f.id),
+      }));
       setSource(rootForms);
+      setAllForms(rootForms);
       return rootForms;
     } catch (error) {
       dispatchAlert({ message: "Formlar yüklenemedi", type: MessageBoxType.Error });
@@ -67,13 +77,63 @@ export default function TenantFormRole(): JSX.Element {
     }
   };
 
-  const loadAssignments = async (forms: FormItem[]) => {
+  const loadAssignments = async (formsParam?: FormItem[]) => {
     try {
-      if (!tenantId || !roleId) { setTarget([]); return; }
-      const ids = await fetchTenantFormAssignments(roleId, tenantId);
-      const idSet = new Set(ids);
-      const selected = forms.filter((s) => idSet.has(String(s.id)));
-      const remaining = forms.filter((s) => !idSet.has(String(s.id)));
+      if (!roleId) { setTarget([]); return; }
+      const forms = formsParam && formsParam.length ? formsParam : (allForms.length ? allForms : await loadForms());
+      // Prefer GET /api/RoleTenantForm/{formTenantRoleId}
+      const detail = await fetchTenantFormRoleDetail(roleId);
+      // Normalize permission ids regardless of field naming/shape
+      const norm = (v: any) => String(v ?? '').trim().toLowerCase();
+      const toIds = (o: any): string[] => {
+        const ids: string[] = [];
+        const add = (v?: any) => { const s = norm(v); if (s) ids.push(s); };
+        add(o?.formId);
+        add(o?.parentFormId);
+        add(o?.id);
+        add(o?.formTenantRoleId);
+        return ids;
+      };
+      let rawItems: any[] = [];
+      if (Array.isArray(detail)) rawItems = detail;
+      else if (detail && Array.isArray(detail.items)) rawItems = detail.items;
+      else if (detail && Array.isArray(detail.data)) rawItems = detail.data;
+      else if (detail && Array.isArray(detail.forms)) rawItems = detail.forms; // backend: forms: [{ formId, ... }]
+      else if (detail && Array.isArray(detail.formPermissions)) rawItems = detail.formPermissions;
+      // fallback: older path via list
+      if (!rawItems.length && tenantId) {
+        const ids = await fetchTenantFormAssignments(roleId, tenantId);
+        rawItems = ids.map((id) => ({ formId: id }));
+      }
+      const idSet = new Set<string>();
+      rawItems.forEach((it) => toIds(it).forEach((x) => idSet.add(x)));
+
+      // Basitleştirilmiş ve kesin eşleştirme: id veya parentFormId ile
+      const matchedSelected = forms.filter((s) => idSet.has(norm(s.id)) || (s.parentFormId && idSet.has(norm(s.parentFormId))));
+      const matchedSet = new Set(matchedSelected.map((m) => m.familyKey));
+
+      // Forms list’inde olmayan ancak detail’de gelen atamalar varsa, onları da hedefe ekle
+      const extraSelected: FormItem[] = rawItems
+        .map((it: any) => {
+          const pid = norm(it.parentFormId);
+          const fid = norm(it.id || it.formId);
+          const familyKey = pid || fid;
+          if (!familyKey) return null;
+          if (matchedSet.has(familyKey)) return null;
+          return {
+            id: (fid || familyKey),
+            formName: String(it.formName || ''),
+            formDescription: String(it.formDescription || ''),
+            parentFormId: (pid || null) as any,
+            familyKey,
+          } as FormItem;
+        })
+        .filter(Boolean) as FormItem[];
+
+      const selected = [...matchedSelected, ...extraSelected];
+      const selectedIds = new Set(selected.map((s) => norm(s.id)));
+      const remaining = forms.filter((s) => !selectedIds.has(norm(s.id)));
+
       setTarget(selected);
       setSource(remaining);
     } catch {
@@ -100,11 +160,15 @@ export default function TenantFormRole(): JSX.Element {
       const ids = target.map((t) => String(t.id));
       if (!ids.length) { dispatchAlert({ message: "En az bir form seçin", type: MessageBoxType.Error }); return; }
       if (roleId) {
-        await updateTenantFormAssignments({ roleId, roleName: roleName || "", formIds: ids });
+        await updateTenantFormAssignments({ roleId, roleName: roleName || "", formIds: ids, roleDescription, roleIsActive: true });
       } else {
         await insertTenantFormAssignments({ roleName: roleName || "", formIds: ids });
       }
       dispatchAlert({ message: "Atamalar kaydedildi", type: MessageBoxType.Success });
+      // Kaydet sonrası detayı tazele
+      const forms = await loadForms();
+      await loadAssignments(forms);
+      await loadRoleDetail();
     } catch (error) {
       dispatchAlert({ message: "Kaydetme sırasında hata", type: MessageBoxType.Error });
     }
@@ -119,14 +183,32 @@ export default function TenantFormRole(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (tenantId) {
-      (async () => {
-        await loadRoleDetail();
-        const forms = await loadForms();
-        await loadAssignments(forms);
-      })();
-    }
-  }, [tenantId, roleId]);
+    if (!tenantId) return;
+    (async () => {
+      await loadRoleDetail();
+      const forms = await loadForms();
+      await loadAssignments(forms);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tenantId]);
+
+  useEffect(() => {
+    if (!roleId) return;
+    (async () => {
+      await loadAssignments(allForms);
+      await loadRoleDetail();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleId]);
+
+  // formlar yüklendiğinde ve rolId varsa yeniden eşitle
+  useEffect(() => {
+    if (!roleId || !allForms.length) return;
+    (async () => {
+      await loadAssignments(allForms);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allForms.length]);
 
   return (
     <DashboardLayout>

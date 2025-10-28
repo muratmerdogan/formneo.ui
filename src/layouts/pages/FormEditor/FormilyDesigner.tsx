@@ -89,6 +89,7 @@ import getConfiguration from "confiuration";
 import FormNeoButton from "./custom/FormNeoButton";
 import ApproveButtons from "./custom/ApproveButtons";
 import { createResource } from "@designable/core";
+import { Editor } from "@monaco-editor/react";
 
 export default function FormilyDesigner(): JSX.Element {
   const navigate = useNavigate();
@@ -424,18 +425,42 @@ export default function FormilyDesigner(): JSX.Element {
                   )}
                 </ViewPanelAny>
                 <ViewPanelAny type="JSONTREE" scrollable={false}>
-                  {(tree: any) => (
-                    <pre style={{ margin: 0, height: "100%", overflow: "auto", background: "#0b1021", color: "#c6d0f5", padding: 16 }}>
-                      {(() => {
-                        try {
-                          const result = transformToSchema(tree);
-                          return JSON.stringify(result.schema || {}, null, 2);
-                        } catch (e) {
-                          return String(e);
-                        }
-                      })()}
-                    </pre>
-                  )}
+                  {(tree: any) => {
+                    const jsonString = (() => {
+                      try {
+                        const result = transformToSchema(tree);
+                        return JSON.stringify(result.schema || {}, null, 2);
+                      } catch {
+                        return "{}";
+                      }
+                    })();
+                    return (
+                      <Editor
+                        height="100%"
+                        defaultLanguage="json"
+                        value={jsonString}
+                        onChange={(val) => {
+                          try {
+                            if (!val) return;
+                            const parsed = JSON.parse(val);
+                            const root = transformToTreeNode({ schema: parsed });
+                            const workspace = engine.workbench?.activeWorkspace;
+                            const operation = workspace?.operation;
+                            if (operation && root) operation.tree.from(root as any);
+                          } catch {
+                            // invalid JSON: ignore live update
+                          }
+                        }}
+                        options={{
+                          minimap: { enabled: false },
+                          fontSize: 13,
+                          wordWrap: "on",
+                          scrollBeyondLastLine: false,
+                          automaticLayout: true,
+                        }}
+                      />
+                    );
+                  }}
                 </ViewPanelAny>
                 <ViewPanelAny type="PREVIEW">
                   {(tree: any) => renderPreview(tree)}

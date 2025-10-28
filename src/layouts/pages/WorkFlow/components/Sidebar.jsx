@@ -79,6 +79,14 @@ const CustomMenuList = () => {
         </MenuItem>
       </Collapse>
       <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "setFieldNode")} draggable>
+          <ListItemIcon>
+            <FaCode />
+          </ListItemIcon>
+          <ListItemText inset>Alan Set</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "httpPostNode")} draggable>
           <ListItemIcon>
             <FaGlobe />

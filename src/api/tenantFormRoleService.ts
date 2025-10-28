@@ -1,6 +1,6 @@
 import axios from "axios";
 import getConfiguration, { getAccessToken } from "confiuration";
-import { FormDataApi } from "api/generated";
+import { FormDataApi, RoleTenantFormApi } from "api/generated";
 
 function getAuthHeaders() {
   const token = getAccessToken();
@@ -39,15 +39,17 @@ export async function insertTenantFormAssignments(params: { roleName: string; fo
   await axios.post(url, body, { headers: { ...getAuthHeaders(), "Content-Type": "application/json" } });
 }
 
-export async function updateTenantFormAssignments(params: { roleId: string; roleName: string; formIds: string[]; }): Promise<void> {
-  const base = process.env.REACT_APP_BASE_PATH || "";
-  const url = `${base}/api/RoleTenantForm/update`;
-  const body = {
-    roleId: params.roleId,
+export async function updateTenantFormAssignments(params: { roleId: string; roleName: string; formIds: string[]; roleDescription?: string; roleIsActive?: boolean; }): Promise<void> {
+  // Generated API: RoleTenantFormUpdateDto
+  const api = new RoleTenantFormApi(getConfiguration());
+  const dto: any = {
+    formTenantRoleId: params.roleId,
     roleName: params.roleName,
+    roleDescription: params.roleDescription ?? undefined,
+    roleIsActive: params.roleIsActive ?? true,
     formPermissions: (params.formIds || []).map((formId) => ({ formId, canView: true })),
-  } as any;
-  await axios.post(url, body, { headers: { ...getAuthHeaders(), "Content-Type": "application/json" } });
+  };
+  await api.apiRoleTenantFormUpdatePost(dto as any);
 }
 
 export async function fetchTenantFormRoleList(): Promise<any[]> {
@@ -60,6 +62,13 @@ export async function fetchTenantFormRoleList(): Promise<any[]> {
   if (Array.isArray(data?.items)) return data.items;
   if (Array.isArray(data?.data)) return data.data;
   return [];
+}
+
+export async function fetchTenantFormRoleDetail(formTenantRoleId: string): Promise<any> {
+  const api = new RoleTenantFormApi(getConfiguration());
+  const res = await api.apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId);
+  // Generated type shows Array<RoleTenantFormListDto>; if backend returns DetailDto, map accordingly
+  return (res as any)?.data;
 }
 
 

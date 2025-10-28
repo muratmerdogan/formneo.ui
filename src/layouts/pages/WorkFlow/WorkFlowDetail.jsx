@@ -16,6 +16,7 @@ import "reactflow/dist/style.css";
 import { ProgressSpinner } from "primereact/progressspinner";
 import Sidebar from "./components/Sidebar.jsx";
 import SmartMenuNode from "./components/SmartMenuNode.jsx";
+import SetFieldNode from "./components/SetFieldNode.jsx";
 import TeamNode from "./components/TeamNode.jsx";
 import ApproverNode from "./components/ApproverNode.jsx";
 import ServiceNoteNode from "./components/ServiceNoteNode.jsx";
@@ -107,6 +108,7 @@ import SqlConditionNode from "./components/SqlConditionNode.jsx";
 import SqlConditionTab from "./propertiespanel/SqlConditionTab.jsx";
 import QueryConditionNode from "./components/QueryConditionNode.jsx";
 import QueryConditionTab from "./propertiespanel/QueryConditionTab";
+import SetFieldTab from "./propertiespanel/SetFieldTab";
 import MailNode from "./components/MailNode.jsx";
 import MailTab from "./propertiespanel/MailTab.jsx";
 import HttpPostNode from "./components/HttpPostNode.jsx";
@@ -125,6 +127,7 @@ const nodeTypes = {
   mailNode: MailNode,
   httpPostNode: HttpPostNode,
   formStopNode: FormStopNode, // Form dur node'u
+  setFieldNode: SetFieldNode,
 };
 
 const initialNodes = [
@@ -326,6 +329,13 @@ function Flow(props) {
             label: "Yeni Sorgu Kriteri",
             criteria: [{ field: "Şirket", operator: "Equal to", value: "Vesa Danışmanlık" }],
             ...baseFormInfo, // ✅ Form bilgisi eklendi
+          };
+          break;
+        case "setFieldNode":
+          nodeData = {
+            actions: [],
+            summary: "",
+            ...baseFormInfo,
           };
           break;
 
@@ -911,6 +921,18 @@ const renderComponent = (
           node={node}
           parsedFormDesign={nodeFormDesign} // ← Form tasarımını buradan al
           workflowData={fullWorkflowData} // ← Workflow verileri eklendi
+          selectedForm={selectedForm}
+          onButtonClick={handlePropertiesChange}
+        />
+      ) : null;
+
+    case "setFieldNode":
+      return data ? (
+        <SetFieldTab
+          key={node.id}
+          initialValues={data}
+          node={node}
+          parsedFormDesign={parsedFormDesign}
           selectedForm={selectedForm}
           onButtonClick={handlePropertiesChange}
         />
