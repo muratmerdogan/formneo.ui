@@ -86,6 +86,9 @@ import { AllLocales as FormilyAntdLocales } from "@designable/formily-antd/esm/l
 import { useParams, useNavigate } from "react-router-dom";
 import { FormDataApi } from "api/generated";
 import getConfiguration from "confiuration";
+import FormNeoButton from "./custom/FormNeoButton";
+import ApproveButtons from "./custom/ApproveButtons";
+import { createResource } from "@designable/core";
 
 export default function FormilyDesigner(): JSX.Element {
   const navigate = useNavigate();
@@ -101,6 +104,10 @@ export default function FormilyDesigner(): JSX.Element {
   GlobalRegistry.setDesignerLanguage("en-US");
   try {
     GlobalRegistry.registerDesignerLocales(FormilyAntdLocales as any);
+  } catch {}
+  // Custom bileşen davranışlarını kaydet
+  try {
+    GlobalRegistry.registerDesignerBehaviors(FormNeoButton as any, ApproveButtons as any);
   } catch {}
 
   const engine = useMemo(
@@ -133,7 +140,10 @@ export default function FormilyDesigner(): JSX.Element {
   } as any);
 
   const previewForm = useMemo(() => createForm(), []);
-  const SchemaField = useMemo(() => createSchemaField({ components: AntdFormily as any }), []);
+  const SchemaField = useMemo(
+    () => createSchemaField({ components: { ...(AntdFormily as any), FormItem: (AntdFormily as any).FormItem, FormNeoButton, ApproveButtons } }),
+    []
+  );
 
   // Load form by id
   useEffect(() => {
@@ -217,7 +227,11 @@ export default function FormilyDesigner(): JSX.Element {
       const conf = getConfiguration();
       const api = new FormDataApi(conf);
       api.apiFormDataPublishIdPost(id)
-        .then(() => message.success("Form published"))
+        .then(async () => {
+          message.success("Form published");
+          setPublicationStatus(2);
+          await openRevisions(true);
+        })
         .catch(() => message.error("Failed to publish"))
         .finally(() => setIsBusy(false));
     } catch (e) {
@@ -349,7 +363,13 @@ export default function FormilyDesigner(): JSX.Element {
                   TimePicker,
                   Upload,
                   Switch,
+                      FormNeoButton,
+                      ApproveButtons,
                 ]}
+              />
+              <ResourceWidgetAny
+                title="FormNeo"
+                sources={createResource(...(FormNeoButton as any).Resource, ...(ApproveButtons as any).Resource)}
               />
               <ResourceWidgetAny
                 title="Yerleşimler"
@@ -397,6 +417,8 @@ export default function FormilyDesigner(): JSX.Element {
                         FormCollapse,
                         FormGrid,
                         FormLayout,
+                        FormNeoButton,
+                        ApproveButtons,
                       }}
                     />
                   )}
@@ -430,8 +452,14 @@ export default function FormilyDesigner(): JSX.Element {
                     placeholder="Enter form name"
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
+                    disabled={!!id}
                   />
                 </AntdForm.Item>
+                {!!id && (
+                  <Typography.Text type="secondary">
+                    Form name is fixed for existing/revision forms.
+                  </Typography.Text>
+                )}
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Typography.Text type="secondary">Status:</Typography.Text>
                   {publicationStatus === 2 ? (

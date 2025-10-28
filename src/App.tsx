@@ -123,6 +123,7 @@ const ParameterViewPublic = lazy(() => import("layouts/pages/FormManagement/list
 const FormDesigner = lazy(() => import("layouts/pages/FormManagement/FormDesigner"));
 const FormEditor = lazy(() => import("layouts/pages/FormEditor/FormEditorV2"));
 const FormilyDesigner = lazy(() => import("layouts/pages/FormEditor/FormilyDesigner"));
+const FormilyPreviewPage = lazy(() => import("pages/forms/FormilyPreviewPage"));
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -268,6 +269,8 @@ export default function App() {
 
             <Route path="/ParameterEdit/" element={<ParameterEditPublic />} />
             <Route path="/forms/view/:formId/:formRunId?/:isVisibility?" element={<ParameterViewPublic />} />
+            {/* Yeni Formily preview: Formily şeması varsa burada, değilse eski viewer'a fallback edilir */}
+            <Route path="/forms/preview/:id" element={<FormilyPreviewPage />} />
             {/* SEO Articles */}
             <Route path="/makale/is-takip-yazilimi" element={<IsTakipYazilimi />} />
             <Route path="/makale/proje-yonetimi-yazilimi" element={<ProjeYonetimiYazilimi />} />

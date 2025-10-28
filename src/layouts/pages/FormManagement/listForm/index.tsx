@@ -90,7 +90,7 @@ function ListForm() {
   };
 
   const handlePreview = (id: string) => {
-    navigate("/forms/view/" + id);
+    navigate("/forms/preview/" + id);
 
   };
   const handleData = (id: string) => {
