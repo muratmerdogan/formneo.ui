@@ -242,15 +242,6 @@ function ListForm() {
       ),
       sortable: true,
     },
-    // {
-    //   id: "formDesign",
-    //   name: "Form Tasarımı",
-    //   Header: "Form Tasarımı",
-    //   accessor: "formDesign",
-    //   Cell: ({ row, value, column }: any) => (
-    //     <GlobalCell value={value} columnName={column.id} testRow={row.original} />
-    //   ),
-    // },
     {
       accessor: "actions",
       Header: <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>İşlemler</div>,

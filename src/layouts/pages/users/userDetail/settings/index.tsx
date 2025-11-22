@@ -49,6 +49,7 @@ import Header from "./components/Header";
 import getConfiguration from "confiuration";
 import { CreateUserDto, UpdateUserDto, UserApi, WorkCompanyApi, WorkCompanyDto } from "api/generated";
 import UserTenantRoles from "./components/UserTenantRoles";
+import UserTenantFormRoles from "./components/UserTenantFormRoles";
 import UserTenantAdmin from "./components/UserTenantAdmin";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -150,6 +151,7 @@ function Settings(): JSX.Element {
     // Tenant özellikleri tenant modda göster
     ...(isTenantMode ? [{ label: "Ticket Yetkileri", icon: "pi pi-ticket", key: "ticket" }] : []),
     ...(isTenantMode ? [{ label: "Tenant Rolleri", icon: "pi pi-users", key: "tenantRoles" }] : []),
+    ...(isTenantMode ? [{ label: "Form Rolleri", icon: "pi pi-shield", key: "tenantFormRoles" }] : []),
     { label: "Hesabı Sil", icon: "pi pi-trash", key: "danger" },
   ];
 
@@ -405,6 +407,7 @@ function Settings(): JSX.Element {
                           ticket: 'sap-icon://task',
                           userTenants: 'sap-icon://group',
                           tenantRoles: 'sap-icon://shield',
+                          tenantFormRoles: 'sap-icon://shield',
                           danger: 'sap-icon://delete',
                         } as any)[it.key];
                         return (
@@ -471,6 +474,16 @@ function Settings(): JSX.Element {
                                 <Grid container spacing={3}>
                                   <Grid item xs={12}>
                                     <UserTenantRoles userId={formGudid || undefined} />
+                                  </Grid>
+                                </Grid>
+                              </MDBox>
+                            )}
+
+                            {it.key === "tenantFormRoles" && isTenantMode && (
+                              <MDBox sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, bgcolor: 'background.paper' }}>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={12}>
+                                    <UserTenantFormRoles userId={formGudid || undefined} />
                                   </Grid>
                                 </Grid>
                               </MDBox>

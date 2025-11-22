@@ -11053,7 +11053,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
                   }
                 }
               },
@@ -11061,7 +11061,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
                   }
                 }
               },
@@ -11069,7 +11069,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
                   }
                 }
               }
@@ -11100,26 +11100,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
-                  }
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
-                  }
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RoleTenantFormListDto"
-                  }
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
                 }
               }
             }
@@ -15621,6 +15612,85 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/UserTenantFormRoles/by/{userId}": {
+      "get": {
+        "tags": [
+          "UserTenantFormRoles"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UserTenantFormRoles/bulk-save": {
+      "post": {
+        "tags": [
+          "UserTenantFormRoles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -25036,6 +25106,34 @@
         },
         "additionalProperties": false
       },
+      "RoleTenantFormDetailDto": {
+        "type": "object",
+        "properties": {
+          "formTenantRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleTenantFormPermissionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RoleTenantFormInsertDto": {
         "type": "object",
         "properties": {
@@ -25061,55 +25159,16 @@
         },
         "additionalProperties": false
       },
-      "RoleTenantFormListDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "formTenantRoleId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "formId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "canView": {
-            "type": "boolean"
-          },
-          "canAdd": {
-            "type": "boolean"
-          },
-          "canEdit": {
-            "type": "boolean"
-          },
-          "canDelete": {
-            "type": "boolean"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "RoleTenantFormPermissionDto": {
         "type": "object",
         "properties": {
           "formId": {
             "type": "string",
             "format": "uuid"
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
           },
           "canView": {
             "type": "boolean"
@@ -29066,6 +29125,49 @@
           "tenantName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTenantFormRoleBulkSaveDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTenantRoleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTenantFormRoleListDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTenantRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formTenantRoleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

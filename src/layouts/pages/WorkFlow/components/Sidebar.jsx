@@ -19,6 +19,9 @@ import {
   FaStop,
   FaPlug,
   FaWpforms,
+  FaPencilAlt,
+  FaExclamationTriangle,
+  FaCodeBranch,
 } from "react-icons/fa";
 
 const CustomMenuList = () => {
@@ -79,9 +82,17 @@ const CustomMenuList = () => {
         </MenuItem>
       </Collapse>
       <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "formConditionNode")} draggable>
+          <ListItemIcon>
+            <FaCodeBranch />
+          </ListItemIcon>
+          <ListItemText inset>Form Koşulu</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "setFieldNode")} draggable>
           <ListItemIcon>
-            <FaCode />
+            <FaPencilAlt />
           </ListItemIcon>
           <ListItemText inset>Alan Set</ListItemText>
         </MenuItem>
@@ -100,6 +111,22 @@ const CustomMenuList = () => {
             <FaEnvelope />
           </ListItemIcon>
           <ListItemText inset>Mail Gönder</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "alertNode")} draggable>
+          <ListItemIcon>
+            <FaExclamationTriangle />
+          </ListItemIcon>
+          <ListItemText inset>Alert/Mesaj</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "userTaskNode")} draggable>
+          <ListItemIcon>
+            <FaUserCheck />
+          </ListItemIcon>
+          <ListItemText inset>Kullanıcı Görevi</ListItemText>
         </MenuItem>
       </Collapse>
 
@@ -123,6 +150,14 @@ const CustomMenuList = () => {
             <FaPlug />
           </ListItemIcon>
           <ListItemText inset>Api Call</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.documentOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "scriptNode")} draggable>
+          <ListItemIcon>
+            <FaCode />
+          </ListItemIcon>
+          <ListItemText inset>Script</ListItemText>
         </MenuItem>
       </Collapse>
 

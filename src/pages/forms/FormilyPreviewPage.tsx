@@ -5,17 +5,25 @@ import getConfiguration from "confiuration";
 
 // Antd + Formily render
 import "antd/dist/antd.css";
-import { Spin, Alert } from "antd";
+import { Spin, Alert, Button as AntButton, message } from "antd";
 import { createForm } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
 import * as AntdFormily from "@formily/antd";
+import * as Icons from "@ant-design/icons";
 
 // FormNeo layout
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import { Typography } from "@mui/material";
+
+interface FormButton {
+  id: string;
+  label: string;
+  type?: "primary" | "default" | "dashed" | "link" | "text";
+  icon?: string;
+  action?: string;
+}
 
 export default function FormilyPreviewPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +31,7 @@ export default function FormilyPreviewPage(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [schema, setSchema] = useState<any>(null);
+  const [formButtons, setFormButtons] = useState<FormButton[]>([]);
 
   const form = useMemo(() => createForm(), []);
   const SchemaField = useMemo(() => createSchemaField({ components: AntdFormily as any }), []);
@@ -46,6 +55,10 @@ export default function FormilyPreviewPage(): JSX.Element {
           return;
         }
         setSchema(parsed.schema);
+        // Button paneli bilgilerini yükle
+        if (parsed.buttonPanel && parsed.buttonPanel.buttons) {
+          setFormButtons(parsed.buttonPanel.buttons);
+        }
       } catch (e: any) {
         setError(e?.message || "Unable to load form");
       } finally {
@@ -71,18 +84,54 @@ export default function FormilyPreviewPage(): JSX.Element {
           <MDBox p={2}><Alert type="error" message={error} /></MDBox>
         )}
         {!loading && !error && schema && (
-          <MDBox p={2} sx={{ backgroundColor: "#fff", borderRadius: 2, boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-            <FormProvider form={form}>
-              <AntdFormily.Form>
-                <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
-                  <SchemaField schema={schema} />
-                </AntdFormily.FormLayout>
-              </AntdFormily.Form>
-            </FormProvider>
-          </MDBox>
+          <>
+            <MDBox p={2} sx={{ backgroundColor: "#fff", borderRadius: 2, boxShadow: "0 2px 8px rgba(0,0,0,0.08)", marginBottom: formButtons.length > 0 ? "80px" : "0" }}>
+              <FormProvider form={form}>
+                <AntdFormily.Form>
+                  <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
+                    <SchemaField schema={schema} />
+                  </AntdFormily.FormLayout>
+                </AntdFormily.Form>
+              </FormProvider>
+            </MDBox>
+            {/* Button Paneli - En Alta Sabitlenmiş */}
+            {formButtons.length > 0 && (
+              <div
+                style={{
+                  position: "fixed",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  backgroundColor: "#f5f5f5",
+                  borderTop: "1px solid #d9d9d9",
+                  padding: "12px 24px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 8,
+                  zIndex: 1000,
+                  boxShadow: "0 -2px 8px rgba(0,0,0,0.1)",
+                }}
+              >
+                {formButtons.map((btn) => {
+                  const IconComponent = btn.icon ? (Icons as any)[`${btn.icon}Outlined`] || (Icons as any)[btn.icon] : null;
+                  return (
+                    <AntButton
+                      key={btn.id}
+                      type={btn.type || "default"}
+                      icon={IconComponent ? React.createElement(IconComponent) : undefined}
+                      onClick={() => {
+                        message.info(`Buton tıklandı: ${btn.label}${btn.action ? ` (Action: ${btn.action})` : ""}`);
+                      }}
+                    >
+                      {btn.label}
+                    </AntButton>
+                  );
+                })}
+              </div>
+            )}
+          </>
         )}
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }

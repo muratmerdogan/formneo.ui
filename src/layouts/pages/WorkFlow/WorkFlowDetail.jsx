@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, createRef, useEffect, useCallback, lazy, Suspense } from "react";
 import ReactFlow, {
   Background,
   Controls,
@@ -36,6 +36,16 @@ import WorkflowWizard from "./components/WorkflowWizard.jsx";
 import WorkflowFormSelector from "./components/WorkflowFormSelector.jsx";
 import FormStopNode from "./components/FormStopNode.jsx";
 import FormStopTab from "./propertiespanel/FormStopTab.jsx";
+import FormNode from "./components/FormNode.jsx";
+import FormNodeTab from "./propertiespanel/FormNodeTab.jsx";
+import AlertNode from "./components/AlertNode.jsx";
+import AlertTab from "./propertiespanel/AlertTab.jsx";
+import UserTaskNode from "./components/UserTaskNode.jsx";
+import UserTaskTab from "./propertiespanel/UserTaskTab.jsx";
+import FormConditionNode from "./components/FormConditionNode.jsx";
+import FormConditionTab from "./propertiespanel/FormConditionTab.jsx";
+import ScriptNode from "./components/ScriptNode.jsx";
+import ScriptTab from "./propertiespanel/ScriptTab.jsx";
 
 import {
   AnalyticalTable,
@@ -92,7 +102,8 @@ import {
   WorkFlowDefinationApi,
   FormDataApi,
 } from "api/generated";
-import { TextField } from "@mui/material";
+import { TextField, Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -127,7 +138,12 @@ const nodeTypes = {
   mailNode: MailNode,
   httpPostNode: HttpPostNode,
   formStopNode: FormStopNode, // Form dur node'u
+  formNode: FormNode, // Form node'u (butonlara göre çıkışlar)
   setFieldNode: SetFieldNode,
+  alertNode: AlertNode, // Alert/Mesaj gösterme node'u
+  userTaskNode: UserTaskNode, // Kullanıcı görevi node'u (basit alanlar + butonlar)
+  formConditionNode: FormConditionNode, // Form field'larına göre koşul node'u
+  scriptNode: ScriptNode, // JavaScript script node'u
 };
 
 const initialNodes = [
@@ -185,6 +201,10 @@ function Flow(props) {
 
   const [isEdit, setisEdit] = useState(false);
   const [msgOpen, setmsgOpen] = useState(false);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [contextMenuNode, setContextMenuNode] = useState(null);
+  const [scriptModalOpen, setScriptModalOpen] = useState(false);
+  const [scriptModalNode, setScriptModalNode] = useState(null);
 
   const [workflowData, setWorkflowData] = useState({
     metadata: {
@@ -407,6 +427,57 @@ function Flow(props) {
           };
           break;
 
+        case "formNode":
+          const formButtons = parsedFormDesign?.buttons || [];
+          nodeData = {
+            name: selectedForm?.formName || "Form",
+            formId: selectedForm?.id,
+            formName: selectedForm?.formName,
+            buttons: formButtons,
+            ...baseFormInfo,
+          };
+          break;
+
+        case "alertNode":
+          nodeData = {
+            title: "Bildirim",
+            message: "Kullanıcıya gösterilecek mesaj",
+            type: "info", // info, success, warning, error
+            ...baseFormInfo,
+          };
+          break;
+
+        case "userTaskNode":
+          nodeData = {
+            name: "Kullanıcı Görevi",
+            fields: [], // [{ label: "Alan Adı", value: "Değer" }]
+            buttons: [], // [{ label: "Buton", action: "ACTION_CODE" }]
+            ...baseFormInfo,
+          };
+          break;
+
+        case "formConditionNode":
+          nodeData = {
+            formNodeId: "",
+            formId: null,
+            formName: "",
+            field: "",
+            operator: "==",
+            value: "",
+            condition: "",
+            ...baseFormInfo,
+          };
+          break;
+
+        case "scriptNode":
+          nodeData = {
+            name: "Script",
+            script: "",
+            processDataTree: {},
+            ...baseFormInfo,
+          };
+          break;
+
         default:
           nodeData = {
             name: "Varsayılan İsim",
@@ -481,7 +552,7 @@ function Flow(props) {
         ],
       };
 
-      console.log("Workflow Data Updated:", newData);
+      // console.log("Workflow Data Updated:", newData); // Debug için kapatıldı
       return newData;
     });
   }, []);
@@ -547,6 +618,69 @@ function Flow(props) {
 
     return preparedData;
   }, [workflowData, workflowName, parsedFormDesign]);
+
+  // Form seçildiğinde otomatik FormNode oluştur
+  useEffect(() => {
+    if (selectedForm && parsedFormDesign) {
+      const buttons = parsedFormDesign?.buttons || [];
+      const existingFormNode = nodes.find((n) => n.type === "formNode" && n.data?.formId === selectedForm.id);
+      
+      // Eğer bu form için zaten bir FormNode yoksa oluştur
+      if (!existingFormNode) {
+        const formNodeId = `formNode-${selectedForm.id || generateUUID()}`;
+        const startNode = nodes.find((n) => n.type === "startNode");
+        const startNodePosition = startNode?.position || { x: 0, y: 0 };
+        
+        const newFormNode = {
+          id: formNodeId,
+          type: "formNode",
+          position: {
+            x: startNodePosition.x + 300,
+            y: startNodePosition.y,
+          },
+          className: "noHaveEdges",
+          data: {
+            name: selectedForm.formName || "Form",
+            formId: selectedForm.id,
+            formName: selectedForm.formName,
+            buttons: buttons,
+            selectedFormId: selectedForm.id,
+            selectedFormName: selectedForm.formName,
+            parsedFormDesign: parsedFormDesign,
+          },
+        };
+        
+        setNodes((nds) => [...nds, newFormNode]);
+        
+        // StartNode'dan FormNode'a otomatik edge oluştur
+        if (startNode) {
+          const newEdge = {
+            id: `edge-${startNode.id}-${formNodeId}`,
+            source: startNode.id,
+            target: formNodeId,
+            type: "smoothstep",
+            animated: true,
+          };
+          setEdges((eds) => [...eds, newEdge]);
+        }
+      } else {
+        // Mevcut FormNode'u güncelle (butonlar değişmiş olabilir)
+        setNodes((nds) =>
+          nds.map((node) =>
+            node.id === existingFormNode.id
+              ? {
+                  ...node,
+                  data: {
+                    ...node.data,
+                    buttons: buttons,
+                  },
+                }
+              : node
+          )
+        );
+      }
+    }
+  }, [selectedForm, parsedFormDesign, nodes, setNodes, setEdges]);
 
   // Workflow başlatma (mevcut useEffect'lerden sonra ekleyin)
   useEffect(() => {
@@ -730,16 +864,81 @@ function Flow(props) {
     // alert(`Bağlantı Bilgileri: ID=${edge.id}`);
   };
   const onNodeClick = (event, node) => {
+    // ✅ Script node ise modal aç
+    if (node.type === "scriptNode") {
+      setScriptModalNode(node);
+      setScriptModalOpen(true);
+      return;
+    }
+
     setisLoadingProperties(true);
     setselecteNodeType(node.type);
     setselecteNodeData(node.data);
     setselectedNode(node);
 
-    // ✅ YENİ: Workflow metadata güncelle
-    updateWorkflowData(node.id, node.type, node.data, "selected");
+    // ✅ Workflow metadata güncelleme kaldırıldı - sadece node seçimi için gereksiz
+    // updateWorkflowData(node.id, node.type, node.data, "selected");
 
     setisLoadingProperties(false);
   };
+
+  // ✅ Sağ tıklama (context menu)
+  const onNodeContextMenu = useCallback(
+    (event, node) => {
+      event.preventDefault();
+      setContextMenuNode(node);
+      setContextMenu(
+        contextMenu === null
+          ? {
+              mouseX: event.clientX + 2,
+              mouseY: event.clientY - 6,
+            }
+          : null
+      );
+    },
+    [contextMenu]
+  );
+
+  // ✅ Context menu'yu kapat
+  const handleCloseContextMenu = () => {
+    setContextMenu(null);
+    setContextMenuNode(null);
+  };
+
+  // ✅ Node silme
+  const handleDeleteNode = useCallback(() => {
+    if (!contextMenuNode) return;
+
+    // StartNode silinemez kontrolü
+    if (contextMenuNode.type === "startNode") {
+      dispatchAlert({
+        message: "Start node silinemez!",
+        type: MessageBoxType.Warning,
+      });
+      handleCloseContextMenu();
+      return;
+    }
+
+    // Node'u sil
+    setNodes((nds) => nds.filter((node) => node.id !== contextMenuNode.id));
+    
+    // İlgili edge'leri de sil
+    setEdges((eds) =>
+      eds.filter(
+        (edge) =>
+          edge.source !== contextMenuNode.id && edge.target !== contextMenuNode.id
+      )
+    );
+
+    // Eğer silinen node seçiliyse, seçimi temizle
+    if (selectedNode?.id === contextMenuNode.id) {
+      setselectedNode(null);
+      setselecteNodeType(null);
+      setselecteNodeData(null);
+    }
+
+    handleCloseContextMenu();
+  }, [contextMenuNode, setNodes, setEdges, selectedNode, dispatchAlert]);
   const onConnect = useCallback(
     (params) => {
       const getNodes = reactFlowInstance.getNodes();
@@ -794,6 +993,7 @@ function Flow(props) {
               onDrop={onDrop}
               onDragOver={onDragOver}
               onNodeClick={onNodeClick}
+              onNodeContextMenu={onNodeContextMenu}
               onEdgeClick={onEdgeClick}
               fitView
               snapToGrid
@@ -804,6 +1004,26 @@ function Flow(props) {
               <Background variant="dots" gap={12} size={1} />
             </ReactFlow>
           )}
+          
+          {/* Context Menu */}
+          <Menu
+            open={contextMenu !== null}
+            onClose={handleCloseContextMenu}
+            anchorReference="anchorPosition"
+            anchorPosition={
+              contextMenu !== null
+                ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                : undefined
+            }
+          >
+            <MenuItem onClick={handleDeleteNode}>
+              <ListItemIcon>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Sil</ListItemText>
+            </MenuItem>
+          </Menu>
+
           <MessageBox
             open={msgOpen}
             onClose={handleMsgDialog}
@@ -812,6 +1032,26 @@ function Flow(props) {
           >
             Verileriniz kaydedilmeyecektir, devam edilsin mi?
           </MessageBox>
+
+          {/* Script Modal */}
+          {scriptModalNode && (
+            <ScriptTab
+              node={scriptModalNode}
+              nodes={nodes}
+              edges={edges}
+              parsedFormDesign={parsedFormDesign}
+              selectedForm={selectedForm}
+              onButtonClick={(data) => {
+                handlePropertiesChange(data);
+                setScriptModalOpen(false);
+              }}
+              open={scriptModalOpen}
+              onClose={() => {
+                setScriptModalOpen(false);
+                setScriptModalNode(null);
+              }}
+            />
+          )}
         </div>
       </SplitterPanel>
 
@@ -832,7 +1072,9 @@ function Flow(props) {
             handlePropertiesChange,
             parsedFormDesign,
             selectedForm,
-            prepareWorkflowDataForHttp()
+            prepareWorkflowDataForHttp(),
+            nodes,
+            edges,
           )
         )}
       </SplitterPanel>
@@ -848,7 +1090,9 @@ const renderComponent = (
   handlePropertiesChange,
   parsedFormDesign,
   selectedForm,
-  fullWorkflowData // ← 7. parametre eklendi
+  fullWorkflowData, // ← 7. parametre eklendi
+  nodes = [], // ← 8. parametre eklendi
+  edges = [] // ← 9. parametre eklendi
 ) => {
   if (type === "queryConditionNode") {
     console.log("parsedFormDesign gönderildi:", parsedFormDesign);
@@ -898,6 +1142,18 @@ const renderComponent = (
           selectedForm={selectedForm}
         />
       ) : null;
+
+    case "formNode":
+      return data ? (
+        <FormNodeTab
+          key={node.id}
+          initialValues={data}
+          node={node}
+          onButtonClick={handlePropertiesChange}
+          selectedForm={selectedForm}
+        />
+      ) : null;
+
     case "sqlConditionNode":
       return data ? (
         <SqlConditionTab
@@ -922,6 +1178,8 @@ const renderComponent = (
           parsedFormDesign={nodeFormDesign} // ← Form tasarımını buradan al
           workflowData={fullWorkflowData} // ← Workflow verileri eklendi
           selectedForm={selectedForm}
+          nodes={nodes} // ← Tüm node'ları geç
+          edges={edges} // ← Tüm edge'leri geç
           onButtonClick={handlePropertiesChange}
         />
       ) : null;
@@ -967,6 +1225,43 @@ const renderComponent = (
         <div>No data for HttpPostNode</div>
       );
 
+    case "alertNode":
+      return data ? (
+        <AlertTab
+          key={node.id}
+          initialValues={data}
+          node={node}
+          onButtonClick={handlePropertiesChange}
+        />
+      ) : null;
+
+    case "userTaskNode":
+      return data ? (
+        <UserTaskTab
+          key={node.id}
+          initialValues={data}
+          node={node}
+          onButtonClick={handlePropertiesChange}
+        />
+      ) : null;
+
+    case "formConditionNode":
+      return data ? (
+        <FormConditionTab
+          key={node.id}
+          node={node}
+          nodes={nodes}
+          edges={edges}
+          parsedFormDesign={parsedFormDesign}
+          selectedForm={selectedForm}
+          onButtonClick={handlePropertiesChange}
+        />
+      ) : null;
+
+    case "scriptNode":
+      // Script node modal'da açılacak, burada render etme
+      return null;
+
     default:
       return null;
   }
@@ -986,6 +1281,7 @@ function WorkFlowDetail(props) {
   const [selectedForm, setSelectedForm] = useState(null);
   const [parsedFormDesign, setParsedFormDesign] = useState(null);
   const navigate = useNavigate();
+  const dispatchAlert = useAlert();
 
   const handleWizardConfirm = (selectedType) => {
     setWorkflowType(selectedType);
@@ -994,44 +1290,45 @@ function WorkFlowDetail(props) {
   };
 
   const handleFormConfirm = (form) => {
+    // ✅ Form yayınlama kontrolü - Sadece yayınlanmış formlar workflow'a bağlanabilir
+    if (form.publicationStatus !== 2) {
+      dispatchAlert({ 
+        message: "Lütfen önce formu yayınlayın! Taslak formlar workflow'a bağlanamaz.", 
+        type: MessageBoxType.Warning 
+      });
+      return;
+    }
+
     setSelectedForm(form);
     setFormListOpen(false);
 
     try {
-      console.log("🔍 Form Type:", form.formType);
-      console.log("🔍 Form Name:", form.formName);
-
       const parsedForm = JSON.parse(form.formDesign);
-      console.log("🔍 Form Components:", parsedForm.components);
-
+      
+      // ✅ ButtonPanel'i oku
+      const buttons = parsedForm?.buttonPanel?.buttons || [];
+      
       // ✅ Düzeltilmiş extraction fonksiyonunu kullan
       const fields = extractFieldsFromComponents(parsedForm.components || []);
-
-      console.log("=== ÇIKARILAN ALANLAR ===");
-      fields.forEach((field) => {
-        console.log(`📝 ${field.label}:`);
-        console.log(`   Name: ${field.name}`);
-        console.log(`   Type: ${field.type}`);
-        console.log(`   ValueEditorType: ${field.valueEditorType}`);
-        console.log(`   Operators: ${JSON.stringify(field.operators)}`);
-        console.log(`   Values: ${field.values ? JSON.stringify(field.values) : "undefined"}`);
-        console.log("");
-      });
 
       setParsedFormDesign({
         fields: fields,
         raw: parsedForm,
+        buttons: buttons, // ButtonPanel butonlarını ekle
       });
-      console.log("✅ parsedFormDesign güncellendi!");
-      navigate(`/workflow/start-list/${workflowId}`, {
-        state: {
-          selectedForm: {
-            formId: form.id,
-            formName: form.formName,
-            formDesign: form.formDesign,
+      
+      // Workflow ID varsa navigate et, yoksa sadece form seçimi yapıldı
+      if (id) {
+        navigate(`/workflow/start-list/${id}`, {
+          state: {
+            selectedForm: {
+              formId: form.id,
+              formName: form.formName,
+              formDesign: form.formDesign,
+            },
           },
-        },
-      });
+        });
+      }
     } catch (err) {
       console.error("❌ Form design JSON parse edilemedi:", err);
     }

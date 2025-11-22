@@ -66,6 +66,7 @@ import {
 } from "context";
 import { AuthApi, MenuApi, MenuListDto } from "api/generated";
 import getConfiguration, { getConfigurationAccessTokenLogin } from "confiuration";
+import { useMenuAuth } from "hooks/useMenuAuth";
 
 import SidenavRoot from "./SidenavRoot";
 import { useTranslation } from "react-i18next";
@@ -299,6 +300,9 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
     return pathname === route;
   };
 
+  // Cache'lenmiş menü yetkilerini kullan
+  const { data: authData = [], isLoading: authLoading } = useMenuAuth();
+
   useEffect(() => {
     const fetchMenuItems = async () => {
       var conf = getConfigurationAccessTokenLogin();
@@ -306,14 +310,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
       var data = await api.apiMenuGet();
       console.log("Tüm menüler (apiMenuGet):", data.data);
       
-      // Yetkili menüleri de getir
-      try {
-        var authData = await api.apiMenuGetAuthByUserGet();
-        console.log("Yetkili menüler (apiMenuGetAuthByUserGet):", authData.data);
+      // Yetkili menüleri filtrele (cache'den gelen veriyi kullan)
+      if (authData && authData.length > 0) {
+        console.log("Yetkili menüler (cache'den):", authData);
         
         // Yetkili menüleri filtrele
         const authorizedMenus = data.data.filter((menu: any) => {
-          return authData.data.some((authMenu: any) => {
+          return authData.some((authMenu: any) => {
             const menuHref = menu.href || menu.route || "";
             const authHref = authMenu.href || authMenu.route || "";
             return menuHref === authHref || 
@@ -338,15 +341,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
         console.log("Birleşik menüler:", uniqueMenus);
         
         setMenuItems(uniqueMenus);
-      } catch (error) {
-        console.error("Yetki kontrolü hatası:", error);
-        setMenuItems(data.data); // Hata durumunda tüm menüleri göster
+      } else if (!authLoading) {
+        // Cache henüz yüklenmediyse veya veri yoksa tüm menüleri göster
+        setMenuItems(data.data);
       }
       
       findDb();
     };
-    fetchMenuItems();
-  }, []);
+    
+    // Auth data yüklendiğinde veya değiştiğinde çalıştır
+    if (!authLoading) {
+      fetchMenuItems();
+    }
+  }, [authData, authLoading]);
 
   const findDb = async () => {
     var conf = getConfiguration();

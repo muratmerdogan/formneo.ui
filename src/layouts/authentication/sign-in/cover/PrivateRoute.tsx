@@ -1,28 +1,10 @@
-import { Menu, MenuApi } from "api/generated";
-import getConfiguration from "confiuration";
-import { useQuery } from "react-query";
-import React, { useEffect, useState } from "react";
+import { Menu } from "api/generated";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useMenuAuth } from "hooks/useMenuAuth";
 
 const PrivateRoute: React.FC = () => {
-  const [menuAuth, setmenuAuth] = useState<Menu[]>([]);
-  const fetchRoleMenuPermissions = async () => {
-    var conf = getConfiguration();
-    var api = new MenuApi(conf);
-    var result = await api.apiMenuGetAuthByUserGet();
-
-    setmenuAuth(result.data);
-    return result.data;
-  };
-
-  const useRoleMenuPermissions = () => {
-    return useQuery("roleMenuPermissions", fetchRoleMenuPermissions, {
-      staleTime: 1000 * 60 * 5, // 5 dakika boyunca veriyi taze tut
-      cacheTime: 1000 * 60 * 10,
-      refetchOnWindowFocus: false, // 10 dakika boyunca önbellekte tut
-      enabled: true,
-    });
-  };
+  // Cache'lenmiş menü yetkilerini kullan
+  const { data: menuAuth = [], isLoading } = useMenuAuth();
 
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
@@ -32,8 +14,6 @@ const PrivateRoute: React.FC = () => {
   const normalizedPath = "/" + currentPath.split("/").slice(1, 2).join("/");
 
   // /WorkCompany/1/Ticket/Create => /WorkCompany olarak al 2. / dan sonrasını sil
-
-  const { data: permissions = [], isLoading, error } = useRoleMenuPermissions();
 
   const normalizeUrl = (url?: string | null) => {
     if (!url || typeof url !== "string") return "";
@@ -52,10 +32,6 @@ const PrivateRoute: React.FC = () => {
       })
       : false;
 
-
-
-
-
   if (!accessToken) {
     return <Navigate to="/authentication/sign-in/cover" replace />;
   }
@@ -65,9 +41,8 @@ const PrivateRoute: React.FC = () => {
   }
 
   if (!hasAccess) {
-
     if (normalizedPath == "/authentication" || normalizedPath == "/dashboards" || isMenuHub) {
-      return <Outlet />
+      return <Outlet />;
     }
     return <Navigate to="/NotAuthorization" replace />; // Yetkisi olmayanları yönlendir
   }

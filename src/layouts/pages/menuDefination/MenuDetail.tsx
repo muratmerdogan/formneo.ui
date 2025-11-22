@@ -142,10 +142,7 @@ const MenuDetail = () => {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    if (name === "code") {
-      const truncatedValue = value.slice(0, 5);
-      setFormData({ ...formData, [name]: truncatedValue });
-    } else if (name === "order" && value == "") {
+    if (name === "order" && value == "") {
       setFormData({ ...formData, [name]: 0 });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -330,7 +327,9 @@ const MenuDetail = () => {
                       value={formData.name}
                       onChange={handleChange}
                     />
+                  </Grid>
 
+                  <Grid item xs={12} sm={12} lg={12}>
                     <MDInput
                       fullWidth
                       sx={{ mb: 3.2 }}
@@ -338,8 +337,10 @@ const MenuDetail = () => {
                       name="code"
                       value={formData.code}
                       onChange={handleChange}
-                      inputProps={{ maxLength: 5 }}
                     />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6} lg={5.75}>
                     <MDInput
                       fullWidth
                       sx={{ mb: 3.2 }}
@@ -348,6 +349,9 @@ const MenuDetail = () => {
                       value={formData.href}
                       onChange={handleChange}
                     />
+                  </Grid>
+                  
+                  <Grid item xs={12} sm={6} lg={5.75}>
                     <MDInput
                       sx={{ mb: 3.2 }}
                       value={formData.order}
@@ -357,7 +361,9 @@ const MenuDetail = () => {
                       onChange={handleChange}
                       fullWidth
                     />
+                  </Grid>
 
+                  <Grid item xs={12} sm={6} lg={5.75}>
                     <Autocomplete
                       renderInput={(params) => (
                         <MDInput

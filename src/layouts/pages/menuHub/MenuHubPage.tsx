@@ -5,17 +5,20 @@ import Footer from "examples/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { Menu, MenuApi } from "api/generated/api";
 import getConfiguration from "confiuration";
+import { useMenuAuth } from "hooks/useMenuAuth";
 
 export default function MenuHubPage(): JSX.Element {
     const { id } = useParams();
     const navigate = useNavigate();
     const [items, setItems] = useState<any[]>([]);
     const [parent, setParent] = useState<any | null>(null);
-    const [auth, setAuth] = useState<Menu[]>([]);
     const [q, setQ] = useState("");
     const [pinned, setPinned] = useState<string[]>(() => {
         try { return JSON.parse(localStorage.getItem("menuHub:pinned") || "[]"); } catch { return []; }
     });
+
+    // Cache'lenmiş menü yetkilerini kullan
+    const { data: auth = [] } = useMenuAuth();
 
     useEffect(() => {
         (async () => {
@@ -26,10 +29,6 @@ export default function MenuHubPage(): JSX.Element {
                 setItems(data);
                 const p = data.find((m) => String(m.id) === String(id) || String(m.menuCode) === String(id)) || null;
                 setParent(p);
-                try {
-                    const authRes = await api.apiMenuGetAuthByUserGet();
-                    setAuth(authRes.data || []);
-                } catch { }
             } catch { }
         })();
     }, [id]);

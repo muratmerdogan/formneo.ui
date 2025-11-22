@@ -124,6 +124,7 @@ const FormDesigner = lazy(() => import("layouts/pages/FormManagement/FormDesigne
 const FormEditor = lazy(() => import("layouts/pages/FormEditor/FormEditorV2"));
 const FormilyDesigner = lazy(() => import("layouts/pages/FormEditor/FormilyDesigner"));
 const FormilyPreviewPage = lazy(() => import("pages/forms/FormilyPreviewPage"));
+const UserFormCrudPage = lazy(() => import("pages/forms/UserFormCrudPage"));
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -246,7 +247,7 @@ export default function App() {
       <ActionBarProvider>
         <Suspense fallback={<div style={{ padding: 24 }}>Yükleniyor…</div>}>
           <Routes>
-            {/* Public Routes */}x  
+            {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/forms/designer" element={<FormilyDesigner />} />
             <Route path="/forms/designer/:id" element={<FormilyDesigner />} />
@@ -271,6 +272,8 @@ export default function App() {
             <Route path="/forms/view/:formId/:formRunId?/:isVisibility?" element={<ParameterViewPublic />} />
             {/* Yeni Formily preview: Formily şeması varsa burada, değilse eski viewer'a fallback edilir */}
             <Route path="/forms/preview/:id" element={<FormilyPreviewPage />} />
+            {/* Kullanıcı formu (CRUD) */}
+            <Route path="/userForm/:id" element={<UserFormCrudPage />} />
             {/* SEO Articles */}
             <Route path="/makale/is-takip-yazilimi" element={<IsTakipYazilimi />} />
             <Route path="/makale/proje-yonetimi-yazilimi" element={<ProjeYonetimiYazilimi />} />

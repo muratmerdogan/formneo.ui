@@ -6,8 +6,9 @@ import "@designable/react/dist/designable.react.umd.production.css";
 import "@designable/react-settings-form/dist/designable.settings-form.umd.production.css";
 
 // Ant Design UI (üst bar için)
-import { Space as AntSpace, Button as AntButton, Typography, Input as AntdInput, Form as AntdForm, message, Tag, Drawer, List } from "antd";
-import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined } from "@ant-design/icons";
+import { Space as AntSpace, Button as AntButton, Typography, Input as AntdInput, Form as AntdForm, message, Tag, Drawer, List, Select as AntdSelect, InputNumber as AntdInputNumber, Switch as AntdSwitch, Divider as AntdDivider, Modal } from "antd";
+import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import * as Icons from "@ant-design/icons";
 import formNeoLogo from "assets/images/logoson.svg";
 
 // Designable React bileşenleri
@@ -91,6 +92,14 @@ import ApproveButtons from "./custom/ApproveButtons";
 import { createResource } from "@designable/core";
 import { Editor } from "@monaco-editor/react";
 
+interface FormButton {
+  id: string;
+  label: string;
+  type?: "primary" | "default" | "dashed" | "link" | "text";
+  icon?: string;
+  action?: string; // Process ekranında kullanılacak action kodu
+}
+
 export default function FormilyDesigner(): JSX.Element {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -101,6 +110,8 @@ export default function FormilyDesigner(): JSX.Element {
   const [parentFormId, setParentFormId] = useState<string | undefined>(undefined);
   const [versionsOpen, setVersionsOpen] = useState(false);
   const [versions, setVersions] = useState<any[]>([]);
+  const [formButtons, setFormButtons] = useState<FormButton[]>([]);
+  const [editingButton, setEditingButton] = useState<FormButton | null>(null);
   // Dil ve locale kayıtlarını motor yaratılmadan ÖNCE yap
   GlobalRegistry.setDesignerLanguage("en-US");
   try {
@@ -162,17 +173,33 @@ export default function FormilyDesigner(): JSX.Element {
         if (typeof data.publicationStatus === "number") setPublicationStatus(data.publicationStatus);
         if (typeof data.revision === "number") setRevision(data.revision);
         const design = data.formDesign ? JSON.parse(data.formDesign) : null;
+        
+        // Button paneli bilgilerini önce yükle (engine'den bağımsız)
+        if (design && design.buttonPanel && design.buttonPanel.buttons) {
+          setFormButtons(design.buttonPanel.buttons);
+        } else {
+          setFormButtons([]);
+        }
+        
+        // Schema'yı yükle (engine hazır olmalı)
         if (design && design.schema) {
-          const root = transformToTreeNode(design);
-          const workspace = engine.workbench?.activeWorkspace;
-          const operation = workspace?.operation;
-          if (operation && root) {
-            // Ağacı temizle ve yeni ağacı yükle
-            operation.tree.from(root as any);
-          }
+          // Engine'in hazır olmasını bekle
+          setTimeout(() => {
+            try {
+              const root = transformToTreeNode(design);
+              const workspace = engine.workbench?.activeWorkspace;
+              const operation = workspace?.operation;
+              if (operation && root) {
+                // Ağacı temizle ve yeni ağacı yükle
+                operation.tree.from(root as any);
+              }
+            } catch (e) {
+              // Schema yüklenirken hata
+            }
+          }, 100);
         }
       } catch (e) {
-        console.error(e);
+        // Form yüklenirken hata
       } finally {
         setIsBusy(false);
       }
@@ -180,7 +207,7 @@ export default function FormilyDesigner(): JSX.Element {
     load();
   }, [id]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     try {
       if (!formName || !formName.trim()) {
         message.warning("Form name is required");
@@ -189,55 +216,113 @@ export default function FormilyDesigner(): JSX.Element {
       const workspace = engine.workbench?.activeWorkspace;
       const tree = workspace?.operation?.tree;
       const result = tree ? transformToSchema(tree) : { schema: {} };
-      const payload = {
-        formName,
-        formDescription: "",
-        formDesign: JSON.stringify(result),
-        javaScriptCode: "",
-        isActive: 1 as any,
-        canEdit: true,
-        publicationStatus: 1 as any,
-        showInMenu: false,
-      } as any;
+      
+      // Button paneli bilgilerini her zaman ekle (state'teki formButtons'ı kullan)
+      const designWithButtons = {
+        ...result,
+        buttonPanel: {
+          buttons: formButtons || [],
+        },
+      };
+      
       setIsBusy(true);
       const conf = getConfiguration();
       const api = new FormDataApi(conf);
-      const task = id
-        ? api.apiFormDataPut({ id, concurrencyToken: 0, ...payload })
-        : api.apiFormDataPost(payload);
-      task
-        .then((res: any) => {
+      
+      if (id) {
+        // Mevcut formu güncelle - mevcut bilgileri koru
+        const currentFormRes = await api.apiFormDataIdGet(id);
+        const currentForm = currentFormRes?.data as any;
+        
+        const payload = {
+          id,
+          concurrencyToken: 0,
+          formName: currentForm.formName || formName,
+          formDescription: currentForm.formDescription || "",
+          formDesign: JSON.stringify(designWithButtons),
+          javaScriptCode: currentForm.javaScriptCode || "",
+          isActive: currentForm.isActive as any,
+          canEdit: currentForm.canEdit !== undefined ? currentForm.canEdit : true,
+          publicationStatus: currentForm.publicationStatus || 1, // Mevcut status'ü koru
+          showInMenu: currentForm.showInMenu || false,
+        } as any;
+        
+        await api.apiFormDataPut(payload);
+        message.success("Form saved successfully");
+      } else {
+        // Yeni form oluştur
+        const payload = {
+          formName,
+          formDescription: "",
+          formDesign: JSON.stringify(designWithButtons),
+          javaScriptCode: "",
+          isActive: 1 as any,
+          canEdit: true,
+          publicationStatus: 1 as any,
+          showInMenu: false,
+        } as any;
+        
+        const res: any = await api.apiFormDataPost(payload);
+        const newId = res?.data?.id;
+        if (newId) {
           message.success("Form saved successfully");
-          const newId = res?.data?.id;
-          if (!id && newId) {
-            navigate(`/forms/designer/${newId}`);
-          }
-        })
-        .catch(() => message.error("Failed to save form"))
-        .finally(() => setIsBusy(false));
-    } catch (e) {
-      console.error(e);
-      message.error("Unexpected error while saving");
+          navigate(`/forms/designer/${newId}`);
+        }
+      }
+    } catch (e: any) {
+      message.error(e?.response?.data?.message || "Failed to save form");
+    } finally {
+      setIsBusy(false);
     }
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     try {
       if (!id) return;
       setIsBusy(true);
+      
+      // Önce formu buttonPanel ile kaydet
+      const workspace = engine.workbench?.activeWorkspace;
+      const tree = workspace?.operation?.tree;
+      const result = tree ? transformToSchema(tree) : { schema: {} };
+      
+      const designWithButtons = {
+        ...result,
+        buttonPanel: {
+          buttons: formButtons || [],
+        },
+      };
+      
       const conf = getConfiguration();
       const api = new FormDataApi(conf);
-      api.apiFormDataPublishIdPost(id)
-        .then(async () => {
-          message.success("Form published");
-          setPublicationStatus(2);
-          await openRevisions(true);
-        })
-        .catch(() => message.error("Failed to publish"))
-        .finally(() => setIsBusy(false));
-    } catch (e) {
-      console.error(e);
-      message.error("Unexpected error while publishing");
+      
+      // Mevcut form bilgilerini al
+      const currentFormRes = await api.apiFormDataIdGet(id);
+      const currentForm = currentFormRes?.data as any;
+      
+      // Formu buttonPanel ile güncelle
+      await api.apiFormDataPut({
+        id,
+        concurrencyToken: 0,
+        formName: currentForm.formName || formName,
+        formDescription: currentForm.formDescription || "",
+        formDesign: JSON.stringify(designWithButtons),
+        javaScriptCode: currentForm.javaScriptCode || "",
+        isActive: currentForm.isActive as any,
+        canEdit: currentForm.canEdit !== undefined ? currentForm.canEdit : true,
+        publicationStatus: currentForm.publicationStatus || 1,
+        showInMenu: currentForm.showInMenu || false,
+      } as any);
+      
+      // Sonra yayınla
+      await api.apiFormDataPublishIdPost(id);
+      message.success("Form published");
+      setPublicationStatus(2);
+      await openRevisions(true);
+    } catch (e: any) {
+      message.error(e?.response?.data?.message || "Failed to publish");
+    } finally {
+      setIsBusy(false);
     }
   };
 
@@ -255,9 +340,8 @@ export default function FormilyDesigner(): JSX.Element {
       const list = (res?.data || []) as any[];
       setVersions(list);
       if (!silent) setVersionsOpen(true);
-    } catch (e) {
-      console.error(e);
-      message.error("Failed to load versions");
+      } catch (e) {
+        message.error("Failed to load versions");
     } finally {
       setIsBusy(false);
     }
@@ -274,24 +358,195 @@ export default function FormilyDesigner(): JSX.Element {
         return;
       }
       setIsBusy(true);
+      
       const conf = getConfiguration();
       const api = new FormDataApi(conf);
-      await api.apiFormDataCreateRevisionIdPost(id);
-      const parent = parentFormId || id;
+      
+      // Mevcut form bilgilerini al
+      const currentFormRes = await api.apiFormDataIdGet(id);
+      const currentForm = currentFormRes?.data as any;
+      
+      // Mevcut formDesign'ı al ve buttonPanel'i ekle/güncelle
+      const currentDesign = currentForm?.formDesign ? JSON.parse(currentForm.formDesign) : { schema: {} };
+      const workspace = engine.workbench?.activeWorkspace;
+      const tree = workspace?.operation?.tree;
+      const result = tree ? transformToSchema(tree) : currentDesign;
+      
+      // ✅ ÖNEMLİ: ButtonPanel'i önce state'ten al (kullanıcının yeni eklediği butonlar dahil)
+      // State'te buton varsa onu kullan, yoksa API'den gelen veriyi kullan
+      const buttonsToUse = formButtons.length > 0 
+        ? formButtons 
+        : (currentDesign?.buttonPanel?.buttons || []);
+      
+      const designWithButtons = {
+        ...result,
+        buttonPanel: {
+          buttons: buttonsToUse,
+        },
+      };
+      
+      // Eğer form yayınlanmışsa (publicationStatus === 2), mevcut formu güncelleme
+      // Sadece revizyon oluştur ve buttonPanel'i yeni revizyona kopyala
+      if (currentForm.publicationStatus === 2) {
+        // ✅ ÖNEMLİ: Yayınlanan formdan revizyon oluştururken, state'teki formButtons'ı kullan
+        // Çünkü kullanıcı yeni buton eklemiş olabilir ama henüz kaydetmemiş olabilir
+        // State'teki butonlar öncelikli olmalı (yeni eklenenler dahil)
+        const buttonsToCopy = formButtons.length > 0 
+          ? formButtons 
+          : (currentDesign?.buttonPanel?.buttons || []);
+        
+        await api.apiFormDataCreateRevisionIdPost(id);
+        
+        // Yeni revizyonu bul ve buttonPanel'i kopyala
+        const parent = currentForm.parentFormId || id;
+        const resList = await api.apiFormDataVersionsParentIdGet(parent);
+        const list = (resList?.data || []) as any[];
+        const drafts = list.filter((x: any) => x.publicationStatus === 1);
+        const latestDraft = drafts.sort((a: any, b: any) => (b.revision || 0) - (a.revision || 0))[0];
+        
+        if (latestDraft?.id) {
+          const latestFormRes = await api.apiFormDataIdGet(latestDraft.id);
+          const latestFormData = latestFormRes?.data as any;
+          const latestDesign = latestFormData?.formDesign ? JSON.parse(latestFormData.formDesign) : { schema: {} };
+          
+          const latestDesignWithButtons = {
+            ...latestDesign,
+            buttonPanel: {
+              buttons: buttonsToCopy,
+            },
+          };
+          
+          await api.apiFormDataPut({
+            id: latestDraft.id,
+            concurrencyToken: 0,
+            formName: latestFormData.formName,
+            formDescription: latestFormData.formDescription || "",
+            formDesign: JSON.stringify(latestDesignWithButtons),
+            javaScriptCode: latestFormData.javaScriptCode || "",
+            isActive: latestFormData.isActive as any,
+            canEdit: latestFormData.canEdit !== undefined ? latestFormData.canEdit : true,
+            publicationStatus: 1 as any,
+            showInMenu: latestFormData.showInMenu || false,
+          } as any);
+          
+          // ButtonPanel'in kaydedildiğinden emin olmak için tekrar kontrol et
+          const verifyRes = await api.apiFormDataIdGet(latestDraft.id);
+          const verifyData = verifyRes?.data as any;
+          const verifyDesign = verifyData?.formDesign ? JSON.parse(verifyData.formDesign) : {};
+          
+          // Eğer buttonPanel kaydedilmemişse tekrar kaydet
+          if (!verifyDesign.buttonPanel || !verifyDesign.buttonPanel.buttons || verifyDesign.buttonPanel.buttons.length === 0) {
+            await api.apiFormDataPut({
+              id: latestDraft.id,
+              concurrencyToken: verifyData.concurrencyToken || 0,
+              formName: verifyData.formName,
+              formDescription: verifyData.formDescription || "",
+              formDesign: JSON.stringify(latestDesignWithButtons),
+              javaScriptCode: verifyData.javaScriptCode || "",
+              isActive: verifyData.isActive as any,
+              canEdit: verifyData.canEdit !== undefined ? verifyData.canEdit : true,
+              publicationStatus: 1 as any,
+              showInMenu: verifyData.showInMenu || false,
+            } as any);
+          }
+          
+          message.success(`Revision #${latestDraft.revision} created`);
+          // Navigate etmeden önce kısa bir bekleme ekle ki API güncellemesi tamamlansın
+          setTimeout(() => {
+            navigate(`/forms/designer/${latestDraft.id}`);
+          }, 300);
+          return;
+        } else {
+          message.warning("Revizyon oluşturuldu ancak yeni revizyon bulunamadı. Lütfen sayfayı yenileyin.");
+          await openRevisions(true);
+          return;
+        }
+      } else {
+        // Taslak formdan revizyon oluştur - önce mevcut formu güncelle (yeni butonlar dahil)
+        // ✅ ÖNEMLİ: designWithButtons zaten state'teki formButtons'ı içeriyor
+        await api.apiFormDataPut({
+          id,
+          concurrencyToken: 0,
+          formName: currentForm.formName || formName,
+          formDescription: currentForm.formDescription || "",
+          formDesign: JSON.stringify(designWithButtons), // ✅ State'teki butonlar dahil
+          javaScriptCode: currentForm.javaScriptCode || "",
+          isActive: currentForm.isActive as any,
+          canEdit: currentForm.canEdit !== undefined ? currentForm.canEdit : true,
+          publicationStatus: currentForm.publicationStatus || 1,
+          showInMenu: currentForm.showInMenu || false,
+        } as any);
+        
+        // Sonra revizyon oluştur
+        await api.apiFormDataCreateRevisionIdPost(id);
+      }
+      
+      // Yeni revizyonu bul
+      const parent = currentForm.parentFormId || id;
       const resList = await api.apiFormDataVersionsParentIdGet(parent);
       const list = (resList?.data || []) as any[];
       const drafts = list.filter((x: any) => x.publicationStatus === 1);
       const latestDraft = drafts.sort((a: any, b: any) => (b.revision || 0) - (a.revision || 0))[0];
+      
       if (latestDraft?.id) {
+        // Yeni revizyona buttonPanel'i kopyala
+        // ✅ ÖNEMLİ: buttonsToUse zaten state'teki formButtons'ı içeriyor (yeni eklenenler dahil)
+        const latestFormRes = await api.apiFormDataIdGet(latestDraft.id);
+        const latestFormData = latestFormRes?.data as any;
+        const latestDesign = latestFormData?.formDesign ? JSON.parse(latestFormData.formDesign) : { schema: {} };
+        
+        const latestDesignWithButtons = {
+          ...latestDesign,
+          buttonPanel: {
+            buttons: buttonsToUse, // ✅ State'teki butonlar (yeni eklenenler dahil)
+          },
+        };
+        
+        await api.apiFormDataPut({
+          id: latestDraft.id,
+          concurrencyToken: 0,
+          formName: latestFormData.formName,
+          formDescription: latestFormData.formDescription || "",
+          formDesign: JSON.stringify(latestDesignWithButtons),
+          javaScriptCode: latestFormData.javaScriptCode || "",
+          isActive: latestFormData.isActive as any,
+          canEdit: latestFormData.canEdit !== undefined ? latestFormData.canEdit : true,
+          publicationStatus: 1 as any,
+          showInMenu: latestFormData.showInMenu || false,
+        } as any);
+        
+        // ButtonPanel'in kaydedildiğinden emin olmak için tekrar kontrol et
+        const verifyRes = await api.apiFormDataIdGet(latestDraft.id);
+        const verifyData = verifyRes?.data as any;
+        const verifyDesign = verifyData?.formDesign ? JSON.parse(verifyData.formDesign) : {};
+        
+        // Eğer buttonPanel kaydedilmemişse tekrar kaydet
+        if (!verifyDesign.buttonPanel || !verifyDesign.buttonPanel.buttons || verifyDesign.buttonPanel.buttons.length === 0) {
+          await api.apiFormDataPut({
+            id: latestDraft.id,
+            concurrencyToken: verifyData.concurrencyToken || 0,
+            formName: verifyData.formName,
+            formDescription: verifyData.formDescription || "",
+            formDesign: JSON.stringify(latestDesignWithButtons),
+            javaScriptCode: verifyData.javaScriptCode || "",
+            isActive: verifyData.isActive as any,
+            canEdit: verifyData.canEdit !== undefined ? verifyData.canEdit : true,
+            publicationStatus: 1 as any,
+            showInMenu: verifyData.showInMenu || false,
+          } as any);
+        }
+        
         message.success(`Revision #${latestDraft.revision} created`);
-        navigate(`/forms/designer/${latestDraft.id}`);
+        // Navigate etmeden önce kısa bir bekleme ekle ki API güncellemesi tamamlansın
+        setTimeout(() => {
+          navigate(`/forms/designer/${latestDraft.id}`);
+        }, 300);
       } else {
         message.success("Revision created");
         await openRevisions(true);
       }
-    } catch (e) {
-      console.error(e);
-      message.error("Failed to create revision");
+    } catch (e: any) {
+      message.error(e?.response?.data?.message || "Failed to create revision");
     } finally {
       setIsBusy(false);
     }
@@ -313,8 +568,224 @@ export default function FormilyDesigner(): JSX.Element {
     );
   };
 
+  // CRUD Ayarları Paneli (seçili alan için x-crud meta yazma/okuma)
+  const CrudSettingsPanel = () => {
+    // Seçili node'u bul
+    const workspace = engine.workbench?.activeWorkspace as any;
+    const operation = workspace?.operation as any;
+    const selection = operation?.selection as any;
+    const selectedIds: string[] = Array.from((selection?.selected as Set<string>) || []);
+    const selectedId = selectedIds[0];
+    const node = selectedId
+      ? (operation?.tree?.findById
+          ? operation.tree.findById(selectedId)
+          : operation?.tree?.find?.((n: any) => n?.id === selectedId))
+      : null;
+
+    // Form/Container gibi düğümler için gizle (basit kontrol)
+    const xc = node?.props?.['x-component'];
+    const isContainer = ['Form', 'FormLayout', 'FormGrid', 'FormTab', 'FormCollapse', 'ArrayCards', 'ArrayTable', 'Card', 'Space'].includes(String(xc));
+    if (!node || isContainer) return null;
+
+    const crud = (node?.props?.['x-crud'] as any) || {};
+    const listCfg = crud.list || {};
+    const filterCfg = crud.filter || {};
+
+    const updateCrud = (patch: any) => {
+      try {
+        const nextCrud = { ...crud, ...patch, list: { ...listCfg, ...(patch.list || {}) }, filter: { ...filterCfg, ...(patch.filter || {}) } };
+        const nextProps = { ...(node.props || {}), ['x-crud']: nextCrud };
+        if (typeof (node as any).setProps === 'function') {
+          (node as any).setProps(nextProps);
+        } else {
+          node.props = nextProps;
+        }
+        // küçük bir titreşimle yeniden çiz
+        (workspace as any)?.operation?.dispatch?.(new (class {})());
+      } catch {
+        // ignore
+      }
+    };
+
+    return (
+      <div style={{ padding: 12, borderBottom: "1px solid #f0f0f0", marginBottom: 8 }}>
+        <Typography.Text strong>CRUD Ayarları</Typography.Text>
+        <AntdForm layout="vertical" size="small" style={{ marginTop: 8 }}>
+          <AntdDivider orientation="left" plain>Liste</AntdDivider>
+          <AntdForm.Item label="Görünsün">
+            <AntdSwitch
+              checked={listCfg.visible !== false}
+              onChange={(val) => updateCrud({ list: { visible: !!val } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Başlık">
+            <AntdInput
+              value={listCfg.title}
+              placeholder="Kolon başlığı (boşsa alan başlığı)"
+              onChange={(e) => updateCrud({ list: { title: e.target.value } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Sıra">
+            <AntdInputNumber
+              style={{ width: '100%' }}
+              value={typeof listCfg.order === 'number' ? listCfg.order : undefined}
+              onChange={(v) => updateCrud({ list: { order: typeof v === 'number' ? v : undefined } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Genişlik">
+            <AntdInputNumber
+              style={{ width: '100%' }}
+              value={typeof listCfg.width === 'number' ? listCfg.width : undefined}
+              onChange={(v) => updateCrud({ list: { width: typeof v === 'number' ? v : undefined } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Hizalama">
+            <AntdSelect
+              value={listCfg.align || 'left'}
+              options={[
+                { label: 'Sol', value: 'left' },
+                { label: 'Orta', value: 'center' },
+                { label: 'Sağ', value: 'right' },
+              ]}
+              onChange={(v) => updateCrud({ list: { align: v } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Sıralanabilir">
+            <AntdSwitch
+              checked={listCfg.sortable !== false}
+              onChange={(val) => updateCrud({ list: { sortable: !!val } })}
+            />
+          </AntdForm.Item>
+
+          <AntdDivider orientation="left" plain>Filtre</AntdDivider>
+          <AntdForm.Item label="Filtrede kullan">
+            <AntdSwitch
+              checked={!!filterCfg.enabled}
+              onChange={(val) => updateCrud({ filter: { enabled: !!val } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Tip">
+            <AntdSelect
+              value={filterCfg.type || 'text'}
+              options={[
+                { label: 'Metin', value: 'text' },
+                { label: 'Seçim', value: 'select' },
+                { label: 'Sayı', value: 'number' },
+                { label: 'Aralık', value: 'range' },
+                { label: 'Boolean', value: 'boolean' },
+                { label: 'Tarih', value: 'date' },
+                { label: 'Tarih Aralığı', value: 'daterange' },
+              ]}
+              onChange={(v) => updateCrud({ filter: { type: v } })}
+            />
+          </AntdForm.Item>
+          <AntdForm.Item label="Placeholder">
+            <AntdInput
+              value={filterCfg.placeholder}
+              placeholder="Filtre placeholder"
+              onChange={(e) => updateCrud({ filter: { placeholder: e.target.value } })}
+            />
+          </AntdForm.Item>
+        </AntdForm>
+      </div>
+    );
+  };
+
+  // Button Panel Yönetimi
+  const handleAddButton = () => {
+    const newButton: FormButton = {
+      id: `btn_${Date.now()}`,
+      label: "Yeni Buton",
+      type: "default",
+      action: "",
+    };
+    setEditingButton(newButton);
+  };
+
+  const handleEditButton = (button: FormButton) => {
+    setEditingButton({ ...button });
+  };
+
+  const handleDeleteButton = (buttonId: string) => {
+    setFormButtons(formButtons.filter((b) => b.id !== buttonId));
+  };
+
+  const handleSaveButton = () => {
+    if (!editingButton) return;
+    if (!editingButton.label.trim()) {
+      message.warning("Buton etiketi gereklidir");
+      return;
+    }
+    const existingIndex = formButtons.findIndex((b) => b.id === editingButton.id);
+    if (existingIndex >= 0) {
+      const updated = [...formButtons];
+      updated[existingIndex] = editingButton;
+      setFormButtons(updated);
+    } else {
+      setFormButtons([...formButtons, editingButton]);
+    }
+    setEditingButton(null);
+    message.success("Buton kaydedildi");
+  };
+
+  const ButtonPanelSettings = () => {
+
+    return (
+      <div style={{ padding: 12, borderBottom: "1px solid #f0f0f0", marginBottom: 8 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <Typography.Text strong>Button Paneli</Typography.Text>
+          <AntButton type="primary" size="small" icon={<PlusOutlined />} onClick={handleAddButton}>
+            Buton Ekle
+          </AntButton>
+        </div>
+        {formButtons.length === 0 ? (
+          <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+            Henüz buton eklenmedi. &quot;Buton Ekle&quot; butonuna tıklayarak buton ekleyebilirsiniz.
+          </Typography.Text>
+        ) : (
+          <List
+            size="small"
+            dataSource={formButtons}
+            renderItem={(btn) => (
+              <List.Item
+                style={{ padding: "8px 0" }}
+                actions={[
+                  <AntButton
+                    key="edit"
+                    type="link"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={() => handleEditButton(btn)}
+                  />,
+                  <AntButton
+                    key="delete"
+                    type="link"
+                    size="small"
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDeleteButton(btn.id)}
+                  />,
+                ]}
+              >
+                <List.Item.Meta
+                  title={
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span>{btn.label}</span>
+                      <Tag style={{ fontSize: 11 }}>{btn.type || "default"}</Tag>
+                      {btn.action && <Tag style={{ fontSize: 11 }} color="blue">{btn.action}</Tag>}
+                    </div>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
+    <div style={{ width: "100%", height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", paddingBottom: formButtons.length > 0 ? "60px" : "0" }}>
       <DesignerAny engine={engine}>
         <StudioPanelAny
           logo={
@@ -500,8 +971,106 @@ export default function FormilyDesigner(): JSX.Element {
                 </div>
               </AntdForm>
             </div>
+            {/* CRUD Ayarları (seçili alan için) */}
+            <CrudSettingsPanel />
+            {/* Button Panel Yönetimi */}
+            <ButtonPanelSettings />
             <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
           </SettingsPanelAny>
+          {/* Button Paneli - En Alta Sabitlenmiş */}
+          <div
+            style={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: "#f5f5f5",
+              borderTop: "1px solid #d9d9d9",
+              padding: "12px 24px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: 8,
+              zIndex: 1000,
+              boxShadow: "0 -2px 8px rgba(0,0,0,0.1)",
+            }}
+          >
+            {formButtons.map((btn) => {
+              const IconComponent = btn.icon ? (Icons as any)[`${btn.icon}Outlined`] || (Icons as any)[btn.icon] : null;
+              return (
+                <AntButton
+                  key={btn.id}
+                  type={btn.type || "default"}
+                  icon={IconComponent ? React.createElement(IconComponent) : undefined}
+                  onClick={() => {
+                    message.info(`Buton tıklandı: ${btn.label}${btn.action ? ` (Action: ${btn.action})` : ""}`);
+                  }}
+                >
+                  {btn.label}
+                </AntButton>
+              );
+            })}
+            {/* Buton Ekle Butonu */}
+            <AntButton
+              type="dashed"
+              icon={<PlusOutlined />}
+              onClick={handleAddButton}
+              style={{ minWidth: 120 }}
+            >
+              Buton Ekle
+            </AntButton>
+          </div>
+          {/* Button Edit Modal - Component seviyesinde */}
+          <Modal
+            title={editingButton?.id && formButtons.find((b) => b.id === editingButton.id) ? "Buton Düzenle" : "Yeni Buton"}
+            open={!!editingButton}
+            onOk={handleSaveButton}
+            onCancel={() => setEditingButton(null)}
+            okText="Kaydet"
+            cancelText="İptal"
+          >
+            {editingButton && (
+              <AntdForm layout="vertical" size="small">
+                <AntdForm.Item label="Buton Etiketi" required>
+                  <AntdInput
+                    value={editingButton.label}
+                    onChange={(e) => setEditingButton({ ...editingButton, label: e.target.value })}
+                    placeholder="Buton etiketi"
+                  />
+                </AntdForm.Item>
+                <AntdForm.Item label="Buton Tipi">
+                  <AntdSelect
+                    value={editingButton.type || "default"}
+                    onChange={(v) => setEditingButton({ ...editingButton, type: v })}
+                    options={[
+                      { label: "Varsayılan", value: "default" },
+                      { label: "Birincil", value: "primary" },
+                      { label: "Kesikli", value: "dashed" },
+                      { label: "Link", value: "link" },
+                      { label: "Metin", value: "text" },
+                    ]}
+                  />
+                </AntdForm.Item>
+                <AntdForm.Item label="İkon (Opsiyonel)">
+                  <AntdInput
+                    value={editingButton.icon || ""}
+                    onChange={(e) => setEditingButton({ ...editingButton, icon: e.target.value })}
+                    placeholder="Ant Design icon adı (örn: save, delete)"
+                  />
+                </AntdForm.Item>
+                <AntdForm.Item label="Action Kodu (Process için)">
+                  <AntdInput
+                    value={editingButton.action || ""}
+                    onChange={(e) => setEditingButton({ ...editingButton, action: e.target.value })}
+                    placeholder="Process ekranında kullanılacak action kodu"
+                  />
+                  <Typography.Text type="secondary" style={{ fontSize: 11 }}>
+                    Bu kod process ekranında buton tıklandığında hangi işlemin yapılacağını belirler
+                  </Typography.Text>
+                </AntdForm.Item>
+              </AntdForm>
+            )}
+          </Modal>
           <Drawer open={versionsOpen} onClose={() => setVersionsOpen(false)} width={360}>
             <div style={{ padding: 16 }}>
               <Typography.Title level={5}>Revisions</Typography.Title>

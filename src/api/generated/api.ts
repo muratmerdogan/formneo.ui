@@ -2326,26 +2326,22 @@ export interface RoleTenantBulkSaveDto {
     'roleId'?: string | null;
     'items'?: Array<RoleTenantBulkItemDto> | null;
 }
+export interface RoleTenantFormDetailDto {
+    'formTenantRoleId'?: string;
+    'roleName'?: string | null;
+    'roleDescription'?: string | null;
+    'isActive'?: boolean;
+    'forms'?: Array<RoleTenantFormPermissionDto> | null;
+}
 export interface RoleTenantFormInsertDto {
     'roleName'?: string | null;
     'roleDescription'?: string | null;
     'roleIsActive'?: boolean | null;
     'formPermissions'?: Array<RoleTenantFormPermissionDto> | null;
 }
-export interface RoleTenantFormListDto {
-    'id'?: string;
-    'formTenantRoleId'?: string;
-    'formId'?: string;
-    'canView'?: boolean;
-    'canAdd'?: boolean;
-    'canEdit'?: boolean;
-    'canDelete'?: boolean;
-    'description'?: string | null;
-    'createdDate'?: string;
-    'updatedDate'?: string | null;
-}
 export interface RoleTenantFormPermissionDto {
     'formId'?: string;
+    'formName'?: string | null;
     'canView'?: boolean;
     'canAdd'?: boolean;
     'canEdit'?: boolean;
@@ -3431,6 +3427,17 @@ export interface UserTenantByTenantDto {
     'userId'?: string | null;
     'userFullName'?: string | null;
     'tenantName'?: string | null;
+}
+export interface UserTenantFormRoleBulkSaveDto {
+    'userId'?: string | null;
+    'formTenantRoleIds'?: Array<string> | null;
+}
+export interface UserTenantFormRoleListDto {
+    'id'?: string;
+    'userId'?: string | null;
+    'formTenantRoleId'?: string;
+    'formTenantRoleName'?: string | null;
+    'isActive'?: boolean;
 }
 export interface UserTenantInsertDto {
     'userId'?: string | null;
@@ -28589,7 +28596,7 @@ export const RoleTenantFormApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantFormListDto>>> {
+        async apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleTenantFormDetailDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormFormTenantRoleIdGet']?.[localVarOperationServerIndex]?.url;
@@ -28600,7 +28607,7 @@ export const RoleTenantFormApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoleTenantFormGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTenantFormListDto>>> {
+        async apiRoleTenantFormGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormTenantRoleListDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoleTenantFormGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoleTenantFormApi.apiRoleTenantFormGet']?.[localVarOperationServerIndex]?.url;
@@ -28656,7 +28663,7 @@ export const RoleTenantFormApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantFormListDto>> {
+        apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId: string, options?: RawAxiosRequestConfig): AxiosPromise<RoleTenantFormDetailDto> {
             return localVarFp.apiRoleTenantFormFormTenantRoleIdGet(formTenantRoleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -28664,7 +28671,7 @@ export const RoleTenantFormApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoleTenantFormGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleTenantFormListDto>> {
+        apiRoleTenantFormGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<FormTenantRoleListDto>> {
             return localVarFp.apiRoleTenantFormGet(options).then((request) => request(axios, basePath));
         },
         /**
@@ -37896,6 +37903,175 @@ export class UserCalendarApi extends BaseAPI {
      */
     public apiUserCalendarWorkLocationsGet(options?: RawAxiosRequestConfig) {
         return UserCalendarApiFp(this.configuration).apiUserCalendarWorkLocationsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * UserTenantFormRolesApi - axios parameter creator
+ */
+export const UserTenantFormRolesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {UserTenantFormRoleBulkSaveDto} [userTenantFormRoleBulkSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantFormRolesBulkSavePost: async (userTenantFormRoleBulkSaveDto?: UserTenantFormRoleBulkSaveDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/UserTenantFormRoles/bulk-save`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userTenantFormRoleBulkSaveDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantFormRolesByUserIdGet: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('apiUserTenantFormRolesByUserIdGet', 'userId', userId)
+            const localVarPath = `/api/UserTenantFormRoles/by/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserTenantFormRolesApi - functional programming interface
+ */
+export const UserTenantFormRolesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserTenantFormRolesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {UserTenantFormRoleBulkSaveDto} [userTenantFormRoleBulkSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto?: UserTenantFormRoleBulkSaveDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantFormRolesApi.apiUserTenantFormRolesBulkSavePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiUserTenantFormRolesByUserIdGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserTenantFormRoleListDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiUserTenantFormRolesByUserIdGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserTenantFormRolesApi.apiUserTenantFormRolesByUserIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * UserTenantFormRolesApi - factory interface
+ */
+export const UserTenantFormRolesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserTenantFormRolesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {UserTenantFormRoleBulkSaveDto} [userTenantFormRoleBulkSaveDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto?: UserTenantFormRoleBulkSaveDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiUserTenantFormRolesByUserIdGet(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserTenantFormRoleListDto>> {
+            return localVarFp.apiUserTenantFormRolesByUserIdGet(userId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserTenantFormRolesApi - object-oriented interface
+ */
+export class UserTenantFormRolesApi extends BaseAPI {
+    /**
+     * 
+     * @param {UserTenantFormRoleBulkSaveDto} [userTenantFormRoleBulkSaveDto] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto?: UserTenantFormRoleBulkSaveDto, options?: RawAxiosRequestConfig) {
+        return UserTenantFormRolesApiFp(this.configuration).apiUserTenantFormRolesBulkSavePost(userTenantFormRoleBulkSaveDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiUserTenantFormRolesByUserIdGet(userId: string, options?: RawAxiosRequestConfig) {
+        return UserTenantFormRolesApiFp(this.configuration).apiUserTenantFormRolesByUserIdGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

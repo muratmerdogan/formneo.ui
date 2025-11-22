@@ -22,8 +22,34 @@ export default function WorkflowFormSelector({ open, onClose, onConfirm }) {
           const conf = getConfiguration();
           const api = new FormDataApi(conf);
           const res = await api.apiFormDataGet();
+          
+          // ✅ Önce sadece yayınlanmış formları filtrele (publicationStatus = 2)
+          const publishedForms = (res.data || []).filter((form) => form.publicationStatus === 2);
+          
+          // Formları parentFormId'ye göre grupla
+          const groupByParent = (rows) => {
+            const map = {};
+            rows.forEach((r) => {
+              const key = r.parentFormId || r.id;
+              map[key] = map[key] || [];
+              map[key].push(r);
+            });
+            return map;
+          };
+
+          // Her grup için en son revizyonu seç
+          const pickLatestRevision = (arr) => {
+            // Zaten sadece yayınlanmış formlar geldiği için direkt en büyük revision'ı seç
+            return [...arr].sort((a, b) => (b.revision || 0) - (a.revision || 0))[0];
+          };
+
+          const groups = groupByParent(publishedForms);
+          const latestForms = Object.values(groups).map((group) => pickLatestRevision(group));
+          
           console.log("API'den gelen form verileri:", res.data);
-          setFormOptions(res.data);
+          console.log("Yayınlanmış formlar:", publishedForms);
+          console.log("Son revizyonlar filtrelendi:", latestForms);
+          setFormOptions(latestForms);
         } catch (error) {
           console.error("Formlar çekilemedi", error);
         }
