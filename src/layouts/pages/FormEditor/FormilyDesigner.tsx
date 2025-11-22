@@ -97,7 +97,7 @@ interface FormButton {
   label: string;
   type?: "primary" | "default" | "dashed" | "link" | "text";
   icon?: string;
-  action?: string; // Process ekranında kullanılacak action kodu
+  action: string; // ✅ ZORUNLU: Process ekranında kullanılacak action kodu (workflow routing için)
 }
 
 export default function FormilyDesigner(): JSX.Element {
@@ -697,7 +697,7 @@ export default function FormilyDesigner(): JSX.Element {
       id: `btn_${Date.now()}`,
       label: "Yeni Buton",
       type: "default",
-      action: "",
+      action: "", // Kullanıcı doldurmalı
     };
     setEditingButton(newButton);
   };
@@ -712,17 +712,48 @@ export default function FormilyDesigner(): JSX.Element {
 
   const handleSaveButton = () => {
     if (!editingButton) return;
+    
+    // ✅ Label kontrolü
     if (!editingButton.label.trim()) {
       message.warning("Buton etiketi gereklidir");
       return;
     }
-    const existingIndex = formButtons.findIndex((b) => b.id === editingButton.id);
+    
+    // ✅ Action code kontrolü - ZORUNLU
+    if (!editingButton.action || !editingButton.action.trim()) {
+      message.error("Action Code zorunludur! Workflow routing için gereklidir.");
+      return;
+    }
+    
+    // ✅ Action code format kontrolü (büyük harf, boşluk yok, özel karakter yok)
+    const actionCode = editingButton.action.trim().toUpperCase().replace(/\s+/g, "_");
+    if (!/^[A-Z0-9_]+$/.test(actionCode)) {
+      message.error("Action Code sadece büyük harf, rakam ve alt çizgi içerebilir (örn: APPROVE, REJECT, SAVE)");
+      return;
+    }
+    
+    // ✅ Aynı action code'un başka bir butonda kullanılıp kullanılmadığını kontrol et
+    const existingButtonWithSameAction = formButtons.find(
+      (b) => b.id !== editingButton.id && b.action?.toUpperCase() === actionCode
+    );
+    if (existingButtonWithSameAction) {
+      message.error(`Action Code "${actionCode}" zaten "${existingButtonWithSameAction.label}" butonunda kullanılıyor!`);
+      return;
+    }
+    
+    // Action code'u normalize et
+    const normalizedButton: FormButton = {
+      ...editingButton,
+      action: actionCode,
+    };
+    
+    const existingIndex = formButtons.findIndex((b) => b.id === normalizedButton.id);
     if (existingIndex >= 0) {
       const updated = [...formButtons];
-      updated[existingIndex] = editingButton;
+      updated[existingIndex] = normalizedButton;
       setFormButtons(updated);
     } else {
-      setFormButtons([...formButtons, editingButton]);
+      setFormButtons([...formButtons, normalizedButton]);
     }
     setEditingButton(null);
     message.success("Buton kaydedildi");
@@ -748,14 +779,34 @@ export default function FormilyDesigner(): JSX.Element {
             dataSource={formButtons}
             renderItem={(btn) => (
               <List.Item
-                style={{ padding: "8px 0" }}
+                style={{ 
+                  padding: "12px 8px",
+                  border: "1px solid #f0f0f0",
+                  borderRadius: 4,
+                  marginBottom: 8,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+                onClick={() => handleEditButton(btn)}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#fafafa";
+                  e.currentTarget.style.borderColor = "#d9d9d9";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.borderColor = "#f0f0f0";
+                }}
                 actions={[
                   <AntButton
                     key="edit"
                     type="link"
                     size="small"
                     icon={<EditOutlined />}
-                    onClick={() => handleEditButton(btn)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditButton(btn);
+                    }}
+                    title="Düzenle"
                   />,
                   <AntButton
                     key="delete"
@@ -763,17 +814,35 @@ export default function FormilyDesigner(): JSX.Element {
                     size="small"
                     danger
                     icon={<DeleteOutlined />}
-                    onClick={() => handleDeleteButton(btn.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteButton(btn.id);
+                    }}
+                    title="Sil"
                   />,
                 ]}
               >
                 <List.Item.Meta
                   title={
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <span>{btn.label}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <span style={{ fontWeight: 500 }}>{btn.label}</span>
                       <Tag style={{ fontSize: 11 }}>{btn.type || "default"}</Tag>
-                      {btn.action && <Tag style={{ fontSize: 11 }} color="blue">{btn.action}</Tag>}
+                      {btn.action ? (
+                        <Tag style={{ fontSize: 11 }} color="blue">{btn.action}</Tag>
+                      ) : (
+                        <Tag style={{ fontSize: 11 }} color="red">Action Code Yok!</Tag>
+                      )}
+                      {btn.icon && (
+                        <Tag style={{ fontSize: 11 }} color="purple">
+                          {React.createElement((Icons as any)[`${btn.icon}Outlined`] || (Icons as any)[btn.icon] || Icons.QuestionCircleOutlined)}
+                        </Tag>
+                      )}
                     </div>
+                  }
+                  description={
+                    <Typography.Text type="secondary" style={{ fontSize: 11 }}>
+                      Tıklayarak düzenleyebilirsiniz
+                    </Typography.Text>
                   }
                 />
               </List.Item>
@@ -1003,8 +1072,17 @@ export default function FormilyDesigner(): JSX.Element {
                   type={btn.type || "default"}
                   icon={IconComponent ? React.createElement(IconComponent) : undefined}
                   onClick={() => {
-                    message.info(`Buton tıklandı: ${btn.label}${btn.action ? ` (Action: ${btn.action})` : ""}`);
+                    if (btn.action) {
+                      message.info(`Buton tıklandı: ${btn.label} (Action: ${btn.action})`);
+                    } else {
+                      message.warning(`"${btn.label}" butonunda Action Code tanımlı değil! Lütfen düzenleyin.`);
+                    }
                   }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    handleEditButton(btn);
+                  }}
+                  title={`${btn.label}${btn.action ? ` - Action: ${btn.action}` : " - Action Code yok!"} (Sağ tıkla düzenle)`}
                 >
                   {btn.label}
                 </AntButton>
@@ -1058,14 +1136,23 @@ export default function FormilyDesigner(): JSX.Element {
                     placeholder="Ant Design icon adı (örn: save, delete)"
                   />
                 </AntdForm.Item>
-                <AntdForm.Item label="Action Kodu (Process için)">
+                <AntdForm.Item 
+                  label="Action Code (Zorunlu)" 
+                  required
+                  help="Workflow routing için gereklidir. Örn: APPROVE, REJECT, SAVE"
+                  validateStatus={editingButton.action && editingButton.action.trim() ? "" : "warning"}
+                >
                   <AntdInput
                     value={editingButton.action || ""}
-                    onChange={(e) => setEditingButton({ ...editingButton, action: e.target.value })}
-                    placeholder="Process ekranında kullanılacak action kodu"
+                    onChange={(e) => {
+                      const value = e.target.value.toUpperCase().replace(/\s+/g, "_");
+                      setEditingButton({ ...editingButton, action: value });
+                    }}
+                    placeholder="APPROVE, REJECT, SAVE vb."
+                    maxLength={50}
                   />
-                  <Typography.Text type="secondary" style={{ fontSize: 11 }}>
-                    Bu kod process ekranında buton tıklandığında hangi işlemin yapılacağını belirler
+                  <Typography.Text type="secondary" style={{ fontSize: 11, display: "block", marginTop: 4 }}>
+                    ⚠️ Bu kod workflow&apos;da hangi yolu takip edeceğini belirler. Büyük harf, rakam ve alt çizgi kullanın.
                   </Typography.Text>
                 </AntdForm.Item>
               </AntdForm>

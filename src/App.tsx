@@ -116,6 +116,8 @@ import OpportunityFormPage from "./pages/opportunities/OpportunityFormPage";
 // Publicly exposed WorkFlow & FormManagement pages
 const WorkFlowList = lazy(() => import("layouts/pages/WorkFlow/WorkFlowList"));
 const WorkFlowDetail = lazy(() => import("layouts/pages/WorkFlow/WorkFlowDetail.jsx"));
+const WorkflowMyTasks = lazy(() => import("layouts/pages/WorkFlow/WorkflowMyTasks"));
+const WorkflowRuntime = lazy(() => import("layouts/pages/WorkFlow/WorkflowRuntime"));
 const ListFormPublic = lazy(() => import("layouts/pages/FormManagement/listForm"));
 const CreateFormPublic = lazy(() => import("layouts/pages/FormManagement/ParamtetersDefination"));
 const ParameterEditPublic = lazy(() => import("layouts/pages/FormManagement/ParameterEdit"));
@@ -261,6 +263,8 @@ export default function App() {
             <Route path="/workflowList" element={<WorkFlowList />} />
             <Route path="/WorkFlowList/detail" element={<WorkFlowDetail />} />
             <Route path="/WorkFlowList/detail/:id" element={<WorkFlowDetail />} />
+            <Route path="/workflows/my-tasks" element={<WorkflowMyTasks />} />
+            <Route path="/workflows/runtime/:id" element={<WorkflowRuntime />} />
             {/* Public FormManagement routes (istenen şekilde public) */}
             <Route path="/forms" element={<ListFormPublic />} />
             <Route path="/forms/detail" element={<FormDesigner />} />

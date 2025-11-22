@@ -203,6 +203,8 @@ function Flow(props) {
   const [msgOpen, setmsgOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState(null);
   const [contextMenuNode, setContextMenuNode] = useState(null);
+  const [edgeContextMenu, setEdgeContextMenu] = useState(null);
+  const [contextMenuEdge, setContextMenuEdge] = useState(null);
   const [scriptModalOpen, setScriptModalOpen] = useState(false);
   const [scriptModalNode, setScriptModalNode] = useState(null);
 
@@ -726,19 +728,50 @@ function Flow(props) {
   };
 
   const onSave = useCallback(() => {
-    const haveNodeWithoutEdge = reactFlowInstance
-      .getNodes()
-      .filter((node) => node.className.includes("noHaveEdges"));
+    console.log("🔵 onSave çağrıldı");
+    console.log("reactFlowInstance:", reactFlowInstance);
+    console.log("txtname.current:", txtname.current);
+    
+    if (!reactFlowInstance) {
+      console.error("❌ reactFlowInstance null!");
+      dispatchAlert({ message: "Workflow instance bulunamadı. Lütfen sayfayı yenileyin.", type: MessageBoxType.Error });
+      return;
+    }
 
-    if (txtname.current?.current.toString().trim() === "") {
+    const allNodes = reactFlowInstance.getNodes();
+    const allEdges = reactFlowInstance.getEdges();
+    
+    // ✅ Bağlantısız node'ları kontrol et (startNode hariç)
+    const nodesWithoutEdges = allNodes.filter((node) => {
+      if (node.type === "startNode") return false; // Start node'un girişi olmayabilir
+      
+      const hasIncomingEdge = allEdges.some((edge) => edge.target === node.id);
+      const hasOutgoingEdge = allEdges.some((edge) => edge.source === node.id);
+      
+      // Hem giriş hem çıkış edge'i olmayan node'lar bağlantısız sayılır
+      return !hasIncomingEdge && !hasOutgoingEdge;
+    });
+
+    const workflowName = txtname.current?.current?.toString()?.trim() || "";
+    
+    if (!workflowName) {
+      console.error("❌ Workflow adı boş!");
       dispatchAlert({ message: "Akış Adı Boş Bırakılamaz", type: MessageBoxType.Error });
       return;
     }
 
-    if (!reactFlowInstance || haveNodeWithoutEdge.length) return;
+    if (nodesWithoutEdges.length > 0) {
+      console.error("❌ Bağlantısız node'lar var:", nodesWithoutEdges);
+      const nodeNames = nodesWithoutEdges.map((n) => n.data?.name || n.id).join(", ");
+      dispatchAlert({ 
+        message: `Bağlantısız node'lar var: ${nodeNames}. Lütfen tüm node'ları bağlayın.`, 
+        type: MessageBoxType.Error 
+      });
+      return;
+    }
 
+    console.log("✅ Validasyonlar geçti, API çağrısı yapılıyor...");
     const flow = { ...reactFlowInstance.toObject(), firstNode };
-    const workflowName = txtname.current?.current;
     const conf = getConfiguration();
     const api = new WorkFlowDefinationApi(conf);
 
@@ -905,6 +938,37 @@ function Flow(props) {
     setContextMenuNode(null);
   };
 
+  // ✅ Edge context menu'yu kapat
+  const handleCloseEdgeContextMenu = () => {
+    setEdgeContextMenu(null);
+    setContextMenuEdge(null);
+  };
+
+  // ✅ Edge silme
+  const handleDeleteEdge = useCallback(() => {
+    if (!contextMenuEdge) return;
+
+    setEdges((eds) => eds.filter((edge) => edge.id !== contextMenuEdge.id));
+    handleCloseEdgeContextMenu();
+  }, [contextMenuEdge, setEdges]);
+
+  // ✅ Edge sağ tıklama (context menu)
+  const onEdgeContextMenu = useCallback(
+    (event, edge) => {
+      event.preventDefault();
+      setContextMenuEdge(edge);
+      setEdgeContextMenu(
+        edgeContextMenu === null
+          ? {
+              mouseX: event.clientX + 2,
+              mouseY: event.clientY - 6,
+            }
+          : null
+      );
+    },
+    [edgeContextMenu]
+  );
+
   // ✅ Node silme
   const handleDeleteNode = useCallback(() => {
     if (!contextMenuNode) return;
@@ -995,6 +1059,7 @@ function Flow(props) {
               onNodeClick={onNodeClick}
               onNodeContextMenu={onNodeContextMenu}
               onEdgeClick={onEdgeClick}
+              onEdgeContextMenu={onEdgeContextMenu}
               fitView
               snapToGrid
               snapGrid={[16, 16]}
@@ -1005,7 +1070,7 @@ function Flow(props) {
             </ReactFlow>
           )}
           
-          {/* Context Menu */}
+          {/* Node Context Menu */}
           <Menu
             open={contextMenu !== null}
             onClose={handleCloseContextMenu}
@@ -1021,6 +1086,25 @@ function Flow(props) {
                 <DeleteIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>Sil</ListItemText>
+            </MenuItem>
+          </Menu>
+
+          {/* Edge Context Menu */}
+          <Menu
+            open={edgeContextMenu !== null}
+            onClose={handleCloseEdgeContextMenu}
+            anchorReference="anchorPosition"
+            anchorPosition={
+              edgeContextMenu !== null
+                ? { top: edgeContextMenu.mouseY, left: edgeContextMenu.mouseX }
+                : undefined
+            }
+          >
+            <MenuItem onClick={handleDeleteEdge}>
+              <ListItemIcon>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Bağlantıyı Sil</ListItemText>
             </MenuItem>
           </Menu>
 
@@ -1674,7 +1758,19 @@ function WorkFlowDetail(props) {
           <MDButton color="error" variant="outlined" onClick={() => (cancelFlow ? cancelFlow() : setmsgOpen(true))}>
             <MuiIcon sx={{ mr: .5 }}>close</MuiIcon> Vazgeç
           </MDButton>
-          <MDButton color="info" onClick={() => saveFlow && saveFlow()}>
+          <MDButton 
+            color="info" 
+            onClick={() => {
+              console.log("🔵 Kaydet butonu tıklandı");
+              console.log("saveFlow:", saveFlow);
+              if (saveFlow) {
+                saveFlow();
+              } else {
+                console.error("❌ saveFlow fonksiyonu tanımlı değil!");
+                dispatchAlert({ message: "Kaydet fonksiyonu hazır değil. Lütfen bekleyin.", type: MessageBoxType.Warning });
+              }
+            }}
+          >
             <MuiIcon sx={{ mr: .5 }}>save</MuiIcon> Kaydet
           </MDButton>
         </MDBox>
