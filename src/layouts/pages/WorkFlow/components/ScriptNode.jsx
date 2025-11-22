@@ -30,7 +30,7 @@ function ScriptNode({ data = { script: "", name: "Script" } }) {
         style={{
           backgroundColor: "white",
           width: "260px",
-          minHeight: "130px",
+          minHeight: "150px",
           borderColor: "#e5e7eb",
           transition: "all 0.2s ease",
         }}
@@ -136,11 +136,11 @@ function ScriptNode({ data = { script: "", name: "Script" } }) {
         </div>
       </div>
 
-      {/* Çıkış handle'ı (sağ taraf) */}
+      {/* TRUE çıkış handle'ı (sağ taraf üst) */}
       <Handle
-        id="output"
+        id="true"
         style={{
-          top: "50%",
+          top: "35%",
           right: "-8px",
           background: "#10b981",
           width: "16px",
@@ -150,7 +150,53 @@ function ScriptNode({ data = { script: "", name: "Script" } }) {
         }}
         type="source"
         position={Position.Right}
-      />
+      >
+        <div
+          style={{
+            position: "absolute",
+            right: "20px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            fontSize: "10px",
+            fontWeight: 600,
+            color: "#10b981",
+            whiteSpace: "nowrap",
+          }}
+        >
+          TRUE
+        </div>
+      </Handle>
+
+      {/* FALSE çıkış handle'ı (sağ taraf alt) */}
+      <Handle
+        id="false"
+        style={{
+          top: "65%",
+          right: "-8px",
+          background: "#ef4444",
+          width: "16px",
+          height: "16px",
+          border: "3px solid white",
+          borderRadius: "50%",
+        }}
+        type="source"
+        position={Position.Right}
+      >
+        <div
+          style={{
+            position: "absolute",
+            right: "20px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            fontSize: "10px",
+            fontWeight: 600,
+            color: "#ef4444",
+            whiteSpace: "nowrap",
+          }}
+        >
+          FALSE
+        </div>
+      </Handle>
     </>
   );
 }

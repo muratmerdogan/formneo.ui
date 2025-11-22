@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { FormDataApi } from "api/generated";
+import getConfiguration from "confiuration";
 import {
   Box,
   Typography,
@@ -37,6 +39,7 @@ const ScriptTab = ({
 }) => {
   const [script, setScript] = useState("");
   const [name, setName] = useState("Script");
+  const [formNodeDataCache, setFormNodeDataCache] = useState({}); // Form node'larının API'den çekilen data'sı
 
   // ✅ Node değiştiğinde state'i güncelle
   useEffect(() => {
@@ -46,7 +49,125 @@ const ScriptTab = ({
     }
   }, [node?.id, node?.data?.script, node?.data?.name]);
 
-  // ✅ Process Data Tree - Önceki node'lardan ve form data'dan değişkenleri topla
+  // ✅ Form node'larından API'den form data çek
+  useEffect(() => {
+    const fetchFormNodesData = async () => {
+      if (!node?.id || !edges || !nodes) return;
+
+      const incomingEdges = edges.filter((edge) => edge.target === node.id);
+      const formNodes = incomingEdges
+        .map((edge) => nodes.find((n) => n.id === edge.source))
+        .filter((n) => n && n.type === "formNode");
+
+      const cache = {};
+      
+      for (const formNode of formNodes) {
+        const formId = formNode.data?.formId || 
+                       formNode.data?.selectedFormId || 
+                       formNode.data?.workflowFormInfo?.formId;
+        
+        if (formId && !formNodeDataCache[formId]) {
+          try {
+            const conf = getConfiguration();
+            const api = new FormDataApi(conf);
+            const response = await api.apiFormDataIdGet(formId);
+            
+            if (response.data) {
+              cache[formId] = response.data;
+            }
+          } catch (error) {
+            // ignore errors
+          }
+        } else if (formId && formNodeDataCache[formId]) {
+          cache[formId] = formNodeDataCache[formId];
+        }
+      }
+      
+      if (Object.keys(cache).length > 0) {
+        setFormNodeDataCache((prev) => ({ ...prev, ...cache }));
+      }
+    };
+
+    fetchFormNodesData();
+  }, [node?.id, edges, nodes]);
+
+  // ✅ extractFieldsFromComponents helper fonksiyonu - Formily ve Formio formatlarını destekler
+  const extractFieldsFromComponents = useMemo(() => {
+    return (components) => {
+      if (!components) return [];
+      
+      const fields = [];
+      const excludedTypes = ["button", "submit", "reset", "dsbutton", "hidden", "dshidden", "file", "dsfile"];
+      const excludedKeys = ["submit", "kaydet", "save", "button", "reset", "cancel", "iptal"];
+      
+            // ✅ Formily formatı: schema.properties objesi
+      if (components.schema && components.schema.properties) {
+        const properties = components.schema.properties;
+        Object.keys(properties).forEach((key) => {
+          const prop = properties[key];
+          if (prop && prop.title) {
+            const componentType = prop["x-component"] || "";
+            const itemKey = (key || "").toLowerCase();
+            
+            // Button component'lerini hariç tut
+            if (!componentType.toLowerCase().includes("button") && !excludedKeys.includes(itemKey)) {
+              fields.push({
+                name: key,
+                label: prop.title || key, // title label olarak kullanılıyor
+                type: prop.type || "string",
+                component: componentType,
+              });
+            }
+          }
+        });
+        return fields;
+      }
+      
+      // ✅ Formio formatı: components array'i
+      if (Array.isArray(components) && components.length > 0) {
+        const traverse = (items) => {
+          if (!items || !Array.isArray(items)) return;
+          
+          for (const item of items) {
+            if (!item) continue;
+            
+            const isInput = item.input !== false && item.key;
+            if (isInput) {
+              const itemType = item.type || "";
+              const itemKey = (item.key || "").toLowerCase();
+              
+              if (!excludedTypes.includes(itemType) && !excludedKeys.includes(itemKey)) {
+                fields.push({
+                  name: item.key,
+                  label: item.label || item.key,
+                  type: item.type || "string",
+                });
+              }
+            }
+            
+            if (item.columns && Array.isArray(item.columns)) {
+              item.columns.forEach((col) => {
+                if (col && col.components) {
+                  traverse(col.components);
+                }
+              });
+            }
+            
+            if (item.components && Array.isArray(item.components)) {
+              traverse(item.components);
+            }
+          }
+        };
+        
+        traverse(components);
+        return fields;
+      }
+      
+      return fields;
+    };
+  }, []);
+
+  // ✅ Process Data Tree - Önceki node'lardan değişkenleri topla
   const processDataTree = useMemo(() => {
     const tree = {
       workflow: {
@@ -56,16 +177,8 @@ const ScriptTab = ({
         formId: "workflow.formId",
         formName: "workflow.formName",
       },
-      formData: {},
       previousNodes: {},
     };
-
-    // Form data'dan field'ları ekle
-    if (parsedFormDesign?.fields) {
-      parsedFormDesign.fields.forEach((field) => {
-        tree.formData[field.name] = `formData.${field.name}`;
-      });
-    }
 
     // Önceki node'ları bul (incoming edges)
     if (node?.id && edges) {
@@ -80,6 +193,45 @@ const ScriptTab = ({
           if (sourceNode.type === "formNode") {
             tree.previousNodes[nodeName].action = `previousNodes.${nodeName}.action`;
             tree.previousNodes[nodeName].formData = `previousNodes.${nodeName}.formData`;
+            
+            // ✅ Sadece API'den çekilen güncel formDesign'dan component'leri extract et
+            const formId = sourceNode.data?.formId || 
+                          sourceNode.data?.selectedFormId || 
+                          sourceNode.data?.workflowFormInfo?.formId;
+            
+            if (formId && formNodeDataCache[formId]?.formDesign) {
+              try {
+                const raw = typeof formNodeDataCache[formId].formDesign === "string"
+                  ? JSON.parse(formNodeDataCache[formId].formDesign)
+                  : formNodeDataCache[formId].formDesign;
+
+                let formFields = [];
+                
+                // ✅ Formily formatı: schema.properties içinde component'ler var
+                if (raw?.schema?.properties) {
+                  formFields = extractFieldsFromComponents(raw);
+                }
+                // ✅ Formio formatı: components array'i
+                else if (raw?.components && Array.isArray(raw.components)) {
+                  formFields = extractFieldsFromComponents(raw.components);
+                }
+                // ✅ Eski format: fields array'i
+                else if (raw?.fields && Array.isArray(raw.fields) && raw.fields.length > 0) {
+                  formFields = raw.fields;
+                }
+                
+                // Form field'larını ekle (label olarak title gösterilecek)
+                if (formFields.length > 0) {
+                  formFields.forEach((field) => {
+                    // Label (title) görünen isim olarak, name ise script'te kullanılacak key
+                    const displayLabel = field.label || field.name;
+                    tree.previousNodes[nodeName][displayLabel] = `previousNodes.${nodeName}.${field.name}`;
+                  });
+                }
+              } catch (e) {
+                // ignore parse errors
+              }
+            }
           } else if (sourceNode.type === "userTaskNode") {
             tree.previousNodes[nodeName].action = `previousNodes.${nodeName}.action`;
             tree.previousNodes[nodeName].userId = `previousNodes.${nodeName}.userId`;
@@ -98,7 +250,7 @@ const ScriptTab = ({
     }
 
     return tree;
-  }, [node?.id, nodes, edges, parsedFormDesign]);
+  }, [node?.id, nodes, edges, extractFieldsFromComponents, formNodeDataCache]);
 
   // ✅ Expanded state for tree
   const [expanded, setExpanded] = useState({});
@@ -206,9 +358,20 @@ const ScriptTab = ({
   // ✅ Test et
   const handleTest = () => {
     try {
-      // Basit syntax kontrolü
-      new Function(script);
-      alert("Script syntax kontrolü başarılı ✅");
+      // Syntax kontrolü ve boolean dönüş kontrolü
+      const testFunction = new Function("workflow", "formData", "previousNodes", script);
+      const result = testFunction(
+        { instanceId: "test", startTime: new Date(), currentStep: 1, formId: "test", formName: "Test" },
+        {},
+        {}
+      );
+      
+      if (typeof result !== "boolean") {
+        alert(`⚠️ Script boolean döndürmüyor. Dönen değer: ${typeof result}. Script true veya false döndürmelidir.`);
+        return;
+      }
+      
+      alert(`Script syntax kontrolü başarılı ✅\nDönen değer: ${result} (${result ? "TRUE" : "FALSE"})`);
     } catch (error) {
       alert(`Script hatası: ${error.message}`);
     }
@@ -268,7 +431,6 @@ const ScriptTab = ({
 
               <List sx={{ width: "100%" }}>
                 {renderTreeItem("workflow", processDataTree.workflow)}
-                {renderTreeItem("formData", processDataTree.formData)}
                 {Object.keys(processDataTree.previousNodes).length > 0 &&
                   renderTreeItem("previousNodes", processDataTree.previousNodes)}
               </List>
@@ -281,6 +443,9 @@ const ScriptTab = ({
               <Box sx={{ p: 2, borderBottom: "1px solid #e5e7eb" }}>
                 <Typography variant="subtitle2" fontWeight={600}>
                   JavaScript Editor
+                </Typography>
+                <Typography variant="caption" color="textSecondary" sx={{ mt: 0.5, display: "block" }}>
+                  Script true veya false döndürmelidir. Örnek: <code>return formData.amount &gt; 1000;</code>
                 </Typography>
               </Box>
 
