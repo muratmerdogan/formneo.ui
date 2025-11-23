@@ -81,19 +81,6 @@ function AlertNode({ data = { message: "Mesaj", type: "info" } }) {
           {data.message || "Mesaj yok"}
         </div>
       </div>
-      
-      <Handle
-        style={{
-          top: "50%",
-          right: "-10px",
-          background: "#555",
-          width: "20px",
-          height: "20px",
-          borderRadius: "50%",
-        }}
-        type="source"
-        position={Position.Right}
-      />
     </>
   );
 }

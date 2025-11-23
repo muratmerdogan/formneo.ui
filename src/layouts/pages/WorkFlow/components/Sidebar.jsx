@@ -11,8 +11,6 @@ import {
   FaChevronRight,
   FaChevronDown,
   FaUserCheck,
-  FaDatabase,
-  FaSearch,
   FaGlobe,
   FaEnvelope,
   FaPlay,
@@ -21,7 +19,6 @@ import {
   FaWpforms,
   FaPencilAlt,
   FaExclamationTriangle,
-  FaCodeBranch,
 } from "react-icons/fa";
 
 const CustomMenuList = () => {
@@ -56,39 +53,6 @@ const CustomMenuList = () => {
           <FaChevronRight style={{ color: "white" }} />
         )}
       </MenuItem>
-      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
-        <MenuItem onDragStart={(event) => onDragStart(event, "approverNode")} draggable>
-          <ListItemIcon>
-            <FaUserCheck />
-          </ListItemIcon>
-          <ListItemText inset>Onaycı</ListItemText>
-        </MenuItem>
-      </Collapse>
-
-      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
-        <MenuItem onDragStart={(event) => onDragStart(event, "sqlConditionNode")} draggable>
-          <ListItemIcon>
-            <FaDatabase />
-          </ListItemIcon>
-          <ListItemText inset>Sql Koşul</ListItemText>
-        </MenuItem>
-      </Collapse>
-      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
-        <MenuItem onDragStart={(event) => onDragStart(event, "queryConditionNode")} draggable>
-          <ListItemIcon>
-            <FaSearch />
-          </ListItemIcon>
-          <ListItemText inset>Sorgu Kriteri</ListItemText>
-        </MenuItem>
-      </Collapse>
-      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
-        <MenuItem onDragStart={(event) => onDragStart(event, "formConditionNode")} draggable>
-          <ListItemIcon>
-            <FaCodeBranch />
-          </ListItemIcon>
-          <ListItemText inset>Form Koşulu</ListItemText>
-        </MenuItem>
-      </Collapse>
       <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
         <MenuItem onDragStart={(event) => onDragStart(event, "setFieldNode")} draggable>
           <ListItemIcon>
