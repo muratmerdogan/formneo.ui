@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { FormDataApi, WorkFlowApi, UserApi } from "api/generated";
+import { FormDataApi, WorkFlowApi, UserApi, WorkFlowStartApiDto } from "api/generated";
 import getConfiguration from "confiuration";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -16,6 +16,7 @@ import { FormProvider, createSchemaField } from "@formily/react";
 import * as AntdFormily from "@formily/antd";
 import { Button as AntButton, message } from "antd";
 import * as Icons from "@ant-design/icons";
+import { WorkFlowContiuneApiDto } from "api/generated";
 
 interface FormButton {
   id: string;
@@ -60,7 +61,7 @@ export default function WorkflowRuntime(): JSX.Element {
         const userResponse = await userApi.apiUserGetLoginUserDetailGet();
         setCurrentUser(userResponse.data?.userName || "");
       } catch (err) {
-        console.warn("Kullanıcı bilgisi yüklenemedi:", err);
+        // Kullanıcı bilgisi yüklenemedi - sessizce devam et
       }
     };
     loadUser();
@@ -96,9 +97,6 @@ export default function WorkflowRuntime(): JSX.Element {
           ? JSON.parse(form.formDesign) 
           : form.formDesign;
 
-        console.log("📋 Parsed formDesign:", parsed);
-        console.log("📋 buttonPanel:", parsed.buttonPanel);
-        console.log("📋 buttons:", parsed.buttonPanel?.buttons);
 
         // Schema'yı oluştur
         if (parsed.schema) {
@@ -114,17 +112,19 @@ export default function WorkflowRuntime(): JSX.Element {
 
         // Button panel'i yükle
         if (parsed.buttonPanel?.buttons && Array.isArray(parsed.buttonPanel.buttons)) {
-          console.log("✅ Butonlar yüklendi:", parsed.buttonPanel.buttons);
           setFormButtons(parsed.buttonPanel.buttons);
-        } else {
-          console.warn("⚠️ ButtonPanel bulunamadı veya buttons array değil");
-          console.warn("parsed:", parsed);
-          console.warn("parsed.buttonPanel:", parsed.buttonPanel);
         }
 
       } catch (err: any) {
-        console.error("Form yüklenirken hata:", err);
-        setError(err.message || "Form yüklenirken bir hata oluştu");
+        let errorMsg = "Form yüklenirken bir hata oluştu";
+        
+        if (err.response) {
+          errorMsg = err.response.data?.message || err.response.data || errorMsg;
+        } else if (err.message) {
+          errorMsg = err.message;
+        }
+        
+        setError(errorMsg);
       } finally {
         setLoading(false);
       }
@@ -135,10 +135,20 @@ export default function WorkflowRuntime(): JSX.Element {
 
   /**
    * ✅ Form butonuna tıklandığında - Backend'e workflow başlatma isteği gönder
+   * BMP Modülü için: Hangi butondan tıklandıysa o butonun action kodu gönderilir
+   * 
+   * Eğer instance ID varsa (devam eden workflow), continue eder
+   * Eğer instance ID yoksa (yeni workflow), start eder
    */
   const handleButtonClick = async (button: FormButton) => {
     if (submitting) {
       return; // Çift tıklamayı önle
+    }
+
+    // ✅ Action kod kontrolü - BMP modülü için zorunlu
+    if (!button.action || !button.action.trim()) {
+      message.error("Bu buton için Action Code tanımlanmamış! Lütfen form tasarımcısında Action Code ekleyin.", 5);
+      return;
     }
 
     try {
@@ -148,7 +158,7 @@ export default function WorkflowRuntime(): JSX.Element {
       await form.validate();
       const formValues = form.values;
 
-      // Workflow instance bilgilerini kontrol et
+      // ✅ Workflow ID kontrolü
       if (!workflowInstance?.workflowId) {
         throw new Error("Workflow ID bulunamadı");
       }
@@ -156,67 +166,123 @@ export default function WorkflowRuntime(): JSX.Element {
       const conf = getConfiguration();
       const workflowApi = new WorkFlowApi(conf);
 
-      // ✅ WorkFlowStartApiDto oluştur
-      // workFlowInfo içinde form verilerini ve buton action'ını JSON olarak gönder
+      // ✅ BMP Modülü için: Action kodunu normalize et (büyük harf, underscore ile ayır)
+      const normalizedAction = button.action.trim().toUpperCase().replace(/\s+/g, "_");
+
+      // ✅ WorkFlowInfo oluştur
       const workFlowInfo = JSON.stringify({
         formData: formValues,
-        buttonAction: button.action || button.id,
+        buttonAction: normalizedAction, // ✅ BMP modülü için normalize edilmiş action kodu
         buttonLabel: button.label,
         formId: workflowInstance.formId,
         timestamp: new Date().toISOString(),
       });
 
-      const startDto = {
-        definationId: workflowInstance.workflowId,
-        userName: currentUser || undefined,
-        workFlowInfo: workFlowInfo,
-      };
+      // ✅ Instance ID kontrolü - Varsa continue, yoksa start
+      const instanceId = id && id !== "new" ? id : workflowInstance?.id;
 
-      console.log("🚀 Workflow başlatılıyor:", {
-        definationId: startDto.definationId,
-        buttonAction: button.action,
-        formDataKeys: Object.keys(formValues),
-      });
+      if (instanceId && instanceId !== "new") {
+        // ✅ Mevcut instance varsa - Workflow devam ettir
+        const continueDto: WorkFlowContiuneApiDto = {
+          workFlowItemId: instanceId,
+          userName: currentUser || undefined,
+          input: workFlowInfo,
+          note: normalizedAction,
+        };
 
-      // ✅ Backend'e workflow başlatma isteği gönder
-      const response = await workflowApi.apiWorkFlowStartPost(startDto);
-      const result = response.data;
+        const response = await workflowApi.apiWorkFlowContiunePost(continueDto);
+        
+        if (!response || !response.data) {
+          throw new Error("Backend'den geçersiz yanıt alındı");
+        }
 
-      console.log("✅ Workflow başlatıldı:", result);
+        message.success(
+          `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow devam ediyor.`,
+          3
+        );
+      } else {
+        // ✅ Yeni instance - Workflow başlat
+        const startDto: WorkFlowStartApiDto = {
+          definationId: workflowInstance.workflowId,
+          userName: currentUser || undefined,
+          workFlowInfo: workFlowInfo,
+          action: normalizedAction, // ✅ BMP modülü için action kodu (doğrudan alan olarak)
+          formData: JSON.stringify(formValues), // ✅ Form verileri (ayrı bir alan olarak da gönderiliyor)
+        };
 
-      // Başarılı mesajı göster
-      message.success(
-        `${button.label} butonuna tıklandı. Workflow başlatıldı.`,
-        3
-      );
+        const response = await workflowApi.apiWorkFlowStartPost(startDto);
+        
+        if (!response || !response.data) {
+          throw new Error("Backend'den geçersiz yanıt alındı");
+        }
 
-      // Workflow instance ID'si varsa güncelle
-      if (result?.id) {
+        const result = response.data;
+
+        message.success(
+          `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow başlatıldı.`,
+          3
+        );
+
         // Yeni instance ID ile görevlerim sayfasına yönlendir
         setTimeout(() => {
           navigate("/workflows/my-tasks", {
             state: {
               newInstanceId: result.id,
-              buttonAction: button.action,
+              buttonAction: normalizedAction,
             },
           });
         }, 1500);
-      } else {
-        // Instance ID yoksa direkt görevlerim sayfasına dön
-        setTimeout(() => {
-          navigate("/workflows/my-tasks");
-        }, 1500);
+        return;
       }
+
+      // Görevlerim sayfasına yönlendir (continue durumu için)
+      setTimeout(() => {
+        navigate("/workflows/my-tasks", {
+          state: {
+            buttonAction: normalizedAction,
+          },
+        });
+      }, 1500);
     } catch (error: any) {
-      console.error("❌ Workflow başlatılırken hata:", error);
+      // ✅ Detaylı hata mesajı oluştur
+      let errorMessage = "Workflow başlatılırken bir hata oluştu";
       
-      // Hata mesajını göster
-      const errorMessage = 
-        error.response?.data?.message || 
-        error.message || 
-        "Workflow başlatılırken bir hata oluştu";
+      if (error.response) {
+        // Backend'den gelen hata
+        const responseData = error.response.data;
+        
+        if (responseData?.message) {
+          errorMessage = responseData.message;
+        } else if (typeof responseData === "string") {
+          errorMessage = responseData;
+        } else if (responseData?.errors && Array.isArray(responseData.errors)) {
+          errorMessage = `Validasyon hataları: ${responseData.errors.join(", ")}`;
+        } else if (responseData?.title) {
+          errorMessage = responseData.title;
+        }
+        
+        // HTTP status koduna göre ek bilgi
+        const status = error.response.status;
+        if (status === 400) {
+          errorMessage = `Geçersiz istek: ${errorMessage}`;
+        } else if (status === 401) {
+          errorMessage = "Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.";
+        } else if (status === 403) {
+          errorMessage = "Bu işlem için yetkiniz bulunmuyor.";
+        } else if (status === 404) {
+          errorMessage = "Workflow tanımı bulunamadı.";
+        } else if (status === 500) {
+          errorMessage = `Sunucu hatası: ${errorMessage}`;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
       
-      message.error(errorMessage, 5);
+      // Kullanıcıya detaylı hata mesajı göster
+      message.error(
+        `❌ ${errorMessage}\n\nButon: ${button.label}\nAction: ${button.action || "Tanımlı değil"}`,
+        8
+      );
     } finally {
       setSubmitting(false);
     }
@@ -308,17 +374,22 @@ export default function WorkflowRuntime(): JSX.Element {
               )}
             </Box>
 
-            <Card>
-              <CardContent>
-                <FormProvider form={form}>
-                  <AntdFormily.Form>
-                    <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
-                      <SchemaField schema={schema} />
-                    </AntdFormily.FormLayout>
-                  </AntdFormily.Form>
-                </FormProvider>
-              </CardContent>
-            </Card>
+            <MDBox 
+              p={2} 
+              sx={{ 
+                backgroundColor: "#fff", 
+                borderRadius: 2, 
+                boxShadow: "0 2px 8px rgba(0,0,0,0.08)" 
+              }}
+            >
+              <FormProvider form={form}>
+                <AntdFormily.Form>
+                  <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
+                    <SchemaField schema={schema} />
+                  </AntdFormily.FormLayout>
+                </AntdFormily.Form>
+              </FormProvider>
+            </MDBox>
           </MDBox>
         </DashboardLayout>
 
@@ -349,6 +420,10 @@ export default function WorkflowRuntime(): JSX.Element {
                 ? (Icons as any)[button.icon] || Icons.CheckOutlined
                 : null;
 
+              // ✅ Action kod kontrolü - BMP modülü için
+              const hasAction = button.action && button.action.trim();
+              const buttonDisabled = submitting || !hasAction;
+
               return (
                 <AntButton
                   key={button.id}
@@ -358,9 +433,15 @@ export default function WorkflowRuntime(): JSX.Element {
                   size="large"
                   style={{ margin: "0 8px" }}
                   loading={submitting}
-                  disabled={submitting}
+                  disabled={buttonDisabled}
+                  title={hasAction ? `Action: ${button.action}` : "Action Code tanımlanmamış!"}
                 >
                   {submitting ? "Gönderiliyor..." : button.label}
+                  {hasAction && (
+                    <span style={{ fontSize: "0.7em", marginLeft: "4px", opacity: 0.7 }}>
+                      ({button.action})
+                    </span>
+                  )}
                 </AntButton>
               );
             })}

@@ -42,6 +42,9 @@ import AlertNode from "./components/AlertNode.jsx";
 import AlertTab from "./propertiespanel/AlertTab.jsx";
 import UserTaskNode from "./components/UserTaskNode.jsx";
 import UserTaskTab from "./propertiespanel/UserTaskTab.jsx";
+import UserTaskTabV2 from "./propertiespanel/UserTaskTabV2.jsx";
+import UserTaskModal from "./propertiespanel/UserTaskModal.jsx";
+import UserTaskFormDesigner from "./propertiespanel/UserTaskFormDesigner.jsx";
 import FormConditionNode from "./components/FormConditionNode.jsx";
 import FormConditionTab from "./propertiespanel/FormConditionTab.jsx";
 import ScriptNode from "./components/ScriptNode.jsx";
@@ -207,6 +210,8 @@ function Flow(props) {
   const [contextMenuEdge, setContextMenuEdge] = useState(null);
   const [scriptModalOpen, setScriptModalOpen] = useState(false);
   const [scriptModalNode, setScriptModalNode] = useState(null);
+  const [userTaskModalOpen, setUserTaskModalOpen] = useState(false);
+  const [userTaskModalNode, setUserTaskModalNode] = useState(null);
 
   const [workflowData, setWorkflowData] = useState({
     metadata: {
@@ -904,6 +909,13 @@ function Flow(props) {
       return;
     }
 
+    // ✅ UserTask node ise modal aç
+    if (node.type === "userTaskNode") {
+      setUserTaskModalNode(node);
+      setUserTaskModalOpen(true);
+      return;
+    }
+
     setisLoadingProperties(true);
     setselecteNodeType(node.type);
     setselecteNodeData(node.data);
@@ -1136,6 +1148,24 @@ function Flow(props) {
               }}
             />
           )}
+
+          {/* UserTask Form Designer Modal */}
+          {userTaskModalOpen && userTaskModalNode && (
+            <UserTaskFormDesigner
+              open={userTaskModalOpen}
+              onClose={() => {
+                setUserTaskModalOpen(false);
+                setUserTaskModalNode(null);
+              }}
+              initialValues={userTaskModalNode.data || {}}
+              node={userTaskModalNode}
+              onSave={(updatedNode) => {
+                handlePropertiesChange(updatedNode);
+                setUserTaskModalOpen(false);
+                setUserTaskModalNode(null);
+              }}
+            />
+          )}
         </div>
       </SplitterPanel>
 
@@ -1321,7 +1351,7 @@ const renderComponent = (
 
     case "userTaskNode":
       return data ? (
-        <UserTaskTab
+        <UserTaskTabV2
           key={node.id}
           initialValues={data}
           node={node}

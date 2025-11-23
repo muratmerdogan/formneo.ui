@@ -76,75 +76,37 @@ function WorkflowMyTasks() {
   /**
    * ✅ Kullanıcıya atanmış workflow instance'larını çek
    * 
-   * NOT: Backend'de workflow instance API'si olmalı
-   * Örnek: apiWorkflowInstanceGet veya apiWorkflowInstanceByUserGet
-   * 
-   * Şimdilik mock data kullanıyoruz, backend hazır olduğunda değiştirilecek
+   * NOT: Backend'de workflow instance API'si hazır olduğunda bu fonksiyon güncellenecek
+   * Örnek: apiWorkFlowGetWorkflowHeadsGet() veya apiWorkFlowGetWorkflowHeadsByUserGet(userId)
    */
   const fetchWorkflowInstances = async () => {
     setLoading(true);
     try {
       const conf = getConfiguration();
-      const workflowApi = new WorkFlowDefinationApi(conf);
-      const formApi = new FormDataApi(conf);
+      const workflowApi = new WorkFlowApi(conf);
+      const userApi = new UserApi(conf);
 
-      // ✅ Tüm workflow'ları çek
-      const workflowsResponse = await workflowApi.apiWorkFlowDefinationGet();
-      const workflows = workflowsResponse.data;
-
-      // ✅ Her workflow için instance'ları çek (mock - backend'de olmalı)
-      const instances: WorkflowInstance[] = [];
-
-      for (const workflow of workflows) {
-        // ✅ defination JSON'ını parse et ve formId'yi bul
-        let formId: string | null = null;
-
-        try {
-          if (workflow.defination) {
-            const parsedDefination = JSON.parse(workflow.defination);
-            // FormNode veya queryConditionNode'dan formId'yi bul
-            const formNode = parsedDefination.nodes?.find(
-              (n: any) =>
-                (n.type === "formNode" || n.type === "queryConditionNode") &&
-                n.data?.selectedFormId
-            );
-
-            if (formNode?.data?.selectedFormId) {
-              formId = formNode.data.selectedFormId;
-            }
-          }
-        } catch (error) {
-          console.error(`Workflow ${workflow.id} defination parse edilemedi:`, error);
-        }
-
-        // FormId yoksa bu workflow'u atla
-        if (!formId) continue;
-
-        try {
-          // Form bilgisini çek
-          const formResponse = await formApi.apiFormDataIdGet(formId);
-          const form = formResponse.data;
-
-          // Mock instance oluştur (backend'de gerçek instance'lar olacak)
-          instances.push({
-            id: `instance-${workflow.id}`,
-            workflowId: workflow.id || "",
-            workflowName: workflow.workflowName || "İsimsiz Workflow",
-            formId: formId,
-            formName: form?.formName || "İsimsiz Form",
-            status: "pending", // Backend'den gelecek
-            startDate: new Date().toISOString(),
-            lastUpdateDate: new Date().toISOString(),
-            currentStep: "formNode", // Backend'den gelecek
-          });
-        } catch (error) {
-          console.error(`Form ${formId} çekilemedi:`, error);
-        }
+      // ✅ Kullanıcı bilgisini al
+      let currentUserId: string | null = null;
+      try {
+        const userResponse = await userApi.apiUserGetLoginUserDetailGet();
+        currentUserId = (userResponse.data as any)?.id || (userResponse.data as any)?.userId || null;
+      } catch (error) {
+        console.warn("Kullanıcı bilgisi alınamadı:", error);
       }
+
+      // ✅ Backend'den workflow instance'ları çek
+      // NOT: Backend API'si hazır olduğunda aşağıdaki satırı aktif edin:
+      // const response = await workflowApi.apiWorkFlowGetWorkflowHeadsGet();
+      // const instances = response.data || [];
+      
+      // Şimdilik boş liste döndür (backend hazır olana kadar)
+      const instances: WorkflowInstance[] = [];
 
       setWorkflowInstances(instances);
     } catch (error) {
       console.error("Workflow instance'ları çekilirken hata:", error);
+      setWorkflowInstances([]);
     } finally {
       setLoading(false);
     }
@@ -249,40 +211,30 @@ function WorkflowMyTasks() {
   };
 
   /**
-   * ✅ Yeni workflow başlat
+   * ✅ Yeni workflow için form göster
+   * 
+   * Workflow instance oluşturmaz, sadece form sayfasına yönlendirir.
+   * Workflow, form butonuna basınca başlatılacak.
    */
   const handleStartNewWorkflow = async (workflow: any) => {
-    try {
-      const conf = getConfiguration();
-      const workflowApi = new WorkFlowApi(conf);
-
-      // ✅ Backend'de workflow instance oluştur
-      // NOT: Backend API'si hazır olduğunda bu kısım güncellenecek
-      // Şimdilik direkt form sayfasına yönlendiriyoruz
-
-      // Geçici olarak mock instance ID oluştur
-      const mockInstanceId = `new-instance-${workflow.id}-${Date.now()}`;
-
-      navigate(`/workflows/runtime/${mockInstanceId}`, {
-        state: {
-          workflowInstance: {
-            id: mockInstanceId,
-            workflowId: workflow.id,
-            workflowName: workflow.workflowName,
-            formId: workflow.formId,
-            formName: workflow.formName,
-            status: "pending",
-            startDate: new Date().toISOString(),
-            lastUpdateDate: new Date().toISOString(),
-            currentStep: "formNode",
-          },
-          isNewInstance: true,
-        },
-      });
-    } catch (error) {
-      console.error("Yeni workflow başlatılırken hata:", error);
-      alert("Workflow başlatılamadı. Lütfen tekrar deneyin.");
+    if (!workflow.formId) {
+      alert("Bu workflow için form tanımlanmamış!");
+      return;
     }
+
+    // ✅ Sadece form sayfasına yönlendir (instance ID yok, workflow başlatılmadı)
+    // Form butonuna basınca workflow başlatılacak
+    navigate(`/workflows/runtime/new`, {
+      state: {
+        workflowInstance: {
+          workflowId: workflow.id,
+          workflowName: workflow.workflowName,
+          formId: workflow.formId,
+          formName: workflow.formName,
+        },
+        isNewInstance: true,
+      },
+    });
   };
 
   /**

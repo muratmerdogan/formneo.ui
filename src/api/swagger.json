@@ -16765,6 +16765,46 @@
         }
       }
     },
+    "/api/WorkFlow/GetDetail/{id}": {
+      "get": {
+        "tags": [
+          "WorkFlow"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/WorkFlowDefination": {
       "get": {
         "tags": [
@@ -29904,6 +29944,50 @@
         },
         "additionalProperties": false
       },
+      "WorkFlowHeadDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "workflowName": {
+            "type": "string",
+            "nullable": true
+          },
+          "workFlowInfo": {
+            "type": "string",
+            "nullable": true
+          },
+          "workFlowStatus": {
+            "$ref": "#/components/schemas/WorkflowStatus"
+          },
+          "createUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workFlowDefinationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkFlowItemDtoWithApproveItems"
+            },
+            "nullable": true
+          },
+          "workFlowDefinationJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "WorkFlowHeadDto": {
         "type": "object",
         "properties": {
@@ -30085,6 +30169,14 @@
             "nullable": true
           },
           "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
             "type": "string",
             "nullable": true
           }

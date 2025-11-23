@@ -265,6 +265,7 @@ export default function App() {
             <Route path="/WorkFlowList/detail/:id" element={<WorkFlowDetail />} />
             <Route path="/workflows/my-tasks" element={<WorkflowMyTasks />} />
             <Route path="/workflows/runtime/:id" element={<WorkflowRuntime />} />
+            <Route path="/workflows/runtime/new" element={<WorkflowRuntime />} />
             {/* Public FormManagement routes (istenen şekilde public) */}
             <Route path="/forms" element={<ListFormPublic />} />
             <Route path="/forms/detail" element={<FormDesigner />} />
