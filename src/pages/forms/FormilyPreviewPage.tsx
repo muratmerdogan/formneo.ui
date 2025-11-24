@@ -5,7 +5,7 @@ import getConfiguration from "confiuration";
 
 // Antd + Formily render
 import "antd/dist/antd.css";
-import { Spin, Alert, Button as AntButton, message } from "antd";
+import { Spin, Alert, Button as AntButton, message, Card as AntdCard, Slider as AntdSlider, Rate as AntdRate } from "antd";
 import { createForm } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
 import * as AntdFormily from "@formily/antd";
@@ -34,7 +34,7 @@ export default function FormilyPreviewPage(): JSX.Element {
   const [formButtons, setFormButtons] = useState<FormButton[]>([]);
 
   const form = useMemo(() => createForm(), []);
-  const SchemaField = useMemo(() => createSchemaField({ components: AntdFormily as any }), []);
+  const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
 
   useEffect(() => {
     const load = async () => {

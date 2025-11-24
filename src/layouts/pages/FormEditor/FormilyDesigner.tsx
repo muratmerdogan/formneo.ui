@@ -6,7 +6,7 @@ import "@designable/react/dist/designable.react.umd.production.css";
 import "@designable/react-settings-form/dist/designable.settings-form.umd.production.css";
 
 // Ant Design UI (üst bar için)
-import { Space as AntSpace, Button as AntButton, Typography, Input as AntdInput, Form as AntdForm, message, Tag, Drawer, List, Select as AntdSelect, InputNumber as AntdInputNumber, Switch as AntdSwitch, Divider as AntdDivider, Modal, Card as AntdCard } from "antd";
+import { Space as AntSpace, Button as AntButton, Typography, Input as AntdInput, Form as AntdForm, message, Tag, Drawer, List, Select as AntdSelect, InputNumber as AntdInputNumber, Switch as AntdSwitch, Divider as AntdDivider, Modal, Card as AntdCard, Slider as AntdSlider, Rate as AntdRate } from "antd";
 import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import * as Icons from "@ant-design/icons";
 import formNeoLogo from "assets/images/logoson.svg";
@@ -153,7 +153,7 @@ export default function FormilyDesigner(): JSX.Element {
 
   const previewForm = useMemo(() => createForm(), []);
   const SchemaField = useMemo(
-    () => createSchemaField({ components: { ...(AntdFormily as any), FormItem: (AntdFormily as any).FormItem, FormNeoButton, ApproveButtons, Card: AntdCard } }),
+    () => createSchemaField({ components: { ...(AntdFormily as any), FormItem: (AntdFormily as any).FormItem, FormNeoButton, ApproveButtons, Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }),
     []
   );
 

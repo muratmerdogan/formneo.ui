@@ -15,7 +15,7 @@ import "antd/dist/antd.css";
 import { createForm } from "@formily/core";
 import { FormProvider, createSchemaField } from "@formily/react";
 import * as AntdFormily from "@formily/antd";
-import { Button as AntButton, message } from "antd";
+import { Button as AntButton, message, Card as AntdCard, Slider as AntdSlider, Rate as AntdRate } from "antd";
 import * as Icons from "@ant-design/icons";
 import { WorkFlowContiuneApiDto } from "api/generated";
 
@@ -52,7 +52,7 @@ export default function WorkflowRuntime(): JSX.Element {
   const isNewInstance = location.state?.isNewInstance || false;
 
   const form = useMemo(() => createForm(), []);
-  const SchemaField = useMemo(() => createSchemaField({ components: AntdFormily as any }), []);
+  const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
 
   // Kullanıcı bilgisini yükle
   useEffect(() => {
