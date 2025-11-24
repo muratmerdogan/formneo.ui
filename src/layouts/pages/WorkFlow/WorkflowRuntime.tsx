@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { FormDataApi, WorkFlowApi, UserApi, WorkFlowStartApiDto } from "api/generated";
+import { FormDataApi, WorkFlowApi, UserApi, WorkFlowStartApiDto, AlertNodeInfo } from "api/generated";
 import getConfiguration from "confiuration";
+import { showWorkflowAlert } from "./utils/workflowAlert";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -17,6 +18,7 @@ import * as AntdFormily from "@formily/antd";
 import { Button as AntButton, message } from "antd";
 import * as Icons from "@ant-design/icons";
 import { WorkFlowContiuneApiDto } from "api/generated";
+
 
 interface FormButton {
   id: string;
@@ -196,10 +198,23 @@ export default function WorkflowRuntime(): JSX.Element {
           throw new Error("Backend'den geçersiz yanıt alındı");
         }
 
-        message.success(
-          `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow devam ediyor.`,
-          3
-        );
+        const result = response.data;
+
+        // ✅ Response'dan gelen alertInfo varsa göster
+        if (result.alertInfo) {
+          const alertInfo: AlertNodeInfo = result.alertInfo;
+          showWorkflowAlert({
+            title: alertInfo.title || "Bildirim",
+            message: alertInfo.message || "Mesaj yok",
+            type: (alertInfo.type as any) || "info",
+          });
+        } else {
+          // Alert yoksa normal başarı mesajı göster
+          message.success(
+            `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow devam ediyor.`,
+            3
+          );
+        }
       } else {
         // ✅ Yeni instance - Workflow başlat
         const startDto: WorkFlowStartApiDto = {
@@ -218,10 +233,27 @@ export default function WorkflowRuntime(): JSX.Element {
 
         const result = response.data;
 
-        message.success(
-          `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow başlatıldı.`,
-          3
-        );
+        // ✅ Response'dan gelen alertInfo varsa göster
+        if (result.alertInfo) {
+          const alertInfo: AlertNodeInfo = result.alertInfo;
+          showWorkflowAlert({
+            title: alertInfo.title || "Bildirim",
+            message: alertInfo.message || "Mesaj yok",
+            type: (alertInfo.type as any) || "info",
+          });
+        } else {
+          // Alert yoksa normal başarı mesajı göster
+          message.success(
+            `${button.label} butonuna tıklandı (Action: ${normalizedAction}). Workflow başlatıldı.`,
+            3
+          );
+        }
+
+        // ✅ Response'dan gelen diğer bilgileri logla (gerekirse)
+        // result.workFlowStatus - Workflow durumu
+        // result.pendingNodeId - Bekleyen node ID
+        // result.formNodeCompleted - Form node tamamlandı mı
+        // result.completedFormNodeId - Tamamlanan form node ID
 
         // Yeni instance ID ile görevlerim sayfasına yönlendir
         setTimeout(() => {
@@ -229,9 +261,11 @@ export default function WorkflowRuntime(): JSX.Element {
             state: {
               newInstanceId: result.id,
               buttonAction: normalizedAction,
+              workflowStatus: result.workFlowStatus,
+              pendingNodeId: result.pendingNodeId,
             },
           });
-        }, 1500);
+        }, result.alertInfo ? 3000 : 1500); // Alert varsa biraz daha bekleyelim
         return;
       }
 

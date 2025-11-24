@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { FormDataApi } from "api/generated";
+import { FormDataApi, FormApi } from "api/generated";
 import getConfiguration from "confiuration";
 import {
   Box,
@@ -39,7 +39,8 @@ const ScriptTab = ({
 }) => {
   const [script, setScript] = useState("");
   const [name, setName] = useState("Script");
-  const [formNodeDataCache, setFormNodeDataCache] = useState({}); // Form node'larının API'den çekilen data'sı
+  const [formInputsCache, setFormInputsCache] = useState({}); // Form input'ları cache'i (/api/Form/{id}/inputs)
+  const [loadingInputs, setLoadingInputs] = useState(false); // Input'lar yükleniyor mu?
 
   // ✅ Node değiştiğinde state'i güncelle
   useEffect(() => {
@@ -49,47 +50,64 @@ const ScriptTab = ({
     }
   }, [node?.id, node?.data?.script, node?.data?.name]);
 
-  // ✅ Form node'larından API'den form data çek
+  // ✅ Modal açıldığında sadece 1 kez form inputs çek (/api/Form/{id}/inputs)
   useEffect(() => {
-    const fetchFormNodesData = async () => {
-      if (!node?.id || !edges || !nodes) return;
-
-      const incomingEdges = edges.filter((edge) => edge.target === node.id);
-      const formNodes = incomingEdges
-        .map((edge) => nodes.find((n) => n.id === edge.source))
-        .filter((n) => n && n.type === "formNode");
-
-      const cache = {};
+    if (!open || !node?.id || !edges || !nodes) return;
+    
+    const fetchFormInputs = async () => {
+      setLoadingInputs(true);
       
-      for (const formNode of formNodes) {
-        const formId = formNode.data?.formId || 
-                       formNode.data?.selectedFormId || 
-                       formNode.data?.workflowFormInfo?.formId;
+      try {
+        const incomingEdges = edges.filter((edge) => edge.target === node.id);
+        const formNodes = incomingEdges
+          .map((edge) => nodes.find((n) => n.id === edge.source))
+          .filter((n) => n && n.type === "formNode");
+
+        const inputsCache = {};
+        const formIdsToFetch = [];
         
-        if (formId && !formNodeDataCache[formId]) {
-          try {
-            const conf = getConfiguration();
-            const api = new FormDataApi(conf);
-            const response = await api.apiFormDataIdGet(formId);
-            
-            if (response.data) {
-              cache[formId] = response.data;
-            }
-          } catch (error) {
-            // ignore errors
+        // Önce hangi formId'lerin cache'de olmadığını belirle
+        for (const formNode of formNodes) {
+          const formId = formNode.data?.formId || 
+                         formNode.data?.selectedFormId || 
+                         formNode.data?.workflowFormInfo?.formId;
+          
+          if (formId && !formInputsCache[formId]) {
+            formIdsToFetch.push(formId);
           }
-        } else if (formId && formNodeDataCache[formId]) {
-          cache[formId] = formNodeDataCache[formId];
         }
-      }
-      
-      if (Object.keys(cache).length > 0) {
-        setFormNodeDataCache((prev) => ({ ...prev, ...cache }));
+        
+        // Sadece cache'de olmayan formId'ler için API çağrısı yap
+        if (formIdsToFetch.length > 0) {
+          for (const formId of formIdsToFetch) {
+            try {
+              const conf = getConfiguration();
+              const formApi = new FormApi(conf);
+              // ✅ GET /api/Form/{id}/inputs endpoint'ine istek yap
+              const response = await formApi.apiFormIdInputsGet(formId);
+              
+              // Response data'yı cache'e kaydet
+              if (response.data !== undefined && response.data !== null) {
+                inputsCache[formId] = response.data;
+              }
+            } catch (error) {
+              // ignore errors
+            }
+          }
+          
+          // Cache'i güncelle (sadece yeni çekilenler için)
+          if (Object.keys(inputsCache).length > 0) {
+            setFormInputsCache((prev) => ({ ...prev, ...inputsCache }));
+          }
+        }
+      } finally {
+        setLoadingInputs(false);
       }
     };
 
-    fetchFormNodesData();
-  }, [node?.id, edges, nodes]);
+    fetchFormInputs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]); // Sadece modal açıldığında (open=true) çalışsın
 
   // ✅ extractFieldsFromComponents helper fonksiyonu - Formily ve Formio formatlarını destekler
   const extractFieldsFromComponents = useMemo(() => {
@@ -100,26 +118,45 @@ const ScriptTab = ({
       const excludedTypes = ["button", "submit", "reset", "dsbutton", "hidden", "dshidden", "file", "dsfile"];
       const excludedKeys = ["submit", "kaydet", "save", "button", "reset", "cancel", "iptal"];
       
-            // ✅ Formily formatı: schema.properties objesi
+      // ✅ Formily formatı: schema.properties objesi (nested properties desteği ile)
       if (components.schema && components.schema.properties) {
-        const properties = components.schema.properties;
-        Object.keys(properties).forEach((key) => {
-          const prop = properties[key];
-          if (prop && prop.title) {
+        const traverseProperties = (props, parentPath = "") => {
+          if (!props || typeof props !== "object") return;
+          
+          Object.keys(props).forEach((key) => {
+            const prop = props[key];
+            if (!prop || typeof prop !== "object") return;
+            
             const componentType = prop["x-component"] || "";
             const itemKey = (key || "").toLowerCase();
+            const propType = prop.type || "";
             
-            // Button component'lerini hariç tut
-            if (!componentType.toLowerCase().includes("button") && !excludedKeys.includes(itemKey)) {
-              fields.push({
-                name: key,
-                label: prop.title || key, // title label olarak kullanılıyor
-                type: prop.type || "string",
-                component: componentType,
-              });
+            // Void type (Card, FormLayout gibi container'lar) - nested properties'e git
+            if (propType === "void" && prop.properties && typeof prop.properties === "object") {
+              traverseProperties(prop.properties, parentPath ? `${parentPath}.${key}` : key);
             }
-          }
-        });
+            // Normal field (string, number, vb.) - title varsa ekle
+            else if (prop.title && propType !== "void") {
+              // Button component'lerini hariç tut
+              if (!componentType.toLowerCase().includes("button") && 
+                  !excludedKeys.includes(itemKey) &&
+                  !excludedTypes.includes(componentType.toLowerCase())) {
+                fields.push({
+                  name: key,
+                  label: prop.title || key,
+                  type: propType || "string",
+                  component: componentType,
+                });
+              }
+            }
+            // Nested properties varsa (void olmayan ama properties'i olan)
+            else if (prop.properties && typeof prop.properties === "object") {
+              traverseProperties(prop.properties, parentPath ? `${parentPath}.${key}` : key);
+            }
+          });
+        };
+        
+        traverseProperties(components.schema.properties);
         return fields;
       }
       
@@ -194,38 +231,41 @@ const ScriptTab = ({
             tree.previousNodes[nodeName].action = `previousNodes.${nodeName}.action`;
             tree.previousNodes[nodeName].formData = `previousNodes.${nodeName}.formData`;
             
-            // ✅ Sadece API'den çekilen güncel formDesign'dan component'leri extract et
+            // ✅ /api/Form/{id}/inputs endpoint'inden gelen input'ları kullan
             const formId = sourceNode.data?.formId || 
                           sourceNode.data?.selectedFormId || 
                           sourceNode.data?.workflowFormInfo?.formId;
             
-            if (formId && formNodeDataCache[formId]?.formDesign) {
+            if (formId && formInputsCache[formId]) {
               try {
-                const raw = typeof formNodeDataCache[formId].formDesign === "string"
-                  ? JSON.parse(formNodeDataCache[formId].formDesign)
-                  : formNodeDataCache[formId].formDesign;
-
-                let formFields = [];
+                const inputs = formInputsCache[formId];
                 
-                // ✅ Formily formatı: schema.properties içinde component'ler var
-                if (raw?.schema?.properties) {
-                  formFields = extractFieldsFromComponents(raw);
-                }
-                // ✅ Formio formatı: components array'i
-                else if (raw?.components && Array.isArray(raw.components)) {
-                  formFields = extractFieldsFromComponents(raw.components);
-                }
-                // ✅ Eski format: fields array'i
-                else if (raw?.fields && Array.isArray(raw.fields) && raw.fields.length > 0) {
-                  formFields = raw.fields;
+                // Input'lar array olabilir veya object olabilir
+                let inputArray = [];
+                if (Array.isArray(inputs)) {
+                  inputArray = inputs;
+                } else if (inputs && typeof inputs === "object") {
+                  // Object ise values'ları al veya direkt object'i array'e çevir
+                  if (inputs.inputs && Array.isArray(inputs.inputs)) {
+                    inputArray = inputs.inputs;
+                  } else if (inputs.fields && Array.isArray(inputs.fields)) {
+                    inputArray = inputs.fields;
+                  } else {
+                    // Object'in kendisini array'e çevir
+                    inputArray = Object.values(inputs);
+                  }
                 }
                 
-                // Form field'larını ekle (label olarak title gösterilecek)
-                if (formFields.length > 0) {
-                  formFields.forEach((field) => {
-                    // Label (title) görünen isim olarak, name ise script'te kullanılacak key
-                    const displayLabel = field.label || field.name;
-                    tree.previousNodes[nodeName][displayLabel] = `previousNodes.${nodeName}.${field.name}`;
+                // Input'ları tree'ye ekle
+                if (inputArray.length > 0) {
+                  inputArray.forEach((input) => {
+                    // Input objesi {name, label, type} formatında olabilir
+                    const fieldName = input.name || input.key || input.fieldName || "";
+                    const fieldLabel = input.label || input.title || input.fieldLabel || fieldName;
+                    
+                    if (fieldName) {
+                      tree.previousNodes[nodeName][fieldLabel] = `previousNodes.${nodeName}.${fieldName}`;
+                    }
                   });
                 }
               } catch (e) {
@@ -250,7 +290,7 @@ const ScriptTab = ({
     }
 
     return tree;
-  }, [node?.id, nodes, edges, extractFieldsFromComponents, formNodeDataCache]);
+  }, [node?.id, nodes, edges, formInputsCache]);
 
   // ✅ Expanded state for tree
   const [expanded, setExpanded] = useState({});
@@ -429,11 +469,19 @@ const ScriptTab = ({
               </Typography>
               <Divider sx={{ mb: 2 }} />
 
-              <List sx={{ width: "100%" }}>
-                {renderTreeItem("workflow", processDataTree.workflow)}
-                {Object.keys(processDataTree.previousNodes).length > 0 &&
-                  renderTreeItem("previousNodes", processDataTree.previousNodes)}
-              </List>
+              {loadingInputs ? (
+                <Box sx={{ textAlign: "center", py: 4 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    Form input&apos;ları yükleniyor...
+                  </Typography>
+                </Box>
+              ) : (
+                <List sx={{ width: "100%" }}>
+                  {renderTreeItem("workflow", processDataTree.workflow)}
+                  {Object.keys(processDataTree.previousNodes).length > 0 &&
+                    renderTreeItem("previousNodes", processDataTree.previousNodes)}
+                </List>
+              )}
             </Box>
           </SplitterPanel>
 
