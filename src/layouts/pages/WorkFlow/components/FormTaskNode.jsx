@@ -14,10 +14,12 @@ function FormTaskNode({ data = { name: "Form Görevi", assignedUserName: "", vis
   const buttonsForHandles = buttons.length > 0 ? buttons : (allButtons.length > 0 ? allButtons : []);
   
   // Node yüksekliğini görünür buton sayısına göre ayarla
-  const headerHeight = 80;
-  const buttonHeight = 40;
+  const headerHeight = 90;
+  const buttonHeight = 36;
   const padding = 16;
-  const nodeHeight = Math.max(120, headerHeight + padding + buttonsForHandles.length * (buttonHeight + 8) + padding);
+  const formInfoHeight = 50;
+  const buttonsAreaHeight = buttonsForHandles.length > 0 ? buttonsForHandles.length * (buttonHeight + 6) : 0;
+  const nodeHeight = Math.max(140, headerHeight + formInfoHeight + buttonsAreaHeight + padding * 2);
   
   return (
     <>
@@ -38,57 +40,70 @@ function FormTaskNode({ data = { name: "Form Görevi", assignedUserName: "", vis
       <div
         className="node border-solid border-4 rounded-lg"
         style={{
-          backgroundColor: "#e67e22",
-          width: "240px",
+          background: "linear-gradient(135deg, #e67e22 0%, #d35400 100%)",
+          width: "260px",
           minHeight: `${nodeHeight}px`,
+          boxShadow: "0 4px 12px rgba(230, 126, 34, 0.3)",
+          borderColor: "#c0392b",
+          borderWidth: "3px",
         }}
       >
         {/* Başlık */}
-        <div className="border-solid border-b-2 py-2 px-4 flex justify-between items-center">
-          <div className="flex items-center" style={{ flexDirection: "column", alignItems: "flex-start", width: "100%" }}>
-            <div className="flex items-center" style={{ width: "100%" }}>
-              <FaTasks style={{ fontSize: "1.2em", color: "white", marginRight: "4px" }} />
-              <span className="ml-2" style={{ fontSize: "1.1em", color: "white", fontWeight: "600" }}>
-                {data.name || "Form Görevi"}
-              </span>
+        <div 
+          className="border-solid border-b-2 py-3 px-4"
+          style={{
+            borderColor: "rgba(255, 255, 255, 0.2)",
+            background: "rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <div className="flex items-center" style={{ width: "100%", marginBottom: "4px" }}>
+            <FaTasks style={{ fontSize: "1.4em", color: "white", marginRight: "8px" }} />
+            <span style={{ fontSize: "1.1em", color: "white", fontWeight: "700", letterSpacing: "0.5px" }}>
+              {data.name || "Form Görevi"}
+            </span>
+          </div>
+          {assignedUser && (
+            <div style={{ fontSize: "0.75em", color: "rgba(255, 255, 255, 0.9)", marginTop: "6px", marginLeft: "32px", display: "flex", alignItems: "center" }}>
+              <span style={{ marginRight: "4px" }}>👤</span>
+              <span>{assignedUser}</span>
             </div>
-            {assignedUser && (
-              <div style={{ fontSize: "0.75em", color: "rgba(255, 255, 255, 0.8)", marginTop: "4px", marginLeft: "24px" }}>
-                👤 {assignedUser}
-              </div>
-            )}
+          )}
+          <div style={{ display: "flex", gap: "8px", marginTop: "6px", marginLeft: "32px", flexWrap: "wrap" }}>
             {totalFieldsCount > 0 && (
-              <div style={{ fontSize: "0.7em", color: "rgba(255, 255, 255, 0.7)", marginTop: "2px", marginLeft: "24px" }}>
-                📋 {visibleFieldsCount}/{totalFieldsCount} alan görünür
+              <div style={{ fontSize: "0.7em", color: "rgba(255, 255, 255, 0.85)", background: "rgba(255, 255, 255, 0.15)", padding: "2px 6px", borderRadius: "4px" }}>
+                📋 {visibleFieldsCount}/{totalFieldsCount}
               </div>
             )}
             {allButtons.length > 0 && (
-              <div style={{ fontSize: "0.7em", color: "rgba(255, 255, 255, 0.7)", marginTop: "2px", marginLeft: "24px" }}>
-                🔘 {buttons.length} / {allButtons.length} buton görünür
+              <div style={{ fontSize: "0.7em", color: "rgba(255, 255, 255, 0.85)", background: "rgba(255, 255, 255, 0.15)", padding: "2px 6px", borderRadius: "4px" }}>
+                🔘 {buttons.length}/{allButtons.length}
               </div>
             )}
           </div>
         </div>
         
         {/* Form bilgisi */}
-        <div className="py-2 px-3">
+        <div className="py-3 px-4">
           <div
             style={{
-              fontSize: "0.85em",
-              color: "rgba(255, 255, 255, 0.8)",
-              padding: "8px",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              borderRadius: "4px",
+              fontSize: "0.9em",
+              color: "rgba(255, 255, 255, 0.95)",
+              padding: "10px",
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+              borderRadius: "8px",
               textAlign: "center",
+              fontWeight: "600",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.1)",
             }}
           >
-            {data.formName || "Form"}
+            📄 {data.formName || "Form"}
           </div>
         </div>
 
         {/* Butonlar */}
         {buttons.length > 0 && (
-          <div className="py-2 px-2">
+          <div className="px-3 pb-3" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             {buttons.map((button, index) => {
               const buttonLabel = button.label || button.name || `Buton ${index + 1}`;
               
@@ -96,21 +111,22 @@ function FormTaskNode({ data = { name: "Form Görevi", assignedUserName: "", vis
                 <div
                   key={button.id || `button-${index}`}
                   style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    padding: "6px 8px",
-                    borderRadius: "6px",
+                    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)",
+                    padding: "8px 12px",
+                    borderRadius: "8px",
                     fontSize: "0.85em",
                     color: "white",
-                    fontWeight: "500",
+                    fontWeight: "600",
                     textAlign: "center",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                    marginBottom: "8px",
+                    border: "2px solid rgba(255, 255, 255, 0.4)",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    transition: "all 0.2s",
                   }}
                 >
-                  {buttonLabel}
+                  <div>{buttonLabel}</div>
                   {button.action && (
-                    <div style={{ fontSize: "0.7em", opacity: 0.8, marginTop: "2px" }}>
-                      ({button.action})
+                    <div style={{ fontSize: "0.7em", opacity: 0.85, marginTop: "4px", fontWeight: "400" }}>
+                      {button.action}
                     </div>
                   )}
                 </div>
@@ -120,23 +136,16 @@ function FormTaskNode({ data = { name: "Form Görevi", assignedUserName: "", vis
         )}
       </div>
       
-      {/* Çıkış handle'ları - Görünür butonlar için handle (node'un dışında) */}
+      {/* Çıkış handle'ları - Görünür butonlar için handle (node'un dışında, ortalanmış) */}
       {buttonsForHandles.map((button, index) => {
-        // Her buton için handle pozisyonunu hesapla
-        const formInfoHeight = 60; // Form bilgisi yüksekliği
-        const buttonSpacing = 8;
-        
-        // İlk butonun başlangıç pozisyonu (header + form info + padding)
-        const firstButtonTop = headerHeight + padding + formInfoHeight + padding;
-        // Her buton için top pozisyonu
-        const buttonTop = firstButtonTop + index * (buttonHeight + buttonSpacing);
-        // Handle butonun ortasında olmalı
-        const handleTop = buttonTop + buttonHeight / 2;
-        // Yüzde olarak hesapla
-        const handleTopPercent = (handleTop / nodeHeight) * 100;
-        
         const buttonAction = button.action || `button-${button.id || index}`;
         const buttonLabel = button.label || button.name || `Buton ${index + 1}`;
+        
+        // Handle'ları butonların ortasına hizala
+        const buttonSpacing = buttonHeight + 6;
+        const buttonsStartY = headerHeight + formInfoHeight + padding;
+        const buttonCenterY = buttonsStartY + (index * buttonSpacing) + (buttonHeight / 2);
+        const handleTopPercent = (buttonCenterY / nodeHeight) * 100;
         
         return (
           <Handle
@@ -146,29 +155,31 @@ function FormTaskNode({ data = { name: "Form Görevi", assignedUserName: "", vis
             position={Position.Right}
             style={{
               top: `${handleTopPercent}%`,
-              right: "-10px",
-              background: "#e67e22",
-              width: "16px",
-              height: "16px",
+              right: "-12px",
+              background: "linear-gradient(135deg, #e67e22 0%, #d35400 100%)",
+              width: "18px",
+              height: "18px",
               borderRadius: "50%",
-              border: "2px solid white",
+              border: "3px solid white",
+              boxShadow: "0 2px 6px rgba(230, 126, 34, 0.5)",
             }}
           >
             <div
               style={{
                 position: "absolute",
-                right: "24px",
+                right: "28px",
                 top: "50%",
                 transform: "translateY(-50%)",
-                background: "#e67e22",
+                background: "linear-gradient(135deg, #e67e22 0%, #d35400 100%)",
                 color: "white",
                 fontSize: "11px",
-                fontWeight: 600,
-                padding: "3px 8px",
-                borderRadius: "6px",
+                fontWeight: 700,
+                padding: "4px 10px",
+                borderRadius: "8px",
                 whiteSpace: "nowrap",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
                 pointerEvents: "none",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
               }}
             >
               {buttonLabel}

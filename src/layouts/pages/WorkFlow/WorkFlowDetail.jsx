@@ -45,6 +45,7 @@ import UserTaskTab from "./propertiespanel/UserTaskTab.jsx";
 import UserTaskTabV2 from "./propertiespanel/UserTaskTabV2.jsx";
 import UserTaskModal from "./propertiespanel/UserTaskModal.jsx";
 import UserTaskFormDesigner from "./propertiespanel/UserTaskFormDesigner.jsx";
+import UserTaskModalSimple from "./propertiespanel/UserTaskModalSimple.jsx";
 import FormTaskNode from "./components/FormTaskNode.jsx";
 import FormTaskModal from "./propertiespanel/FormTaskModal.jsx";
 import FormConditionNode from "./components/FormConditionNode.jsx";
@@ -460,10 +461,31 @@ function Flow(props) {
           break;
 
         case "userTaskNode":
+          // Varsayılan olarak approve ve reject butonları ekle
+          const defaultUserTaskButtons = [
+            {
+              id: "approve",
+              label: "Onayla",
+              action: "APPROVE",
+              type: "primary",
+            },
+            {
+              id: "reject",
+              label: "Reddet",
+              action: "REJECT",
+              type: "default",
+            },
+          ];
+          
           nodeData = {
             name: "Kullanıcı Görevi",
-            fields: [], // [{ label: "Alan Adı", value: "Değer" }]
-            buttons: [], // [{ label: "Buton", action: "ACTION_CODE" }]
+            userId: null,
+            userName: "",
+            assignedUserName: "",
+            message: "",
+            showApprove: true,
+            showReject: true,
+            buttons: defaultUserTaskButtons,
             ...baseFormInfo,
           };
           break;
@@ -1204,9 +1226,9 @@ function Flow(props) {
             />
           )}
 
-          {/* UserTask Form Designer Modal */}
+          {/* UserTask Modal - Basit Versiyon */}
           {userTaskModalOpen && userTaskModalNode && (
-            <UserTaskFormDesigner
+            <UserTaskModalSimple
               open={userTaskModalOpen}
               onClose={() => {
                 setUserTaskModalOpen(false);
