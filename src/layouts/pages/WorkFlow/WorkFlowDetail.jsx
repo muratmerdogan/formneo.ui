@@ -45,6 +45,8 @@ import UserTaskTab from "./propertiespanel/UserTaskTab.jsx";
 import UserTaskTabV2 from "./propertiespanel/UserTaskTabV2.jsx";
 import UserTaskModal from "./propertiespanel/UserTaskModal.jsx";
 import UserTaskFormDesigner from "./propertiespanel/UserTaskFormDesigner.jsx";
+import FormTaskNode from "./components/FormTaskNode.jsx";
+import FormTaskModal from "./propertiespanel/FormTaskModal.jsx";
 import FormConditionNode from "./components/FormConditionNode.jsx";
 import FormConditionTab from "./propertiespanel/FormConditionTab.jsx";
 import ScriptNode from "./components/ScriptNode.jsx";
@@ -145,6 +147,7 @@ const nodeTypes = {
   setFieldNode: SetFieldNode,
   alertNode: AlertNode, // Alert/Mesaj gösterme node'u
   userTaskNode: UserTaskNode, // Kullanıcı görevi node'u (basit alanlar + butonlar)
+  formTaskNode: FormTaskNode, // Form görevi node'u (kullanıcı atama + alan kontrolü)
   formConditionNode: FormConditionNode, // Form field'larına göre koşul node'u
   scriptNode: ScriptNode, // JavaScript script node'u
 };
@@ -212,6 +215,8 @@ function Flow(props) {
   const [scriptModalNode, setScriptModalNode] = useState(null);
   const [userTaskModalOpen, setUserTaskModalOpen] = useState(false);
   const [userTaskModalNode, setUserTaskModalNode] = useState(null);
+  const [formTaskModalOpen, setFormTaskModalOpen] = useState(false);
+  const [formTaskModalNode, setFormTaskModalNode] = useState(null);
 
   const [workflowData, setWorkflowData] = useState({
     metadata: {
@@ -459,6 +464,39 @@ function Flow(props) {
             name: "Kullanıcı Görevi",
             fields: [], // [{ label: "Alan Adı", value: "Değer" }]
             buttons: [], // [{ label: "Buton", action: "ACTION_CODE" }]
+            ...baseFormInfo,
+          };
+          break;
+
+        case "formTaskNode":
+          // Form butonlarını otomatik yükle
+          const formTaskButtons = parsedFormDesign?.buttons || [];
+          const allFormTaskButtons = formTaskButtons.map(btn => ({
+            id: btn.id,
+            label: btn.label || btn.name || "Buton",
+            action: btn.action || "",
+            type: btn.type || "default",
+            icon: btn.icon || null,
+            color: btn.color || "primary",
+            ...btn, // Tüm diğer özellikleri de koru
+          }));
+          
+          nodeData = {
+            name: "Form Görevi",
+            userId: null,
+            userName: "",
+            assignedUserName: "",
+            formId: selectedForm?.id,
+            formName: selectedForm?.formName,
+            message: "",
+            fieldSettings: {},
+            buttonSettings: {},
+            buttons: [], // Görünür butonlar (başlangıçta boş, modal'dan ayarlanacak)
+            allButtons: allFormTaskButtons, // TÜM butonlar (handle'lar için)
+            visibleFieldsCount: 0,
+            totalFieldsCount: 0,
+            visibleButtonsCount: 0,
+            totalButtonsCount: allFormTaskButtons.length,
             ...baseFormInfo,
           };
           break;
@@ -713,7 +751,17 @@ function Flow(props) {
     // alert(newValue);
     let obje = nodes.find((o) => o.id === newValue.id);
     if (obje) {
-      obje.data = newValue.data;
+      // ✅ Node'u React state ile güncelle
+      setNodes((nds) =>
+        nds.map((node) =>
+          node.id === newValue.id
+            ? {
+                ...node,
+                data: newValue.data,
+              }
+            : node
+        )
+      );
 
       // ✅ YENİ: Workflow verilerini güncelle
       updateWorkflowData(obje.id, obje.type, newValue.data, "updated");
@@ -913,6 +961,13 @@ function Flow(props) {
     if (node.type === "userTaskNode") {
       setUserTaskModalNode(node);
       setUserTaskModalOpen(true);
+      return;
+    }
+
+    // ✅ FormTask node ise modal aç
+    if (node.type === "formTaskNode") {
+      setFormTaskModalNode(node);
+      setFormTaskModalOpen(true);
       return;
     }
 
@@ -1163,6 +1218,26 @@ function Flow(props) {
                 handlePropertiesChange(updatedNode);
                 setUserTaskModalOpen(false);
                 setUserTaskModalNode(null);
+              }}
+            />
+          )}
+
+          {/* FormTask Modal */}
+          {formTaskModalOpen && formTaskModalNode && (
+            <FormTaskModal
+              open={formTaskModalOpen}
+              onClose={() => {
+                setFormTaskModalOpen(false);
+                setFormTaskModalNode(null);
+              }}
+              initialValues={formTaskModalNode.data || {}}
+              node={formTaskModalNode}
+              workflowFormId={selectedForm?.id}
+              workflowFormName={selectedForm?.formName}
+              onSave={(updatedNode) => {
+                handlePropertiesChange(updatedNode);
+                setFormTaskModalOpen(false);
+                setFormTaskModalNode(null);
               }}
             />
           )}

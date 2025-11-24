@@ -19,6 +19,7 @@ import {
   FaWpforms,
   FaPencilAlt,
   FaExclamationTriangle,
+  FaTasks,
 } from "react-icons/fa";
 
 const CustomMenuList = () => {
@@ -91,6 +92,14 @@ const CustomMenuList = () => {
             <FaUserCheck />
           </ListItemIcon>
           <ListItemText inset>Kullanıcı Görevi</ListItemText>
+        </MenuItem>
+      </Collapse>
+      <Collapse in={open.smartOptions} timeout="auto" unmountOnExit>
+        <MenuItem onDragStart={(event) => onDragStart(event, "formTaskNode")} draggable>
+          <ListItemIcon>
+            <FaTasks />
+          </ListItemIcon>
+          <ListItemText inset>Form Görevi</ListItemText>
         </MenuItem>
       </Collapse>
 
