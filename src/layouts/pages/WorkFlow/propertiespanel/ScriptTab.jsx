@@ -7,21 +7,19 @@ import {
   Divider,
   List,
   ListItem,
-  ListItemText,
-  Collapse,
-  ListItemButton,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
   IconButton,
+  Tooltip,
+  Chip,
 } from "@mui/material";
 import {
-  ExpandMore as ExpandMoreIcon,
-  ChevronRight as ChevronRightIcon,
   Close as CloseIcon,
   Code as CodeIcon,
+  Info as InfoIcon,
 } from "@mui/icons-material";
 import { Editor } from "@monaco-editor/react";
 import { Splitter, SplitterPanel } from "primereact/splitter";
@@ -204,171 +202,83 @@ const ScriptTab = ({
     };
   }, []);
 
-  // ✅ Process Data Tree - Önceki node'lardan değişkenleri topla
-  const processDataTree = useMemo(() => {
-    const tree = {
-      workflow: {
-        instanceId: "workflow.instanceId",
-        startTime: "workflow.startTime",
-        currentStep: "workflow.currentStep",
-        formId: "workflow.formId",
-        formName: "workflow.formName",
-      },
-      previousNodes: {},
-    };
+  // ✅ Form alanlarını düz liste olarak topla (tree yerine)
+  const formFieldsList = useMemo(() => {
+    const fields = [];
 
     // Önceki node'ları bul (incoming edges)
     if (node?.id && edges) {
       const incomingEdges = edges.filter((edge) => edge.target === node.id);
       incomingEdges.forEach((edge) => {
         const sourceNode = nodes.find((n) => n.id === edge.source);
-        if (sourceNode && sourceNode.type !== "startNode") {
+        if (sourceNode && sourceNode.type === "formNode") {
           const nodeName = sourceNode.data?.name || sourceNode.id;
-          tree.previousNodes[nodeName] = {};
-
-          // Node type'a göre output field'ları ekle
-          if (sourceNode.type === "formNode") {
-            tree.previousNodes[nodeName].action = `previousNodes.${nodeName}.action`;
-            tree.previousNodes[nodeName].formData = `previousNodes.${nodeName}.formData`;
-            
-            // ✅ /api/Form/{id}/inputs endpoint'inden gelen input'ları kullan
-            const formId = sourceNode.data?.formId || 
-                          sourceNode.data?.selectedFormId || 
-                          sourceNode.data?.workflowFormInfo?.formId;
-            
-            if (formId && formInputsCache[formId]) {
-              try {
-                const inputs = formInputsCache[formId];
-                
-                // Input'lar array olabilir veya object olabilir
-                let inputArray = [];
-                if (Array.isArray(inputs)) {
-                  inputArray = inputs;
-                } else if (inputs && typeof inputs === "object") {
-                  // Object ise values'ları al veya direkt object'i array'e çevir
-                  if (inputs.inputs && Array.isArray(inputs.inputs)) {
-                    inputArray = inputs.inputs;
-                  } else if (inputs.fields && Array.isArray(inputs.fields)) {
-                    inputArray = inputs.fields;
-                  } else {
-                    // Object'in kendisini array'e çevir
-                    inputArray = Object.values(inputs);
-                  }
+          
+          // ✅ /api/Form/{id}/inputs endpoint'inden gelen input'ları kullan
+          const formId = sourceNode.data?.formId || 
+                        sourceNode.data?.selectedFormId || 
+                        sourceNode.data?.workflowFormInfo?.formId;
+          
+          if (formId && formInputsCache[formId]) {
+            try {
+              const inputs = formInputsCache[formId];
+              
+              // Input'lar array olabilir veya object olabilir
+              let inputArray = [];
+              if (Array.isArray(inputs)) {
+                inputArray = inputs;
+              } else if (inputs && typeof inputs === "object") {
+                if (inputs.inputs && Array.isArray(inputs.inputs)) {
+                  inputArray = inputs.inputs;
+                } else if (inputs.fields && Array.isArray(inputs.fields)) {
+                  inputArray = inputs.fields;
+                } else {
+                  inputArray = Object.values(inputs);
                 }
-                
-                // Input'ları tree'ye ekle
-                if (inputArray.length > 0) {
-                  inputArray.forEach((input) => {
-                    // Input objesi {name, label, type} formatında olabilir
-                    const fieldName = input.name || input.key || input.fieldName || "";
-                    const fieldLabel = input.label || input.title || input.fieldLabel || fieldName;
-                    
-                    if (fieldName) {
-                      tree.previousNodes[nodeName][fieldLabel] = `previousNodes.${nodeName}.${fieldName}`;
-                    }
-                  });
-                }
-              } catch (e) {
-                // ignore parse errors
               }
+              
+              // Input'ları düz listeye ekle
+              if (inputArray.length > 0) {
+                inputArray.forEach((input) => {
+                  // ✅ Component'lerin name alanını öncelikli kullan (key yerine)
+                  const fieldId = input.name || input.id || input.key || input.fieldName || "";
+                  const fieldLabel = input.label || input.title || input.fieldLabel || input.name || fieldId;
+                  const componentType = input.componentType || input.type || input.component || "unknown";
+                  
+                  if (fieldId) {
+                    fields.push({
+                      fieldId,
+                      fieldLabel,
+                      componentType,
+                      nodeName,
+                      path: `previousNodes.${nodeName}.${fieldId}`
+                    });
+                  }
+                });
+              }
+            } catch (e) {
+              // ignore parse errors
             }
-          } else if (sourceNode.type === "userTaskNode") {
-            tree.previousNodes[nodeName].action = `previousNodes.${nodeName}.action`;
-            tree.previousNodes[nodeName].userId = `previousNodes.${nodeName}.userId`;
-            tree.previousNodes[nodeName].userName = `previousNodes.${nodeName}.userName`;
-          } else if (sourceNode.type === "setFieldNode") {
-            tree.previousNodes[nodeName].updatedFields = `previousNodes.${nodeName}.updatedFields`;
-            tree.previousNodes[nodeName].summary = `previousNodes.${nodeName}.summary`;
-          } else if (sourceNode.type === "approverNode") {
-            tree.previousNodes[nodeName].approvalStatus = `previousNodes.${nodeName}.approvalStatus`;
-            tree.previousNodes[nodeName].approverId = `previousNodes.${nodeName}.approverId`;
-          } else if (sourceNode.type === "formConditionNode") {
-            tree.previousNodes[nodeName].conditionResult = `previousNodes.${nodeName}.conditionResult`;
           }
         }
       });
     }
 
-    return tree;
+    return fields;
   }, [node?.id, nodes, edges, formInputsCache]);
 
-  // ✅ Expanded state for tree
-  const [expanded, setExpanded] = useState({});
-
-  const handleToggle = (key) => {
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  // ✅ Tree item render helper
-  const renderTreeItem = (key, value, parentPath = "", level = 0) => {
-    const currentPath = parentPath ? `${parentPath}.${key}` : key;
-    // İlk seviye için varsayılan olarak açık, diğerleri için expanded state'e bak
-    const isExpanded = level === 0 ? (expanded[currentPath] !== undefined ? expanded[currentPath] : true) : (expanded[currentPath] !== undefined ? expanded[currentPath] : false);
-
-    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-      const hasChildren = Object.keys(value).length > 0;
-      return (
-        <Box key={key} sx={{ pl: level * 2 }}>
-          <ListItemButton
-            onClick={() => hasChildren && handleToggle(currentPath)}
-            sx={{ py: 0.5 }}
-          >
-            {hasChildren && (isExpanded ? <ExpandMoreIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />)}
-            <Typography variant="body2" fontWeight={600} sx={{ ml: hasChildren ? 0 : 2 }}>
-              {key}
-            </Typography>
-          </ListItemButton>
-          {hasChildren && (
-            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {Object.entries(value).map(([subKey, subValue]) =>
-                  renderTreeItem(subKey, subValue, currentPath, level + 1)
-                )}
-              </List>
-            </Collapse>
-          )}
-        </Box>
-      );
-    } else {
-      return (
-        <ListItem
-          key={key}
-          component="div"
-          onClick={() => {
-            // Monaco Editor'a değişkeni ekle
-            const editor = window.monacoEditorRef;
-            if (editor) {
-              const selection = editor.getSelection();
-              const text = typeof value === "string" ? value : currentPath;
-              editor.executeEdits("insert-variable", [
-                {
-                  range: selection,
-                  text: text,
-                },
-              ]);
-            }
-          }}
-          sx={{
-            pl: level * 2 + 4,
-            py: 0.5,
-            cursor: "pointer",
-            "&:hover": { backgroundColor: "#f5f5f5" },
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
-                {key}
-              </Typography>
-            }
-            secondary={
-              <Typography variant="caption" color="textSecondary" sx={{ fontFamily: "monospace" }}>
-                {typeof value === "string" ? value : currentPath}
-              </Typography>
-            }
-          />
-        </ListItem>
-      );
+  // ✅ Form alanını editor'e ekle
+  const handleFieldClick = (fieldId, path) => {
+    const editor = window.monacoEditorRef;
+    if (editor) {
+      const selection = editor.getSelection();
+      // Tıklayınca ID'yi yaz (path yerine direkt fieldId veya path)
+      editor.executeEdits("insert-variable", [
+        {
+          range: selection,
+          text: path, // previousNodes.nodeName.fieldId formatında
+        },
+      ]);
     }
   };
 
@@ -382,7 +292,7 @@ const ScriptTab = ({
     const nodeData = {
       name,
       script,
-      processDataTree,
+      formFieldsList, // Form alanlarını da kaydet (runtime'da kullanılabilir)
     };
 
     if (onButtonClick) {
@@ -475,11 +385,95 @@ const ScriptTab = ({
                     Form input&apos;ları yükleniyor...
                   </Typography>
                 </Box>
+              ) : formFieldsList.length === 0 ? (
+                <Box sx={{ textAlign: "center", py: 4 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    Form alanları bulunamadı. Lütfen önce bir FormNode ekleyin ve bağlayın.
+                  </Typography>
+                </Box>
               ) : (
-                <List sx={{ width: "100%" }}>
-                  {renderTreeItem("workflow", processDataTree.workflow)}
-                  {Object.keys(processDataTree.previousNodes).length > 0 &&
-                    renderTreeItem("previousNodes", processDataTree.previousNodes)}
+                <List sx={{ width: "100%", maxHeight: "500px", overflowY: "auto" }}>
+                  {formFieldsList.map((field, index) => (
+                    <Tooltip
+                      key={`${field.nodeName}-${field.fieldId}-${index}`}
+                      title={
+                        <Box>
+                          <Typography variant="caption" display="block" fontWeight={600}>
+                            Component: {field.componentType}
+                          </Typography>
+                          <Typography variant="caption" display="block">
+                            Node: {field.nodeName}
+                          </Typography>
+                          <Typography variant="caption" display="block">
+                            Path: {field.path}
+                          </Typography>
+                        </Box>
+                      }
+                      arrow
+                      placement="right"
+                    >
+                      <ListItem
+                        component="div"
+                        onClick={() => handleFieldClick(field.fieldId, field.path)}
+                        sx={{
+                          py: 1,
+                          px: 2,
+                          cursor: "pointer",
+                          borderBottom: "1px solid #e5e7eb",
+                          "&:hover": { 
+                            backgroundColor: "#f5f5f5",
+                            transform: "translateX(4px)",
+                            transition: "all 0.2s"
+                          },
+                        }}
+                      >
+                        <Box sx={{ flex: 1 }}>
+                          <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+                            <Typography 
+                              variant="body2" 
+                              sx={{ 
+                                fontFamily: "monospace",
+                                fontWeight: 600,
+                                color: "#6366f1"
+                              }}
+                            >
+                              {field.fieldId}
+                            </Typography>
+                            <Chip 
+                              label={field.componentType} 
+                              size="small" 
+                              sx={{ 
+                                height: "20px",
+                                fontSize: "0.65rem",
+                                bgcolor: "#e0e7ff",
+                                color: "#6366f1"
+                              }} 
+                            />
+                          </Box>
+                          <Typography 
+                            variant="caption" 
+                            color="textSecondary"
+                            sx={{ display: "block" }}
+                          >
+                            {field.fieldLabel}
+                          </Typography>
+                          <Typography 
+                            variant="caption" 
+                            color="textSecondary"
+                            sx={{ 
+                              fontFamily: "monospace",
+                              fontSize: "0.7rem",
+                              display: "block",
+                              mt: 0.5
+                            }}
+                          >
+                            {field.path}
+                          </Typography>
+                        </Box>
+                        <InfoIcon fontSize="small" sx={{ color: "#9ca3af", ml: 1 }} />
+                      </ListItem>
+                    </Tooltip>
+                  ))}
                 </List>
               )}
             </Box>
