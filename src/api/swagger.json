@@ -5570,6 +5570,44 @@
         }
       }
     },
+    "/api/FormData/names": {
+      "get": {
+        "tags": [
+          "FormData"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormData/GetFormPrioritiesEnum": {
       "get": {
         "tags": [
@@ -22067,6 +22105,20 @@
           },
           "publicationStatus": {
             "$ref": "#/components/schemas/FormPublicationStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormNameIdDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -1379,6 +1379,10 @@ export interface FormDataUpdateDto {
 }
 
 
+export interface FormNameIdDto {
+    'id'?: string;
+    'formName'?: string | null;
+}
 
 export const FormPriority = {
     NUMBER_1: 1,
@@ -15807,6 +15811,39 @@ export const FormDataApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataNamesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/FormData/names`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16127,6 +16164,17 @@ export const FormDataApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFormDataNamesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FormNameIdDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiFormDataNamesGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormDataApi.apiFormDataNamesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16289,6 +16337,14 @@ export const FormDataApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFormDataNamesGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<FormNameIdDto>> {
+            return localVarFp.apiFormDataNamesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {FormDataInsertDto} [formDataInsertDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16441,6 +16497,15 @@ export class FormDataApi extends BaseAPI {
      */
     public apiFormDataLatestPerFamilyGet(options?: RawAxiosRequestConfig) {
         return FormDataApiFp(this.configuration).apiFormDataLatestPerFamilyGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiFormDataNamesGet(options?: RawAxiosRequestConfig) {
+        return FormDataApiFp(this.configuration).apiFormDataNamesGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
