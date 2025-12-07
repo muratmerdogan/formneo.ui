@@ -358,6 +358,7 @@ export default function WorkflowRuntime(): JSX.Element {
   return (
     <>
       {/* Footer'ı gizle ve scroll bar sorununu çöz */}
+      {/* Formily Form CSS Stilleri */}
       <style>{`
         footer,
         [class*="Footer"],
@@ -369,6 +370,298 @@ export default function WorkflowRuntime(): JSX.Element {
         }
         html {
           overflow-x: hidden !important;
+        }
+
+        /* Formily Form Container Stilleri */
+        .ant-form {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .ant-form-item {
+          margin-bottom: 24px !important;
+          padding: 0;
+        }
+
+        .ant-form-item-label {
+          padding-bottom: 8px !important;
+        }
+
+        .ant-form-item-label > label {
+          font-size: 14px !important;
+          font-weight: 600 !important;
+          color: #1a202c !important;
+          line-height: 1.5 !important;
+        }
+
+        .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+          color: #ef4444 !important;
+          margin-right: 4px !important;
+        }
+
+        /* Input, Select, TextArea Stilleri */
+        .ant-input,
+        .ant-input-number,
+        .ant-input-password,
+        .ant-picker,
+        .ant-select-selector,
+        .ant-input-number-input,
+        textarea.ant-input {
+          border-radius: 8px !important;
+          border: 1px solid #e2e8f0 !important;
+          padding: 10px 14px !important;
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+          transition: all 0.2s ease !important;
+          background-color: #ffffff !important;
+          color: #1a202c !important;
+        }
+
+        .ant-input:hover,
+        .ant-input-number:hover,
+        .ant-input-password:hover,
+        .ant-picker:hover,
+        .ant-select-selector:hover,
+        textarea.ant-input:hover {
+          border-color: #667eea !important;
+        }
+
+        .ant-input:focus,
+        .ant-input-number:focus,
+        .ant-input-password:focus,
+        .ant-picker-focused,
+        .ant-select-focused .ant-select-selector,
+        textarea.ant-input:focus {
+          border-color: #667eea !important;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+          outline: none !important;
+        }
+
+        /* Select Dropdown Stilleri */
+        .ant-select {
+          width: 100% !important;
+        }
+
+        .ant-select-selector {
+          min-height: 42px !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+
+        .ant-select-selection-item {
+          line-height: 40px !important;
+        }
+
+        /* TextArea Stilleri */
+        textarea.ant-input {
+          min-height: 100px !important;
+          resize: vertical !important;
+        }
+
+        /* DatePicker Stilleri */
+        .ant-picker {
+          width: 100% !important;
+          height: 42px !important;
+        }
+
+        /* InputNumber Stilleri */
+        .ant-input-number {
+          width: 100% !important;
+        }
+
+        .ant-input-number-input {
+          height: 100% !important;
+        }
+
+        /* Checkbox ve Radio Stilleri */
+        .ant-checkbox-wrapper,
+        .ant-radio-wrapper {
+          font-size: 14px !important;
+          color: #1a202c !important;
+          margin-bottom: 8px !important;
+        }
+
+        .ant-checkbox-checked .ant-checkbox-inner,
+        .ant-radio-checked .ant-radio-inner {
+          background-color: #667eea !important;
+          border-color: #667eea !important;
+        }
+
+        /* Upload Stilleri */
+        .ant-upload {
+          width: 100% !important;
+        }
+
+        .ant-upload.ant-upload-drag {
+          border-radius: 8px !important;
+          border: 2px dashed #e2e8f0 !important;
+          background-color: #f8f9fa !important;
+          transition: all 0.2s ease !important;
+        }
+
+        .ant-upload.ant-upload-drag:hover {
+          border-color: #667eea !important;
+          background-color: #f0f4ff !important;
+        }
+
+        /* Rate Component Stilleri */
+        .ant-rate {
+          font-size: 20px !important;
+        }
+
+        .ant-rate-star {
+          color: #fbbf24 !important;
+        }
+
+        /* Slider Stilleri */
+        .ant-slider {
+          margin: 16px 0 !important;
+        }
+
+        .ant-slider-rail {
+          background-color: #e2e8f0 !important;
+        }
+
+        .ant-slider-track {
+          background-color: #667eea !important;
+        }
+
+        .ant-slider-handle {
+          border-color: #667eea !important;
+        }
+
+        /* Card Component Stilleri */
+        .ant-card {
+          border-radius: 12px !important;
+          border: 1px solid #e2e8f0 !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+          margin-bottom: 16px !important;
+        }
+
+        .ant-card-head {
+          border-bottom: 1px solid #e2e8f0 !important;
+          padding: 16px 20px !important;
+        }
+
+        .ant-card-head-title {
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          color: #1a202c !important;
+        }
+
+        .ant-card-body {
+          padding: 20px !important;
+        }
+
+        /* Form Item Help Text */
+        .ant-form-item-explain-error {
+          color: #ef4444 !important;
+          font-size: 12px !important;
+          margin-top: 4px !important;
+        }
+
+        .ant-form-item-explain-success {
+          color: #10b981 !important;
+          font-size: 12px !important;
+          margin-top: 4px !important;
+        }
+
+        /* Form Layout Responsive */
+        @media (max-width: 768px) {
+          .ant-form-item-label {
+            text-align: left !important;
+          }
+          
+          .ant-form-item-label > label {
+            font-size: 13px !important;
+          }
+        }
+
+        /* Form Grid Layout */
+        .ant-row {
+          margin-left: -8px !important;
+          margin-right: -8px !important;
+        }
+
+        .ant-col {
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+        }
+
+        /* Button Group Stilleri */
+        .ant-btn-group {
+          display: flex !important;
+          gap: 8px !important;
+        }
+
+        /* Switch Stilleri */
+        .ant-switch-checked {
+          background-color: #667eea !important;
+        }
+
+        /* TimePicker Stilleri */
+        .ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected {
+          background-color: #667eea !important;
+        }
+
+        /* Cascader Stilleri */
+        .ant-cascader-picker {
+          width: 100% !important;
+        }
+
+        .ant-cascader-menu-item-active {
+          background-color: #f0f4ff !important;
+        }
+
+        /* Transfer Stilleri */
+        .ant-transfer-list {
+          border-radius: 8px !important;
+          border: 1px solid #e2e8f0 !important;
+        }
+
+        /* TreeSelect Stilleri */
+        .ant-select-tree {
+          border-radius: 8px !important;
+        }
+
+        .ant-select-tree-node-selected {
+          background-color: #f0f4ff !important;
+        }
+
+        /* Form Item Spacing */
+        .ant-form-horizontal .ant-form-item-label {
+          flex: 0 0 25% !important;
+          max-width: 25% !important;
+        }
+
+        .ant-form-horizontal .ant-form-item-control {
+          flex: 0 0 75% !important;
+          max-width: 75% !important;
+        }
+
+        /* Readonly ve Disabled State */
+        .ant-input[disabled],
+        .ant-input-number[disabled],
+        .ant-select-disabled .ant-select-selector,
+        .ant-picker-disabled {
+          background-color: #f7fafc !important;
+          color: #718096 !important;
+          cursor: not-allowed !important;
+        }
+
+        /* Placeholder Stilleri */
+        .ant-input::placeholder,
+        textarea.ant-input::placeholder {
+          color: #a0aec0 !important;
+          opacity: 1 !important;
+        }
+
+        /* Focus Ring */
+        .ant-input:focus-visible,
+        .ant-select-focused .ant-select-selector,
+        .ant-picker-focused {
+          outline: 2px solid #667eea !important;
+          outline-offset: 2px !important;
         }
       `}</style>
       
@@ -387,38 +680,50 @@ export default function WorkflowRuntime(): JSX.Element {
         <DashboardLayout>
           <DashboardNavbar />
           <MDBox 
-            my={3} 
+            my={0.5}
+            pt={1}
             sx={{ 
               paddingBottom: formButtons.length > 0 ? "100px" : "20px",
               overflowY: "auto",
               overflowX: "hidden",
               flex: 1,
               width: "100%",
-              maxHeight: "calc(100vh - 150px)",
+              maxHeight: "calc(100vh - 100px)",
             }}
           >
-            <Box sx={{ mb: 3 }}>
-              <MDTypography variant="h4" fontWeight={600} gutterBottom>
+            <Box sx={{ mb: 1.5, px: 2 }}>
+              <MDTypography variant="h4" fontWeight={600} gutterBottom sx={{ mb: 0.5 }}>
                 {formName}
               </MDTypography>
               {workflowInstance?.workflowName && (
-                <MDTypography variant="body2" color="textSecondary">
+                <MDTypography variant="body2" color="textSecondary" sx={{ mb: 0 }}>
                   Workflow: {workflowInstance.workflowName}
                 </MDTypography>
               )}
             </Box>
 
             <MDBox 
-              p={2} 
+              p={3}
               sx={{ 
                 backgroundColor: "#fff", 
-                borderRadius: 2, 
-                boxShadow: "0 2px 8px rgba(0,0,0,0.08)" 
+                borderRadius: 3, 
+                boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+                border: "1px solid #e2e8f0",
+                maxWidth: "1200px",
+                margin: "0 auto",
+                mx: 2,
               }}
             >
               <FormProvider form={form}>
                 <AntdFormily.Form>
-                  <AntdFormily.FormLayout layout="horizontal" labelAlign="left" labelCol={6} wrapperCol={18} size="default">
+                  <AntdFormily.FormLayout 
+                    layout="horizontal" 
+                    labelAlign="left" 
+                    labelCol={6} 
+                    wrapperCol={18} 
+                    size="large"
+                    colon={true}
+                  >
                     <SchemaField schema={schema} />
                   </AntdFormily.FormLayout>
                 </AntdFormily.Form>

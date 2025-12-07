@@ -1379,6 +1379,64 @@ export interface FormDataUpdateDto {
 }
 
 
+
+export const FormItemStatus = {
+    NUMBER_0: 0,
+    NUMBER_1: 1,
+    NUMBER_2: 2
+} as const;
+
+export type FormItemStatus = typeof FormItemStatus[keyof typeof FormItemStatus];
+
+
+export interface FormItems {
+    'id'?: string;
+    'mainClientId'?: string | null;
+    'mainClient'?: MainClient;
+    'createdBy'?: string | null;
+    'updatedBy'?: string | null;
+    'createdDate'?: string;
+    'updatedDate'?: string | null;
+    'isDelete'?: boolean;
+    'uniqNumber'?: number;
+    'concurrencyToken'?: number;
+    'workflowItemId'?: string;
+    'formDesign'?: string | null;
+    'formId'?: string | null;
+    'formUser'?: string | null;
+    'formUserNameSurname'?: string | null;
+    'formData'?: string | null;
+    'formDescription'?: string | null;
+    'formUserMessage'?: string | null;
+    'formTaskMessage'?: string | null;
+    'formItemStatus'?: FormItemStatus;
+    'workflowItem'?: WorkflowItem;
+    'form'?: Form;
+}
+
+
+export interface FormItemsDto {
+    'id'?: string;
+    'workflowItemId'?: string;
+    'shortId'?: string | null;
+    'shortWorkflowItemId'?: string | null;
+    'formDesign'?: string | null;
+    'formId'?: string | null;
+    'formUser'?: string | null;
+    'formUserNameSurname'?: string | null;
+    'formData'?: string | null;
+    'formDescription'?: string | null;
+    'formUserMessage'?: string | null;
+    'formTaskMessage'?: string | null;
+    'formItemStatus'?: FormItemStatus;
+    'workFlowItem'?: WorkFlowItemDto;
+    'createdDate'?: string;
+    'updatedDate'?: string;
+    'uniqNumber'?: number;
+    'workFlowHead'?: WorkFlowHeadDto;
+}
+
+
 export interface FormNameIdDto {
     'id'?: string;
     'formName'?: string | null;
@@ -1430,6 +1488,24 @@ export const FormStatus = {
 } as const;
 
 export type FormStatus = typeof FormStatus[keyof typeof FormStatus];
+
+
+export interface FormTaskItemDto {
+    'id'?: string;
+    'workflowItemId'?: string;
+    'workflowHeadId'?: string;
+    'shortId'?: string | null;
+    'shortWorkflowItemId'?: string | null;
+    'formDesign'?: string | null;
+    'formId'?: string | null;
+    'formTaskMessage'?: string | null;
+    'formDescription'?: string | null;
+    'formItemStatus'?: FormItemStatus;
+    'workFlowHead'?: WorkFlowHeadDto;
+    'workFlowItem'?: WorkFlowItemDto;
+    'createdDate'?: string;
+    'uniqNumber'?: number;
+}
 
 
 export interface FormTenantRoleListDto {
@@ -1984,6 +2060,11 @@ export interface MenuUpdateDto {
     'showMenu'?: boolean;
     'isTenantOnly'?: boolean;
     'isGlobalOnly'?: boolean;
+}
+export interface MyTasksDto {
+    'formTasks'?: Array<FormTaskItemDto> | null;
+    'userTasks'?: Array<UserTaskItemDto> | null;
+    'totalCount'?: number;
 }
 export interface NodeResultInfo {
     'nodeId'?: string | null;
@@ -3441,6 +3522,22 @@ export interface UserRoleDto {
     'roleId'?: string | null;
     'roleName'?: string | null;
 }
+export interface UserTaskItemDto {
+    'id'?: string;
+    'workflowItemId'?: string;
+    'workflowHeadId'?: string;
+    'shortId'?: string | null;
+    'shortWorkflowItemId'?: string | null;
+    'approveUser'?: string | null;
+    'approveUserNameSurname'?: string | null;
+    'approverStatus'?: ApproverStatus;
+    'workFlowHead'?: WorkFlowHeadDto;
+    'workFlowItem'?: WorkFlowItemDto;
+    'createdDate'?: string;
+    'uniqNumber'?: number;
+}
+
+
 export interface UserTenantBulkAssignUsersDto {
     'tenantId'?: string;
     'userIds'?: Array<string> | null;
@@ -3744,6 +3841,7 @@ export interface WorkFlowItemDtoWithApproveItems {
     'nodeDescription'?: string | null;
     'workFlowNodeStatus'?: WorkflowStatus;
     'approveItems'?: Array<ApproveItemsDto> | null;
+    'formItems'?: Array<FormItemsDto> | null;
 }
 
 
@@ -3753,6 +3851,7 @@ export interface WorkFlowStartApiDto {
     'userName'?: string | null;
     'formData'?: string | null;
     'action'?: string | null;
+    'note'?: string | null;
 }
 
 export const WorkLocation = {
@@ -3808,6 +3907,7 @@ export interface WorkflowItem {
     'nodeDescription'?: string | null;
     'workFlowNodeStatus'?: WorkflowStatus;
     'approveItems'?: Array<ApproveItems> | null;
+    'formItems'?: Array<FormItems> | null;
 }
 
 
@@ -40655,6 +40755,39 @@ export const WorkFlowApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiWorkFlowGetMyTasksMyTasksGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/WorkFlow/GetMyTasks/my-tasks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {WorkFlowStartApiDto} [workFlowStartApiDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40762,6 +40895,17 @@ export const WorkFlowApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiWorkFlowGetMyTasksMyTasksGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MyTasksDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiWorkFlowGetMyTasksMyTasksGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WorkFlowApi.apiWorkFlowGetMyTasksMyTasksGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {WorkFlowStartApiDto} [workFlowStartApiDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40813,6 +40957,14 @@ export const WorkFlowApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiWorkFlowGetMyTasksMyTasksGet(options?: RawAxiosRequestConfig): AxiosPromise<MyTasksDto> {
+            return localVarFp.apiWorkFlowGetMyTasksMyTasksGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {WorkFlowStartApiDto} [workFlowStartApiDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40854,6 +41006,15 @@ export class WorkFlowApi extends BaseAPI {
      */
     public apiWorkFlowGetDetailIdGet(id: string, options?: RawAxiosRequestConfig) {
         return WorkFlowApiFp(this.configuration).apiWorkFlowGetDetailIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiWorkFlowGetMyTasksMyTasksGet(options?: RawAxiosRequestConfig) {
+        return WorkFlowApiFp(this.configuration).apiWorkFlowGetMyTasksMyTasksGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

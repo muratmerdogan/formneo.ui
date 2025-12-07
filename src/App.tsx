@@ -62,6 +62,7 @@ const Logout = lazy(() => import("layouts/authentication/sign-in/cover/Logout"))
 import PrivateRoute from "layouts/authentication/sign-in/cover/PrivateRoute";
 const Cover = lazy(() => import("layouts/authentication/sign-in/cover"));
 const LandingPage = lazy(() => import("layouts/pages/landing"));
+const ProcessDetail = lazy(() => import("layouts/pages/landing/ProcessDetail"));
 const CompanyRegister = lazy(() => import("layouts/authentication/company-register"));
 const AllProjects = lazy(() => import("layouts/pages/profile/all-projects"));
 const MessagePage = lazy(() => import("layouts/applications/chat/MessagePage"));
@@ -251,6 +252,7 @@ export default function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/processes/:key" element={<ProcessDetail />} />
             <Route path="/forms/designer" element={<FormilyDesigner />} />
             <Route path="/forms/designer/:id" element={<FormilyDesigner />} />
             <Route path="/authentication/sign-in/cover" element={<Cover />} />

@@ -16911,6 +16911,35 @@
         }
       }
     },
+    "/api/WorkFlow/GetMyTasks/my-tasks": {
+      "get": {
+        "tags": [
+          "WorkFlow"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/WorkFlow/GetDetail/{id}": {
       "get": {
         "tags": [
@@ -22109,6 +22138,183 @@
         },
         "additionalProperties": false
       },
+      "FormItemStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "FormItems": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workflowItem": {
+            "$ref": "#/components/schemas/WorkflowItem"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormItemsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "FormNameIdDto": {
         "type": "object",
         "properties": {
@@ -22218,6 +22424,66 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "FormTaskItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "FormTenantRoleListDto": {
         "type": "object",
@@ -24048,6 +24314,30 @@
           },
           "isGlobalOnly": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MyTasksDto": {
+        "type": "object",
+        "properties": {
+          "formTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormTaskItemDto"
+            },
+            "nullable": true
+          },
+          "userTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTaskItemDto"
+            },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -29345,6 +29635,57 @@
         },
         "additionalProperties": false
       },
+      "UserTaskItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "approverStatus": {
+            "$ref": "#/components/schemas/ApproverStatus"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserTenantBulkAssignUsersDto": {
         "type": "object",
         "properties": {
@@ -30395,6 +30736,13 @@
               "$ref": "#/components/schemas/ApproveItemsDto"
             },
             "nullable": true
+          },
+          "formItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormItemsDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -30419,6 +30767,10 @@
             "nullable": true
           },
           "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
             "type": "string",
             "nullable": true
           }
@@ -30595,6 +30947,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ApproveItems"
+            },
+            "nullable": true
+          },
+          "formItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormItems"
             },
             "nullable": true
           }

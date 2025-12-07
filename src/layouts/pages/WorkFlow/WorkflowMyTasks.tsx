@@ -22,7 +22,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import { WorkFlowDefinationApi, FormDataApi, WorkFlowApi, UserApi } from "api/generated";
+import { WorkFlowDefinationApi, FormDataApi, WorkFlowApi, UserApi, MyTasksDto, FormTaskItemDto, UserTaskItemDto, FormItemStatus, ApproverStatus } from "api/generated";
 import getConfiguration from "confiuration";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -43,23 +43,32 @@ import { tr } from "date-fns/locale";
  *    - Tıklayınca yeni instance oluşturulur ve form açılır
  */
 
-interface WorkflowInstance {
+interface WorkflowTask {
   id: string;
-  workflowId: string;
-  workflowName: string;
-  formId: string;
-  formName: string;
+  workflowItemId?: string;
+  workflowHeadId?: string;
+  shortId?: string | null;
+  type: "formTask" | "userTask";
+  formId?: string | null;
+  formName?: string;
+  workflowName?: string;
+  message?: string | null;
   status: "pending" | "in-progress" | "completed" | "cancelled";
-  startDate: string;
-  lastUpdateDate: string;
-  currentStep?: string;
-  assignedUserId?: string;
+  createdDate?: string;
+  uniqNumber?: number;
+  // FormTask için
+  formDesign?: string | null;
+  formTaskMessage?: string | null;
+  formDescription?: string | null;
+  // UserTask için
+  approveUser?: string | null;
+  approveUserNameSurname?: string | null;
 }
 
 function WorkflowMyTasks() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0); // 0: Devam Eden Görevlerim, 1: Yeni Süreç Başlat
-  const [workflowInstances, setWorkflowInstances] = useState<WorkflowInstance[]>([]);
+  const [workflowTasks, setWorkflowTasks] = useState<WorkflowTask[]>([]);
   const [availableWorkflows, setAvailableWorkflows] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingWorkflows, setLoadingWorkflows] = useState(true);
@@ -74,39 +83,105 @@ function WorkflowMyTasks() {
   }, [activeTab]);
 
   /**
-   * ✅ Kullanıcıya atanmış workflow instance'larını çek
-   * 
-   * NOT: Backend'de workflow instance API'si hazır olduğunda bu fonksiyon güncellenecek
-   * Örnek: apiWorkFlowGetWorkflowHeadsGet() veya apiWorkFlowGetWorkflowHeadsByUserGet(userId)
+   * ✅ Kullanıcıya atanmış workflow görevlerini çek
+   * /api/WorkFlow/GetMyTasks/my-tasks endpoint'ini kullanır
    */
   const fetchWorkflowInstances = async () => {
     setLoading(true);
     try {
       const conf = getConfiguration();
       const workflowApi = new WorkFlowApi(conf);
-      const userApi = new UserApi(conf);
 
-      // ✅ Kullanıcı bilgisini al
-      let currentUserId: string | null = null;
-      try {
-        const userResponse = await userApi.apiUserGetLoginUserDetailGet();
-        currentUserId = (userResponse.data as any)?.id || (userResponse.data as any)?.userId || null;
-      } catch (error) {
-        console.warn("Kullanıcı bilgisi alınamadı:", error);
+      // ✅ API'den kullanıcının görevlerini çek
+      const response = await workflowApi.apiWorkFlowGetMyTasksMyTasksGet();
+      const myTasks: MyTasksDto = response.data || {};
+
+      const tasks: WorkflowTask[] = [];
+
+      // FormTask'ları ekle
+      if (myTasks.formTasks && Array.isArray(myTasks.formTasks)) {
+        myTasks.formTasks.forEach((formTask: FormTaskItemDto) => {
+          // FormItemStatus: 0=Pending, 1=InProgress, 2=Completed
+          let status: "pending" | "in-progress" | "completed" | "cancelled" = "pending";
+          if (formTask.formItemStatus === FormItemStatus.NUMBER_2) {
+            status = "completed";
+          } else if (formTask.formItemStatus === FormItemStatus.NUMBER_1) {
+            status = "in-progress";
+          } else {
+            status = "pending";
+          }
+
+          // FormTask için form bilgisi - workFlowHead yoksa formTask'tan al
+          const formTaskFormId = formTask.formId || null;
+          // workFlowHead varsa ondan al, yoksa formTask'tan al
+          const formTaskFormName = formTask.workFlowHead?.workFlowDefination?.form?.formName || 
+                                  formTask.formDescription || 
+                                  formTask.formTaskMessage || 
+                                  "Form Görevi";
+          const workflowName = formTask.workFlowHead?.workflowName || "İş Akışı";
+
+          tasks.push({
+            id: formTask.id || "",
+            workflowItemId: formTask.workflowItemId,
+            workflowHeadId: formTask.workflowHeadId,
+            shortId: formTask.shortId,
+            type: "formTask",
+            formId: formTaskFormId,
+            formName: formTaskFormName,
+            workflowName: workflowName,
+            message: formTask.formTaskMessage || formTask.formDescription || null,
+            status,
+            createdDate: formTask.createdDate,
+            uniqNumber: formTask.uniqNumber,
+            formDesign: formTask.formDesign,
+            formTaskMessage: formTask.formTaskMessage,
+            formDescription: formTask.formDescription,
+          });
+        });
       }
 
-      // ✅ Backend'den workflow instance'ları çek
-      // NOT: Backend API'si hazır olduğunda aşağıdaki satırı aktif edin:
-      // const response = await workflowApi.apiWorkFlowGetWorkflowHeadsGet();
-      // const instances = response.data || [];
-      
-      // Şimdilik boş liste döndür (backend hazır olana kadar)
-      const instances: WorkflowInstance[] = [];
+      // UserTask'ları ekle
+      if (myTasks.userTasks && Array.isArray(myTasks.userTasks)) {
+        myTasks.userTasks.forEach((userTask: UserTaskItemDto) => {
+          // ApproverStatus: 0=Pending, 1=InProgress, 2=Approved, 3=Rejected
+          let status: "pending" | "in-progress" | "completed" | "cancelled" = "pending";
+          if (userTask.approverStatus === ApproverStatus.NUMBER_2 || userTask.approverStatus === ApproverStatus.NUMBER_3) {
+            status = "completed";
+          } else if (userTask.approverStatus === ApproverStatus.NUMBER_1) {
+            status = "in-progress";
+          } else {
+            status = "pending";
+          }
 
-      setWorkflowInstances(instances);
+          // UserTask için form bilgisi - workFlowHead yoksa varsayılan değerler kullan
+          const formId = userTask.workFlowHead?.workFlowDefination?.formId || null;
+          const formName = userTask.workFlowHead?.workFlowDefination?.form?.formName || 
+                          "Kullanıcı Görevi";
+          const workflowName = userTask.workFlowHead?.workflowName || "İş Akışı";
+
+          tasks.push({
+            id: userTask.id || "",
+            workflowItemId: userTask.workflowItemId,
+            workflowHeadId: userTask.workflowHeadId,
+            shortId: userTask.shortId,
+            type: "userTask",
+            formId: formId,
+            formName: formName,
+            workflowName: workflowName,
+            message: null,
+            status,
+            createdDate: userTask.createdDate,
+            uniqNumber: userTask.uniqNumber,
+            approveUser: userTask.approveUser,
+            approveUserNameSurname: userTask.approveUserNameSurname,
+          });
+        });
+      }
+
+      setWorkflowTasks(tasks);
     } catch (error) {
-      console.error("Workflow instance'ları çekilirken hata:", error);
-      setWorkflowInstances([]);
+      console.error("Workflow görevleri çekilirken hata:", error);
+      setWorkflowTasks([]);
     } finally {
       setLoading(false);
     }
@@ -199,13 +274,26 @@ function WorkflowMyTasks() {
   };
 
   /**
-   * ✅ Devam eden workflow instance'a tıklandığında form sayfasına yönlendir
+   * ✅ Devam eden workflow görevine tıklandığında form sayfasına yönlendir
    */
-  const handleWorkflowClick = (instance: WorkflowInstance) => {
+  const handleWorkflowClick = (task: WorkflowTask) => {
     // Workflow runtime sayfasına yönlendir (form ile birlikte)
-    navigate(`/workflows/runtime/${instance.id}`, {
+    // workflowHeadId veya workflowItemId kullanarak runtime'a git
+    const workflowInstanceId = task.workflowHeadId || task.workflowItemId || task.id;
+    
+    navigate(`/workflows/runtime/${workflowInstanceId}`, {
       state: {
-        workflowInstance: instance,
+        workflowInstance: {
+          id: workflowInstanceId,
+          workflowId: task.workflowHeadId || "",
+          workflowName: task.workflowName || "İş Akışı",
+          formId: task.formId || "",
+          formName: task.formName || "Form",
+          taskId: task.id,
+          taskType: task.type,
+          formDesign: task.formDesign,
+        },
+        task: task,
       },
     });
   };
@@ -274,12 +362,12 @@ function WorkflowMyTasks() {
   };
 
   /**
-   * ✅ Filtrelenmiş instance'lar
+   * ✅ Filtrelenmiş görevler
    */
-  const filteredInstances =
+  const filteredTasks =
     filter === "all"
-      ? workflowInstances
-      : workflowInstances.filter((instance) => instance.status === filter);
+      ? workflowTasks
+      : workflowTasks.filter((task) => task.status === filter);
 
   return (
     <DashboardLayout>
@@ -343,12 +431,12 @@ function WorkflowMyTasks() {
               />
             </Box>
 
-            {/* Workflow Instance Listesi */}
+            {/* Workflow Görev Listesi */}
             {loading ? (
               <Box sx={{ textAlign: "center", py: 4 }}>
                 <Typography>Yükleniyor...</Typography>
               </Box>
-            ) : filteredInstances.length === 0 ? (
+            ) : filteredTasks.length === 0 ? (
               <Card>
                 <CardContent sx={{ textAlign: "center", py: 4 }}>
                   <AssignmentIcon sx={{ fontSize: 64, color: "text.secondary", mb: 2 }} />
@@ -362,8 +450,8 @@ function WorkflowMyTasks() {
               </Card>
             ) : (
               <Grid container spacing={2}>
-                {filteredInstances.map((instance) => (
-                  <Grid item xs={12} md={6} lg={4} key={instance.id}>
+                {filteredTasks.map((task) => (
+                  <Grid item xs={12} md={6} lg={4} key={task.id}>
                     <Card
                       sx={{
                         height: "100%",
@@ -376,41 +464,76 @@ function WorkflowMyTasks() {
                           transform: "translateY(-2px)",
                         },
                       }}
-                      onClick={() => handleWorkflowClick(instance)}
+                      onClick={() => handleWorkflowClick(task)}
                     >
                       <CardContent sx={{ flex: 1 }}>
                         {/* Başlık */}
                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", mb: 2 }}>
                           <Box sx={{ flex: 1 }}>
                             <Typography variant="h6" fontWeight={600} gutterBottom>
-                              {instance.formName}
+                              {task.formName || "Görev"}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                              {instance.workflowName}
+                              {task.workflowName || "İş Akışı"}
                             </Typography>
+                            {task.type === "formTask" && (
+                              <Chip 
+                                label="Form Görevi" 
+                                size="small" 
+                                color="primary" 
+                                sx={{ mt: 0.5, fontSize: "0.7rem" }} 
+                              />
+                            )}
+                            {task.type === "userTask" && (
+                              <Chip 
+                                label="Kullanıcı Görevi" 
+                                size="small" 
+                                color="secondary" 
+                                sx={{ mt: 0.5, fontSize: "0.7rem" }} 
+                              />
+                            )}
                           </Box>
                           <Chip
-                            label={getStatusText(instance.status)}
-                            color={getStatusColor(instance.status) as any}
+                            label={getStatusText(task.status)}
+                            color={getStatusColor(task.status) as any}
                             size="small"
                           />
                         </Box>
+
+                        {/* Mesaj */}
+                        {task.message && (
+                          <Box sx={{ mb: 2, p: 1.5, bgcolor: "grey.50", borderRadius: 1 }}>
+                            <Typography variant="body2" color="textSecondary">
+                              {task.message}
+                            </Typography>
+                          </Box>
+                        )}
 
                         <Box sx={{ borderTop: 1, borderColor: "divider", my: 2 }} />
 
                         {/* Detaylar */}
                         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <AccessTimeIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                            <Typography variant="caption" color="textSecondary">
-                              Başlangıç: {format(new Date(instance.startDate), "dd MMM yyyy HH:mm", { locale: tr })}
-                            </Typography>
-                          </Box>
-                          {instance.currentStep && (
+                          {task.createdDate && (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                              <AccessTimeIcon sx={{ fontSize: 16, color: "text.secondary" }} />
+                              <Typography variant="caption" color="textSecondary">
+                                Oluşturulma: {format(new Date(task.createdDate), "dd MMM yyyy HH:mm", { locale: tr })}
+                              </Typography>
+                            </Box>
+                          )}
+                          {task.shortId && (
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                               <PlayArrowIcon sx={{ fontSize: 16, color: "text.secondary" }} />
                               <Typography variant="caption" color="textSecondary">
-                                Adım: {instance.currentStep}
+                                ID: {task.shortId}
+                              </Typography>
+                            </Box>
+                          )}
+                          {task.type === "userTask" && task.approveUserNameSurname && (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                              <AssignmentIcon sx={{ fontSize: 16, color: "text.secondary" }} />
+                              <Typography variant="caption" color="textSecondary">
+                                Atanan: {task.approveUserNameSurname}
                               </Typography>
                             </Box>
                           )}
@@ -425,10 +548,10 @@ function WorkflowMyTasks() {
                           fullWidth
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleWorkflowClick(instance);
+                            handleWorkflowClick(task);
                           }}
                         >
-                          Devam Et
+                          {task.type === "formTask" ? "Formu Aç" : "Görevi Görüntüle"}
                         </MDButton>
                       </Box>
                     </Card>

@@ -519,9 +519,9 @@
       "FreeTrial": "Ücretsiz Dene"
     },
     "Hero": {
-      "Title": "Müşteri İlişkilerinde",
-      "Subtitle": "Akıllı CRM Çözümleri",
-      "Description": "Müşterilerinizi yönetin, satış süreçlerinizi takip edin, işinizi büyütün. Basit ama güçlü CRM sistemi.",
+      "Title": "BMP Yazılımı ve Süreç Yazılımı Çözümü",
+      "Subtitle": "İş Süreç Yönetimi Platformu",
+      "Description": "FormNeo BPM, BMP yazılımı ve süreç yazılımı olarak iş süreç yönetimi platformudur. Görsel workflow tasarımı, akıllı otomasyon ve süreç yönetimi ile kurumsal iş süreçlerinizi tek platformda yönetin. Onay süreçlerinizi otomatikleştirin, görevlerinizi takip edin ve verimliliğinizi artırın.",
       "StartFree": "Ücretsiz Başla",
       "WatchDemo": "Demo İzle",
       "Features": {
@@ -531,8 +531,8 @@
       }
     },
     "Features": {
-      "Title": "CRM Özelliklerimiz",
-      "Subtitle": "Küçük ve orta ölçekli işletmeler için tasarlanmış, temel CRM ihtiyaçlarınızı karşılayan güçlü özellikler.",
+      "Title": "BPM Özelliklerimiz",
+      "Subtitle": "Kurumsal iş süreçlerinizi dijitalleştirmek için ihtiyacınız olan tüm araçlar. Görsel workflow tasarımından süreç analitiğine kadar.",
       "CustomerManagement": {
         "Title": "Temel Müşteri Yönetimi",
         "Description": "Müşteri kartları, gruplar/etiketler (VIP, potansiyel, aktif/pasif), notlar ve detaylı müşteri bilgileri yönetimi."
@@ -559,36 +559,36 @@
       }
     },
     "AdvancedFeatures": {
-      "Title": "Gelişmiş Özellikler",
-      "Subtitle": "Sürükle-bırak yönetimi ve akıllı onay süreçleri ile iş akışlarınızı otomatikleştirin.",
+      "Title": "Güçlü BPM Özellikleri",
+      "Subtitle": "Görsel workflow tasarımı, akıllı otomasyon ve süreç yönetimi ile iş süreçlerinizi dijitalleştirin.",
       "DragDrop": {
-        "Title": "Sürükle-Bırak Müşteri Yönetimi",
-        "Description": "Müşterilerinizi satış aşamaları arasında kolayca sürükleyip bırakın. Potansiyel müşteriden satışa kadar tüm süreci görsel olarak yönetin.",
+        "Title": "Görsel Workflow Tasarımcısı",
+        "Description": "Sürükle-bırak ile iş süreçlerinizi görsel olarak modelleyin. Form görevleri, kullanıcı görevleri, koşullu dallanmalar ve otomasyonlar tek ekranda.",
         "Features": {
-          "VisualPipeline": "Görsel pipeline yönetimi",
-          "DragDrop": "Drag & drop ile kolay taşıma",
-          "AutoUpdate": "Otomatik durum güncellemeleri",
-          "StageReporting": "Aşama bazlı raporlama"
+          "VisualPipeline": "Görsel workflow tasarımı",
+          "DragDrop": "Sürükle-bırak node'lar",
+          "AutoUpdate": "Gerçek zamanlı süreç izleme",
+          "StageReporting": "Süreç analitiği ve raporlama"
         }
       },
       "SmartApproval": {
-        "Title": "Akıllı Onay Süreçleri",
-        "Description": "Satış süreçlerinizde otomatik onay akışları oluşturun. Belirli koşullarda otomatik aksiyonlar alın, manuel onay gerektiren durumları belirleyin.",
+        "Title": "Akıllı Onay ve Görev Yönetimi",
+        "Description": "Çok seviyeli onay süreçleri, dinamik görev atama ve otomatik bildirimler. Form görevleri ve kullanıcı görevleri ile süreçlerinizi yönetin.",
         "Features": {
-          "AutoRules": "Otomatik onay kuralları",
-          "MultiLevel": "Çok seviyeli onay sistemi",
-          "EmailNotifications": "E-posta bildirimleri",
-          "ApprovalHistory": "Onay geçmişi takibi"
+          "AutoRules": "Koşullu görev atama",
+          "MultiLevel": "Çok seviyeli onay süreçleri",
+          "EmailNotifications": "E-posta ve bildirim otomasyonu",
+          "ApprovalHistory": "Görev geçmişi ve audit log"
         }
       },
       "CustomWorkflows": {
-        "Title": "Özelleştirilebilir İş Akışları",
-        "Description": "Kendi iş süreçlerinize uygun özel akışlar oluşturun. Tetikleyiciler, koşullar ve aksiyonlarla güçlü otomasyon sistemleri kurun.",
+        "Title": "Gelişmiş İş Süreci Otomasyonu",
+        "Description": "Script node'lar, HTTP POST, SQL sorguları, Mail entegrasyonları ve koşullu dallanmalar ile güçlü otomasyon sistemleri kurun.",
         "Features": {
-          "CustomDesign": "Özel iş akışı tasarımı",
-          "ConditionalTriggers": "Koşullu tetikleyiciler",
-          "AutoAssignment": "Otomatik görev atamaları",
-          "ProcessAnalysis": "Süreç performans analizi"
+          "CustomDesign": "Özel workflow tasarımı",
+          "ConditionalTriggers": "Koşullu tetikleyiciler ve dallanmalar",
+          "AutoAssignment": "Dinamik görev atama",
+          "ProcessAnalysis": "Süreç performans metrikleri ve analitik"
         }
       },
       "DemoSoon": "Demo Yakında!",
@@ -604,10 +604,10 @@
           "Period": "ay",
           "Description": "Küçük işletmeler için ideal",
           "Features": {
-            "Customers": "100 müşteri kaydı",
+            "Customers": "100 workflow tanımı",
             "Users": "1 kullanıcı",
-            "BasicCRM": "Temel müşteri yönetimi",
-            "BasicReports": "Basit raporlar",
+            "BasicCRM": "Temel workflow yönetimi",
+            "BasicReports": "Basit süreç raporları",
             "EmailSupport": "E-posta desteği"
           },
           "Button": "Başla"
@@ -618,11 +618,11 @@
           "Period": "ay",
           "Description": "Büyüyen işletmeler için",
           "Features": {
-            "Customers": "1,000 müşteri kaydı",
+            "Customers": "1,000 workflow tanımı",
             "Users": "3 kullanıcı",
-            "AllFeatures": "Tüm CRM özellikleri",
-            "Pipeline": "Satış pipeline yönetimi",
-            "AdvancedReports": "Gelişmiş raporlar",
+            "AllFeatures": "Tüm BPM özellikleri",
+            "Pipeline": "Görsel workflow tasarımı",
+            "AdvancedReports": "Gelişmiş süreç analitiği",
             "PrioritySupport": "Öncelikli destek",
             "AutoBackup": "Otomatik yedekleme"
           },
@@ -635,7 +635,7 @@
           "Period": "fiyat",
           "Description": "Büyük organizasyonlar için",
           "Features": {
-            "UnlimitedCustomers": "Sınırsız müşteri",
+            "UnlimitedCustomers": "Sınırsız workflow",
             "UnlimitedUsers": "Sınırsız kullanıcı",
             "CustomIntegrations": "Özel entegrasyonlar",
             "CustomTraining": "Özel eğitim",
@@ -647,13 +647,13 @@
       }
     },
     "CTA": {
-      "Title": "Hemen Başlamaya Hazır mısınız?",
-      "Subtitle": "Binlerce şirket FormNeo ile form süreçlerini dijitalleştirdi. Siz de katılın ve farkı hissedin.",
+      "Title": "İş Süreçlerinizi Dijitalleştirmeye Hazır mısınız?",
+      "Subtitle": "FormNeo BPM ile onay süreçlerinizi otomatikleştirin, workflow'larınızı tasarlayın ve verimliliğinizi artırın. Ücretsiz denemeye başlayın.",
       "CreateAccount": "Ücretsiz Hesap Oluştur",
       "ContactSales": "Satış Ekibiyle Konuş"
     },
     "Footer": {
-      "Description": "Küçük ve orta ölçekli işletmeler için tasarlanmış akıllı CRM çözümü. Müşteri ilişkilerinizi güçlendirin, satışlarınızı artırın.",
+      "Description": "Kurumsal iş süreçlerinizi dijitalleştirmek için güçlü BPM platformu. Görsel workflow tasarımı, akıllı otomasyon ve süreç yönetimi ile verimliliğinizi artırın.",
       "Product": {
         "Title": "Ürün",
         "Features": "Özellikler",

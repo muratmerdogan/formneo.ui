@@ -1,9 +1,9 @@
 /**
- * FormNeo Landing Page - SaaS Ürün Tanıtım Sayfası
+ * FormNeo BPM Landing Page - Business Process Management Platform Tanıtım Sayfası
  */
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @mui material components
@@ -47,8 +47,8 @@ import EmailIcon from "@mui/icons-material/Email";
 
 // Styled components
 const HeroSection = styled(Box)(({ theme }) => ({
-    background: "linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)",
-    color: "#2c3e50",
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    color: "#ffffff",
     padding: theme.spacing(20, 0, 12, 0),
     textAlign: "center",
     position: "relative",
@@ -86,21 +86,6 @@ const PricingCard = styled(Card)(({ theme }) => ({
         transform: "translateY(-8px)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
     }
-}));
-const ModulesNav = styled(Box)(({ theme }) => ({
-    position: "sticky",
-    top: 90,
-    zIndex: 3,
-    background: "rgba(255,255,255,.9)",
-    border: "1px solid #e2e8f0",
-    borderRadius: 16,
-    padding: theme.spacing(1.25),
-    boxShadow: "0 12px 28px rgba(2,6,23,0.08)",
-    backdropFilter: "blur(8px)",
-    overflowX: 'auto',
-    msOverflowStyle: 'none',
-    scrollbarWidth: 'none',
-    '::-webkit-scrollbar': { display: 'none' },
 }));
 
 const ModuleCard = styled(Card)(({ theme }) => ({
@@ -189,41 +174,12 @@ const Dot = styled(Box)(({ active }: { active: boolean }) => ({
     }
 }));
 
-const OrderManagementSection = styled(Box)(({ theme }) => ({ display: 'none' }));
-
-const PlatformCard = styled(Card)(({ theme }) => ({
-    padding: theme.spacing(3),
-    textAlign: "center",
-    height: "100%",
-    background: "rgba(255, 255, 255, 0.95)",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255, 255, 255, 0.2)",
-    transition: "all 0.3s ease",
-    "&:hover": {
-        transform: "translateY(-8px)",
-        boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-        background: "white",
-    }
-}));
-
-const IntegrationBadge = styled(Box)(({ theme }) => ({
-    display: "inline-flex",
-    alignItems: "center",
-    gap: theme.spacing(1),
-    padding: theme.spacing(0.5, 2),
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: "20px",
-    fontSize: "14px",
-    fontWeight: "500",
-    margin: theme.spacing(0.5),
-}));
 
 function LandingPage(): JSX.Element {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const [selectedPlan, setSelectedPlan] = useState<string>("professional");
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [activeKey, setActiveKey] = useState<string>("Tasks");
 
     const [langAnchor, setLangAnchor] = useState<null | HTMLElement>(null);
     const openLang = Boolean(langAnchor);
@@ -233,81 +189,78 @@ function LandingPage(): JSX.Element {
     const langFlag: Record<string, string> = { tr: '🇹🇷', en: '🇬🇧', de: '🇩🇪', fr: '🇫🇷', es: '🇪🇸' };
     const currentFlag = langFlag[i18n.language] || '🌐';
 
-    // Sipariş yönetimi içerikleri kaldırıldı
-
+    // 30 Gerçek Hayat Süreci - HR, Üretim ve Kalite
     const sectionKeys = [
-        "Tasks",
-        "Builder",
-        "Workflow",
-        "Calendar",
-        "Files",
-        "Roles",
-        "Notifications",
-        "Reports",
-        "Mobile",
-        "Integrations",
-        "Projects",
+        // HR Süreçleri (10)
+        "HR_Recruitment",
+        "HR_Leave",
+        "HR_Performance",
+        "HR_Promotion",
+        "HR_Training",
+        "HR_AccidentReport",
+        "HR_Disciplinary",
+        "HR_Resignation",
+        "HR_SalaryIncrease",
+        "HR_Transfer",
+        "HR_TravelExpense",
+        // Üretim Süreçleri (10)
+        "Production_Order",
+        "Production_Material",
+        "Production_Quality",
+        "Production_Maintenance",
+        "Production_LineChange",
+        "Production_Recall",
+        "Production_Stop",
+        "Production_Improvement",
+        "Production_StockTransfer",
+        "Production_Report",
+        // Kalite Süreçleri (10)
+        "Quality_ControlReport",
+        "Quality_Compliance",
+        "Quality_Supplier",
+        "Quality_Improvement",
+        "Quality_Complaint",
+        "Quality_Audit",
+        "Quality_StandardChange",
+        "Quality_Training",
+        "Quality_Certification",
+        "Quality_Metrics",
     ];
 
     const iconFor = (key: string) => {
-        switch (key) {
-            case "Tasks": return <DashboardIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            case "Builder": return <DragIndicatorIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            case "Workflow": return <WorkflowIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            case "Notifications": return <NotificationsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            case "Reports": return <AnalyticsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            case "Integrations": return <IntegrationInstructionsIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-            default: return <CheckCircleIcon sx={{ fontSize: 48, color: "#667eea" }} />;
-        }
+        const iconColor = "#667eea";
+        if (key.startsWith("HR_")) return <BusinessIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Production_")) return <DashboardIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Quality_")) return <CheckCircleIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("IT_")) return <IntegrationInstructionsIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Finance_")) return <AnalyticsIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Legal_")) return <SecurityIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Security_")) return <SecurityIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Facility_")) return <CloudIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Marketing_")) return <NotificationsIcon sx={{ fontSize: 48, color: iconColor }} />;
+        if (key.startsWith("Sales_")) return <ApprovalIcon sx={{ fontSize: 48, color: iconColor }} />;
+        return <CheckCircleIcon sx={{ fontSize: 48, color: iconColor }} />;
     };
 
     const sections = sectionKeys.map((k) => {
         const titleKey = `landing:Sections.${k}.Title` as any;
         const bulletsKey = `landing:Sections.${k}.Bullets` as any;
+        const implementationKey = `landing:Sections.${k}.Implementation` as any;
         const bullets = (t(bulletsKey, { returnObjects: true }) as unknown as string[]) || [];
+        const implementation = t(implementationKey) as unknown as string;
         return {
             key: k,
             icon: iconFor(k),
             title: t(titleKey) as unknown as string,
             bullets,
+            implementation,
         };
     });
 
-    // Aktif modülü takip etmek için IntersectionObserver
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const visible = entries
-                .filter((e) => e.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-            if (visible?.target?.id) {
-                const id = visible.target.id.replace('mod-', '');
-                if (sectionKeys.includes(id)) setActiveKey(id);
-            }
-        }, { rootMargin: '-40% 0px -50% 0px', threshold: [0.1, 0.25, 0.5, 0.75, 1] });
-
-        sectionKeys.forEach((k) => {
-            const el = document.getElementById(`mod-${k}`);
-            if (el) observer.observe(el);
-        });
-        return () => observer.disconnect();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sectionKeys.join('|')]);
 
     const carouselSlides = [
         {
-            icon: <DashboardIcon sx={{ fontSize: 80, color: "#667eea" }} />,
-            title: "Sipariş Yönetim Modülü",
-            description: "Getir, Trendyol Yemek, Yemeksepeti gibi platformlardan gelen siparişlerinizi tek yerden yönetin. İşletmenizin operasyonel verimliliğini maksimuma çıkarın.",
-            features: [
-                "Tüm platformları tek panelde birleştirin",
-                "Gerçek zamanlı sipariş senkronizasyonu",
-                "Otomatik bildirim ve uyarı sistemi",
-                "Platform bazlı satış analiz raporları",
-                "Stok ve menü yönetimi entegrasyonu"
-            ]
-        },
-        {
-            icon: <DragIndicatorIcon sx={{ fontSize: 80, color: "#667eea" }} />,
+            icon: <WorkflowIcon sx={{ fontSize: 80, color: "#667eea" }} />,
             title: t('ns1:LandingPage.AdvancedFeatures.DragDrop.Title'),
             description: t('ns1:LandingPage.AdvancedFeatures.DragDrop.Description'),
             features: [
@@ -329,7 +282,7 @@ function LandingPage(): JSX.Element {
             ]
         },
         {
-            icon: <WorkflowIcon sx={{ fontSize: 80, color: "#667eea" }} />,
+            icon: <SpeedIcon sx={{ fontSize: 80, color: "#667eea" }} />,
             title: t('ns1:LandingPage.AdvancedFeatures.CustomWorkflows.Title'),
             description: t('ns1:LandingPage.AdvancedFeatures.CustomWorkflows.Description'),
             features: [
@@ -337,6 +290,18 @@ function LandingPage(): JSX.Element {
                 t('ns1:LandingPage.AdvancedFeatures.CustomWorkflows.Features.ConditionalTriggers'),
                 t('ns1:LandingPage.AdvancedFeatures.CustomWorkflows.Features.AutoAssignment'),
                 t('ns1:LandingPage.AdvancedFeatures.CustomWorkflows.Features.ProcessAnalysis')
+            ]
+        },
+        {
+            icon: <AnalyticsIcon sx={{ fontSize: 80, color: "#667eea" }} />,
+            title: "Süreç Analitiği ve İzleme",
+            description: "İş süreçlerinizin performansını gerçek zamanlı olarak izleyin. Bottleneck'leri tespit edin, SLA'ları takip edin ve süreçlerinizi sürekli optimize edin.",
+            features: [
+                "Gerçek zamanlı süreç dashboard'ları",
+                "Görev tamamlanma süreleri analizi",
+                "Kullanıcı ve departman performans metrikleri",
+                "SLA takibi ve uyarı sistemi",
+                "Süreç maliyet analizi ve raporlama"
             ]
         }
     ];
@@ -464,33 +429,33 @@ function LandingPage(): JSX.Element {
                                     alignItems="center" 
                                     gap={1}
                                     sx={{
-                                        backgroundColor: "rgba(102, 126, 234, 0.15)",
+                                        backgroundColor: "rgba(255, 255, 255, 0.15)",
                                         borderRadius: "30px",
                                         padding: { xs: "8px 14px", md: "10px 20px" },
                                         cursor: "pointer",
                                         transition: "all 0.3s ease",
-                                        border: "2px solid rgba(102, 126, 234, 0.3)",
-                                        boxShadow: "0 2px 10px rgba(102, 126, 234, 0.2)",
+                                        border: "2px solid rgba(255, 255, 255, 0.3)",
+                                        boxShadow: "0 2px 10px rgba(255, 255, 255, 0.2)",
                                         "&:hover": {
-                                            backgroundColor: "#667eea",
+                                            backgroundColor: "rgba(255, 255, 255, 0.25)",
                                             transform: "translateY(-3px)",
-                                            boxShadow: "0 6px 20px rgba(102, 126, 234, 0.4)",
+                                            boxShadow: "0 6px 20px rgba(255, 255, 255, 0.3)",
                                             "& .email-text": {
-                                                color: "white"
+                                                color: "#ffffff"
                                             },
                                             "& .email-icon": {
-                                                color: "white"
+                                                color: "#ffffff"
                                             }
                                         }
                                     }}
                                     onClick={() => window.open('mailto:info@formneo.com?subject=FormNeo Hakkında Bilgi Talebi')}
                                 >
-                                    <EmailIcon className="email-icon" sx={{ fontSize: { xs: 20, md: 22 }, color: "#667eea" }} />
+                                    <EmailIcon className="email-icon" sx={{ fontSize: { xs: 20, md: 22 }, color: "#ffffff" }} />
                                     <MDTypography 
                                         className="email-text"
                                         variant="body2" 
                                         sx={{ 
-                                            color: "#667eea", 
+                                            color: "#ffffff", 
                                             fontWeight: "700",
                                             fontSize: { xs: "13px", md: "15px" },
                                             display: { xs: "none", sm: "block" }
@@ -546,12 +511,16 @@ function LandingPage(): JSX.Element {
             <HeroSection>
                 <Container maxWidth="lg">
                     <MDBox position="relative" zIndex={1}>
-                        <MDTypography variant="h1" fontWeight="bold" mb={3} sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" } }}>
-                            {t('landing:Slogan.Title')}
+                        <MDTypography variant="h1" fontWeight="bold" mb={3} sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" }, color: "#ffffff" }}>
+                            {t('ns1:LandingPage.Hero.Title')}
                         </MDTypography>
 
-                        <MDTypography variant="h5" mb={5} sx={{ opacity: 0.9, maxWidth: "800px", mx: "auto" }}>
-                            {t('landing:Slogan.Short')}
+                        <MDTypography variant="h4" mb={2} sx={{ opacity: 0.95, fontWeight: 500, color: "#ffffff" }}>
+                            {t('ns1:LandingPage.Hero.Subtitle')}
+                        </MDTypography>
+
+                        <MDTypography variant="h6" mb={5} sx={{ opacity: 0.95, maxWidth: "800px", mx: "auto", lineHeight: 1.6, color: "#ffffff" }}>
+                            {t('ns1:LandingPage.Hero.Description')}
                         </MDTypography>
 
                         <MDBox display="flex" gap={3} justifyContent="center" flexWrap="wrap">
@@ -565,41 +534,21 @@ function LandingPage(): JSX.Element {
                                     py: 1.5,
                                     fontSize: "1.1rem",
                                     textTransform: "none",
-                                    boxShadow: "0 8px 25px rgba(255, 215, 0, 0.3)"
+                                    boxShadow: "0 8px 25px rgba(255, 255, 255, 0.3)"
                                 }}
                             >
                                 {t('ns1:LandingPage.Hero.StartFree')}
                             </MDButton>
-                            <MDButton
-                                variant="outlined"
-                                color="info"
-                                size="large"
-                                onClick={handleGetStarted}
-                                sx={{
-                                    px: 4,
-                                    py: 1.5,
-                                    fontSize: "1.1rem",
-                                    textTransform: "none",
-                                    borderColor: "rgba(255, 255, 255, 0.5)",
-                                    color: "white",
-                                    "&:hover": {
-                                        borderColor: "white",
-                                        backgroundColor: "rgba(255, 255, 255, 0.1)"
-                                    }
-                                }}
-                            >
-                                {t('ns1:LandingPage.Hero.WatchDemo')}
-                            </MDButton>
                         </MDBox>
 
                         <MDBox mt={6} display="flex" justifyContent="center" alignItems="center" gap={4} flexWrap="wrap">
-                            <MDTypography variant="body2" sx={{ opacity: 0.8 }}>
+                            <MDTypography variant="body2" sx={{ opacity: 0.95, color: "#ffffff" }}>
                                 ✓ {t('ns1:LandingPage.Hero.Features.FreeTrial')}
                             </MDTypography>
-                            <MDTypography variant="body2" sx={{ opacity: 0.8 }}>
+                            <MDTypography variant="body2" sx={{ opacity: 0.95, color: "#ffffff" }}>
                                 ✓ {t('ns1:LandingPage.Hero.Features.NoCredit')}
                             </MDTypography>
-                            <MDTypography variant="body2" sx={{ opacity: 0.8 }}>
+                            <MDTypography variant="body2" sx={{ opacity: 0.95, color: "#ffffff" }}>
                                 ✓ {t('ns1:LandingPage.Hero.Features.InstantSetup')}
                             </MDTypography>
                         </MDBox>
@@ -607,99 +556,81 @@ function LandingPage(): JSX.Element {
                 </Container>
             </HeroSection>
 
-            {/* Modules Quick Nav */}
-            <Container maxWidth="lg">
-                <ModulesNav>
-                    <MDBox display="flex" gap={1} flexWrap="wrap" alignItems="center">
-                        {sections.map((s) => {
-                            const isActive = s.key === activeKey;
-                            const colorMap: Record<string, string> = {
-                                Tasks: '#6366f1',
-                                Builder: '#22c55e',
-                                Workflow: '#a855f7',
-                                Calendar: '#f59e0b',
-                                Files: '#0ea5e9',
-                                Roles: '#ef4444',
-                                Notifications: '#06b6d4',
-                                Reports: '#84cc16',
-                                Mobile: '#f43f5e',
-                                Integrations: '#8b5cf6',
-                                Projects: '#10b981',
-                            };
-                            const base = colorMap[s.key] || '#667eea';
-                            return (
-                                <button
-                                    key={s.key}
-                                    onClick={() => {
-                                        const el = document.getElementById(`mod-${s.key}`);
-                                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    }}
-                                    style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: 8,
-                                        border: isActive ? '1px solid transparent' : `1px solid ${base}33`,
-                                        background: isActive ? `linear-gradient(135deg, ${base} 0%, ${base} 100%)` : '#ffffff',
-                                        color: isActive ? '#ffffff' : '#0f172a',
-                                        borderRadius: 999,
-                                        padding: '8px 14px',
-                                        fontWeight: 800,
-                                        cursor: 'pointer',
-                                        boxShadow: isActive ? `0 8px 20px ${base}40` : '0 2px 8px rgba(2,6,23,0.06)'
-                                    }}
-                                >
-                                    <span style={{ width: 8, height: 8, borderRadius: 999, background: isActive ? 'rgba(255,255,255,.9)' : base }} />
-                                    {s.title}
-                                </button>
-                            );
-                        })}
-                    </MDBox>
-                </ModulesNav>
-            </Container>
 
-            {/* Features Section (Formneo Tasks) */}
+            {/* Features Section (BPM Features) */}
             <Container maxWidth="lg">
                 <MDBox py={12}>
                     <MDBox textAlign="center" mb={8}>
-                        <MDTypography variant="h2" fontWeight="bold" color="dark" mb={3}>
-                            {t('landing:Slogan.Title')}
+                        <MDTypography variant="h2" fontWeight="bold" color="dark" mb={2}>
+                            30 Hazır İş Süreci Şablonu
                         </MDTypography>
-                        <MDTypography variant="h6" color="text" sx={{ maxWidth: "600px", mx: "auto" }}>
-                            {t('landing:Slogan.Short')}
+                        <MDTypography variant="h5" color="info" mb={3} fontWeight={600}>
+                            HR, Üretim ve Kalite Süreçleri - BMP Yazılımı
+                        </MDTypography>
+                        <MDTypography variant="h6" color="text" sx={{ maxWidth: "800px", mx: "auto", lineHeight: 1.8 }}>
+                            FormNeo BPM, BMP yazılımı ve süreç yazılımı olarak gerçek iş süreçlerinizi 1-3 gün içinde dijitalleştirin. 
+                            Her süreç detaylı açıklamalar ve adım adım implementasyon rehberi ile hazır. 
+                            Kod yazmaya gerek yok, görsel workflow tasarımcısı ile hızlıca başlayın!
                         </MDTypography>
                     </MDBox>
 
                     <Grid container spacing={3}>
                         {sections.map((feature, index) => (
-                            <Grid item xs={12} md={6} key={index} id={`mod-${feature.key}`}>
-                                <ModuleCard>
+                            <Grid item xs={12} md={6} lg={4} key={index} id={`mod-${feature.key}`}>
+                                <Link
+                                    to={`/processes/${feature.key}`}
+                                    style={{ textDecoration: 'none', display: 'block' }}
+                                >
+                                    <ModuleCard
+                                        sx={{
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                transform: 'translateY(-8px)',
+                                                boxShadow: '0 20px 40px rgba(102, 126, 234, 0.2)',
+                                            }
+                                        }}
+                                    >
                                     <MDBox display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-                                        <MDBox display="flex" alignItems="center" gap={1.5}>
+                                        <MDBox display="flex" alignItems="center" gap={1}>
                                             {feature.icon}
-                                            <MDTypography variant="h4" fontWeight="bold">{feature.title}</MDTypography>
+                                            <MDTypography variant="h5" fontWeight="bold">{feature.title}</MDTypography>
                                         </MDBox>
-                                        <a href={`#mod-${feature.key}`} style={{ fontSize: 12, color: '#64748b', textDecoration: 'none' }}>#{feature.key}</a>
                                     </MDBox>
-                                    <MDBox component="ul" sx={{ m: 0, pl: 3, lineHeight: 1.8 }}>
-                                        {(feature.bullets || []).map((b: any, i: number) => (
+                                    <MDBox 
+                                        sx={{ 
+                                            display: 'inline-block',
+                                            backgroundColor: '#f0f4ff',
+                                            color: '#667eea',
+                                            padding: '4px 12px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 700,
+                                            mb: 2
+                                        }}
+                                    >
+                                        ⚡ {feature.implementation} içinde hazır
+                                    </MDBox>
+                                    <MDBox component="ul" sx={{ m: 0, pl: 2.5, lineHeight: 1.6, fontSize: '14px' }}>
+                                        {(feature.bullets || []).slice(0, 4).map((b: any, i: number) => (
                                             <li key={i}>
-                                                <MDTypography variant="body1" color="text">{b}</MDTypography>
+                                                <MDTypography variant="body2" color="text">{b}</MDTypography>
                                             </li>
                                         ))}
+                                        {(feature.bullets || []).length > 4 && (
+                                            <li>
+                                                <MDTypography variant="body2" color="info" sx={{ fontWeight: 600, mt: 1 }}>
+                                                    +{(feature.bullets || []).length - 4} özellik daha... Detaylar için tıklayın
+                                                </MDTypography>
+                                            </li>
+                                        )}
                                     </MDBox>
-                                    <MDBox mt={2}>
-                                        <MDButton variant="text" color="info" sx={{ textTransform: 'none', fontWeight: 700 }}>
-                                            {t('ns1:LandingPage.CTA.ContactSales')}
-                                        </MDButton>
-                                    </MDBox>
-                                </ModuleCard>
+                                    </ModuleCard>
+                                </Link>
                             </Grid>
                         ))}
                     </Grid>
                 </MDBox>
             </Container>
-
-            {/* Order Management Section kaldırıldı */}
 
             {/* Advanced Features Carousel */}
             <Container maxWidth="lg">
@@ -1002,6 +933,7 @@ function LandingPage(): JSX.Element {
                     </MDBox>
                 </Container>
             </MDBox>
+
         </PageLayout>
     );
 }

@@ -1,98 +1,559 @@
 {
   "Slogan": {
-    "Title": "Formneo Tasks — İşlerinizi yönetin, akışı otomatikleştirin",
-    "Short": "Formdan göreve, görevden sonuca. Hepsi tek platformda."
+    "Title": "FormNeo BPM — İş Süreçlerinizi Dijitalleştirin",
+    "Short": "HR, Üretim ve Kalite süreçlerinizi hızlıca dijitalleştirin. Hazır şablonlar ile 1-3 gün içinde kullanıma başlayın."
   },
   "Sections": {
-    "Tasks": {
-      "Title": "Görev Yönetimi",
+    "HR_Recruitment": {
+      "Title": "🎯 İşe Alım Süreci",
+      "Implementation": "2 gün",
       "Bullets": [
-        "Görev oluşturma, atama, son tarih",
-        "Durumlar: Bekliyor, Devam Ediyor, Tamamlandı",
-        "Öncelik, tarih, etiket",
-        "Yorum ve dosya paylaşımı"
+        "CV değerlendirme ve ön eleme formları",
+        "Mülakat planlama ve koordinasyon",
+        "Teknik test ve değerlendirme süreçleri",
+        "Referans kontrolü otomasyonu",
+        "İş teklifi hazırlama ve onay akışı",
+        "İşe başlangıç dokümantasyonu"
       ]
     },
-    "Builder": {
-      "Title": "Sürükle–Bırak Form Oluşturucu",
+    "HR_Leave": {
+      "Title": "📅 İzin Talebi",
+      "Implementation": "1 gün",
       "Bullets": [
-        "Metin, sayı, tarih, seçim, dosya",
-        "Koşullu alanlar",
-        "Kaydedilen form → otomatik görev",
-        "Masraf, satın alma, arıza şablonları"
+        "Çalışan izin talebi formu",
+        "Otomatik kalan izin hesaplama",
+        "Yönetici onay süreci",
+        "Muhasebe ve bordro bildirimi",
+        "Takvim entegrasyonu",
+        "SMS/Email bildirimleri"
       ]
     },
-    "Workflow": {
-      "Title": "Onay ve Akış Yönetimi",
+    "HR_Performance": {
+      "Title": "📊 Performans Değerlendirme",
+      "Implementation": "3 gün",
       "Bullets": [
-        "Eğer/ise kural tabanlı akış",
-        "Çok seviyeli onay",
-        "Otomatik devir",
-        "E-posta veya Telegram bildirim"
+        "Dönemsel performans formları",
+        "360 derece geri bildirim sistemi",
+        "Hedef ve KPI takibi",
+        "Gelişim planı oluşturma",
+        "Otomatik raporlama ve analiz",
+        "HR onayı ve arşivleme"
       ]
     },
-    "Calendar": {
-      "Title": "Takvim ve Hatırlatıcılar",
+    "HR_Promotion": {
+      "Title": "📈 Terfi Başvurusu",
+      "Implementation": "2 gün",
       "Bullets": [
-        "Günlük/haftalık/aylık görev takvimi",
-        "Son tarih hatırlatmaları (e-posta / sistem içi)",
-        "Geciken görev uyarıları"
+        "Terfi başvuru formu ve gerekçe",
+        "Performans geçmişi kontrolü",
+        "Çok seviyeli onay süreci",
+        "Maaş artış hesaplama",
+        "Organizasyon şeması güncelleme",
+        "Otomatik bildirimler"
       ]
     },
-    "Files": {
-      "Title": "Dosya ve Doküman Yönetimi",
+    "HR_AccidentReport": {
+      "Title": "⚠️ İş Kazası Bildirimi",
+      "Implementation": "1 gün",
       "Bullets": [
-        "Görev bazlı dosya yükleme ve versiyonlama",
-        "Ortak klasör yapısı",
-        "Doküman önizleme"
+        "Hızlı kaza bildirim formu",
+        "Fotoğraf ve doküman ekleme",
+        "SGK bildirimi otomasyonu",
+        "İş güvenliği ekibi bildirimi",
+        "Hukuk departmanı yönlendirme",
+        "Takip ve raporlama"
       ]
     },
-    "Roles": {
-      "Title": "Kullanıcı, Rol ve Yetki",
+    "HR_Disciplinary": {
+      "Title": "⚖️ Disiplin İşlemi",
+      "Implementation": "2 gün",
       "Bullets": [
-        "Rol bazlı görünürlük (Yönetici / Personel / Onaylayıcı)",
-        "Kullanıcı daveti ve ekipler",
-        "Çoklu ekip desteği"
+        "Disiplin raporu oluşturma",
+        "Çalışan savunması alma",
+        "İnsan kaynakları değerlendirme",
+        "Yönetim onay süreci",
+        "Karar bildirimi",
+        "Dosya arşivleme"
       ]
     },
-    "Notifications": {
-      "Title": "Bildirim Sistemi",
+    "HR_SalaryIncrease": {
+      "Title": "💵 Maaş Artış Talebi",
+      "Implementation": "2 gün",
       "Bullets": [
-        "E-posta ve sistem içi bildirimler",
-        "Telegram veya Microsoft Teams entegrasyonu",
-        "Günlük özet raporu"
+        "Maaş artış başvuru formu",
+        "Performans ve kıdem değerlendirme",
+        "Bütçe kontrolü",
+        "Çok seviyeli onay süreci",
+        "Muhasebe bildirimi",
+        "Bordro güncelleme"
       ]
     },
-    "Reports": {
-      "Title": "Raporlama ve Analiz",
+    "HR_Transfer": {
+      "Title": "🔄 İç Transfer Başvurusu",
+      "Implementation": "2 gün",
       "Bullets": [
-        "Tamamlanan / geciken görev oranı",
-        "Kullanıcı ve departman bazlı performans",
-        "PDF / Excel dışa aktarma"
+        "Transfer başvuru formu",
+        "Mevcut ve hedef departman onayı",
+        "Pozisyon uygunluk kontrolü",
+        "Yönetici değerlendirmesi",
+        "İK onay süreci",
+        "Transfer tarihi planlama"
       ]
     },
-    "Mobile": {
-      "Title": "Mobil Uyumluluk",
+    "HR_TravelExpense": {
+      "Title": "✈️ Seyahat Masrafı",
+      "Implementation": "1 gün",
       "Bullets": [
-        "Responsive arayüz",
-        "PWA desteği",
-        "Anlık bildirimler"
+        "Seyahat masrafı bildirim formu",
+        "Ulaşım, konaklama ve yemek giderleri",
+        "Fatura ve belge yükleme",
+        "Yönetici onay süreci",
+        "Muhasebe entegrasyonu",
+        "Ödeme takibi ve raporlama"
       ]
     },
-    "Integrations": {
-      "Title": "Entegrasyon ve API",
+    "HR_Training": {
+      "Title": "🎓 Eğitim Talebi",
+      "Implementation": "2 gün",
       "Bullets": [
-        "REST API + Webhook",
-        "SuccessFactors, SAP BTP, Outlook, Google Calendar",
-        "Kurumsal entegrasyonlar"
+        "Eğitim ihtiyaç analizi",
+        "Bütçe onayı süreci",
+        "Eğitim sağlayıcı değerlendirme",
+        "Katılımcı listesi yönetimi",
+        "Eğitim sonrası değerlendirme",
+        "Sertifika ve katılım takibi"
       ]
     },
-    "Projects": {
-      "Title": "Proje Yönetimi",
+    "HR_Resignation": {
+      "Title": "👋 İstifa Süreci",
+      "Implementation": "2 gün",
       "Bullets": [
-        "Proje → epik → görev hiyerarşisi",
-        "Kanban ve zaman çizelgesi",
-        "Kaynak ve kapasite görünürlüğü"
+        "İstifa başvurusu ve gerekçe",
+        "Çıkış mülakatı formu",
+        "Zimmet iade kontrolü",
+        "Bordro ve hakediş hesaplama",
+        "İş çıkış belgesi hazırlama",
+        "Otomatik bildirimler"
+      ]
+    },
+    "Production_Order": {
+      "Title": "🏭 Üretim Emri",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Üretim emri oluşturma",
+        "Malzeme ve kapasite kontrolü",
+        "Üretim planlama onayı",
+        "İş emri dağıtımı",
+        "Üretim takip ve raporlama",
+        "Tamamlanma bildirimi"
+      ]
+    },
+    "Production_Material": {
+      "Title": "📦 Malzeme Talebi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Malzeme talep formu",
+        "Stok kontrolü ve uyarılar",
+        "Satınalma onay süreci",
+        "Tedarikçi seçimi ve sipariş",
+        "Giriş kontrolü ve depolama",
+        "Maliyet takibi"
+      ]
+    },
+    "Production_Maintenance": {
+      "Title": "🔧 Bakım Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Arıza bildirimi ve önceliklendirme",
+        "Bakım ekibi atama",
+        "Yedek parça kontrolü",
+        "Bakım sonrası test",
+        "Bakım geçmişi ve raporlama",
+        "Önleyici bakım planı"
+      ]
+    },
+    "Production_Quality": {
+      "Title": "✅ Kalite Kontrol",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Üretim sonrası kalite formu",
+        "Ölçüm ve test sonuçları",
+        "Uygun/uygunsuz karar",
+        "Red ürün yönlendirme",
+        "Kalite raporu oluşturma",
+        "İstatistiksel analiz"
+      ]
+    },
+    "Production_LineChange": {
+      "Title": "🔄 Üretim Hattı Değişikliği",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Hattı değişiklik talebi",
+        "Kapasite ve maliyet analizi",
+        "Üretim planlama onayı",
+        "Makine ve ekipman ayarları",
+        "Test üretimi ve kalite kontrolü",
+        "Değişiklik raporlama"
+      ]
+    },
+    "Production_Recall": {
+      "Title": "🔙 Ürün Geri Çağırma",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Geri çağırma kararı",
+        "Etkilenen parti tespiti",
+        "Müşteri bildirimi otomasyonu",
+        "Geri dönüş takibi",
+        "Kalite analizi ve raporlama",
+        "Düzeltici faaliyet planı"
+      ]
+    },
+    "Production_Stop": {
+      "Title": "⏸️ Üretim Durma Bildirimi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Durma nedeni bildirimi",
+        "Etkilenen üretim planı analizi",
+        "Yönetim onayı",
+        "Müşteri bildirimi",
+        "Alternatif çözüm planı",
+        "Yeniden başlatma süreci"
+      ]
+    },
+    "Production_Improvement": {
+      "Title": "💡 İyileştirme Önerisi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "İyileştirme öneri formu",
+        "Maliyet-fayda analizi",
+        "Teknik değerlendirme",
+        "Yönetim onay süreci",
+        "Uygulama planı",
+        "Sonuç takibi ve raporlama"
+      ]
+    },
+    "Production_StockTransfer": {
+      "Title": "📦 Stok Transfer Talebi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Stok transfer formu",
+        "Kaynak ve hedef depo kontrolü",
+        "Stok müsaitlik kontrolü",
+        "Onay süreci",
+        "Transfer işlemi",
+        "Stok güncelleme"
+      ]
+    },
+    "Production_Report": {
+      "Title": "📊 Üretim Raporu Onayı",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Günlük/haftalık üretim raporu",
+        "Verimlilik metrikleri",
+        "Kalite istatistikleri",
+        "Yönetici onayı",
+        "Rapor arşivleme",
+        "Dashboard güncelleme"
+      ]
+    },
+    "Quality_ControlReport": {
+      "Title": "📋 Kalite Kontrol Raporu",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Kalite kontrol formu",
+        "Ölçüm ve test sonuçları",
+        "Uygunluk değerlendirmesi",
+        "Red/onay kararı",
+        "Rapor oluşturma",
+        "İlgili departman bildirimi"
+      ]
+    },
+    "Quality_Compliance": {
+      "Title": "✅ Uygunluk Bildirimi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Uygunluk kontrol formu",
+        "Standart ve yönetmelik kontrolü",
+        "Dokümantasyon kontrolü",
+        "Uygunluk sertifikası",
+        "Arşivleme",
+        "Periyodik kontrol takibi"
+      ]
+    },
+    "Quality_Improvement": {
+      "Title": "📈 Kalite İyileştirme Önerisi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "İyileştirme öneri formu",
+        "Mevcut durum analizi",
+        "Hedef ve metrikler",
+        "Uygulama planı",
+        "Yönetim onayı",
+        "Sonuç takibi"
+      ]
+    },
+    "Quality_NCR": {
+      "Title": "⚠️ Uygunsuzluk Raporu",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Uygunsuzluk tespit ve kayıt",
+        "Fotoğraf ve doküman ekleme",
+        "Kök neden analizi",
+        "Düzeltici faaliyet planı",
+        "Takip ve doğrulama",
+        "Raporlama ve analiz"
+      ]
+    },
+    "Quality_Complaint": {
+      "Title": "📞 Müşteri Şikayeti",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Şikayet kaydı ve kategorizasyon",
+        "İlgili departmana yönlendirme",
+        "Analiz ve aksiyon planı",
+        "Müşteri geri bildirimi",
+        "Çözüm ve kapanış",
+        "Şikayet trend analizi"
+      ]
+    },
+    "Quality_Supplier": {
+      "Title": "🏢 Tedarikçi Değerlendirme",
+      "Implementation": "3 gün",
+      "Bullets": [
+        "Tedarikçi performans kriterleri",
+        "Dönemsel değerlendirme formu",
+        "Puanlama ve skorlama",
+        "Düşük performans aksiyon planı",
+        "Tedarikçi onay/red süreci",
+        "Tedarikçi raporu"
+      ]
+    },
+    "Quality_Audit": {
+      "Title": "🔍 İç Denetim",
+      "Implementation": "3 gün",
+      "Bullets": [
+        "Denetim planı ve program",
+        "Denetim checklist ve sorular",
+        "Bulgu kayıt ve kategorizasyon",
+        "Düzeltici faaliyet takibi",
+        "Denetim raporu hazırlama",
+        "Yönetim sunumu"
+      ]
+    },
+    "Quality_StandardChange": {
+      "Title": "📐 Standart Değişiklik Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Standart değişiklik formu",
+        "Değişiklik gerekçesi",
+        "Etki analizi",
+        "Kalite ekibi değerlendirmesi",
+        "Yönetim onayı",
+        "Dokümantasyon güncelleme"
+      ]
+    },
+    "Quality_Training": {
+      "Title": "🎓 Kalite Eğitimi Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Eğitim ihtiyaç analizi",
+        "Eğitim programı seçimi",
+        "Katılımcı listesi",
+        "Bütçe onayı",
+        "Eğitim sonrası değerlendirme",
+        "Sertifika takibi"
+      ]
+    },
+    "Quality_Certification": {
+      "Title": "🏆 Kalite Belgelendirme Başvurusu",
+      "Implementation": "3 gün",
+      "Bullets": [
+        "Belgelendirme başvuru formu",
+        "Gerekli dokümantasyon",
+        "Hazırlık kontrol listesi",
+        "Denetim planlama",
+        "Belge takibi",
+        "Yenileme hatırlatıcıları"
+      ]
+    },
+    "Quality_Metrics": {
+      "Title": "📊 Kalite Metrikleri Raporlama",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Kalite metrikleri toplama",
+        "KPI hesaplama",
+        "Trend analizi",
+        "Rapor oluşturma",
+        "Yönetim sunumu",
+        "Dashboard güncelleme"
+      ]
+    },
+    "IT_Support": {
+      "Title": "💻 IT Destek Talebi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Teknik destek talep formu",
+        "Önceliklendirme ve kategorizasyon",
+        "IT ekibi otomatik atama",
+        "Uzaktan destek entegrasyonu",
+        "Çözüm ve kapanış",
+        "Kullanıcı memnuniyet anketi"
+      ]
+    },
+    "IT_Hardware": {
+      "Title": "🖥️ Donanım Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Donanım ihtiyaç formu",
+        "Yönetici onay süreci",
+        "Bütçe kontrolü",
+        "Satınalma süreci",
+        "Zimmet kayıt ve takip",
+        "Demirbaş numarası atama"
+      ]
+    },
+    "Finance_Purchase": {
+      "Title": "🛒 Satınalma Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Satınalma talep formu",
+        "Bütçe kontrolü ve onay",
+        "Tedarikçi karşılaştırma",
+        "Sipariş oluşturma",
+        "Teslim alma ve fatura",
+        "Ödeme süreci"
+      ]
+    },
+    "Finance_Invoice": {
+      "Title": "🧾 Fatura Onayı",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Fatura yükleme ve kayıt",
+        "Sipariş eşleştirme",
+        "İrsaliye kontrolü",
+        "Muhasebe onay süreci",
+        "Ödeme planı oluşturma",
+        "Ödeme bildirimi"
+      ]
+    },
+    "Finance_Travel": {
+      "Title": "✈️ Seyahat Talebi",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Seyahat planı ve gerekçe",
+        "Bütçe onayı",
+        "Uçak/otel rezervasyonu",
+        "Avans talebi",
+        "Harcama raporu",
+        "Mahsuplaşma işlemi"
+      ]
+    },
+    "Legal_Contract": {
+      "Title": "📜 Sözleşme Onayı",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Sözleşme taslağı yükleme",
+        "Hukuk departmanı inceleme",
+        "Değişiklik talepleri",
+        "Yönetim onayı",
+        "İmza süreci",
+        "Arşivleme ve takip"
+      ]
+    },
+    "Security_Access": {
+      "Title": "🔐 Erişim Yetkisi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Erişim yetkisi talep formu",
+        "Yönetici onayı",
+        "Güvenlik onayı",
+        "Sistem yetkilendirme",
+        "Kart/anahtar teslimi",
+        "Düzenli yetki gözden geçirme"
+      ]
+    },
+    "Security_Visitor": {
+      "Title": "👤 Ziyaretçi Kaydı",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Ziyaretçi ön bildirim",
+        "Ziyaret onayı",
+        "Güvenlik kontrolü",
+        "Ziyaretçi kartı hazırlama",
+        "Giriş-çıkış kaydı",
+        "Raporlama"
+      ]
+    },
+    "Facility_Room": {
+      "Title": "🏢 Toplantı Odası Rezervasyonu",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Oda rezervasyon formu",
+        "Müsaitlik kontrolü",
+        "Ekipman talepleri",
+        "Otomatik onay",
+        "Takvim entegrasyonu",
+        "Hatırlatıcılar"
+      ]
+    },
+    "Facility_Office": {
+      "Title": "🪑 Ofis Malzemesi Talebi",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "Malzeme talep formu",
+        "Stok kontrolü",
+        "Yönetici onayı",
+        "Dağıtım planı",
+        "Teslim alma",
+        "Stok takibi"
+      ]
+    },
+    "Marketing_Campaign": {
+      "Title": "📢 Kampanya Onayı",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Kampanya planı hazırlama",
+        "Bütçe talebi ve onayı",
+        "Kreatif içerik onayı",
+        "Kanal ve tarih belirleme",
+        "Performans takibi",
+        "ROI analizi"
+      ]
+    },
+    "Marketing_Content": {
+      "Title": "✍️ İçerik Onayı",
+      "Implementation": "1 gün",
+      "Bullets": [
+        "İçerik hazırlama ve yükleme",
+        "Editör kontrolü",
+        "Hukuki uygunluk kontrolü",
+        "Yönetici onayı",
+        "Yayınlama planı",
+        "Performans takibi"
+      ]
+    },
+    "Sales_Quote": {
+      "Title": "💼 Teklif Hazırlama",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Müşteri ihtiyaç analizi",
+        "Fiyat ve maliyet hesaplama",
+        "Satış yöneticisi onayı",
+        "Teklif dokümanı oluşturma",
+        "Müşteriye gönderim",
+        "Takip ve revizyon"
+      ]
+    },
+    "Sales_Order": {
+      "Title": "🎉 Sipariş Onayı",
+      "Implementation": "2 gün",
+      "Bullets": [
+        "Sipariş kaydı ve detaylar",
+        "Kredi limiti kontrolü",
+        "Stok müsaitlik kontrolü",
+        "Fiyat onayı",
+        "Üretim/sevkiyat bildirimi",
+        "Fatura hazırlama"
       ]
     }
   }
