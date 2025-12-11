@@ -135,7 +135,7 @@ function Cover(): JSX.Element {
   });
 
 
-  const handleLoginWithVesa = async () => {
+  const handleLoginWithFormneo = async () => {
     if (email && password) {
       const isLocalhost = window.location.hostname === "localhost";
 
@@ -289,7 +289,7 @@ function Cover(): JSX.Element {
                       onKeyDown={(e: any) => {
                         if (e.key === "Enter") {
                           if (email && password && isEmailValid) {
-                            handleLoginWithVesa();
+                            handleLoginWithFormneo();
                           } else {
                             if (!email || !isEmailValid) {
                               setAlert({
@@ -370,7 +370,7 @@ function Cover(): JSX.Element {
                     <MDBox mb={2.5}>
                       <MDButton
                       disabled={!email || !password || !isEmailValid}
-                        onClick={handleLoginWithVesa}
+                        onClick={handleLoginWithFormneo}
                         variant="gradient"
                         color="info"
                         fullWidth

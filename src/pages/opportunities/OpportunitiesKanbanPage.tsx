@@ -269,7 +269,7 @@ function OpportunitiesKanbanPage(): JSX.Element {
         demoCols[code] = { id: code, title: String(s?.name ?? s?.code ?? ""), items: [] };
       });
       const demoItems: OpportunityKanbanItem[] = [
-        { id: "d1", title: "ERP Entegrasyonu", customerName: "Vesa Yazılım", amount: 450000, currency: "TRY", stageIndex: 0, stageCode: codes[0] || "ADAY", probability: 40, tags: ["ERP", "Demo"], ownerInitials: "VY" },
+        { id: "d1", title: "ERP Entegrasyonu", customerName: "Formneo Yazılım", amount: 450000, currency: "TRY", stageIndex: 0, stageCode: codes[0] || "ADAY", probability: 40, tags: ["ERP", "Demo"], ownerInitials: "VY" },
         { id: "d2", title: "SF Modül Lisansı", customerName: "Acme AŞ", amount: 12000, currency: "USD", stageIndex: 2, stageCode: codes[2] || "TEKLIF", probability: 60, tags: ["Lisans"], ownerInitials: "AA" },
         { id: "d3", title: "Mobil Uygulama", customerName: "Globex", amount: 180000, currency: "TRY", stageIndex: 1, stageCode: codes[1] || "DEGERLENDIRME", probability: 35, tags: ["Mobil", "React"], ownerInitials: "GL" },
         { id: "d4", title: "Destek Paketi", customerName: "Initech", amount: 3000, currency: "USD", stageIndex: 3, stageCode: codes[3] || "MUZAKERE", probability: 75, tags: ["Destek"], ownerInitials: "IT" },

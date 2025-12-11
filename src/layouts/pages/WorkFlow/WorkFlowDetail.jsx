@@ -360,7 +360,7 @@ function Flow(props) {
         case "queryConditionNode":
           nodeData = {
             label: "Yeni Sorgu Kriteri",
-            criteria: [{ field: "Şirket", operator: "Equal to", value: "Vesa Danışmanlık" }],
+            criteria: [{ field: "Şirket", operator: "Equal to", value: "Formneo Danışmanlık" }],
             ...baseFormInfo, // ✅ Form bilgisi eklendi
           };
           break;

@@ -54,7 +54,7 @@ import { Sidebar, Menu, MenuItem, SubMenu, menuClasses } from "react-pro-sidebar
 import "primeicons/primeicons.css";
 
 // Custom styles for the Sidenav
-import logo from "../../assets/images/vesapng.png";
+
 import formneoLogo from "assets/images/formneolog.png";
 
 // Material Dashboard 2 PRO React context

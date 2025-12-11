@@ -162,12 +162,12 @@ export class DSCustomerSelectComponent extends SelectComponent {
           }
         },
         { 
-          label: 'Vesa Digital (Mehmet Kaya)', 
+          label: 'Formneo Digital (Mehmet Kaya)', 
           value: 'customer-3',
           customer: {
             name: 'Mehmet Kaya',
-            company: 'Vesa Digital',
-            email: 'mehmet@vesa.com'
+            company: 'Formneo Digital',
+            email: 'mehmet@formneo.com'
           }
         },
         { 
