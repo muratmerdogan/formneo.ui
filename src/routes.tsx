@@ -36,7 +36,7 @@ Coded by www.creative-tim.com
 */
 
 import { lazy } from "react";
-import ContactPage from "pages/contact/ContactPage";
+
 // Material Dashboard 2 PRO React layouts (lazy loaded)
 const Analytics = lazy(() => import("layouts/dashboards/analytics"));
 const Sales = lazy(() => import("layouts/dashboards/sales"));
@@ -55,6 +55,7 @@ const Charts = lazy(() => import("layouts/pages/charts"));
 const Notifications = lazy(() => import("layouts/pages/notifications"));
 const Kanban = lazy(() => import("layouts/applications/kanban"));
 const Wizard = lazy(() => import("layouts/applications/wizard"));
+const ContactPage = lazy(() => import("pages/contact/ContactPage"));
 
 const Calendar = lazy(() => import("layouts/applications/calendar"));
 const OpportunitiesListPage = lazy(() => import("pages/opportunities/OpportunitiesListPage"));

@@ -497,6 +497,14 @@ function LandingPage(): JSX.Element {
                             <MDButton
                                 variant="gradient"
                                 color="info"
+                                onClick={() => navigate("/contact")}
+                                sx={{ textTransform: "none" }}
+                            >
+                                İletişim
+                            </MDButton>
+                            <MDButton
+                                variant="gradient"
+                                color="info"
                                 onClick={handleRegister}
                                 sx={{ textTransform: "none" }}
                             >

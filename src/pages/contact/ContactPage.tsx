@@ -51,7 +51,9 @@ export default function ContactPage(): JSX.Element {
         minHeight="40vh"
         width="100%"
         sx={{
-          backgroundImage: `linear-gradient(195deg, #42424a, #191919)`,
+         
+          backgroundImage: `linear-gradient(135deg, #667eea, #764ba2)`,
+
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
@@ -101,7 +103,7 @@ export default function ContactPage(): JSX.Element {
                       <MDBox display="flex" alignItems="center" mb={2}>
                         <Icon fontSize="medium" color="inherit">location_on</Icon>
                         <MDTypography variant="body2" ml={2} color="text">
-                          Teknopark İstanbul
+                          Eskişehir, Turkey
                         </MDTypography>
                       </MDBox>
                     </MDBox>
@@ -152,11 +154,17 @@ export default function ContactPage(): JSX.Element {
                        />
                     </MDBox>
 
-                    <MDBox display="flex" justifyContent="flex-end" mt={2}>
-                      <MDButton type="submit" variant="gradient" color="info" disabled={isSubmitting}>
-                        {selectedSubject === "demo" ? "Demo Talep Et" : "Gönder"}
-                      </MDButton>
-                    </MDBox>
+                <MDBox mt={2}> {/* display="flex" gerekmez çünkü buton %100 olacak */}
+  <MDButton 
+    type="submit" 
+    variant="gradient" 
+    color="info" 
+    disabled={isSubmitting}
+    fullWidth // Bu özellik butonu %100 genişliğe getirir
+  >
+    {selectedSubject === "demo" ? "Demo Talep Et" : "Gönder"}
+  </MDButton>
+</MDBox>
                   </MDBox>
                 </Grid>
               </Grid>

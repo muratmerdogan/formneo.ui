@@ -1,3 +1,4 @@
+const ContactPage = lazy(() => import("pages/contact/ContactPage"));
 /**
 =========================================================
 * Material Dashboard 2 PRO React TS - v1.0.2
@@ -258,6 +259,9 @@ export default function App() {
             <Route path="/authentication/sign-in/cover" element={<Cover />} />
             <Route path="/authentication/company-register" element={<CompanyRegister />} />
             <Route path="/LogOut" element={<Logout />} />
+
+            {/* İletişim Sayfası Public Route */}
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/authentication/reset-password" element={<ResetCover />} />
             <Route path="/tickets/customer" element={<CustomerSales />} />
             <Route path="/orders/console" element={<OrdersConsolePage />} />
