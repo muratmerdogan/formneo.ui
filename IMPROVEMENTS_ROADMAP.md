@@ -9,7 +9,7 @@
 **Sorun:** 
 - Action kodları serbest metin olarak giriliyor
 - Standart action kodları yok
-- Validasyon yok (boş, tekrar eden, geçersiz karakterler)
+- Validasyon yok (boş, tekrar eden, geçersiz karakterlesr)
 
 **Çözüm:**
 ```typescript
