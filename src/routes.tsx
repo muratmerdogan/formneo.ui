@@ -36,6 +36,7 @@ Coded by www.creative-tim.com
 */
 
 import { lazy } from "react";
+import ContactPage from "pages/contact/ContactPage";
 // Material Dashboard 2 PRO React layouts (lazy loaded)
 const Analytics = lazy(() => import("layouts/dashboards/analytics"));
 const Sales = lazy(() => import("layouts/dashboards/sales"));
@@ -162,6 +163,15 @@ const routes = [
         component: <SuccessFactorsHome />,
       },
     ],
+  },
+  {
+    type: "collapse",
+    name: "İletişim",
+    key: "contact",
+    route: "/contact",
+    component: <ContactPage />,
+    icon: <Icon fontSize="medium">contact_support</Icon>, // Veya 'contacts'
+    noCollapse: true,
   },
   {
     type: "collapse",
