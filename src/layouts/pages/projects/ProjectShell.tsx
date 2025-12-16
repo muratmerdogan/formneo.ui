@@ -64,6 +64,20 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
 
   const Content = (
     <MDBox>
+      {/* Ana listeye dön butonu */}
+      <MDBox mb={2}>
+        <MDButton
+          variant="outlined"
+          color="info"
+          size="small"
+          startIcon={<Icon>arrow_back</Icon>}
+          onClick={() => navigate("/projects")}
+          sx={{ borderRadius: 8, fontWeight: 500 }}
+        >
+          Projeler Sayfasına Dön
+        </MDButton>
+      </MDBox>
+
       {/* Header with project name and quick actions */}
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md={8}>
