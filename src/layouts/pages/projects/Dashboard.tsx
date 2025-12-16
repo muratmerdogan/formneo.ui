@@ -8,6 +8,11 @@ import Icon from "@mui/material/Icon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import IconButton from "@mui/material/IconButton";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -35,6 +40,8 @@ function ProjectsDashboard(): JSX.Element {
   const [createOpen, setCreateOpen] = useState(false);
   const [switcherProjects, setSwitcherProjects] = useState<{ id: string; name: string }[]>([]);
   const [search, setSearch] = useState("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<{ id: string; name: string } | null>(null);
   // Global keyboard shortcut (Cmd/Ctrl+K) to open switcher
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -73,6 +80,15 @@ function ProjectsDashboard(): JSX.Element {
   // no right preview drawer in master-detail layout
 
   const openProject = (id: string) => navigate(`/projects/${id}/tasks`);
+
+  // Proje silme fonksiyonu (API ile entegre edilebilir)
+  const handleDeleteProject = async () => {
+    if (!projectToDelete) return;
+    // Burada gerçek API çağrısı yapılabilir
+    setSwitcherProjects((prev) => prev.filter((p) => p.id !== projectToDelete.id));
+    setDeleteDialogOpen(false);
+    setProjectToDelete(null);
+  };
 
   // Sidebar removed in favor of command-palette switcher
 
@@ -136,13 +152,44 @@ function ProjectsDashboard(): JSX.Element {
                             {switcherProjects
                               .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
                               .map((p, idx, arr) => (
-                              <React.Fragment key={p.id}>
-                                <ListItem button onClick={() => openProject(p.id)}>
-                                  <ListItemText primary={p.name} />
-                                </ListItem>
+                                <React.Fragment key={p.id}>
+                                  <ListItem
+                                    secondaryAction={
+                                      <IconButton
+                                        edge="end"
+                                        aria-label="delete"
+                                        color="error"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setProjectToDelete(p);
+                                          setDeleteDialogOpen(true);
+                                        }}
+                                        sx={{ ml: 1 }}
+                                      >
+                                        <Icon>delete</Icon>
+                                      </IconButton>
+                                    }
+                                    button
+                                    onClick={() => openProject(p.id)}
+                                  >
+                                    <ListItemText primary={p.name} />
+                                  </ListItem>
                                   {idx < arr.length - 1 && <Divider component="li" />}
-                              </React.Fragment>
-                            ))}
+                                </React.Fragment>
+                              ))}
+                                {/* Silme onay diyalogu */}
+                                <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+                                  <DialogTitle>Projeyi Sil</DialogTitle>
+                                  <DialogContent>
+                                    <MDTypography variant="body1">
+                                      {projectToDelete ? `"${projectToDelete.name}" adlı projeyi silmek istediğinize emin misiniz?` : "Projeyi silmek istediğinize emin misiniz?"}
+                                    </MDTypography>
+                                  </DialogContent>
+                                  <DialogActions>
+                                    <MDButton onClick={() => setDeleteDialogOpen(false)} color="info" variant="outlined">Hayır</MDButton>
+                                    <MDButton onClick={handleDeleteProject} color="error" variant="gradient">Evet</MDButton>
+                                  </DialogActions>
+                                </Dialog>
                           </List>
                         ) : (
                           <MDTypography variant="body2" color="text">Proje bulunamadı.</MDTypography>
