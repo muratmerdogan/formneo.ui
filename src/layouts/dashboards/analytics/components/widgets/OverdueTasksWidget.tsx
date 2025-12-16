@@ -1,17 +1,41 @@
-import React from "react";
-import { List, ListItem, ListItemText, Chip } from "@mui/material";
+
+import React, { useState } from "react";
+import { List, ListItem, ListItemText, Chip, IconButton, Stack, Typography } from "@mui/material";
+import Icon from "@mui/material/Icon";
 
 export default function OverdueTasksWidget(): JSX.Element {
-    const items = [
+    const [items, setItems] = useState([
         { id: "t1", title: "Teklif onayı", due: "2 gün gecikti" },
         { id: "t2", title: "SLA Yanıtı", due: "1 gün gecikti" },
-    ];
+    ]);
+    const handleComplete = (id: string) => setItems((prev) => prev.filter((t) => t.id !== id));
+    const handleDelete = (id: string) => setItems((prev) => prev.filter((t) => t.id !== id));
+    const handleDetail = (id: string) => alert(`Görev Detay: ${id}`);
     return (
         <List dense>
+            {items.length === 0 && (
+                <ListItem>
+                    <Typography color="text.secondary" sx={{ fontStyle: "italic", width: "100%", textAlign: "center" }}>Görev yok</Typography>
+                </ListItem>
+            )}
             {items.map((it) => (
-                <ListItem key={it.id} sx={{ px: 0 }}>
+                <ListItem key={it.id} sx={{ px: 0 }}
+                    secondaryAction={
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <Chip color="error" size="small" label="Gecikmiş" />
+                            <IconButton color="success" size="small" onClick={() => handleComplete(it.id)} title="Tamamla">
+                                <Icon>check_circle</Icon>
+                            </IconButton>
+                            <IconButton color="info" size="small" onClick={() => handleDetail(it.id)} title="Detay">
+                                <Icon>info</Icon>
+                            </IconButton>
+                            <IconButton color="error" size="small" onClick={() => handleDelete(it.id)} title="Sil">
+                                <Icon>delete</Icon>
+                            </IconButton>
+                        </Stack>
+                    }
+                >
                     <ListItemText primary={it.title} secondary={it.due} />
-                    <Chip color="error" size="small" label="Gecikmiş" />
                 </ListItem>
             ))}
         </List>
