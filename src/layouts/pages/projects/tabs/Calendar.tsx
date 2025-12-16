@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Calendar from "examples/Calendar";
+import { IconButton, Tooltip, Icon, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Stack } from "@mui/material";
 
 // Demo event verisi (gün, hafta, ay, tatil, görev)
-
 // Türkiye 2025 ve 2026 resmi tatilleri (her biri 'Resmi Tatil' olarak gösterilecek)
 const turkiyeResmiTatilleri = [
   // 2025
@@ -68,19 +68,12 @@ const demoEvents = [
 ];
 
 
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
-  Stack
-} from "@mui/material";
-import Icon from "@mui/material/Icon";
+
+
 
 function CalendarTab(): JSX.Element {
   const [events, setEvents] = useState(demoEvents);
+  const [hoveredEventId, setHoveredEventId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newDate, setNewDate] = useState("");
@@ -120,6 +113,44 @@ function CalendarTab(): JSX.Element {
         initialView="dayGridMonth"
         events={events}
         height={600}
+        eventContent={(arg: any) => {
+          const id = arg.event.id || arg.event._def.publicId || arg.event.startStr + arg.event.title;
+          return (
+            <div
+              onMouseEnter={() => setHoveredEventId(id)}
+              onMouseLeave={() => setHoveredEventId(null)}
+              style={{
+                position: "relative",
+                paddingRight: 28,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 28,
+                width: "100%"
+              }}
+            >
+              <span style={{ width: "100%", textAlign: "center", fontWeight: 500 }}>{arg.event.title}</span>
+              {hoveredEventId === id && (
+                <Tooltip title="Sil" placement="top">
+                  <IconButton
+                    size="small"
+                    color="error"
+                    sx={{ position: "absolute", top:0, right: 0, zIndex: 2 }}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setEvents(evts => evts.filter(ev => {
+                        const evId = ev.start + ev.title;
+                        return evId !== id;
+                      }));
+                    }}
+                  >
+                    <Icon fontSize="small">delete</Icon>
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
+          );
+        }}
       />
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle>Yeni Etkinlik Ekle</DialogTitle>
@@ -150,6 +181,8 @@ function CalendarTab(): JSX.Element {
     </MDBox>
   );
 }
+
+
 
 export default CalendarTab;
 
