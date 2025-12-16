@@ -99,11 +99,24 @@ function CalendarTab(): JSX.Element {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
         <MDTypography variant="h6">Takvim</MDTypography>
         <Button
-          variant="contained"
+          variant="outlined"
           color="info"
           startIcon={<Icon>add</Icon>}
           onClick={() => setDialogOpen(true)}
-          sx={{ borderRadius: 2, textTransform: "none", fontWeight: 500 }}
+          sx={{
+            borderRadius: 2,
+            textTransform: "none",
+            fontWeight: 500,
+            border: '2px solid',
+            borderColor: 'info.main',
+            backgroundColor: '#fff',
+            color: 'info.main',
+            // '&:hover': {
+            //   backgroundColor: 'info.light',
+            //   borderColor: 'info.dark',
+            //   color: 'info.dark',
+            // },
+          }}
         >
           Yeni Etkinlik
         </Button>
@@ -152,7 +165,7 @@ function CalendarTab(): JSX.Element {
           );
         }}
       />
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Yeni Etkinlik Ekle</DialogTitle>
         <DialogContent>
           <Stack spacing={2} mt={1}>
