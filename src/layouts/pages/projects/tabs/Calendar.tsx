@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Calendar from "examples/Calendar";
@@ -58,7 +58,7 @@ const demoEvents = [
     end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
     className: "warning",
   },
-  // Resmi tatilleri ekle (her biri 'Resmi Tatil' başlığıyla)
+  
   ...turkiyeResmiTatilleri.map(tatil => ({
     title: "Resmi Tatil",
     start: tatil.date,
@@ -67,16 +67,86 @@ const demoEvents = [
   })),
 ];
 
+
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  Stack
+} from "@mui/material";
+import Icon from "@mui/material/Icon";
+
 function CalendarTab(): JSX.Element {
+  const [events, setEvents] = useState(demoEvents);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDate, setNewDate] = useState("");
+
+  const handleAddEvent = () => {
+    if (!newTitle.trim() || !newDate) return;
+    setEvents([
+      ...events,
+      {
+        title: newTitle,
+        start: newDate,
+        end: newDate,
+        className: "info",
+      },
+    ]);
+    setDialogOpen(false);
+    setNewTitle("");
+    setNewDate("");
+  };
+
   return (
     <MDBox>
-      <MDTypography variant="h6" mb={2}>Takvim</MDTypography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
+        <MDTypography variant="h6">Takvim</MDTypography>
+        <Button
+          variant="contained"
+          color="info"
+          startIcon={<Icon>add</Icon>}
+          onClick={() => setDialogOpen(true)}
+          sx={{ borderRadius: 2, textTransform: "none", fontWeight: 500 }}
+        >
+          Yeni Etkinlik
+        </Button>
+      </Stack>
       <Calendar
         header={{ title: "Proje Takvimi" }}
         initialView="dayGridMonth"
-        events={demoEvents}
+        events={events}
         height={600}
       />
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Yeni Etkinlik Ekle</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} mt={1}>
+            <TextField
+              label="Etkinlik Başlığı"
+              value={newTitle}
+              onChange={e => setNewTitle(e.target.value)}
+              fullWidth
+              autoFocus
+            />
+            <TextField
+              label="Tarih"
+              type="date"
+              value={newDate}
+              onChange={e => setNewDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="inherit">İptal</Button>
+          <Button onClick={handleAddEvent} color="info" variant="contained" disabled={!newTitle.trim() || !newDate}>Ekle</Button>
+        </DialogActions>
+      </Dialog>
     </MDBox>
   );
 }
