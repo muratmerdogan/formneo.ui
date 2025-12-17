@@ -1,6 +1,8 @@
 import React from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import GanttChart from "react-gantt-chart";
+
 
 // İlk aşama: Boş bir Gantt Chart alanı ve açıklama
 const GanttChartTab: React.FC = () => {
