@@ -1,3 +1,4 @@
+const SpecialDaysPage = lazy(() => import("pages/specialdays/SpecialDaysPage"));
 /**
 =========================================================
 * Material Dashboard 2 PRO React TS - v1.0.2
@@ -150,6 +151,16 @@ const QRMenuPreviewPage = lazy(() => import("pages/qrmenu/QRMenuPreviewPage"));
 
 
 const routes = [
+
+  {
+    type: "collapse",
+    name: "Özel Günler",
+    key: "specialdays",
+    route: "/specialdays",
+    component: <SpecialDaysPage />,
+    icon: <Icon fontSize="medium">event</Icon>,
+    noCollapse: true,
+  },
 
   {
     type: "collapse",
