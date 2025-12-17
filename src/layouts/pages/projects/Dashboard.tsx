@@ -129,8 +129,8 @@ function ProjectsDashboard(): JSX.Element {
               {/* Main Content: Project Detail (tabs) */}
               <Grid item xs={12}>
                 <MDBox>
-                  {/* Yaklaşan Kritik Görevler Widget */}
-                  <CriticalTasksWidget />
+                  {/* Yaklaşan Kritik Görevler Widget sadece ana projeler sayfasında */}
+                  {id ? null : <CriticalTasksWidget />}
                   {id ? (
                     <ProjectShell embedded onOpenSwitcher={() => setSwitcherOpen(true)} />
                   ) : (
