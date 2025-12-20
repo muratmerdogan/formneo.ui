@@ -94,18 +94,18 @@ export default function ContactPage(): JSX.Element {
                       </MDBox>
 
                       <MDBox display="flex" alignItems="center" mb={2}>
-                        <Icon fontSize="medium" color="inherit">phone</Icon>
-                        <MDTypography variant="body2" ml={2} color="text">
+                        {/* <Icon fontSize="medium" color="inherit">phone</Icon> */}
+                        {/* <MDTypography variant="body2" ml={2} color="text">
                           +90 212 123 45 67
-                        </MDTypography>
+                        </MDTypography> */}
                       </MDBox>
 
-                      <MDBox display="flex" alignItems="center" mb={2}>
+                      {/* <MDBox display="flex" alignItems="center" mb={2}>
                         <Icon fontSize="medium" color="inherit">location_on</Icon>
                         <MDTypography variant="body2" ml={2} color="text">
                           Eskişehir, Turkey
                         </MDTypography>
-                      </MDBox>
+                      </MDBox> */}
                     </MDBox>
                   </MDBox>
                 </Grid>
