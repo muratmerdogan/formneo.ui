@@ -129,7 +129,7 @@ function CreateDepartment() {
       var conf = getConfiguration();
       var api = new TicketDepartmentsApi(conf);
       var response = await api.apiTicketDepartmentsGet();
-      console.log("sercan departmanları", response);
+      console.log("murat departmanları", response);
       setMyDepertments(response.data);
     } catch (error) {
       dispatchAlert({

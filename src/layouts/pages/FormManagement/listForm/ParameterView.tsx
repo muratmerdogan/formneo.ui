@@ -155,7 +155,7 @@ const ParameterView = (): JSX.Element => {
             console.log("form run id", formRunId);
             console.log("formexssData", formexisstData);
             if (formexisstData == null) {
-                console.log("sercan");
+                console.log("murat");
                 formRuntimeDto2.id = uuidv4();
                 formRuntimeDto2.formId = formsId;
                 formRuntimeDto2.valuesJson = JSON.stringify(event);

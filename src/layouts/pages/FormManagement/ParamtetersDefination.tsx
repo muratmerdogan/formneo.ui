@@ -166,10 +166,10 @@ const ParamtetersDefination = (): JSX.Element => {
     const dataTypes = await formProperty.apiFormDataGetFormTypesEnumGet();
     const workFlowDefinationData =
       await workflowdefination.apiWorkFlowDefinationGetWorkFlowListByMenuGet();
-    console.log("sercan log1 prio", dataPriorities.data);
-    console.log("sercan log2 catego", dataCategories.data);
-    console.log("sercan log3 type", dataTypes.data);
-    console.log("sercan log4 definiton", workFlowDefinationData.data);
+    console.log("murat log1 prio", dataPriorities.data);
+    console.log("murat log2 catego", dataCategories.data);
+    console.log("murat log3 type", dataTypes.data);
+    console.log("murat log4 definiton", workFlowDefinationData.data);
     setMyFormPriorities(dataPriorities.data as any);
     setMyFormCategories(dataCategories.data as any);
     setMyFormTypes(dataTypes.data as any);

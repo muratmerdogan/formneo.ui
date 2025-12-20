@@ -145,7 +145,7 @@ function WorkCompanyCE() {
       // }
       const sanitizedWorkFlowId =
         companyData.workFlowDefinationId == "" ? null : companyData.workFlowDefinationId;
-      console.log("sercan", sanitizedWorkFlowId);
+      console.log("murat", sanitizedWorkFlowId);
       if (id) {
         await api.apiWorkCompanyPut({
           ...companyData,
