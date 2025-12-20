@@ -22,7 +22,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import { WorkFlowDefinationApi, FormDataApi, WorkFlowApi, UserApi, MyTasksDto, FormTaskItemDto, UserTaskItemDto, FormItemStatus, ApproverStatus } from "api/generated";
+import { WorkFlowDefinationApi, FormDataApi, WorkFlowApi, UserApi, MyTasksDto, FormTaskItemDto, UserTaskItemDto, FormItemStatus, ApproverStatus, TaskFormDto } from "api/generated";
 import getConfiguration from "confiuration";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -274,28 +274,110 @@ function WorkflowMyTasks() {
   };
 
   /**
-   * ✅ Devam eden workflow görevine tıklandığında form sayfasına yönlendir
+   * ✅ Devam eden workflow görevine tıklandığında API'den detay çek ve form/userTask göster
    */
-  const handleWorkflowClick = (task: WorkflowTask) => {
-    // Workflow runtime sayfasına yönlendir (form ile birlikte)
-    // workflowHeadId veya workflowItemId kullanarak runtime'a git
-    const workflowInstanceId = task.workflowHeadId || task.workflowItemId || task.id;
-    
-    navigate(`/workflows/runtime/${workflowInstanceId}`, {
-      state: {
-        workflowInstance: {
-          id: workflowInstanceId,
-          workflowId: task.workflowHeadId || "",
-          workflowName: task.workflowName || "İş Akışı",
-          formId: task.formId || "",
-          formName: task.formName || "Form",
-          taskId: task.id,
-          taskType: task.type,
-          formDesign: task.formDesign,
-        },
-        task: task,
-      },
-    });
+  const handleWorkflowClick = async (task: WorkflowTask) => {
+    try {
+      const conf = getConfiguration();
+      const workflowApi = new WorkFlowApi(conf);
+
+      // workflowItemId'yi al (task'tan veya id'den)
+      const workflowItemId = task.workflowItemId || task.id;
+      
+      if (!workflowItemId) {
+        console.error("WorkflowItemId bulunamadı");
+        alert("Görev detayı alınamadı: WorkflowItemId bulunamadı");
+        return;
+      }
+
+      // ✅ API'den görev detayını çek
+      const response = await workflowApi.apiWorkFlowGetTaskDetailByWorkflowItemIdWorkflowitemWorkflowItemIdTaskDetailGet(workflowItemId);
+      const taskDetail: TaskFormDto = response.data;
+
+      console.log("✅ Görev detayı alındı:", taskDetail);
+
+      // ✅ taskType veya nodeType'a göre formTask mı userTask mı belirle
+      const isFormTask = taskDetail.formItemId !== null && taskDetail.formItemId !== undefined;
+      const isUserTask = taskDetail.approveItemId !== null && taskDetail.approveItemId !== undefined;
+      
+      // Alternatif olarak taskType veya nodeType'a bak
+      const taskType = taskDetail.taskType || taskDetail.nodeType || "";
+      const isFormTaskByType = taskType?.toLowerCase().includes("form") || taskDetail.nodeType?.toLowerCase() === "formtasknode";
+      const isUserTaskByType = taskType?.toLowerCase().includes("user") || taskDetail.nodeType?.toLowerCase() === "usertasknode";
+
+      // Son karar: önce itemId'lere bak, yoksa type'a bak
+      const finalIsFormTask = isFormTask || (isFormTaskByType && !isUserTask);
+      const finalIsUserTask = isUserTask || (isUserTaskByType && !isFormTask);
+
+      const workflowInstanceId = taskDetail.workflowHeadId || task.workflowHeadId || task.workflowItemId || task.id;
+
+      // ✅ FormTask ise runtime sayfasına yönlendir
+      if (finalIsFormTask) {
+        navigate(`/workflows/runtime/${workflowInstanceId}`, {
+          state: {
+            workflowInstance: {
+              id: workflowInstanceId,
+              workflowId: taskDetail.workflowHeadId || task.workflowHeadId || "",
+              workflowName: task.workflowName || "İş Akışı",
+              formId: taskDetail.formId || task.formId || "",
+              formName: task.formName || "Form",
+              taskId: taskDetail.formItemId || task.id,
+              taskType: "formTask",
+              formDesign: taskDetail.formDesign || task.formDesign,
+              formData: taskDetail.formData,
+              workflowItemId: taskDetail.workflowItemId || workflowItemId,
+            },
+            task: task,
+            taskDetail: taskDetail,
+          },
+        });
+      } 
+      // ✅ UserTask ise userTask sayfasına yönlendir (veya runtime'da userTask göster)
+      else if (finalIsUserTask) {
+        navigate(`/workflows/runtime/${workflowInstanceId}`, {
+          state: {
+            workflowInstance: {
+              id: workflowInstanceId,
+              workflowId: taskDetail.workflowHeadId || task.workflowHeadId || "",
+              workflowName: task.workflowName || "İş Akışı",
+              formId: taskDetail.formId || task.formId || "",
+              formName: task.formName || "Kullanıcı Görevi",
+              taskId: taskDetail.approveItemId || task.id,
+              taskType: "userTask",
+              workflowItemId: taskDetail.workflowItemId || workflowItemId,
+              approveUser: taskDetail.approveUser,
+              approveUserNameSurname: taskDetail.approveUserNameSurname,
+              approverStatus: taskDetail.approverStatus,
+            },
+            task: task,
+            taskDetail: taskDetail,
+          },
+        });
+      } 
+      // ✅ Belirlenemezse runtime'a git (mevcut mantık)
+      else {
+        console.warn("Görev tipi belirlenemedi, varsayılan olarak runtime'a yönlendiriliyor");
+        navigate(`/workflows/runtime/${workflowInstanceId}`, {
+          state: {
+            workflowInstance: {
+              id: workflowInstanceId,
+              workflowId: task.workflowHeadId || "",
+              workflowName: task.workflowName || "İş Akışı",
+              formId: task.formId || "",
+              formName: task.formName || "Form",
+              taskId: task.id,
+              taskType: task.type,
+              formDesign: task.formDesign,
+            },
+            task: task,
+            taskDetail: taskDetail,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Görev detayı çekilirken hata:", error);
+      alert("Görev detayı alınamadı. Lütfen tekrar deneyin.");
+    }
   };
 
   /**

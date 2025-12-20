@@ -139,9 +139,9 @@ function Cover(): JSX.Element {
     if (email && password) {
       const isLocalhost = window.location.hostname === "localhost";
 
-      const scopes = isLocalhost
-        ? "api://28116fc8-fd64-4ccb-ab4d-96d2f3653846/access_as_user" // Local
-        : "api://1a4e7070-9c88-4097-9805-caf72e245e79/access_as_user"; // Production
+      // const scopes = isLocalhost
+      //   ? "api://28116fc8-fd64-4ccb-ab4d-96d2f3653846/access_as_user" // Local
+      //   : "api://1a4e7070-9c88-4097-9805-caf72e245e79/access_as_user"; // Production
 
       dispatchBusy({ isBusy: true });
 
