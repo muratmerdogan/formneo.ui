@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Calendar from "examples/Calendar";
+import { IconButton, Tooltip, Icon, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Stack } from "@mui/material";
 
 // Demo event verisi (gün, hafta, ay, tatil, görev)
-
 // Türkiye 2025 ve 2026 resmi tatilleri (her biri 'Resmi Tatil' olarak gösterilecek)
 const turkiyeResmiTatilleri = [
   // 2025
@@ -58,7 +58,7 @@ const demoEvents = [
     end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
     className: "warning",
   },
-  // Resmi tatilleri ekle (her biri 'Resmi Tatil' başlığıyla)
+  
   ...turkiyeResmiTatilleri.map(tatil => ({
     title: "Resmi Tatil",
     start: tatil.date,
@@ -67,19 +67,135 @@ const demoEvents = [
   })),
 ];
 
+
+
+
+
 function CalendarTab(): JSX.Element {
+  const [events, setEvents] = useState(demoEvents);
+  const [hoveredEventId, setHoveredEventId] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDate, setNewDate] = useState("");
+
+  const handleAddEvent = () => {
+    if (!newTitle.trim() || !newDate) return;
+    setEvents([
+      ...events,
+      {
+        title: newTitle,
+        start: newDate,
+        end: newDate,
+        className: "info",
+      },
+    ]);
+    setDialogOpen(false);
+    setNewTitle("");
+    setNewDate("");
+  };
+
   return (
     <MDBox>
-      <MDTypography variant="h6" mb={2}>Takvim</MDTypography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
+        <MDTypography variant="h6">Takvim</MDTypography>
+        <Button
+          variant="outlined"
+          color="info"
+          startIcon={<Icon>add</Icon>}
+          onClick={() => setDialogOpen(true)}
+          sx={{
+            borderRadius: 2,
+            textTransform: "none",
+            fontWeight: 500,
+            border: '2px solid',
+            borderColor: 'info.main',
+            backgroundColor: '#fff',
+            color: 'info.main',
+            // '&:hover': {
+            //   backgroundColor: 'info.light',
+            //   borderColor: 'info.dark',
+            //   color: 'info.dark',
+            // },
+          }}
+        >
+          Yeni Etkinlik
+        </Button>
+      </Stack>
       <Calendar
         header={{ title: "Proje Takvimi" }}
         initialView="dayGridMonth"
-        events={demoEvents}
+        events={events}
         height={600}
+        eventContent={(arg: any) => {
+          const id = arg.event.id || arg.event._def.publicId || arg.event.startStr + arg.event.title;
+          return (
+            <div
+              onMouseEnter={() => setHoveredEventId(id)}
+              onMouseLeave={() => setHoveredEventId(null)}
+              style={{
+                position: "relative",
+                paddingRight: 28,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 28,
+                width: "100%"
+              }}
+            >
+              <span style={{ width: "100%", textAlign: "center", fontWeight: 500 }}>{arg.event.title}</span>
+              {hoveredEventId === id && (
+                <Tooltip title="Sil" placement="top">
+                  <IconButton
+                    size="small"
+                    color="error"
+                    sx={{ position: "absolute", top:0, right: 0, zIndex: 2 }}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setEvents(evts => evts.filter(ev => {
+                        const evId = ev.start + ev.title;
+                        return evId !== id;
+                      }));
+                    }}
+                  >
+                    <Icon fontSize="small">delete</Icon>
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
+          );
+        }}
       />
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Yeni Etkinlik Ekle</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} mt={1}>
+            <TextField
+              label="Etkinlik Başlığı"
+              value={newTitle}
+              onChange={e => setNewTitle(e.target.value)}
+              fullWidth
+              autoFocus
+            />
+            <TextField
+              label="Tarih"
+              type="date"
+              value={newDate}
+              onChange={e => setNewDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="inherit">İptal</Button>
+          <Button onClick={handleAddEvent} color="info" variant="contained" disabled={!newTitle.trim() || !newDate}>Ekle</Button>
+        </DialogActions>
+      </Dialog>
     </MDBox>
   );
 }
+
+
 
 export default CalendarTab;
 

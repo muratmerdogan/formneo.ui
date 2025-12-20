@@ -23,11 +23,13 @@ import getConfiguration from "confiuration";
 import OverviewTab from "./tabs/Overview";
 import TasksTab from "./tabs/Tasks";
 import CalendarTab from "./tabs/Calendar";
+import GanttChartTab from "./tabs/GanttChartTab"; // Gantt Chart tabı eklendi
 import FilesTab from "./tabs/Files";
 import ReportsTab from "./tabs/Reports";
 import SettingsTab from "./tabs/Settings";
 
-const TABS = ["overview", "tasks", "calendar", "files", "reports", "settings"] as const;
+// Gantt Chart tabı eklendi
+const TABS = ["overview", "tasks", "calendar", "gantt", "files", "reports", "settings"] as const;
 
 type ProjectShellProps = {
   embedded?: boolean;
@@ -64,6 +66,20 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
 
   const Content = (
     <MDBox>
+      {/* Ana listeye dön butonu */}
+      <MDBox mb={2}>
+        <MDButton
+          variant="outlined"
+          color="info"
+          size="small"
+          startIcon={<Icon>arrow_back</Icon>}
+          onClick={() => navigate("/projects")}
+          sx={{ borderRadius: 8, fontWeight: 500 }}
+        >
+          Projeler Sayfasına Dön
+        </MDButton>
+      </MDBox>
+
       {/* Header with project name and quick actions */}
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md={8}>
@@ -95,6 +111,7 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
           <Tab icon={<Icon>space_dashboard</Icon>} iconPosition="start" value="overview" label="Overview" />
           <Tab icon={<Icon>view_kanban</Icon>} iconPosition="start" value="tasks" label="Tasks" />
           <Tab icon={<Icon>event</Icon>} iconPosition="start" value="calendar" label="Calendar" />
+          <Tab icon={<Icon>timeline</Icon>} iconPosition="start" value="gantt" label="Gantt Chart" />
           <Tab icon={<Icon>folder</Icon>} iconPosition="start" value="files" label="Files" />
           <Tab icon={<Icon>bar_chart</Icon>} iconPosition="start" value="reports" label="Reports" />
           <Tab icon={<Icon>settings</Icon>} iconPosition="start" value="settings" label="Settings" />
@@ -105,6 +122,8 @@ function ProjectShell({ embedded, onOpenSwitcher }: ProjectShellProps): JSX.Elem
         {currentTab === "overview" && <OverviewTab />}
         {currentTab === "tasks" && <TasksTab />}
         {currentTab === "calendar" && <CalendarTab />}
+        {/* Gantt Chart tabı: İlk aşamada sadece boş alan ve açıklama */}
+        {currentTab === "gantt" && <GanttChartTab />}
         {currentTab === "files" && <FilesTab />}
         {currentTab === "reports" && <ReportsTab />}
         {currentTab === "settings" && <SettingsTab />}
