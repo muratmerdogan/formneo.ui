@@ -2249,6 +2249,37 @@
         }
       }
     },
+    "/api/Contact/SendContact": {
+      "post": {
+        "tags": [
+          "Contact"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/crm/CrmChangeLogs/customer/{customerId}": {
       "get": {
         "tags": [
@@ -4576,6 +4607,114 @@
         }
       }
     },
+    "/api/Form/{id}/elements": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Form/{id}/inputs": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Form/{id}/elements/{componentType}": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "componentType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Form/{id}/element/{designableId}": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "designableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Form/{formId}/submission": {
       "get": {
         "tags": [
@@ -5275,6 +5414,44 @@
         }
       }
     },
+    "/api/FormData/latest-per-family": {
+      "get": {
+        "tags": [
+          "FormData"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDataListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDataListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormDataListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormData/GetFieldByForm/{guid}": {
       "get": {
         "tags": [
@@ -5416,6 +5593,44 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/FormDataListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormData/names": {
+      "get": {
+        "tags": [
+          "FormData"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormNameIdDto"
                   }
                 }
               }
@@ -5938,6 +6153,29 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/FormRuntime/GetLatestColumnsAndAllRevisionData/{parentId}": {
+      "get": {
+        "tags": [
+          "FormRuntime"
+        ],
+        "parameters": [
+          {
+            "name": "parentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -10979,6 +11217,224 @@
         }
       }
     },
+    "/api/RoleTenantForm": {
+      "get": {
+        "tags": [
+          "RoleTenantForm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RoleTenantForm/{formTenantRoleId}": {
+      "get": {
+        "tags": [
+          "RoleTenantForm"
+        ],
+        "parameters": [
+          {
+            "name": "formTenantRoleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleTenantFormDetailDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RoleTenantForm/roles": {
+      "get": {
+        "tags": [
+          "RoleTenantForm"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FormTenantRoleListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RoleTenantForm/insert": {
+      "post": {
+        "tags": [
+          "RoleTenantForm"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormInsertDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormInsertDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormInsertDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RoleTenantForm/update": {
+      "post": {
+        "tags": [
+          "RoleTenantForm"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleTenantFormUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/RoleTenantMenu/{roleId}/{tenantId}": {
       "get": {
         "tags": [
@@ -15337,6 +15793,85 @@
         }
       }
     },
+    "/api/UserTenantFormRoles/by/{userId}": {
+      "get": {
+        "tags": [
+          "UserTenantFormRoles"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTenantFormRoleListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UserTenantFormRoles/bulk-save": {
+      "post": {
+        "tags": [
+          "UserTenantFormRoles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserTenantFormRoleBulkSaveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/UserTenantRoles/by/{userId}/{tenantId}": {
       "get": {
         "tags": [
@@ -16407,6 +16942,115 @@
         }
       }
     },
+    "/api/WorkFlow/GetMyTasks/my-tasks": {
+      "get": {
+        "tags": [
+          "WorkFlow"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyTasksDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkFlow/GetDetail/{id}": {
+      "get": {
+        "tags": [
+          "WorkFlow"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkFlowHeadDetailDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkFlow/GetTaskDetailByWorkflowItemId/workflowitem/{workflowItemId}/task-detail": {
+      "get": {
+        "tags": [
+          "WorkFlow"
+        ],
+        "parameters": [
+          {
+            "name": "workflowItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskFormDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskFormDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskFormDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/WorkFlowDefination": {
       "get": {
         "tags": [
@@ -16768,6 +17412,39 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "AlertNodeInfo": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "nodeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "nodeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/WorkflowStatus"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "ApproveHeadInfo": {
         "type": "object",
@@ -18915,6 +19592,28 @@
             "items": {
               "$ref": "#/components/schemas/Plant"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -21532,6 +22231,270 @@
         },
         "additionalProperties": false
       },
+      "FormInstance": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedByNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "workflowHead": {
+            "$ref": "#/components/schemas/WorkflowHead"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormItemStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "FormItems": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainClientId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "mainClient": {
+            "$ref": "#/components/schemas/MainClient"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "concurrencyToken": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workflowItem": {
+            "$ref": "#/components/schemas/WorkflowItem"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormItemsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUserMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormNameIdDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormPriority": {
         "enum": [
           1,
@@ -21627,6 +22590,96 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "FormTaskItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormTenantRoleListDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "FormType": {
         "enum": [
@@ -23431,6 +24484,51 @@
         },
         "additionalProperties": false
       },
+      "MyTasksDto": {
+        "type": "object",
+        "properties": {
+          "formTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormTaskItemDto"
+            },
+            "nullable": true
+          },
+          "userTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTaskItemDto"
+            },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NodeResultInfo": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "nodeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "nodeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/WorkflowStatus"
+          }
+        },
+        "additionalProperties": false
+      },
       "OfficeLocation": {
         "enum": [
           0,
@@ -24718,6 +25816,114 @@
         },
         "additionalProperties": false
       },
+      "RoleTenantFormDetailDto": {
+        "type": "object",
+        "properties": {
+          "formTenantRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleTenantFormPermissionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleTenantFormInsertDto": {
+        "type": "object",
+        "properties": {
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleIsActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "formPermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleTenantFormPermissionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleTenantFormPermissionDto": {
+        "type": "object",
+        "properties": {
+          "formId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formName": {
+            "type": "string",
+            "nullable": true
+          },
+          "canView": {
+            "type": "boolean"
+          },
+          "canAdd": {
+            "type": "boolean"
+          },
+          "canEdit": {
+            "type": "boolean"
+          },
+          "canDelete": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleTenantFormUpdateDto": {
+        "type": "object",
+        "properties": {
+          "formTenantRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleIsActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "formPermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleTenantFormPermissionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RoleTenantInsertDto": {
         "type": "object",
         "properties": {
@@ -25023,6 +26229,85 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "TaskFormDto": {
+        "type": "object",
+        "properties": {
+          "nodeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "nodeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "taskType": {
+            "type": "string",
+            "nullable": true
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formDesign": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formItemId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "formTaskMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "formDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "formUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "formItemStatus": {
+            "$ref": "#/components/schemas/FormItemStatus"
+          },
+          "approveItemId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "approveUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "approverStatus": {
+            "$ref": "#/components/schemas/ApproverStatus"
+          },
+          "workFlowDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "TaskUsersDto": {
         "type": "object",
@@ -28595,6 +29880,57 @@
         },
         "additionalProperties": false
       },
+      "UserTaskItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowHeadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "shortId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortWorkflowItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveUserNameSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "approverStatus": {
+            "$ref": "#/components/schemas/ApproverStatus"
+          },
+          "workFlowHead": {
+            "$ref": "#/components/schemas/WorkFlowHeadDto"
+          },
+          "workFlowItem": {
+            "$ref": "#/components/schemas/WorkFlowItemDto"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserTenantBulkAssignUsersDto": {
         "type": "object",
         "properties": {
@@ -28629,6 +29965,49 @@
           "tenantName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTenantFormRoleBulkSaveDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTenantRoleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTenantFormRoleListDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "formTenantRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "formTenantRoleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -29203,7 +30582,11 @@
             "type": "string",
             "nullable": true
           },
-          "input": {
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
             "type": "string",
             "nullable": true
           },
@@ -29365,6 +30748,50 @@
         },
         "additionalProperties": false
       },
+      "WorkFlowHeadDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "workflowName": {
+            "type": "string",
+            "nullable": true
+          },
+          "workFlowInfo": {
+            "type": "string",
+            "nullable": true
+          },
+          "workFlowStatus": {
+            "$ref": "#/components/schemas/WorkflowStatus"
+          },
+          "createUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workFlowDefinationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workflowItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkFlowItemDtoWithApproveItems"
+            },
+            "nullable": true
+          },
+          "workFlowDefinationJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "WorkFlowHeadDto": {
         "type": "object",
         "properties": {
@@ -29422,6 +30849,34 @@
           "workFlowInfo": {
             "type": "string",
             "nullable": true
+          },
+          "workFlowStatus": {
+            "$ref": "#/components/schemas/WorkflowStatus"
+          },
+          "pendingNodeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentNodeInfo": {
+            "$ref": "#/components/schemas/NodeResultInfo"
+          },
+          "isCompleted": {
+            "type": "boolean"
+          },
+          "isSuccessfullyCompleted": {
+            "type": "boolean"
+          },
+          "alertInfo": {
+            "$ref": "#/components/schemas/AlertNodeInfo"
+          },
+          "formNodeCompleted": {
+            "type": "boolean",
+            "deprecated": true
+          },
+          "completedFormNodeId": {
+            "type": "string",
+            "nullable": true,
+            "deprecated": true
           }
         },
         "additionalProperties": false
@@ -29530,6 +30985,13 @@
               "$ref": "#/components/schemas/ApproveItemsDto"
             },
             "nullable": true
+          },
+          "formItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormItemsDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -29546,6 +31008,18 @@
             "nullable": true
           },
           "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
             "type": "string",
             "nullable": true
           }
@@ -29635,6 +31109,17 @@
             },
             "nullable": true
           },
+          "formInstance": {
+            "$ref": "#/components/schemas/FormInstance"
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          },
           "workFlowDefinationId": {
             "type": "string",
             "format": "uuid"
@@ -29722,6 +31207,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ApproveItems"
+            },
+            "nullable": true
+          },
+          "formItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormItems"
             },
             "nullable": true
           }
