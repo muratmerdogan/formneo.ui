@@ -102,13 +102,16 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
   // Form alanlarını yükle
   useEffect(() => {
     const loadFormFields = async () => {
-      if (!workflowFormId) return;
+      // ✅ formId'yi önce node'un mevcut data'sından al, yoksa workflowFormId'yi kullan
+      const formId = initialValues?.formId || node?.data?.formId || workflowFormId;
+      
+      if (!formId) return;
       
       try {
         dispatchBusy({ isBusy: true });
         const conf = getConfiguration();
         const api = new FormDataApi(conf);
-        const res = await api.apiFormDataIdGet(workflowFormId);
+        const res = await api.apiFormDataIdGet(formId);
         const formData = res?.data;
         
         if (formData?.formDesign) {
@@ -152,10 +155,14 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
       }
     };
 
-    if (open && workflowFormId) {
-      loadFormFields();
+    if (open) {
+      // ✅ formId varsa form alanlarını yükle
+      const formId = initialValues?.formId || node?.data?.formId || workflowFormId;
+      if (formId) {
+        loadFormFields();
+      }
     }
-  }, [open, workflowFormId, initialValues]);
+  }, [open, workflowFormId, initialValues, node]);
 
   // Initial values değiştiğinde state'i güncelle
   useEffect(() => {
@@ -348,6 +355,11 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
       ...btn, // Tüm diğer özellikleri de koru
     }));
 
+    // ✅ formId'yi önce node'un mevcut data'sından al, yoksa workflowFormId'yi kullan
+    // Bu sayede formId kaybolmaz ve şemada korunur
+    const formId = initialValues?.formId || node?.data?.formId || workflowFormId;
+    const formName = initialValues?.formName || node?.data?.formName || workflowFormName;
+
     const taskData = {
       name,
       userId: selectedUser.id || selectedUser.userAppId,
@@ -357,8 +369,8 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
       assignedUserName: selectedUser.firstName && selectedUser.lastName
         ? `${selectedUser.firstName} ${selectedUser.lastName}`
         : selectedUser.userAppName || selectedUser.userName,
-      formId: workflowFormId,
-      formName: workflowFormName,
+      formId: formId, // ✅ Önce mevcut data'dan, yoksa workflowFormId'den al
+      formName: formName, // ✅ Önce mevcut data'dan, yoksa workflowFormName'den al
       message,
       fieldSettings,
       buttonSettings,

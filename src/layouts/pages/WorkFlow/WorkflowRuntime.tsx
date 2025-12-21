@@ -50,6 +50,7 @@ export default function WorkflowRuntime(): JSX.Element {
   // Workflow instance bilgisi (location.state'den gelir)
   const workflowInstance = location.state?.workflowInstance;
   const isNewInstance = location.state?.isNewInstance || false;
+  const taskDetail = location.state?.taskDetail;
 
   const form = useMemo(() => createForm(), []);
   const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
@@ -135,6 +136,80 @@ export default function WorkflowRuntime(): JSX.Element {
     load();
   }, [workflowInstance?.formId]);
 
+  // ✅ FormData'yı location.state'den al ve form'a initial values olarak ver
+  // Schema yüklendikten SONRA formData'yı set et (Formily için önemli)
+  useEffect(() => {
+    // FormData kaynakları: workflowInstance.formData veya taskDetail.formData
+    const incomingFormData = workflowInstance?.formData || taskDetail?.formData;
+    
+    console.log("🔍 FormData kontrolü:", {
+      hasIncomingFormData: !!incomingFormData,
+      hasForm: !!form,
+      hasSchema: !!schema,
+      loading,
+      incomingFormData,
+    });
+    
+    // Schema yüklenmiş ve formData varsa form'a yükle
+    if (incomingFormData && form && schema && !loading) {
+      try {
+        // Eğer formData string ise parse et, değilse direkt kullan
+        const parsedFormData = typeof incomingFormData === "string" 
+          ? JSON.parse(incomingFormData) 
+          : incomingFormData;
+        
+        console.log("📦 Parsed FormData:", parsedFormData);
+        
+        if (parsedFormData && typeof parsedFormData === "object") {
+          // ✅ FormData nested yapıda olabilir (formData.formData içinde asıl veriler)
+          // Eğer formData içinde formData property'si varsa, onu kullan
+          let actualFormData = parsedFormData;
+          
+          if (parsedFormData.formData && typeof parsedFormData.formData === "object") {
+            // Nested yapı: formData.formData içindeki verileri kullan
+            actualFormData = parsedFormData.formData;
+            console.log("📦 Nested FormData bulundu, içindeki veriler kullanılıyor:", actualFormData);
+          } else if (parsedFormData.formData && typeof parsedFormData.formData === "string") {
+            // Eğer formData.formData string ise parse et
+            try {
+              actualFormData = JSON.parse(parsedFormData.formData);
+              console.log("📦 FormData.formData string parse edildi:", actualFormData);
+            } catch (e) {
+              console.warn("⚠️ FormData.formData parse edilemedi, orijinal kullanılıyor");
+            }
+          }
+          
+          // Formily form'una initial values olarak set et
+          // Formily'de form values'ları set etmek için setValues kullanılır
+          if (actualFormData && typeof actualFormData === "object") {
+            form.setInitialValues(actualFormData);
+            form.setValues(actualFormData);
+            
+            setFormData(actualFormData);
+            console.log("✅ FormData form'a yüklendi:", actualFormData);
+            console.log("✅ Form values kontrolü:", form.values);
+            console.log("✅ Form initialValues kontrolü:", form.initialValues);
+            
+            // Form'un güncellendiğinden emin olmak için bir sonraki render'da kontrol et
+            setTimeout(() => {
+              console.log("⏰ 100ms sonra form values:", form.values);
+              console.log("⏰ Form'un tüm field'ları:", Object.keys(form.values || {}));
+            }, 100);
+          } else {
+            console.warn("⚠️ ActualFormData geçerli bir obje değil:", actualFormData);
+          }
+        } else {
+          console.warn("⚠️ FormData geçerli bir obje değil:", parsedFormData);
+        }
+      } catch (error) {
+        console.error("❌ FormData parse edilirken hata:", error);
+        console.error("❌ FormData içeriği:", incomingFormData);
+      }
+    } else if (incomingFormData && (!schema || loading)) {
+      console.log("⏳ FormData var ama schema henüz yüklenmedi, bekleniyor...");
+    }
+  }, [workflowInstance?.formData, taskDetail?.formData, form, schema, loading]);
+
   /**
    * ✅ Form butonuna tıklandığında - Backend'e workflow başlatma isteği gönder
    * BMP Modülü için: Hangi butondan tıklandıysa o butonun action kodu gönderilir
@@ -188,7 +263,8 @@ export default function WorkflowRuntime(): JSX.Element {
         const continueDto: WorkFlowContiuneApiDto = {
           workFlowItemId: instanceId,
           userName: currentUser || undefined,
-          input: workFlowInfo,
+          formData: workFlowInfo, // ✅ input yerine formData kullanılıyor
+          action: normalizedAction, // ✅ action property'sine eklendi
           note: normalizedAction,
         };
 

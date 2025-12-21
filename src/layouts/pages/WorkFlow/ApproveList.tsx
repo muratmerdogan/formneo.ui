@@ -470,10 +470,8 @@ function ApproveList() {
         dispatchBusy({ isBusy: true });
         var workFlowApi = new WorkFlowApi(configuration);
         let contiuneDto: WorkFlowContiuneApiDto = {};
-        contiuneDto.approveItem = row.id;
         contiuneDto.workFlowItemId = row.workflowItemId;
         contiuneDto.userName = username;
-        contiuneDto.input = "yes";
         contiuneDto.note = "";
 
         workFlowApi
@@ -508,10 +506,8 @@ function ApproveList() {
         dispatchBusy({ isBusy: true });
         var workFlowApi = new WorkFlowApi(configuration);
         let contiuneDto: WorkFlowContiuneApiDto = {};
-        contiuneDto.approveItem = row.id;
         contiuneDto.workFlowItemId = row.workflowItemId;
         contiuneDto.userName = username;
-        contiuneDto.input = "no";
         contiuneDto.note = rejectText;
 
         workFlowApi
@@ -547,13 +543,10 @@ function ApproveList() {
     dispatchBusy({ isBusy: true });
     var workFlowApi = new WorkFlowApi(configuration);
     let contiuneDto: WorkFlowContiuneApiDto = {};
-    contiuneDto.approveItem = obj.original.id;
     contiuneDto.workFlowItemId = obj.original.workflowItemId;
 
     contiuneDto.userName = username;
-    contiuneDto.input = "yes";
     contiuneDto.note = description;
-    contiuneDto.numberManDay = numberManDay.toString();
     //contiuneDto.manDay = manDay;
 
     workFlowApi
@@ -596,10 +589,8 @@ function ApproveList() {
     dispatchBusy({ isBusy: true });
     var workFlowApi = new WorkFlowApi(configuration);
     let contiuneDto: WorkFlowContiuneApiDto = {};
-    contiuneDto.approveItem = obj.original.id;
     contiuneDto.workFlowItemId = obj.original.workflowItemId;
     contiuneDto.userName = username;
-    contiuneDto.input = "no";
     contiuneDto.note = description;
     // contiuneDto.numberManDay = numberManDay.toString();
 

@@ -309,7 +309,8 @@ function WorkflowMyTasks() {
       const finalIsFormTask = isFormTask || (isFormTaskByType && !isUserTask);
       const finalIsUserTask = isUserTask || (isUserTaskByType && !isFormTask);
 
-      const workflowInstanceId = taskDetail.workflowHeadId || task.workflowHeadId || task.workflowItemId || task.id;
+      // ✅ workflowItemId kullanılmalı (workflowHeadId değil)
+      const workflowInstanceId = taskDetail.workflowItemId || task.workflowItemId || workflowItemId || task.id;
 
       // ✅ FormTask ise runtime sayfasına yönlendir
       if (finalIsFormTask) {

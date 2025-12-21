@@ -30517,10 +30517,6 @@
       "WorkFlowContiuneApiDto": {
         "type": "object",
         "properties": {
-          "approveItem": {
-            "type": "string",
-            "nullable": true
-          },
           "workFlowItemId": {
             "type": "string",
             "nullable": true
@@ -30529,15 +30525,15 @@
             "type": "string",
             "nullable": true
           },
-          "input": {
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "formData": {
             "type": "string",
             "nullable": true
           },
           "note": {
-            "type": "string",
-            "nullable": true
-          },
-          "numberManDay": {
             "type": "string",
             "nullable": true
           }
@@ -31054,6 +31050,14 @@
           },
           "formInstance": {
             "$ref": "#/components/schemas/FormInstance"
+          },
+          "formId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
           },
           "workFlowDefinationId": {
             "type": "string",

@@ -266,12 +266,9 @@ function WorkflowApprovalList() {
     dispatchBusy({ isBusy: true });
     var workFlowApi = new WorkFlowApi(configuration);
     let contiuneDto = {};
-    contiuneDto.approveItem = obj.original.id;
     contiuneDto.workFlowItemId = obj.original.workflowItemId;
     contiuneDto.userName = username;
-    contiuneDto.input = "yes";
     contiuneDto.note = description;
-    contiuneDto.numberManDay = numberManDay.toString();
 
     workFlowApi
       .apiWorkFlowContiunePost(contiuneDto)
@@ -292,10 +289,8 @@ function WorkflowApprovalList() {
     dispatchBusy({ isBusy: true });
     var workFlowApi = new WorkFlowApi(configuration);
     let contiuneDto = {};
-    contiuneDto.approveItem = obj.original.id;
     contiuneDto.workFlowItemId = obj.original.workflowItemId;
     contiuneDto.userName = username;
-    contiuneDto.input = "no";
     contiuneDto.note = description;
 
     workFlowApi
