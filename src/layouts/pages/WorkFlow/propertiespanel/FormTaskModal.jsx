@@ -39,7 +39,10 @@ import {
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
   SelectAll as SelectAllIcon,
   Deselect as DeselectIcon,
+  Code as CodeIcon,
 } from "@mui/icons-material";
+import { Editor } from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import { UserApi, FormDataApi } from "api/generated";
@@ -67,7 +70,188 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
   const [activeTab, setActiveTab] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [fieldScript, setFieldScript] = useState(initialValues?.fieldScript || "");
+  const [monacoEditor, setMonacoEditor] = useState(null);
+  const [monacoInstance, setMonacoInstance] = useState(null);
   const dispatchBusy = useBusy();
+
+  // Monaco Editor için IntelliSense tip tanımlarını oluştur ve güncelle
+  useEffect(() => {
+    if (!monacoInstance || activeTab !== 2) return;
+
+    // Form alanları varsa detaylı tip tanımları, yoksa temel tip tanımları
+    let typeDefinitions = '';
+    
+    if (formFields.length > 0) {
+      // Form alanlarını tip tanımına dönüştür (normalize edilmiş key kullan)
+      const fieldTypes = formFields.map(field => {
+        const typeMap = {
+          string: "string",
+          number: "number",
+          boolean: "boolean",
+          date: "string",
+          datetime: "string",
+        };
+        const fieldType = typeMap[field.type] || "any";
+        const normalizedKey = field.normalizedKey || field.key;
+        const label = (field.label || normalizedKey).replace(/"/g, '\\"');
+        return `  /** ${label} (${field.type}) */\n  "${normalizedKey}": ${fieldType};`;
+      }).join("\n");
+
+      // Form alanlarını string literal union type olarak oluştur (IntelliSense için - normalize edilmiş key kullan)
+      const fieldKeys = formFields.map(field => {
+        const normalizedKey = field.normalizedKey || field.key;
+        return `"${normalizedKey}"`;
+      }).join(" | ");
+      
+      // Her form alanı için overload ekle (IntelliSense için - normalize edilmiş key kullan)
+      const fieldOverloads = formFields.map(field => {
+        const normalizedKey = field.normalizedKey || field.key;
+        const label = (field.label || normalizedKey).replace(/"/g, '\\"');
+        return `/**
+ * ${label} alanının değerini oku
+ * @param {"${normalizedKey}"} fieldKey
+ * @returns {any}
+ */
+declare function getFieldValue(fieldKey: "${normalizedKey}"): any;`;
+      }).join("\n");
+
+      typeDefinitions = `
+/**
+ * Form Alanları Tip Tanımları
+ * Bu dosya otomatik olarak oluşturulmuştur
+ */
+
+/** Form alan anahtarları */
+type FormFieldKey = ${fieldKeys || "string"};
+
+/** Form değerleri objesi */
+declare var formValues: {
+${fieldTypes}
+};
+
+/**
+ * Alan görünürlüğünü ayarla
+ * @param {FormFieldKey} fieldKey - Form alanının anahtarı
+ * @param {boolean} visible - Görünür mü? (true/false)
+ */
+declare function setFieldVisible(fieldKey: FormFieldKey, visible: boolean): void;
+
+/**
+ * Alan readonly durumunu ayarla
+ * @param {FormFieldKey} fieldKey - Form alanının anahtarı
+ * @param {boolean} readonly - Readonly mi? (true/false)
+ */
+declare function setFieldReadonly(fieldKey: FormFieldKey, readonly: boolean): void;
+
+/**
+ * Alan değerini ata
+ * @param {FormFieldKey} fieldKey - Form alanının anahtarı
+ * @param {any} value - Atanacak değer
+ */
+declare function setFieldValue(fieldKey: FormFieldKey, value: any): void;
+
+${fieldOverloads}
+
+/**
+ * Alan değerini oku (genel)
+ * @param {string} fieldKey - Form alanının anahtarı
+ * @returns {any} Alan değeri
+ */
+declare function getFieldValue(fieldKey: string): any;
+`;
+    } else {
+      // Temel helper fonksiyonlar için tip tanımları (form alanları olmadan)
+      typeDefinitions = `
+/**
+ * Form Script Helper Fonksiyonları
+ */
+
+/**
+ * Alan görünürlüğünü ayarla
+ * @param {string} fieldKey - Form alanının anahtarı
+ * @param {boolean} visible - Görünür mü? (true/false)
+ */
+declare function setFieldVisible(fieldKey: string, visible: boolean): void;
+
+/**
+ * Alan readonly durumunu ayarla
+ * @param {string} fieldKey - Form alanının anahtarı
+ * @param {boolean} readonly - Readonly mi? (true/false)
+ */
+declare function setFieldReadonly(fieldKey: string, readonly: boolean): void;
+
+/**
+ * Alan değerini ata
+ * @param {string} fieldKey - Form alanının anahtarı
+ * @param {any} value - Atanacak değer
+ */
+declare function setFieldValue(fieldKey: string, value: any): void;
+
+/**
+ * Alan değerini oku
+ * @param {string} fieldKey - Form alanının anahtarı
+ * @returns {any} Alan değeri
+ */
+declare function getFieldValue(fieldKey: string): any;
+
+/**
+ * Form değerleri objesi
+ */
+declare var formValues: Record<string, any>;
+`;
+    }
+
+    try {
+      // Önceki tip tanımını kaldır ve yenisini ekle
+      const existingLibs = monacoInstance.languages.typescript.javascriptDefaults.getExtraLibs();
+      const libsMap = new Map(Object.entries(existingLibs || {}));
+      
+      if (libsMap.has("file:///formFields.d.ts")) {
+        libsMap.delete("file:///formFields.d.ts");
+        monacoInstance.languages.typescript.javascriptDefaults.setExtraLibs(
+          Object.fromEntries(libsMap)
+        );
+      }
+
+      // Güncellenmiş tip tanımlarını ekle (form alanları ile)
+      const disposable = monacoInstance.languages.typescript.javascriptDefaults.addExtraLib(
+        typeDefinitions,
+        "file:///formFields.d.ts"
+      );
+
+      console.log("✅ Tip tanımları eklendi:", formFields.length > 0 ? `${formFields.length} alan` : "temel fonksiyonlar");
+
+      // IntelliSense'i tetikle
+      if (monacoEditor) {
+        const model = monacoEditor.getModel();
+        if (model) {
+          // Model URI'sini kontrol et
+          console.log("Model URI:", model.uri.toString());
+          
+          // Model'i yeniden yükle (IntelliSense'i güncellemek için)
+          setTimeout(() => {
+            // IntelliSense'i manuel olarak tetikle
+            try {
+              monacoEditor.getAction("editor.action.triggerSuggest")?.run();
+              console.log("✅ IntelliSense tetiklendi");
+            } catch (e) {
+              console.warn("IntelliSense tetiklenemedi:", e);
+            }
+          }, 300);
+        }
+      }
+
+      // Cleanup function
+      return () => {
+        if (disposable) {
+          disposable.dispose();
+        }
+      };
+    } catch (error) {
+      console.warn("Monaco IntelliSense güncellenirken hata:", error);
+    }
+  }, [formFields, monacoInstance, monacoEditor, activeTab]);
 
   // Kullanıcıları otomatik yükle (modal açıldığında)
   useEffect(() => {
@@ -194,12 +378,32 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
       if (initialValues.message) {
         setMessage(initialValues.message);
       }
+      if (initialValues.fieldScript) {
+        setFieldScript(initialValues.fieldScript);
+      }
     } else if (!open) {
       // Modal kapandığında state'leri sıfırla
       setInputValue("");
       setSearchByName([]);
     }
   }, [open, initialValues]);
+
+  // Key'i normalize et (teknik ID'leri kaldır, sadece alan adını kullan)
+  const normalizeFieldKey = (key) => {
+    // "u0migqzm2uo.stafftype" -> "stafftype"
+    // Nokta ile ayrılmışsa son kısmı al
+    if (key.includes('.')) {
+      const parts = key.split('.');
+      return parts[parts.length - 1];
+    }
+    // Teknik ID formatı varsa (örn: "u0migqzm2uo") kaldır
+    // Eğer key teknik ID gibi görünüyorsa (sadece harf ve rakam, uzunluğu 8-12 karakter), son kısmı al
+    const match = key.match(/^[a-z0-9]{8,12}\.(.+)$/);
+    if (match) {
+      return match[1];
+    }
+    return key;
+  };
 
   // Form schema'dan alanları çıkar
   const extractFieldsFromSchema = (properties, parentPath = "") => {
@@ -216,9 +420,11 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
         }
       } else if (prop["x-component"] && prop["x-component"] !== "FormItem") {
         // Normal field
+        const normalizedKey = normalizeFieldKey(fieldPath);
         fields.push({
-          key: fieldPath,
-          label: prop.title || prop.label || key,
+          key: fieldPath, // Orijinal key (backend için)
+          normalizedKey: normalizedKey, // Normalize edilmiş key (IntelliSense için)
+          label: prop.title || prop.label || normalizedKey,
           type: prop.type || "string",
           component: prop["x-component"],
           required: prop.required || false,
@@ -374,6 +580,7 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
       message,
       fieldSettings,
       buttonSettings,
+      fieldScript: fieldScript, // ✅ Form alanları için script
       buttons: visibleButtons, // Görünür butonlar (gösterim için)
       allButtons: allButtons, // TÜM butonlar (handle'lar için)
       visibleFieldsCount,
@@ -529,6 +736,7 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
             <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
               <Tab label="Alanlar" icon={<VisibilityIcon />} iconPosition="start" />
               <Tab label="Butonlar" icon={<SettingsIcon />} iconPosition="start" />
+              <Tab label="Script" icon={<CodeIcon />} iconPosition="start" />
             </Tabs>
           </Box>
 
@@ -816,6 +1024,142 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
                 </Typography>
               </Box>
             )}
+          </Box>
+          )}
+
+          {/* Script Tab */}
+          {activeTab === 2 && (
+          <Box mb={2}>
+            <Typography variant="subtitle2" fontWeight={600} mb={2}>
+              Form Alanları Script Kontrolü
+            </Typography>
+            
+            <Paper sx={{ p: 2, mb: 2, bgcolor: "info.light", color: "info.contrastText" }}>
+              <Typography variant="body2" fontWeight={600} mb={1}>
+                💡 Script Kullanımı
+              </Typography>
+              <Typography variant="caption" component="div">
+                Script ile form alanlarını dinamik olarak kontrol edebilirsiniz:
+                <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 20 }}>
+                  <li><strong>setFieldVisible(fieldKey, visible)</strong> - Alan görünürlüğünü ayarla</li>
+                  <li><strong>setFieldReadonly(fieldKey, readonly)</strong> - Alan readonly durumunu ayarla</li>
+                  <li><strong>setFieldValue(fieldKey, value)</strong> - Alan değerini ata</li>
+                  <li><strong>getFieldValue(fieldKey)</strong> - Alan değerini oku</li>
+                  <li><strong>formValues</strong> - Tüm form değerlerine erişim</li>
+                </ul>
+              </Typography>
+            </Paper>
+
+            <Box sx={{ border: "1px solid #e0e0e0", borderRadius: 1, overflow: "hidden" }}>
+              <Editor
+                height="400px"
+                defaultLanguage="javascript"
+                value={fieldScript}
+                onChange={(value) => setFieldScript(value || "")}
+                theme="vs-light"
+                onMount={(editor, monacoInstance) => {
+                  setMonacoEditor(editor);
+                  setMonacoInstance(monacoInstance);
+                  
+                  // JavaScript modunda TypeScript tip kontrolünü etkinleştir
+                  monacoInstance.languages.typescript.javascriptDefaults.setCompilerOptions({
+                    allowNonTsExtensions: true,
+                    checkJs: true,
+                    noLib: false,
+                    target: monacoInstance.languages.typescript.ScriptTarget.ES2020,
+                    allowJs: true,
+                    lib: ["ES2020"],
+                  });
+
+                  // Model URI'sini kontrol et ve ayarla
+                  const model = editor.getModel();
+                  if (model) {
+                    console.log("Monaco Editor model URI:", model.uri.toString());
+                    
+                    // Model'in URI'sini JavaScript dosyası olarak ayarla (IntelliSense için)
+                    // Bu, tip tanımlarının çalışması için önemli
+                    const uri = model.uri;
+                    if (!uri.path.endsWith('.js') && !uri.path.endsWith('.ts')) {
+                      // Model URI'sini JavaScript olarak işaretle
+                      console.log("Model URI ayarlandı:", uri.toString());
+                    }
+                  }
+                }}
+                options={{
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  lineNumbers: "on",
+                  scrollBeyondLastLine: false,
+                  wordWrap: "on",
+                  suggestOnTriggerCharacters: true,
+                  quickSuggestions: {
+                    other: true,
+                    comments: false,
+                    strings: true,
+                  },
+                  suggestSelection: "first",
+                  tabSize: 2,
+                  autoIndent: "full",
+                  formatOnPaste: true,
+                  formatOnType: true,
+                  acceptSuggestionOnCommitCharacter: true,
+                  acceptSuggestionOnEnter: "on",
+                  snippetSuggestions: "top",
+                }}
+              />
+            </Box>
+
+            {/* Form Alanları Listesi */}
+            {formFields.length > 0 && (
+              <Box mt={2}>
+                <Typography variant="caption" color="textSecondary" display="block" mb={1}>
+                  📋 Mevcut Form Alanları (IntelliSense&apos;te otomatik görünecek):
+                </Typography>
+                <Paper sx={{ p: 2, bgcolor: "grey.50", maxHeight: "150px", overflowY: "auto" }}>
+                  <Box display="flex" flexWrap="wrap" gap={1}>
+                    {formFields.map((field) => (
+                      <Chip
+                        key={field.key}
+                        label={`${field.label || field.key} (${field.type})`}
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontSize: "0.7rem" }}
+                      />
+                    ))}
+                  </Box>
+                </Paper>
+              </Box>
+            )}
+
+            <Box mt={2}>
+              <Typography variant="caption" color="textSecondary" display="block" mb={1}>
+                💡 Örnek Script:
+              </Typography>
+              <Paper sx={{ p: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
+{`// Örnek: Eğer "musteriTipi" alanı "Bireysel" ise "vergiNo" alanını gizle
+// Not: Alan adlarını yazarken IntelliSense ile otomatik tamamlama yapabilirsiniz
+if (getFieldValue("musteriTipi") === "Bireysel") {
+  setFieldVisible("vergiNo", false);
+} else {
+  setFieldVisible("vergiNo", true);
+}
+
+// Örnek: "tutar" alanı 1000'den büyükse "onayGerekli" alanını readonly yap
+if (getFieldValue("tutar") > 1000) {
+  setFieldReadonly("onayGerekli", true);
+}
+
+// Örnek: "toplamTutar" alanını otomatik hesapla
+const tutar1 = getFieldValue("tutar1") || 0;
+const tutar2 = getFieldValue("tutar2") || 0;
+setFieldValue("toplamTutar", tutar1 + tutar2);
+
+// Örnek: formValues ile tüm form değerlerine erişim
+// formValues.alanAdi şeklinde kullanabilirsiniz (IntelliSense destekler)`}
+                </pre>
+              </Paper>
+            </Box>
           </Box>
           )}
         </Box>
