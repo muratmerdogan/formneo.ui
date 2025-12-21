@@ -3757,12 +3757,11 @@ export interface WorkCompanyUpdateDto {
 
 
 export interface WorkFlowContiuneApiDto {
-    'approveItem'?: string | null;
     'workFlowItemId'?: string | null;
     'userName'?: string | null;
-    'input'?: string | null;
+    'action'?: string | null;
+    'formData'?: string | null;
     'note'?: string | null;
-    'numberManDay'?: string | null;
 }
 export interface WorkFlowDefination {
     'id'?: string;
@@ -3924,6 +3923,8 @@ export interface WorkflowHead {
     'createUser'?: string | null;
     'workflowItems'?: Array<WorkflowItem> | null;
     'formInstance'?: FormInstance;
+    'formId'?: string | null;
+    'form'?: Form;
     'workFlowDefinationId'?: string;
     'workFlowDefination'?: WorkFlowDefination;
     'workFlowDefinationJson'?: string | null;
