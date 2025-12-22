@@ -56,6 +56,8 @@ const Charts = lazy(() => import("layouts/pages/charts"));
 const Notifications = lazy(() => import("layouts/pages/notifications"));
 const Kanban = lazy(() => import("layouts/applications/kanban"));
 const Wizard = lazy(() => import("layouts/applications/wizard"));
+
+const ContactListPage = lazy(() => import("pages/contact/ContactListPage"));
 const ContactPage = lazy(() => import("pages/contact/ContactPage"));
 
 const Calendar = lazy(() => import("layouts/applications/calendar"));
@@ -151,6 +153,15 @@ const QRMenuPreviewPage = lazy(() => import("pages/qrmenu/QRMenuPreviewPage"));
 
 
 const routes = [
+
+  {
+    type: "collapse",
+    name: "İletişim Mesajları",
+    key: "contact-messages",
+    icon: <Icon fontSize="small">email</Icon>,
+    route: "/contact-messages",
+    component: <ContactListPage />,
+  },
 
   {
     type: "collapse",
