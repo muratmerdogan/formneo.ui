@@ -31,6 +31,7 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                 </Typography>
 
                 <Grid container spacing={2}>
+                    {/* Tenant Rolleri */}
                     <Grid item xs={12} md={4}>
                         <Card
                             className="project-info-card"
@@ -54,6 +55,7 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             </Typography>
                         </Card>
                     </Grid>
+                    {/* Tenant Kullanıcıları */}
                     <Grid item xs={12} md={4}>
                         <Card
                             className="project-info-card"
@@ -77,6 +79,7 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             </Typography>
                         </Card>
                     </Grid>
+                    {/* Tenant Kullanıcı Atama */}
                     <Grid item xs={12} md={4}>
                         <Card
                             className="project-info-card"
@@ -100,6 +103,7 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             </Typography>
                         </Card>
                     </Grid>
+                    {/* Tenant İzinleri */}
                     <Grid item xs={12} md={4}>
                         <Card className="project-info-card" style={{ cursor: "pointer" }} onClick={() => navigate("/tenants/management/permissions", { state: { tenantId: selectedTenant?.id || selectedTenant?.clientId, tenantName: selectedTenant?.name || selectedTenant?.clientName || selectedTenant?.title } })}>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -107,6 +111,17 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 Erişim ve yetkilendirme
+                            </Typography>
+                        </Card>
+                    </Grid>
+                    {/* İletişim Mesajları */}
+                    <Grid item xs={12} md={4}>
+                        <Card className="project-info-card" style={{ cursor: "pointer" }} onClick={() => navigate("/contact-messages") }>
+                            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                <Icon color="info">email</Icon> İletişim Mesajları
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                Kullanıcıdan gelen iletişim mesajlarını görüntüle
                             </Typography>
                         </Card>
                     </Grid>
