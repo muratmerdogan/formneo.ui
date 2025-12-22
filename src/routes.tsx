@@ -154,13 +154,39 @@ const QRMenuPreviewPage = lazy(() => import("pages/qrmenu/QRMenuPreviewPage"));
 
 const routes = [
 
+
   {
     type: "collapse",
-    name: "İletişim Mesajları",
-    key: "contact-messages",
-    icon: <Icon fontSize="small">email</Icon>,
-    route: "/contact-messages",
-    component: <ContactListPage />,
+    name: "Tenant Admin",
+    key: "tenant-admin",
+    icon: <Icon fontSize="medium">admin_panel_settings</Icon>,
+    collapse: [
+      {
+        name: "Form Yetkisi",
+        key: "form-role",
+        route: "/tenant/form-role",
+        component: <TenantsManagement />,
+      },
+      {
+        name: "Sistem Ayarları",
+        key: "settings-parameters",
+        route: "/settings/parameters",
+        component: <ParametersPage />,
+      },
+      {
+        name: "Tenant Kullanıcı Yönetimi",
+        key: "tenant-users",
+        route: "/tenant/users",
+        component: <TenantUsers />,
+      },
+      {
+        name: "İletişim Mesajları",
+        key: "contact-messages",
+        icon: <Icon fontSize="small">email</Icon>,
+        route: "/contact-messages",
+        component: <ContactListPage />,
+      },
+    ],
   },
 
   {
