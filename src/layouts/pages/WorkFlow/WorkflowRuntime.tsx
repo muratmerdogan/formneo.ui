@@ -57,6 +57,105 @@ export default function WorkflowRuntime(): JSX.Element {
   const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
 
   /**
+   * ✅ Schema'yı fieldScript'e göre modifiye et
+   * Script'teki setFieldVisible çağrılarını analiz edip schema'yı modifiye eder
+   * Bu sayede alanlar render edilmeden önce gizli olur (flash olmaz)
+   */
+  const applyScriptToSchema = (script: string, schema: any, formValues: any = {}): any => {
+    if (!script || !script.trim() || !schema) {
+      return schema;
+    }
+
+    try {
+      // Script'teki setFieldVisible çağrılarını yakalamak için mock fonksiyonlar
+      const visibilityMap: Record<string, boolean> = {};
+      const readonlyMap: Record<string, boolean> = {};
+      
+      const setFieldVisible = (fieldKey: string, visible: boolean) => {
+        visibilityMap[fieldKey] = visible;
+      };
+
+      const setFieldReadonly = (fieldKey: string, readonly: boolean) => {
+        readonlyMap[fieldKey] = readonly;
+      };
+
+      const setFieldValue = (_fieldKey: string, _value: any) => {
+        // Schema modifikasyonunda değer atama yapmıyoruz
+      };
+
+      const getFieldValue = (fieldKey: string): any => {
+        // Form values'dan değer oku
+        return formValues[fieldKey];
+      };
+
+      // Script'i çalıştır ve visibility/readonly map'lerini doldur
+      const scriptFunction = new Function(
+        "setFieldVisible",
+        "setFieldReadonly",
+        "setFieldValue",
+        "getFieldValue",
+        "formValues",
+        script
+      );
+
+      scriptFunction(
+        setFieldVisible,
+        setFieldReadonly,
+        setFieldValue,
+        getFieldValue,
+        formValues
+      );
+
+      // Schema'yı modifiye et
+      const modifiedSchema = JSON.parse(JSON.stringify(schema)); // Deep copy
+      
+      const applyToProperties = (properties: any, path: string = "") => {
+        if (!properties) return;
+        
+        Object.keys(properties).forEach(key => {
+          const prop = properties[key];
+          const fieldPath = path ? `${path}.${key}` : key;
+          
+          // Visibility kontrolü
+          if (visibilityMap.hasOwnProperty(fieldPath) || visibilityMap.hasOwnProperty(key)) {
+            const visible = visibilityMap[fieldPath] ?? visibilityMap[key];
+            if (!visible) {
+              prop["x-display"] = "hidden";
+            } else {
+              prop["x-display"] = "visible";
+            }
+          }
+          
+          // Readonly kontrolü
+          if (readonlyMap.hasOwnProperty(fieldPath) || readonlyMap.hasOwnProperty(key)) {
+            const readonly = readonlyMap[fieldPath] ?? readonlyMap[key];
+            if (readonly) {
+              prop["x-pattern"] = "readOnly";
+            } else {
+              prop["x-pattern"] = "editable";
+            }
+          }
+          
+          // Nested properties varsa recursive olarak işle
+          if (prop.properties) {
+            applyToProperties(prop.properties, fieldPath);
+          }
+        });
+      };
+
+      if (modifiedSchema.properties) {
+        applyToProperties(modifiedSchema.properties);
+      }
+
+      console.log("✅ Schema fieldScript'e göre modifiye edildi");
+      return modifiedSchema;
+    } catch (error) {
+      console.error("❌ Schema modifikasyonu sırasında hata:", error);
+      return schema; // Hata durumunda orijinal schema'yı döndür
+    }
+  };
+
+  /**
    * ✅ FieldScript'i çalıştır
    * FormTaskNode'dan gelen fieldScript'i çalıştırır ve form alanlarını kontrol eder
    */
@@ -195,16 +294,51 @@ export default function WorkflowRuntime(): JSX.Element {
 
 
         // Schema'yı oluştur
-        if (parsed.schema) {
-          setSchema(parsed.schema);
-        } else {
+        let finalSchema = parsed.schema;
+        if (!finalSchema) {
           // Eski format için schema oluştur
-          const schema = {
+          finalSchema = {
             type: "object",
             properties: {},
           };
-          setSchema(schema);
         }
+
+        // ✅ FieldScript varsa schema'yı modifiye et (flash önleme)
+        // Script'i schema yüklenirken çalıştırıp schema'yı modifiye ediyoruz
+        // Böylece alanlar render edilmeden önce gizli olur
+        const fieldScript = taskDetail?.fieldScript;
+        if (fieldScript && fieldScript.trim()) {
+          // FormData henüz yüklenmemiş olabilir, ama varsa kullan
+          // workflowInstance veya taskDetail'den formData'yı al
+          let initialFormValues: any = {};
+          try {
+            const incomingFormData = workflowInstance?.formData || taskDetail?.formData;
+            if (incomingFormData) {
+              const parsed = typeof incomingFormData === "string" 
+                ? JSON.parse(incomingFormData) 
+                : incomingFormData;
+              if (parsed && typeof parsed === "object") {
+                initialFormValues = parsed.formData && typeof parsed.formData === "object"
+                  ? parsed.formData
+                  : parsed.formData && typeof parsed.formData === "string"
+                  ? JSON.parse(parsed.formData)
+                  : parsed;
+              }
+            }
+          } catch (e) {
+            // FormData parse edilemezse boş obje kullan
+            console.warn("⚠️ FormData parse edilemedi, boş obje kullanılıyor");
+          }
+          
+          try {
+            finalSchema = applyScriptToSchema(fieldScript, finalSchema, initialFormValues);
+            console.log("✅ Schema fieldScript'e göre modifiye edildi (flash önlendi)");
+          } catch (error) {
+            console.warn("⚠️ Schema modifikasyonu sırasında hata, orijinal schema kullanılıyor:", error);
+          }
+        }
+
+        setSchema(finalSchema);
 
         // Button panel'i yükle
         if (parsed.buttonPanel?.buttons && Array.isArray(parsed.buttonPanel.buttons)) {
@@ -227,7 +361,7 @@ export default function WorkflowRuntime(): JSX.Element {
     };
 
     load();
-  }, [workflowInstance?.formId]);
+  }, [workflowInstance?.formId, taskDetail?.fieldScript]);
 
   // ✅ FormData'yı location.state'den al ve form'a initial values olarak ver
   // Schema yüklendikten SONRA formData'yı set et (Formily için önemli)
@@ -303,7 +437,9 @@ export default function WorkflowRuntime(): JSX.Element {
     }
   }, [workflowInstance?.formData, taskDetail?.formData, form, schema, loading]);
 
-  // ✅ FieldScript'i çalıştır - Form yüklendikten sonra
+  // ✅ FieldScript'i çalıştır - FormData yüklendikten sonra (değer atamaları için)
+  // Not: Visibility kontrolleri schema yüklenirken yapıldı (flash önleme)
+  // Burada sadece değer atamaları ve dinamik kontroller yapılır
   useEffect(() => {
     // Yeni bir taskDetail geldiğinde ref'i sıfırla
     if (taskDetail?.fieldScript) {
@@ -327,16 +463,17 @@ export default function WorkflowRuntime(): JSX.Element {
     // formData state'i set edildikten sonra script'i çalıştır
     const timeout = setTimeout(() => {
       const formValues = form.values;
-      // FormData yüklenmişse script'i çalıştır
+      // FormData yüklenmişse script'i çalıştır (değer atamaları için)
+      // Visibility zaten schema'da ayarlandı, burada sadece dinamik kontroller yapılır
       if (formValues && Object.keys(formValues).length > 0) {
-        console.log("📝 FieldScript çalıştırılıyor, form values:", formValues);
+        console.log("📝 FieldScript çalıştırılıyor (değer atamaları için), form values:", formValues);
         executeFieldScript(fieldScript, form);
         scriptExecutedRef.current = true; // Script çalıştırıldı olarak işaretle
       } else {
         // FormData henüz yüklenmemiş, tekrar dene
         console.log("⏳ FormData henüz yüklenmedi, script çalıştırma erteleniyor...");
       }
-    }, 300); // FormData yüklendikten sonra biraz bekle
+    }, 100); // FormData yüklendikten sonra kısa bir bekleme (visibility zaten schema'da)
 
     return () => clearTimeout(timeout);
   }, [taskDetail?.fieldScript, form, schema, loading, formData]);
