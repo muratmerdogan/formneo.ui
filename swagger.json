@@ -2249,6 +2249,18 @@
         }
       }
     },
+    "/api/Contact/GetAllContacts": {
+      "get": {
+        "tags": [
+          "Contact"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Contact/SendContact": {
       "post": {
         "tags": [
