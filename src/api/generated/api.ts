@@ -12749,11 +12749,6 @@ export interface TaskFormDto {
      * @memberof TaskFormDto
      */
     'formItemStatus'?: FormItemStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof TaskFormDto
-     */
     'approveItemId'?: string | null;
     /**
      * 
@@ -18873,17 +18868,6 @@ export interface WorkCompanyUpdateDto {
  * @interface WorkFlowContiuneApiDto
  */
 export interface WorkFlowContiuneApiDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
-    'approveItem'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
     'workFlowItemId'?: string | null;
     /**
      * 
@@ -18909,18 +18893,7 @@ export interface WorkFlowContiuneApiDto {
      * @memberof WorkFlowContiuneApiDto
      */
     'note'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof WorkFlowContiuneApiDto
-     */
-    'numberManDay'?: string | null;
 }
-/**
- * 
- * @export
- * @interface WorkFlowDefination
- */
 export interface WorkFlowDefination {
     /**
      * 
