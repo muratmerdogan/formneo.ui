@@ -18,6 +18,7 @@ import * as AntdFormily from "@formily/antd";
 import { Button as AntButton, message, Card as AntdCard, Slider as AntdSlider, Rate as AntdRate } from "antd";
 import * as Icons from "@ant-design/icons";
 import { WorkFlowContiuneApiDto } from "api/generated";
+import CurrencyInput from "../FormEditor/custom/CurrencyInput";
 
 
 interface FormButton {
@@ -54,7 +55,7 @@ export default function WorkflowRuntime(): JSX.Element {
   const taskDetail = location.state?.taskDetail;
 
   const form = useMemo(() => createForm(), []);
-  const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
+  const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), CurrencyInput, Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
 
   /**
    * ✅ Schema'yı fieldScript'e göre modifiye et
