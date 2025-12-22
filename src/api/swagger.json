@@ -26233,6 +26233,10 @@
           "formItemStatus": {
             "$ref": "#/components/schemas/FormItemStatus"
           },
+          "fieldScript": {
+            "type": "string",
+            "nullable": true
+          },
           "approveItemId": {
             "type": "string",
             "format": "uuid",
@@ -30517,6 +30521,10 @@
       "WorkFlowContiuneApiDto": {
         "type": "object",
         "properties": {
+          "approveItem": {
+            "type": "string",
+            "nullable": true
+          },
           "workFlowItemId": {
             "type": "string",
             "nullable": true
@@ -30534,6 +30542,10 @@
             "nullable": true
           },
           "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberManDay": {
             "type": "string",
             "nullable": true
           }

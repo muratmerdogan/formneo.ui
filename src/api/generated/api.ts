@@ -2578,6 +2578,7 @@ export interface TaskFormDto {
     'formDescription'?: string | null;
     'formUser'?: string | null;
     'formItemStatus'?: FormItemStatus;
+    'fieldScript'?: string | null;
     'approveItemId'?: string | null;
     'approveUser'?: string | null;
     'approveUserNameSurname'?: string | null;
@@ -3757,11 +3758,13 @@ export interface WorkCompanyUpdateDto {
 
 
 export interface WorkFlowContiuneApiDto {
+    'approveItem'?: string | null;
     'workFlowItemId'?: string | null;
     'userName'?: string | null;
     'action'?: string | null;
     'formData'?: string | null;
     'note'?: string | null;
+    'numberManDay'?: string | null;
 }
 export interface WorkFlowDefination {
     'id'?: string;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { FormDataApi, WorkFlowApi, UserApi, WorkFlowStartApiDto, AlertNodeInfo } from "api/generated";
 import getConfiguration from "confiuration";
@@ -46,6 +46,7 @@ export default function WorkflowRuntime(): JSX.Element {
   const [formData, setFormData] = useState<any>({});
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<string>("");
+  const scriptExecutedRef = useRef<boolean>(false); // Script'in çalıştırılıp çalıştırılmadığını takip et
 
   // Workflow instance bilgisi (location.state'den gelir)
   const workflowInstance = location.state?.workflowInstance;
@@ -54,6 +55,98 @@ export default function WorkflowRuntime(): JSX.Element {
 
   const form = useMemo(() => createForm(), []);
   const SchemaField = useMemo(() => createSchemaField({ components: { ...(AntdFormily as any), Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }), []);
+
+  /**
+   * ✅ FieldScript'i çalıştır
+   * FormTaskNode'dan gelen fieldScript'i çalıştırır ve form alanlarını kontrol eder
+   */
+  const executeFieldScript = (script: string, formInstance: any) => {
+    if (!script || !script.trim() || !formInstance) {
+      return;
+    }
+
+    try {
+      // Formily form instance'ından helper fonksiyonları oluştur
+      const setFieldVisible = (fieldKey: string, visible: boolean) => {
+        try {
+          const field = formInstance.query(fieldKey).take();
+          if (field) {
+            // Formily'de display property'si ile görünürlük kontrol edilir
+            if (visible) {
+              field.setDisplay("visible");
+            } else {
+              field.setDisplay("hidden");
+            }
+          } else {
+            console.warn(`⚠️ Field bulunamadı: ${fieldKey}`);
+          }
+        } catch (error) {
+          console.warn(`⚠️ setFieldVisible hatası (${fieldKey}):`, error);
+        }
+      };
+
+      const setFieldReadonly = (fieldKey: string, readonly: boolean) => {
+        try {
+          const field = formInstance.query(fieldKey).take();
+          if (field) {
+            if (readonly) {
+              field.setPattern("readOnly");
+            } else {
+              field.setPattern("editable");
+            }
+          } else {
+            console.warn(`⚠️ Field bulunamadı: ${fieldKey}`);
+          }
+        } catch (error) {
+          console.warn(`⚠️ setFieldReadonly hatası (${fieldKey}):`, error);
+        }
+      };
+
+      const setFieldValue = (fieldKey: string, value: any) => {
+        try {
+          formInstance.setFieldValue(fieldKey, value);
+        } catch (error) {
+          console.warn(`⚠️ setFieldValue hatası (${fieldKey}):`, error);
+        }
+      };
+
+      const getFieldValue = (fieldKey: string): any => {
+        try {
+          return formInstance.getFieldValue(fieldKey);
+        } catch (error) {
+          console.warn(`⚠️ getFieldValue hatası (${fieldKey}):`, error);
+          return undefined;
+        }
+      };
+
+      // Form values'ı global değişken olarak erişilebilir yap
+      const formValues = formInstance.values || {};
+
+      // Script'i güvenli bir şekilde çalıştır
+      // Function constructor kullanarak script'i çalıştırıyoruz
+      const scriptFunction = new Function(
+        "setFieldVisible",
+        "setFieldReadonly",
+        "setFieldValue",
+        "getFieldValue",
+        "formValues",
+        script
+      );
+
+      console.log("🚀 FieldScript çalıştırılıyor...");
+      scriptFunction(
+        setFieldVisible,
+        setFieldReadonly,
+        setFieldValue,
+        getFieldValue,
+        formValues
+      );
+      console.log("✅ FieldScript başarıyla çalıştırıldı");
+    } catch (error) {
+      console.error("❌ FieldScript çalıştırılırken hata:", error);
+      console.error("❌ Script içeriği:", script);
+    }
+  };
 
   // Kullanıcı bilgisini yükle
   useEffect(() => {
@@ -209,6 +302,44 @@ export default function WorkflowRuntime(): JSX.Element {
       console.log("⏳ FormData var ama schema henüz yüklenmedi, bekleniyor...");
     }
   }, [workflowInstance?.formData, taskDetail?.formData, form, schema, loading]);
+
+  // ✅ FieldScript'i çalıştır - Form yüklendikten sonra
+  useEffect(() => {
+    // Yeni bir taskDetail geldiğinde ref'i sıfırla
+    if (taskDetail?.fieldScript) {
+      scriptExecutedRef.current = false;
+    }
+
+    // Script zaten çalıştırıldıysa tekrar çalıştırma
+    if (scriptExecutedRef.current) {
+      return;
+    }
+
+    // fieldScript'i taskDetail'den al
+    const fieldScript = taskDetail?.fieldScript;
+    
+    // Script yoksa veya form/schema hazır değilse çık
+    if (!fieldScript || !fieldScript.trim() || !form || !schema || loading) {
+      return;
+    }
+
+    // FormData yüklenene kadar bekle (form.values hazır olmalı)
+    // formData state'i set edildikten sonra script'i çalıştır
+    const timeout = setTimeout(() => {
+      const formValues = form.values;
+      // FormData yüklenmişse script'i çalıştır
+      if (formValues && Object.keys(formValues).length > 0) {
+        console.log("📝 FieldScript çalıştırılıyor, form values:", formValues);
+        executeFieldScript(fieldScript, form);
+        scriptExecutedRef.current = true; // Script çalıştırıldı olarak işaretle
+      } else {
+        // FormData henüz yüklenmemiş, tekrar dene
+        console.log("⏳ FormData henüz yüklenmedi, script çalıştırma erteleniyor...");
+      }
+    }, 300); // FormData yüklendikten sonra biraz bekle
+
+    return () => clearTimeout(timeout);
+  }, [taskDetail?.fieldScript, form, schema, loading, formData]);
 
   /**
    * ✅ Form butonuna tıklandığında - Backend'e workflow başlatma isteği gönder

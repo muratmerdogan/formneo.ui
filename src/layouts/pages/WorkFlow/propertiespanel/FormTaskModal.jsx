@@ -24,6 +24,19 @@ import {
   ButtonGroup,
   Card,
   CardContent,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import {
   Close as CloseIcon,
@@ -40,6 +53,11 @@ import {
   SelectAll as SelectAllIcon,
   Deselect as DeselectIcon,
   Code as CodeIcon,
+  ContentCopy as ContentCopyIcon,
+  PlayArrow as PlayArrowIcon,
+  BugReport as BugReportIcon,
+  TableChart as TableChartIcon,
+  FormatListBulleted as FormatListBulletedIcon,
 } from "@mui/icons-material";
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -71,9 +89,130 @@ const FormTaskModal = ({ open, onClose, initialValues, node, onSave, workflowFor
   const [inputValue, setInputValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [fieldScript, setFieldScript] = useState(initialValues?.fieldScript || "");
+  const [scriptEventType, setScriptEventType] = useState(initialValues?.scriptEventType || "onLoad"); // "onLoad" | "onChange" | "both"
   const [monacoEditor, setMonacoEditor] = useState(null);
   const [monacoInstance, setMonacoInstance] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [showFieldReference, setShowFieldReference] = useState(false);
   const dispatchBusy = useBusy();
+
+  // Script şablonları
+  const scriptTemplates = {
+    "": "Özel Script",
+    "conditional-visibility": `// Koşullu Görünürlük Şablonu
+// Eğer bir alan belirli bir değere sahipse, diğer alanları göster/gizle
+
+const anaAlan = getFieldValue("anaAlan");
+if (anaAlan === "Değer1") {
+  setFieldVisible("gizliAlan1", true);
+  setFieldVisible("gizliAlan2", false);
+} else if (anaAlan === "Değer2") {
+  setFieldVisible("gizliAlan1", false);
+  setFieldVisible("gizliAlan2", true);
+}`,
+    "auto-calculation": `// Otomatik Hesaplama Şablonu
+// Birden fazla alanı toplayıp sonucu başka bir alana yaz
+
+const deger1 = parseFloat(getFieldValue("deger1") || 0);
+const deger2 = parseFloat(getFieldValue("deger2") || 0);
+const deger3 = parseFloat(getFieldValue("deger3") || 0);
+
+const toplam = deger1 + deger2 + deger3;
+setFieldValue("toplam", toplam);`,
+    "readonly-condition": `// Koşullu Readonly Şablonu
+// Belirli koşullarda alanları readonly yap
+
+const durum = getFieldValue("durum");
+if (durum === "Onaylandi" || durum === "Reddedildi") {
+  setFieldReadonly("aciklama", true);
+  setFieldReadonly("notlar", true);
+} else {
+  setFieldReadonly("aciklama", false);
+  setFieldReadonly("notlar", false);
+}`,
+    "form-validation": `// Form Validasyon Şablonu
+// Alan değerlerini kontrol et ve uygun aksiyonlar al
+
+const yas = parseInt(getFieldValue("yas") || 0);
+if (yas < 18) {
+  setFieldVisible("veliBilgileri", true);
+  setFieldReadonly("veliBilgileri", false);
+} else {
+  setFieldVisible("veliBilgileri", false);
+}
+
+const email = getFieldValue("email");
+if (email && !email.includes("@")) {
+  // Email formatı hatalı - backend'de kontrol edilebilir
+  console.warn("Email formatı hatalı");
+}`,
+    "date-calculation": `// Tarih Hesaplama Şablonu
+// Tarih alanlarından süre hesapla
+
+const baslangic = getFieldValue("baslangicTarihi");
+const bitis = getFieldValue("bitisTarihi");
+
+if (baslangic && bitis) {
+  const baslangicDate = new Date(baslangic);
+  const bitisDate = new Date(bitis);
+  const gunFarki = Math.ceil((bitisDate - baslangicDate) / (1000 * 60 * 60 * 24));
+  
+  if (gunFarki > 0) {
+    setFieldValue("gunSayisi", gunFarki);
+  }
+}`,
+  };
+
+  // Şablon seçildiğinde script'i güncelle
+  const handleTemplateChange = (templateKey) => {
+    setSelectedTemplate(templateKey);
+    if (templateKey && scriptTemplates[templateKey]) {
+      setFieldScript(scriptTemplates[templateKey]);
+    }
+  };
+
+  // Hızlı işlemler
+  const quickActions = {
+    "hide-all": () => {
+      const script = formFields.map(field => {
+        const key = field.normalizedKey || field.key;
+        return `setFieldVisible("${key}", false);`;
+      }).join("\n");
+      setFieldScript(script);
+    },
+    "show-all": () => {
+      const script = formFields.map(field => {
+        const key = field.normalizedKey || field.key;
+        return `setFieldVisible("${key}", true);`;
+      }).join("\n");
+      setFieldScript(script);
+    },
+    "readonly-all": () => {
+      const script = formFields.map(field => {
+        const key = field.normalizedKey || field.key;
+        return `setFieldReadonly("${key}", true);`;
+      }).join("\n");
+      setFieldScript(script);
+    },
+    "enable-all": () => {
+      const script = formFields.map(field => {
+        const key = field.normalizedKey || field.key;
+        return `setFieldReadonly("${key}", false);`;
+      }).join("\n");
+      setFieldScript(script);
+    },
+    "debug-template": () => {
+      const script = `// Debug Template - Tüm alanları console'a yazdır
+console.log("=== Form Değerleri ===");
+${formFields.map(field => {
+  const key = field.normalizedKey || field.key;
+  return `console.log("${key}:", getFieldValue("${key}"));`;
+}).join("\n")}
+console.log("=== Tüm Form Values ===");
+console.log(formValues);`;
+      setFieldScript(script);
+    },
+  };
 
   // Monaco Editor için IntelliSense tip tanımlarını oluştur ve güncelle
   useEffect(() => {
@@ -1034,19 +1173,90 @@ declare var formValues: Record<string, any>;
               Form Alanları Script Kontrolü
             </Typography>
             
+            {/* Script Şablonları ve Hızlı İşlemler */}
+            <Box mb={2} display="flex" gap={2} flexWrap="wrap">
+              <FormControl size="small" sx={{ minWidth: 200 }}>
+                <InputLabel>📝 Script Şablonu</InputLabel>
+                <Select
+                  value={selectedTemplate}
+                  label="📝 Script Şablonu"
+                  onChange={(e) => handleTemplateChange(e.target.value)}
+                >
+                  <MenuItem value="">Özel Script</MenuItem>
+                  <MenuItem value="conditional-visibility">Koşullu Görünürlük</MenuItem>
+                  <MenuItem value="auto-calculation">Otomatik Hesaplama</MenuItem>
+                  <MenuItem value="readonly-condition">Koşullu Readonly</MenuItem>
+                  <MenuItem value="form-validation">Form Validasyon</MenuItem>
+                  <MenuItem value="date-calculation">Tarih Hesaplama</MenuItem>
+                </Select>
+              </FormControl>
+
+              <Box display="flex" gap={1} flexWrap="wrap">
+                <MDButton
+                  size="small"
+                  variant="outlined"
+                  color="info"
+                  onClick={quickActions["hide-all"]}
+                  startIcon={<VisibilityOffIcon />}
+                >
+                  Tümünü Gizle
+                </MDButton>
+                <MDButton
+                  size="small"
+                  variant="outlined"
+                  color="info"
+                  onClick={quickActions["show-all"]}
+                  startIcon={<VisibilityIcon />}
+                >
+                  Tümünü Göster
+                </MDButton>
+                <MDButton
+                  size="small"
+                  variant="outlined"
+                  color="warning"
+                  onClick={quickActions["readonly-all"]}
+                  startIcon={<LockIcon />}
+                >
+                  Tümünü Readonly
+                </MDButton>
+                <MDButton
+                  size="small"
+                  variant="outlined"
+                  color="success"
+                  onClick={quickActions["enable-all"]}
+                  startIcon={<LockOpenIcon />}
+                >
+                  Tümünü Aktif
+                </MDButton>
+                <MDButton
+                  size="small"
+                  variant="outlined"
+                  color="secondary"
+                  onClick={quickActions["debug-template"]}
+                  startIcon={<BugReportIcon />}
+                >
+                  Debug Template
+                </MDButton>
+              </Box>
+            </Box>
+
             <Paper sx={{ p: 2, mb: 2, bgcolor: "info.light", color: "info.contrastText" }}>
               <Typography variant="body2" fontWeight={600} mb={1}>
-                💡 Script Kullanımı
+                💡 Script Kullanımı - Form Alanlarını Kontrol Etme
               </Typography>
               <Typography variant="caption" component="div">
                 Script ile form alanlarını dinamik olarak kontrol edebilirsiniz:
                 <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 20 }}>
-                  <li><strong>setFieldVisible(fieldKey, visible)</strong> - Alan görünürlüğünü ayarla</li>
-                  <li><strong>setFieldReadonly(fieldKey, readonly)</strong> - Alan readonly durumunu ayarla</li>
-                  <li><strong>setFieldValue(fieldKey, value)</strong> - Alan değerini ata</li>
-                  <li><strong>getFieldValue(fieldKey)</strong> - Alan değerini oku</li>
-                  <li><strong>formValues</strong> - Tüm form değerlerine erişim</li>
+                  <li><strong>setFieldVisible(fieldKey, visible)</strong> - Component&apos;i gizle/göster (true=görünür, false=gizli)</li>
+                  <li><strong>setFieldReadonly(fieldKey, readonly)</strong> - Component&apos;i readonly yap (true=readonly, false=düzenlenebilir)</li>
+                  <li><strong>setFieldValue(fieldKey, value)</strong> - Component&apos;e değer ata</li>
+                  <li><strong>getFieldValue(fieldKey)</strong> - Component&apos;ten değer oku</li>
+                  <li><strong>formValues</strong> - Tüm form değerlerine erişim (formValues.alanAdi)</li>
                 </ul>
+                <Typography variant="caption" component="div" mt={1} sx={{ fontStyle: "italic" }}>
+                  💡 İpucu: Alan adlarını yazarken IntelliSense ile otomatik tamamlama yapabilirsiniz. 
+                  getFieldValue(&quot; yazdığınızda form alanları otomatik görünecektir.
+                </Typography>
               </Typography>
             </Paper>
 
@@ -1109,54 +1319,212 @@ declare var formValues: Record<string, any>;
               />
             </Box>
 
-            {/* Form Alanları Listesi */}
+            {/* Form Alanları Referans Tablosu */}
             {formFields.length > 0 && (
-              <Box mt={2}>
-                <Typography variant="caption" color="textSecondary" display="block" mb={1}>
-                  📋 Mevcut Form Alanları (IntelliSense&apos;te otomatik görünecek):
-                </Typography>
-                <Paper sx={{ p: 2, bgcolor: "grey.50", maxHeight: "150px", overflowY: "auto" }}>
-                  <Box display="flex" flexWrap="wrap" gap={1}>
-                    {formFields.map((field) => (
-                      <Chip
-                        key={field.key}
-                        label={`${field.label || field.key} (${field.type})`}
-                        size="small"
-                        variant="outlined"
-                        sx={{ fontSize: "0.7rem" }}
-                      />
-                    ))}
-                  </Box>
-                </Paper>
-              </Box>
+              <Accordion expanded={showFieldReference} onChange={(e, expanded) => setShowFieldReference(expanded)} sx={{ mt: 2 }}>
+                <AccordionSummary expandIcon={<TableChartIcon />}>
+                  <Typography variant="subtitle2" fontWeight={600}>
+                    📋 Form Alanları Referans Tablosu ({formFields.length} alan)
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <TableContainer>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell><strong>Alan Adı</strong></TableCell>
+                          <TableCell><strong>Label</strong></TableCell>
+                          <TableCell><strong>Tip</strong></TableCell>
+                          <TableCell><strong>Component</strong></TableCell>
+                          <TableCell><strong>Zorunlu</strong></TableCell>
+                          <TableCell><strong>İşlemler</strong></TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {formFields.map((field) => {
+                          const normalizedKey = field.normalizedKey || field.key;
+                          return (
+                            <TableRow key={field.key}>
+                              <TableCell>
+                                <code style={{ fontSize: "0.75rem", color: "#1976d2" }}>
+                                  {normalizedKey}
+                                </code>
+                              </TableCell>
+                              <TableCell>{field.label || "-"}</TableCell>
+                              <TableCell>
+                                <Chip label={field.type} size="small" variant="outlined" />
+                              </TableCell>
+                              <TableCell>
+                                <Typography variant="caption">{field.component || "-"}</Typography>
+                              </TableCell>
+                              <TableCell>
+                                {field.required ? (
+                                  <Chip label="Evet" size="small" color="error" />
+                                ) : (
+                                  <Chip label="Hayır" size="small" />
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    const script = `getFieldValue("${normalizedKey}");`;
+                                    setFieldScript(fieldScript + "\n" + script);
+                                  }}
+                                  title="Değer oku"
+                                >
+                                  <ContentCopyIcon fontSize="small" />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </AccordionDetails>
+              </Accordion>
             )}
 
             <Box mt={2}>
-              <Typography variant="caption" color="textSecondary" display="block" mb={1}>
-                💡 Örnek Script:
+              <Typography variant="caption" color="textSecondary" display="block" mb={1} fontWeight={600}>
+                💡 Detaylı Kullanım Örnekleri:
               </Typography>
-              <Paper sx={{ p: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+              
+              {/* Örnek 1: Component Gizleme */}
+              <Paper sx={{ p: 2, mb: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <Typography variant="caption" fontWeight={600} display="block" mb={1} color="primary.main">
+                  1️⃣ Component Gizleme/Gösterme:
+                </Typography>
                 <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
 {`// Örnek: Eğer "musteriTipi" alanı "Bireysel" ise "vergiNo" alanını gizle
-// Not: Alan adlarını yazarken IntelliSense ile otomatik tamamlama yapabilirsiniz
 if (getFieldValue("musteriTipi") === "Bireysel") {
-  setFieldVisible("vergiNo", false);
+  setFieldVisible("vergiNo", false);  // Component'i gizle
 } else {
-  setFieldVisible("vergiNo", true);
+  setFieldVisible("vergiNo", true);   // Component'i göster
 }
 
-// Örnek: "tutar" alanı 1000'den büyükse "onayGerekli" alanını readonly yap
+// Örnek: Birden fazla alanı gizle
+if (getFieldValue("kategori") === "Diger") {
+  setFieldVisible("ozelAlan1", false);
+  setFieldVisible("ozelAlan2", false);
+}`}
+                </pre>
+              </Paper>
+
+              {/* Örnek 2: Readonly Yapma */}
+              <Paper sx={{ p: 2, mb: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <Typography variant="caption" fontWeight={600} display="block" mb={1} color="primary.main">
+                  2️⃣ Component Readonly Yapma:
+                </Typography>
+                <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
+{`// Örnek: "tutar" alanı 1000'den büyükse "onayGerekli" alanını readonly yap
 if (getFieldValue("tutar") > 1000) {
-  setFieldReadonly("onayGerekli", true);
+  setFieldReadonly("onayGerekli", true);   // Readonly yap
+} else {
+  setFieldReadonly("onayGerekli", false);   // Düzenlenebilir yap
 }
 
-// Örnek: "toplamTutar" alanını otomatik hesapla
+// Örnek: Belirli bir değer seçildiğinde alanı readonly yap
+if (getFieldValue("durum") === "Onaylandi") {
+  setFieldReadonly("aciklama", true);
+}`}
+                </pre>
+              </Paper>
+
+              {/* Örnek 3: Değer Atama */}
+              <Paper sx={{ p: 2, mb: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <Typography variant="caption" fontWeight={600} display="block" mb={1} color="primary.main">
+                  3️⃣ Component&apos;e Değer Atama:
+                </Typography>
+                <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
+{`// Örnek: "toplamTutar" alanını otomatik hesapla
 const tutar1 = getFieldValue("tutar1") || 0;
 const tutar2 = getFieldValue("tutar2") || 0;
 setFieldValue("toplamTutar", tutar1 + tutar2);
 
-// Örnek: formValues ile tüm form değerlerine erişim
-// formValues.alanAdi şeklinde kullanabilirsiniz (IntelliSense destekler)`}
+// Örnek: Tarih alanına bugünün tarihini ata
+setFieldValue("baslangicTarihi", new Date().toISOString().split('T')[0]);
+
+// Örnek: Varsayılan değer ata
+if (!getFieldValue("varsayilanAlan")) {
+  setFieldValue("varsayilanAlan", "Varsayılan Değer");
+}
+
+// Örnek: Koşullu değer atama
+if (getFieldValue("tip") === "Acil") {
+  setFieldValue("oncelik", "Yüksek");
+} else {
+  setFieldValue("oncelik", "Normal");
+}`}
+                </pre>
+              </Paper>
+
+              {/* Örnek 4: Değer Okuma */}
+              <Paper sx={{ p: 2, mb: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <Typography variant="caption" fontWeight={600} display="block" mb={1} color="primary.main">
+                  4️⃣ Component&apos;ten Değer Okuma:
+                </Typography>
+                <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
+{`// Örnek: Tek bir alan değerini oku
+const musteriAdi = getFieldValue("musteriAdi");
+console.log("Müşteri Adı:", musteriAdi);
+
+// Örnek: formValues ile tüm form değerlerine erişim (IntelliSense destekler)
+const toplam = formValues.tutar1 + formValues.tutar2;
+setFieldValue("toplamTutar", toplam);
+
+// Örnek: Birden fazla alanı kontrol et
+const ad = getFieldValue("ad");
+const soyad = getFieldValue("soyad");
+if (ad && soyad) {
+  setFieldValue("tamAd", ad + " " + soyad);
+}
+
+// Örnek: Değer kontrolü ile işlem yap
+const yas = getFieldValue("yas");
+if (yas && yas >= 18) {
+  setFieldVisible("veliBilgileri", false);
+} else {
+  setFieldVisible("veliBilgileri", true);
+}`}
+                </pre>
+              </Paper>
+
+              {/* Örnek 5: Karmaşık Senaryo */}
+              <Paper sx={{ p: 2, bgcolor: "grey.50", fontSize: "0.75rem", fontFamily: "monospace" }}>
+                <Typography variant="caption" fontWeight={600} display="block" mb={1} color="primary.main">
+                  5️⃣ Karmaşık Senaryo Örneği:
+                </Typography>
+                <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
+{`// Örnek: Personel tipine göre alanları kontrol et
+const personelTipi = getFieldValue("personelTipi");
+
+if (personelTipi === "Kadrolu") {
+  // Kadrolu personel için gerekli alanları göster
+  setFieldVisible("sicilNo", true);
+  setFieldVisible("maas", true);
+  setFieldReadonly("maas", false);
+  
+  // Geçici personel alanlarını gizle
+  setFieldVisible("sozlesmeBaslangic", false);
+  setFieldVisible("sozlesmeBitis", false);
+} else if (personelTipi === "Sozlesmeli") {
+  // Sözleşmeli personel için gerekli alanları göster
+  setFieldVisible("sozlesmeBaslangic", true);
+  setFieldVisible("sozlesmeBitis", true);
+  
+  // Kadrolu personel alanlarını gizle
+  setFieldVisible("sicilNo", false);
+  setFieldVisible("maas", false);
+}
+
+// Otomatik hesaplama
+const gunSayisi = getFieldValue("gunSayisi");
+const gunlukUcret = getFieldValue("gunlukUcret");
+if (gunSayisi && gunlukUcret) {
+  setFieldValue("toplamUcret", gunSayisi * gunlukUcret);
+}`}
                 </pre>
               </Paper>
             </Box>
