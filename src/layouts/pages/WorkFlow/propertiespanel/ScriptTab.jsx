@@ -64,6 +64,15 @@ const ScriptTab = ({
         const inputsCache = {};
         const formIdsToFetch = [];
         
+        // ✅ ScriptNode'un kendi formId'sini de kontrol et (default form)
+        const scriptNodeFormId = node.data?.formId || 
+                                 node.data?.selectedFormId || 
+                                 node.data?.workflowFormInfo?.formId;
+        
+        if (scriptNodeFormId && !formInputsCache[scriptNodeFormId]) {
+          formIdsToFetch.push(scriptNodeFormId);
+        }
+        
         // Önce hangi formId'lerin cache'de olmadığını belirle
         for (const formNode of formNodes) {
           const formId = formNode.data?.formId || 
@@ -206,6 +215,53 @@ const ScriptTab = ({
   const formFieldsList = useMemo(() => {
     const fields = [];
 
+    // ✅ ScriptNode'un kendi formId'sinden gelen alanları ekle (formData olarak)
+    const scriptNodeFormId = node.data?.formId || 
+                             node.data?.selectedFormId || 
+                             node.data?.workflowFormInfo?.formId;
+    
+    if (scriptNodeFormId && formInputsCache[scriptNodeFormId]) {
+      try {
+        const inputs = formInputsCache[scriptNodeFormId];
+        
+        // Input'lar array olabilir veya object olabilir
+        let inputArray = [];
+        if (Array.isArray(inputs)) {
+          inputArray = inputs;
+        } else if (inputs && typeof inputs === "object") {
+          if (inputs.inputs && Array.isArray(inputs.inputs)) {
+            inputArray = inputs.inputs;
+          } else if (inputs.fields && Array.isArray(inputs.fields)) {
+            inputArray = inputs.fields;
+          } else {
+            inputArray = Object.values(inputs);
+          }
+        }
+        
+        // Input'ları düz listeye ekle (formData olarak, previousNodes değil)
+        if (inputArray.length > 0) {
+          inputArray.forEach((input) => {
+            // ✅ Component'lerin name alanını öncelikli kullan (key yerine)
+            const fieldId = input.name || input.id || input.key || input.fieldName || "";
+            const fieldLabel = input.label || input.title || input.fieldLabel || input.name || fieldId;
+            const componentType = input.componentType || input.type || input.component || "unknown";
+            
+            if (fieldId) {
+              fields.push({
+                fieldId,
+                fieldLabel,
+                componentType,
+                nodeName: "formData", // ✅ ScriptNode'un kendi formu için formData kullan
+                path: `formData.${fieldId}` // ✅ formData.fieldId formatında
+              });
+            }
+          });
+        }
+      } catch (e) {
+        // ignore parse errors
+      }
+    }
+
     // Önceki node'ları bul (incoming edges)
     if (node?.id && edges) {
       const incomingEdges = edges.filter((edge) => edge.target === node.id);
@@ -265,7 +321,7 @@ const ScriptTab = ({
     }
 
     return fields;
-  }, [node?.id, nodes, edges, formInputsCache]);
+  }, [node?.id, node?.data?.formId, node?.data?.selectedFormId, node?.data?.workflowFormInfo?.formId, nodes, edges, formInputsCache]);
 
   // ✅ Form alanını editor'e ekle
   const handleFieldClick = (fieldId, path) => {
@@ -358,6 +414,11 @@ const ScriptTab = ({
               <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.8)" }}>
                 JavaScript koşulları ve işlemleri yazın
               </Typography>
+              {selectedForm && (
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.9)", mt: 0.5, display: "block", fontWeight: 500 }}>
+                  Form: {selectedForm.formName}
+                </Typography>
+              )}
             </Box>
           </Box>
           <IconButton onClick={onClose} sx={{ color: "white" }}>

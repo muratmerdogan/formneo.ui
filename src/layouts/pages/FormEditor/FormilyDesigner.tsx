@@ -89,7 +89,7 @@ import { FormDataApi } from "api/generated";
 import getConfiguration from "confiuration";
 import FormNeoButton from "./custom/FormNeoButton";
 import ApproveButtons from "./custom/ApproveButtons";
-import CurrencyInput from "./custom/CurrencyInput";
+import CurrencyInput, { CurrencyInputSource } from "./custom/CurrencyInput";
 import { createResource } from "@designable/core";
 import { Editor } from "@monaco-editor/react";
 
@@ -123,14 +123,10 @@ export default function FormilyDesigner(): JSX.Element {
     GlobalRegistry.registerDesignerBehaviors(FormNeoButton as any, ApproveButtons as any, CurrencyInput as any);
   } catch {}
   
-  // Custom icon'ları kaydet - farklı icon adları deneyelim
+  // Custom icon'ları kaydet - NumberPickerSource pattern'ini kullan
   try {
     GlobalRegistry.registerDesignerIcons({
-      DollarOutlined: DollarOutlined,
-      MoneyCollectOutlined: MoneyCollectOutlined,
-      BankOutlined: BankOutlined,
-      WalletOutlined: WalletOutlined,
-      DollarCircleOutlined: DollarCircleOutlined,
+      CurrencyInputSource: CurrencyInputSource,
     } as any);
   } catch {}
 

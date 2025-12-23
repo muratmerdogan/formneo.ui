@@ -545,7 +545,7 @@ export default function WorkflowRuntime(): JSX.Element {
 
         const result = response.data;
 
-        // ✅ Response'dan gelen alertInfo varsa göster
+        // ✅ Response'dan gelen alertInfo varsa göster ve formu kapatma (uyarı mesajı)
         if (result.alertInfo) {
           const alertInfo: AlertNodeInfo = result.alertInfo;
           showWorkflowAlert({
@@ -553,6 +553,9 @@ export default function WorkflowRuntime(): JSX.Element {
             message: alertInfo.message || "Mesaj yok",
             type: (alertInfo.type as any) || "info",
           });
+          // ✅ alertInfo geldiğinde formu kapatma, kullanıcı mesajı görsün ve form açık kalsın
+          setSubmitting(false);
+          return;
         } else {
           // Alert yoksa normal başarı mesajı göster
           message.success(
@@ -578,7 +581,7 @@ export default function WorkflowRuntime(): JSX.Element {
 
         const result = response.data;
 
-        // ✅ Response'dan gelen alertInfo varsa göster
+        // ✅ Response'dan gelen alertInfo varsa göster ve formu kapatma (uyarı mesajı)
         if (result.alertInfo) {
           const alertInfo: AlertNodeInfo = result.alertInfo;
           showWorkflowAlert({
@@ -586,6 +589,9 @@ export default function WorkflowRuntime(): JSX.Element {
             message: alertInfo.message || "Mesaj yok",
             type: (alertInfo.type as any) || "info",
           });
+          // ✅ alertInfo geldiğinde formu kapatma, kullanıcı mesajı görsün ve form açık kalsın
+          setSubmitting(false);
+          return;
         } else {
           // Alert yoksa normal başarı mesajı göster
           message.success(
@@ -610,7 +616,7 @@ export default function WorkflowRuntime(): JSX.Element {
               pendingNodeId: result.pendingNodeId,
             },
           });
-        }, result.alertInfo ? 3000 : 1500); // Alert varsa biraz daha bekleyelim
+        }, 1500);
         return;
       }
 
