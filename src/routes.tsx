@@ -179,11 +179,20 @@ const routes = [
         route: "/tenant/users",
         component: <TenantUsers />,
       },
+    ],
+  },
+
+  {
+    type: "collapse",
+    name: "Global Admin",
+    key: "global-admin",
+    icon: <Icon fontSize="medium">admin_panel_settings</Icon>,
+    collapse: [
       {
         name: "İletişim Mesajları",
-        key: "contact-messages",
+        key: "contact-form",
         icon: <Icon fontSize="small">email</Icon>,
-        route: "/contact-messages",
+        route: "/global-admin/contact-form",
         component: <ContactListPage />,
       },
     ],
