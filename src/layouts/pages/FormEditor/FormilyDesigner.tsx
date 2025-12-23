@@ -7,7 +7,7 @@ import "@designable/react-settings-form/dist/designable.settings-form.umd.produc
 
 // Ant Design UI (üst bar için)
 import { Space as AntSpace, Button as AntButton, Typography, Input as AntdInput, Form as AntdForm, message, Tag, Drawer, List, Select as AntdSelect, InputNumber as AntdInputNumber, Switch as AntdSwitch, Divider as AntdDivider, Modal, Card as AntdCard, Slider as AntdSlider, Rate as AntdRate } from "antd";
-import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { SaveOutlined, RocketOutlined, HistoryOutlined, EyeOutlined, CodeOutlined, PlusOutlined, EditOutlined, DeleteOutlined, DollarCircleOutlined, DollarOutlined, MoneyCollectOutlined, BankOutlined, WalletOutlined } from "@ant-design/icons";
 import * as Icons from "@ant-design/icons";
 import formNeoLogo from "assets/images/logoson.svg";
 
@@ -89,6 +89,7 @@ import { FormDataApi } from "api/generated";
 import getConfiguration from "confiuration";
 import FormNeoButton from "./custom/FormNeoButton";
 import ApproveButtons from "./custom/ApproveButtons";
+import CurrencyInput, { CurrencyInputSource } from "./custom/CurrencyInput";
 import { createResource } from "@designable/core";
 import { Editor } from "@monaco-editor/react";
 
@@ -119,7 +120,14 @@ export default function FormilyDesigner(): JSX.Element {
   } catch {}
   // Custom bileşen davranışlarını kaydet
   try {
-    GlobalRegistry.registerDesignerBehaviors(FormNeoButton as any, ApproveButtons as any);
+    GlobalRegistry.registerDesignerBehaviors(FormNeoButton as any, ApproveButtons as any, CurrencyInput as any);
+  } catch {}
+  
+  // Custom icon'ları kaydet - NumberPickerSource pattern'ini kullan
+  try {
+    GlobalRegistry.registerDesignerIcons({
+      CurrencyInputSource: CurrencyInputSource,
+    } as any);
   } catch {}
 
   const engine = useMemo(
@@ -153,7 +161,7 @@ export default function FormilyDesigner(): JSX.Element {
 
   const previewForm = useMemo(() => createForm(), []);
   const SchemaField = useMemo(
-    () => createSchemaField({ components: { ...(AntdFormily as any), FormItem: (AntdFormily as any).FormItem, FormNeoButton, ApproveButtons, Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }),
+    () => createSchemaField({ components: { ...(AntdFormily as any), FormItem: (AntdFormily as any).FormItem, FormNeoButton, ApproveButtons, CurrencyInput, Card: AntdCard, Slider: AntdSlider, Rate: AntdRate } }),
     []
   );
 
@@ -892,6 +900,7 @@ export default function FormilyDesigner(): JSX.Element {
                   Input,
                   Password,
                   NumberPicker,
+                  CurrencyInput,
                   Rate,
                   Slider,
                   Select,
@@ -904,13 +913,14 @@ export default function FormilyDesigner(): JSX.Element {
                   TimePicker,
                   Upload,
                   Switch,
-                      FormNeoButton,
-                      ApproveButtons,
                 ]}
               />
               <ResourceWidgetAny
                 title="FormNeo"
-                sources={createResource(...(FormNeoButton as any).Resource, ...(ApproveButtons as any).Resource)}
+                sources={createResource(
+                  ...((FormNeoButton as any).Resource || []),
+                  ...((ApproveButtons as any).Resource || [])
+                )}
               />
               <ResourceWidgetAny
                 title="Yerleşimler"
@@ -960,6 +970,7 @@ export default function FormilyDesigner(): JSX.Element {
                         FormLayout,
                         FormNeoButton,
                         ApproveButtons,
+                        CurrencyInput,
                       }}
                     />
                   )}

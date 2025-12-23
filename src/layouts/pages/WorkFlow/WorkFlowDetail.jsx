@@ -541,6 +541,8 @@ function Flow(props) {
             name: "Script",
             script: "",
             processDataTree: {},
+            formId: selectedForm?.id,
+            formName: selectedForm?.formName,
             ...baseFormInfo,
           };
           break;
