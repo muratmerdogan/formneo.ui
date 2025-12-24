@@ -1,3 +1,5 @@
+const TenantAdminPage = lazy(() => import("pages/tenant-admin"));
+// Removed the misplaced TenantAdminPage route object
 const SpecialDaysPage = lazy(() => import("pages/specialdays/SpecialDaysPage"));
 /**
 =========================================================
@@ -20,6 +22,15 @@ Coded by www.creative-tim.com
 
   Once you add a new route on this file it will be visible automatically on
   the Sidenav.
+    {
+      type: "collapse",
+      name: "Tenant Admin (Yeni)",
+      key: "tenant-admin-page",
+      icon: <Icon fontSize="medium">admin_panel_settings</Icon>,
+      route: "/tenant-admin",
+      component: <TenantAdminPage />,
+      noCollapse: true,
+    },
 
   For adding a new route you can follow the existing routes in the routes array.
   1. The `type` key with the `collapse` value is used for a route.
