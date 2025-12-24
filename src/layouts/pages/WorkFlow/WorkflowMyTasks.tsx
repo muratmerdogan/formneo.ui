@@ -17,6 +17,7 @@ import {
   AddCircle as AddCircleIcon,
   List as ListIcon,
 } from "@mui/icons-material";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -60,6 +61,8 @@ interface WorkflowTask {
   formDesign?: string | null;
   formTaskMessage?: string | null;
   formDescription?: string | null;
+  formUser?: string | null; // FormTask için sürecin kimin üzerinde olduğu
+  formUserNameSurname?: string | null; // FormTask için sürecin kimin üzerinde olduğu (isim)
   // UserTask için
   approveUser?: string | null;
   approveUserNameSurname?: string | null;
@@ -119,6 +122,14 @@ function WorkflowMyTasks() {
                                   formTask.formTaskMessage || 
                                   "Form Görevi";
           const workflowName = formTask.workFlowHead?.workflowName || "İş Akışı";
+          
+          // ✅ FormTask için sürecin kimin üzerinde olduğu bilgisi
+          // NOT: Backend'de FormTaskItemDto'ya formUser/formUserNameSurname eklenirse buraya eklenecek
+          // Şimdilik workFlowHead.createUser kullanılıyor (workflow'u oluşturan kullanıcı)
+          const formUser = (formTask as any).formUser || 
+                          formTask.workFlowHead?.createUser || 
+                          null;
+          const formUserNameSurname = (formTask as any).formUserNameSurname || null;
 
           tasks.push({
             id: formTask.id || "",
@@ -136,6 +147,8 @@ function WorkflowMyTasks() {
             formDesign: formTask.formDesign,
             formTaskMessage: formTask.formTaskMessage,
             formDescription: formTask.formDescription,
+            formUser: formUser,
+            formUserNameSurname: formUserNameSurname,
           });
         });
       }
@@ -514,134 +527,164 @@ function WorkflowMyTasks() {
               />
             </Box>
 
-            {/* Workflow Görev Listesi */}
-            {loading ? (
-              <Box sx={{ textAlign: "center", py: 4 }}>
-                <Typography>Yükleniyor...</Typography>
-              </Box>
-            ) : filteredTasks.length === 0 ? (
-              <Card>
-                <CardContent sx={{ textAlign: "center", py: 4 }}>
-                  <AssignmentIcon sx={{ fontSize: 64, color: "text.secondary", mb: 2 }} />
-                  <Typography variant="h6" color="textSecondary">
-                    Görev bulunamadı
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Size atanmış bir iş akışı bulunmamaktadır.
-                  </Typography>
-                </CardContent>
-              </Card>
-            ) : (
-              <Grid container spacing={2}>
-                {filteredTasks.map((task) => (
-                  <Grid item xs={12} md={6} lg={4} key={task.id}>
-                    <Card
-                      sx={{
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        "&:hover": {
-                          boxShadow: 6,
-                          transform: "translateY(-2px)",
-                        },
-                      }}
-                      onClick={() => handleWorkflowClick(task)}
-                    >
-                      <CardContent sx={{ flex: 1 }}>
-                        {/* Başlık */}
-                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", mb: 2 }}>
-                          <Box sx={{ flex: 1 }}>
-                            <Typography variant="h6" fontWeight={600} gutterBottom>
-                              {task.formName || "Görev"}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                              {task.workflowName || "İş Akışı"}
-                            </Typography>
-                            {task.type === "formTask" && (
-                              <Chip 
-                                label="Form Görevi" 
-                                size="small" 
-                                color="primary" 
-                                sx={{ mt: 0.5, fontSize: "0.7rem" }} 
-                              />
-                            )}
-                            {task.type === "userTask" && (
-                              <Chip 
-                                label="Kullanıcı Görevi" 
-                                size="small" 
-                                color="secondary" 
-                                sx={{ mt: 0.5, fontSize: "0.7rem" }} 
-                              />
-                            )}
-                          </Box>
+            {/* Workflow Görev Listesi - DataGrid */}
+            <Card>
+              <CardContent>
+                <div style={{ height: 600, width: "100%" }}>
+                  <DataGrid
+                    rows={filteredTasks}
+                    columns={[
+                      {
+                        field: "formName",
+                        headerName: "Form Adı",
+                        width: 200,
+                        flex: 1,
+                        renderCell: (params) => (
+                          <Typography variant="body2" fontWeight={600}>
+                            {params.value || "Görev"}
+                          </Typography>
+                        ),
+                      },
+                      {
+                        field: "workflowName",
+                        headerName: "İş Akışı",
+                        width: 200,
+                        flex: 1,
+                      },
+                      {
+                        field: "type",
+                        headerName: "Tip",
+                        width: 150,
+                        renderCell: (params) => (
                           <Chip
-                            label={getStatusText(task.status)}
-                            color={getStatusColor(task.status) as any}
+                            label={params.value === "formTask" ? "Form Görevi" : "Kullanıcı Görevi"}
+                            size="small"
+                            color={params.value === "formTask" ? "primary" : "secondary"}
+                          />
+                        ),
+                      },
+                      {
+                        field: "status",
+                        headerName: "Durum",
+                        width: 150,
+                        renderCell: (params) => (
+                          <Chip
+                            label={getStatusText(params.value)}
+                            color={getStatusColor(params.value) as any}
                             size="small"
                           />
-                        </Box>
-
-                        {/* Mesaj */}
-                        {task.message && (
-                          <Box sx={{ mb: 2, p: 1.5, bgcolor: "grey.50", borderRadius: 1 }}>
-                            <Typography variant="body2" color="textSecondary">
-                              {task.message}
-                            </Typography>
-                          </Box>
-                        )}
-
-                        <Box sx={{ borderTop: 1, borderColor: "divider", my: 2 }} />
-
-                        {/* Detaylar */}
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                          {task.createdDate && (
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <AccessTimeIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                              <Typography variant="caption" color="textSecondary">
-                                Oluşturulma: {format(new Date(task.createdDate), "dd MMM yyyy HH:mm", { locale: tr })}
+                        ),
+                      },
+                      {
+                        field: "message",
+                        headerName: "Mesaj",
+                        width: 250,
+                        flex: 1,
+                        renderCell: (params) => (
+                          <Typography variant="body2" color="textSecondary" noWrap>
+                            {params.value || "-"}
+                          </Typography>
+                        ),
+                      },
+                      {
+                        field: "createdDate",
+                        headerName: "Oluşturulma Tarihi",
+                        width: 180,
+                        renderCell: (params) =>
+                          params.value ? (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                              <AccessTimeIcon sx={{ fontSize: 14, color: "text.secondary" }} />
+                              <Typography variant="body2" color="textSecondary">
+                                {format(new Date(params.value), "dd MMM yyyy HH:mm", { locale: tr })}
                               </Typography>
                             </Box>
-                          )}
-                          {task.shortId && (
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <PlayArrowIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                              <Typography variant="caption" color="textSecondary">
-                                ID: {task.shortId}
+                          ) : (
+                            "-"
+                          ),
+                      },
+                      {
+                        field: "shortId",
+                        headerName: "ID",
+                        width: 120,
+                        renderCell: (params) =>
+                          params.value ? (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                              <PlayArrowIcon sx={{ fontSize: 14, color: "text.secondary" }} />
+                              <Typography variant="body2" color="textSecondary">
+                                {params.value}
                               </Typography>
                             </Box>
-                          )}
-                          {task.type === "userTask" && task.approveUserNameSurname && (
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              <AssignmentIcon sx={{ fontSize: 16, color: "text.secondary" }} />
-                              <Typography variant="caption" color="textSecondary">
-                                Atanan: {task.approveUserNameSurname}
+                          ) : (
+                            "-"
+                          ),
+                      },
+                      {
+                        field: "assignedUser",
+                        headerName: "Süreç Üzerinde",
+                        width: 180,
+                        renderCell: (params) => {
+                          // FormTask için formUserNameSurname, UserTask için approveUserNameSurname
+                          const userName = params.row.type === "formTask" 
+                            ? params.row.formUserNameSurname 
+                            : params.row.approveUserNameSurname;
+                          
+                          return userName ? (
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                              <AssignmentIcon sx={{ fontSize: 14, color: "text.secondary" }} />
+                              <Typography variant="body2" color="textSecondary">
+                                {userName}
                               </Typography>
                             </Box>
-                          )}
-                        </Box>
-                      </CardContent>
-
-                      {/* Footer */}
-                      <Box sx={{ p: 2, pt: 0 }}>
-                        <MDButton
-                          variant="gradient"
-                          color="info"
-                          fullWidth
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleWorkflowClick(task);
-                          }}
-                        >
-                          {task.type === "formTask" ? "Formu Aç" : "Görevi Görüntüle"}
-                        </MDButton>
-                      </Box>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
+                          ) : (
+                            "-"
+                          );
+                        },
+                      },
+                      {
+                        field: "actions",
+                        headerName: "İşlemler",
+                        width: 150,
+                        sortable: false,
+                        renderCell: (params) => (
+                          <MDButton
+                            variant="gradient"
+                            color="info"
+                            size="small"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleWorkflowClick(params.row);
+                            }}
+                          >
+                            {params.row.type === "formTask" ? "Formu Aç" : "Görüntüle"}
+                          </MDButton>
+                        ),
+                      },
+                    ]}
+                    loading={loading}
+                    onRowClick={(params: GridRowParams) => handleWorkflowClick(params.row)}
+                    pageSizeOptions={[10, 25, 50, 100]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { pageSize: 25 },
+                      },
+                    }}
+                    sx={{
+                      "& .MuiDataGrid-row:hover": {
+                        cursor: "pointer",
+                        backgroundColor: "action.hover",
+                      },
+                      "& .MuiDataGrid-cell:focus": {
+                        outline: "none",
+                      },
+                    }}
+                    localeText={{
+                      noRowsLabel: "Görev bulunamadı",
+                      noResultsOverlayLabel: "Sonuç bulunamadı",
+                    }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </>
         )}
 
