@@ -99,6 +99,7 @@ export default function MenuHubPage(): JSX.Element {
 
                         <div className="text-xs font-semibold text-slate-500 mb-2">Tümü</div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {/* Dinamik alt menü kartları */}
                             {subs.map((m) => {
                                 const href = (m.href && String(m.href).trim()) || (m.route && String(m.route).trim()) || "#";
                                 const key = String(m.id || m.menuCode);
@@ -116,6 +117,32 @@ export default function MenuHubPage(): JSX.Element {
                                     </div>
                                 );
                             })}
+                            {/* Statik Departman Tanımlama Kartı */}
+                            <div className="text-left rounded-xl border bg-white shadow-sm p-4 hover:border-slate-400">
+                                <div className="flex items-start justify-between">
+                                    <div className="text-sm font-medium">Departman Tanımlama</div>
+                                </div>
+                                <div className="text-xs text-slate-500 mt-1">Departman ekle ve düzenle</div>
+                                <div className="mt-3">
+                                    <button onClick={() => navigate("/tenant/department-management")}
+                                        className="h-8 px-3 rounded-md border bg-slate-900 text-white text-xs">
+                                        Aç
+                                    </button>
+                                </div>
+                            </div>
+                            {/* Statik Pozisyon Tanımlama Kartı */}
+                            <div className="text-left rounded-xl border bg-white shadow-sm p-4 hover:border-slate-400">
+                                <div className="flex items-start justify-between">
+                                    <div className="text-sm font-medium">Pozisyon Tanımlama</div>
+                                </div>
+                                <div className="text-xs text-slate-500 mt-1">Pozisyon ekle ve düzenle</div>
+                                <div className="mt-3">
+                                    <button onClick={() => navigate("/tenant/position-management")}
+                                        className="h-8 px-3 rounded-md border bg-slate-900 text-white text-xs">
+                                        Aç
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </>
                 )}

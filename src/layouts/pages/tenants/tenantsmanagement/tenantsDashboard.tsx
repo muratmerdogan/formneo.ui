@@ -125,28 +125,6 @@ function TenantsManagementDashboard({ showDashboard, selectedTenant, onReturn }:
                             </Typography>
                         </Card>
                     </Grid>
-                    {/* Departman Tanımlama */}
-                    <Grid item xs={12} md={4}>
-                        <Card className="project-info-card" style={{ cursor: "pointer" }} onClick={() => navigate("/tenant/department-management") }>
-                            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <Icon color="info">apartment</Icon> Departman Tanımlama
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Departman ekle ve düzenle
-                            </Typography>
-                        </Card>
-                    </Grid>
-                    {/* Pozisyon Tanımlama */}
-                    <Grid item xs={12} md={4}>
-                        <Card className="project-info-card" style={{ cursor: "pointer" }} onClick={() => navigate("/tenant/position-management") }>
-                            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <Icon color="info">work</Icon> Pozisyon Tanımlama
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Pozisyon ekle ve düzenle
-                            </Typography>
-                        </Card>
-                    </Grid>
                 </Grid>
             </div>
         </div>
