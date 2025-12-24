@@ -133,6 +133,8 @@ const TenantsManagement = lazy(() => import("layouts/pages/tenants/tenantsmanage
 const TenantRoles = lazy(() => import("layouts/pages/tenants/tenantsmanagement/roles"));
 const TenantUsers = lazy(() => import("layouts/pages/tenants/tenantsmanagement/users"));
 const TenantPermissions = lazy(() => import("layouts/pages/tenants/tenantsmanagement/permissions"));
+const DepartmentManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement/department"));
+const PositionManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement/position"));
 const TenantRolesDetail = lazy(() => import("layouts/pages/tenantroles/detail"));
 const TenantUsersForTenant = lazy(() => import("layouts/pages/tenants/users"));
 const SuccessFactorsHome = lazy(() => import("layouts/pages/successfactors"));
@@ -178,6 +180,18 @@ const routes = [
         key: "tenant-users",
         route: "/tenant/users",
         component: <TenantUsers />,
+      },
+      {
+        name: "Departman Tanımlama",
+        key: "department-management",
+        route: "/tenant/department-management",
+        component: <DepartmentManagement />,
+      },
+      {
+        name: "Pozisyon Tanımlama",
+        key: "position-management",
+        route: "/tenant/position-management",
+        component: <PositionManagement />,
       },
     ],
   },
