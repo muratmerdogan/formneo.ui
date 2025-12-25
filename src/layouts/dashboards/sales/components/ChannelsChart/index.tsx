@@ -38,15 +38,12 @@ import { Popover } from "@mui/material";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 
 interface ChannelsChartProps {
-  id?: string;
-  isAllData?: boolean;
-  isOpenTicket?: boolean;
+  id: string;
   startDate?: string;
   endDate?: string;
 }
 
-function ChannelsChart({ ...rest }: ChannelsChartProps): JSX.Element {
-  const { id, isAllData, isOpenTicket, startDate, endDate } = rest;
+function ChannelsChart({ id, startDate, endDate }: ChannelsChartProps): JSX.Element {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
   const [chartData, setChartData] = useState(channelChartData);
@@ -66,11 +63,13 @@ function ChannelsChart({ ...rest }: ChannelsChartProps): JSX.Element {
   useEffect(() => {
     dispatchBusy({ isBusy: true });
     async function fetchData() {
-      await fetchChartData(id, isAllData, isOpenTicket, startDate, endDate).then(setChartData);
+      if (id) {
+        await fetchChartData(id, startDate, endDate).then(setChartData);
+      }
       dispatchBusy({ isBusy: false });
     }
     fetchData();
-  }, [id, isAllData, isOpenTicket, startDate, endDate]);
+  }, [id, startDate, endDate]);
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -95,7 +94,7 @@ function ChannelsChart({ ...rest }: ChannelsChartProps): JSX.Element {
         <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
           <MDBox display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <MDTypography style={{ fontSize: "1.2rem", marginBottom: "10px" }} variant="h6">
-              Müşteri Bazlı {isAllData ? "Toplam" : "Açık"} Talep Sayısı{" "}
+              Müşteri Bazlı Talep Sayısı
             </MDTypography>
 
             {chartData.labels.map((item, index) => (
@@ -129,7 +128,7 @@ function ChannelsChart({ ...rest }: ChannelsChartProps): JSX.Element {
       </Popover>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <MDTypography variant="h6">
-          Müşteri bazlı {isAllData ? "Toplam" : "Açık"} Talep Sayısı 
+          Müşteri Bazlı Talep Sayısı
         </MDTypography>
         <Tooltip title="Detaylı bilgi için aşağıdaki butona tıklayınız" placement="bottom" arrow>
           <MDButton variant="outlined" color="secondary" size="small" circular iconOnly>
@@ -194,10 +193,9 @@ function ChannelsChart({ ...rest }: ChannelsChartProps): JSX.Element {
         mt="auto"
       >
         <MDBox width={{ xs: "100%", sm: "60%" }} lineHeight={1}>
-          <MDTypography variant="button" color="text" fontWeight="light">
-            Müşteri bazlı <strong>{isAllData ? "Toplam" : "Açık"} talep </strong> sayısını
-            grafiksel olarak görebilirsiniz.
-          </MDTypography>
+            <MDTypography variant="button" color="text" fontWeight="light">
+              Müşteri bazlı <strong>talep</strong> sayısını grafiksel olarak görebilirsiniz.
+            </MDTypography>
         </MDBox>
         <MDBox width={{ xs: "100%", sm: "40%" }} textAlign="right" mt={{ xs: 2, sm: "auto" }}>
           <MDButton color={darkMode ? "white" : "light"} onClick={handleClick}>

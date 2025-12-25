@@ -705,7 +705,6 @@ function Sales(): JSX.Element {
                 <MDBox sx={{ marginTop: "20px" }}>
                   <ChannelsChart
                     id={formData.selectedKullaniciId}
-                    isAllData={true}
                     startDate={formatDate(formData.startDate)}
                     endDate={formatDate(formData.endDate)}
                   />
@@ -733,8 +732,6 @@ function Sales(): JSX.Element {
                 <MDBox sx={{ marginTop: "20px" }}>
                   <ChannelsChart
                     id={formData.selectedKullaniciId}
-                    isAllData={false}
-                    isOpenTicket={true}
                     startDate={formatDate(formData.startDate)}
                     endDate={formatDate(formData.endDate)}
                   />
