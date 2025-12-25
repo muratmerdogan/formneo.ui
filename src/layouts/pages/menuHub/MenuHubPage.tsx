@@ -3,15 +3,18 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { useNavigate, useParams } from "react-router-dom";
-import { Menu, MenuApi } from "api/generated/api";
+import { Menu, MenuApi, MenuListDto } from "api/generated/api";
 import getConfiguration from "confiuration";
 import { useMenuAuth } from "hooks/useMenuAuth";
+import { useRootMenus } from "hooks/useRootMenus";
 
 export default function MenuHubPage(): JSX.Element {
     const { id } = useParams();
     const navigate = useNavigate();
     const [items, setItems] = useState<any[]>([]);
     const [parent, setParent] = useState<any | null>(null);
+    const [subMenus, setSubMenus] = useState<MenuListDto[]>([]);
+    const [loadingSubMenus, setLoadingSubMenus] = useState(false);
     const [q, setQ] = useState("");
     const [pinned, setPinned] = useState<string[]>(() => {
         try { return JSON.parse(localStorage.getItem("menuHub:pinned") || "[]"); } catch { return []; }
@@ -19,35 +22,55 @@ export default function MenuHubPage(): JSX.Element {
 
     // Cache'lenmiş menü yetkilerini kullan
     const { data: auth = [] } = useMenuAuth();
+    // ✅ Ana menüleri cache'lenmiş hook'tan al (tekrar çağrı yapmaz)
+    const { data: rootMenus = [] } = useRootMenus();
 
+    // Ana menüleri ve parent'ı bul
     useEffect(() => {
-        (async () => {
+        if (rootMenus.length > 0) {
+            setItems(rootMenus);
+            const p = rootMenus.find((m) => String(m.id) === String(id) || String(m.menuCode) === String(id)) || null;
+            setParent(p);
+        }
+    }, [id, rootMenus]);
+
+    // ✅ Alt menüleri API'den çek
+    useEffect(() => {
+        const fetchSubMenus = async () => {
+            if (!parent || !parent.id) {
+                setSubMenus([]);
+                return;
+            }
+
             try {
+                setLoadingSubMenus(true);
                 const api = new MenuApi(getConfiguration());
-                const res = await api.apiMenuAllListDataGet();
-                const data: any[] = (res as any)?.data || [];
-                setItems(data);
-                const p = data.find((m) => String(m.id) === String(id) || String(m.menuCode) === String(id)) || null;
-                setParent(p);
-            } catch { }
-        })();
-    }, [id]);
+                const response = await api.apiMenuSubMenusMenuIdGet(parent.id);
+                setSubMenus(response.data || []);
+            } catch (error) {
+                console.error("Alt menüler çekilirken hata:", error);
+                setSubMenus([]);
+            } finally {
+                setLoadingSubMenus(false);
+            }
+        };
+
+        fetchSubMenus();
+    }, [parent?.id]);
 
     const subs = useMemo(() => {
-        if (!parent) return [] as any[];
-        const all = Array.isArray(parent.subMenus) && parent.subMenus.length
-            ? (parent.subMenus as any[])
-            : items.filter((x) => String(x.parentMenuId || "") === String(parent.id || ""));
+        if (!parent || subMenus.length === 0) return [] as any[];
+        
         const hasAuth = (m: any) => {
             const href = (m.href && String(m.href).trim()) || (m.route && String(m.route).trim()) || "";
             const norm = "/" + href.split("/").slice(1, 2).join("/");
             return auth.some((a) => ("/" + String(a.href || "").split("/").slice(1, 2).join("/")) === norm);
         };
-        const filtered = all.filter((m) => hasAuth(m));
+        const filtered = subMenus.filter((m) => hasAuth(m));
         const search = q.trim().toLowerCase();
         const searched = search ? filtered.filter((m) => String(m.name || "").toLowerCase().includes(search)) : filtered;
         return searched.sort((a, b) => (a.order || 0) - (b.order || 0));
-    }, [items, parent, auth, q]);
+    }, [subMenus, parent, auth, q]);
 
     const togglePin = (key: string) => {
         setPinned((prev) => {
@@ -146,7 +169,10 @@ export default function MenuHubPage(): JSX.Element {
                         </div>
                     </>
                 )}
-                {!subs.length && (
+                {loadingSubMenus && (
+                    <div className="text-sm text-slate-500">Yükleniyor...</div>
+                )}
+                {!loadingSubMenus && !subs.length && (
                     <div className="text-sm text-slate-500">Bu menüye bağlı alt menü bulunamadı.</div>
                 )}
             </div>

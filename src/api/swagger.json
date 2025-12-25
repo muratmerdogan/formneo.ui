@@ -8614,6 +8614,93 @@
         }
       }
     },
+    "/api/Menu/RootMenus": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Menu/SubMenus/{menuId}": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuListDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Menu/all-without-auth": {
       "get": {
         "tags": [
@@ -17171,17 +17258,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkFlowDefinationListDto"
+                  "$ref": "#/components/schemas/WorkFlowDefinationUpdateDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkFlowDefinationListDto"
+                  "$ref": "#/components/schemas/WorkFlowDefinationUpdateDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkFlowDefinationListDto"
+                  "$ref": "#/components/schemas/WorkFlowDefinationUpdateDto"
                 }
               }
             }
@@ -30657,10 +30744,6 @@
             "format": "uuid"
           },
           "workflowName": {
-            "type": "string",
-            "nullable": true
-          },
-          "defination": {
             "type": "string",
             "nullable": true
           },
