@@ -96,6 +96,7 @@ import TextField from "@mui/material/TextField";
 import { useAlert } from "layouts/pages/hooks/useAlert";
 import { useBusy } from "layouts/pages/hooks/useBusy";
 import { themes } from "examples/Sidenav";
+import { useRootMenus } from "hooks/useRootMenus";
 
 // Declaring prop types for DashboardNavbar
 interface Props {
@@ -330,22 +331,15 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
     })();
   }, []);
 
-  const fetchMenuData = async () => {
-    try {
-      const isSpecialRoute = currentPath.startsWith("/authentication") || currentPath.startsWith("/NotAuthorization");
-      if (isSpecialRoute) return;
-      var conf = getConfiguration();
-      var api = new MenuApi(conf);
-      var data = await api.apiMenuAllListDataGet();
-      setMenuData(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // ✅ Ana menüleri cache'lenmiş hook'tan al (tekrar çağrı yapmaz)
+  const { data: rootMenus = [] } = useRootMenus();
 
   useEffect(() => {
-    fetchMenuData();
-  }, []);
+    const isSpecialRoute = currentPath.startsWith("/authentication") || currentPath.startsWith("/NotAuthorization");
+    if (!isSpecialRoute && rootMenus.length > 0) {
+      setMenuData(rootMenus);
+    }
+  }, [currentPath, rootMenus]);
 
   useEffect(() => {
     setShellInfo();

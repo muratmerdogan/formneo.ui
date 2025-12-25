@@ -423,7 +423,7 @@ function LandingPage(): JSX.Element {
                         </MDBox>
                         <MDBox display="flex" alignItems="center" gap={2} flexWrap="wrap">
                             {/* E-posta İletişim */}
-                            <Tooltip title="info@formneo.com - İletişime Geç">
+                            <Tooltip title="tineo.com - İletişime Geç">
                                 <MDBox 
                                     display="flex" 
                                     alignItems="center" 
