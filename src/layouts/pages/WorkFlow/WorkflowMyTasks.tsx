@@ -230,17 +230,12 @@ function WorkflowMyTasks() {
 
       console.log("📋 Toplam workflow sayısı:", workflows.length);
 
-      const workflowsWithForms: any[] = [];
-
-      for (const workflow of workflows) {
+      // Her workflow için detay ve form bilgisini paralel çek
+      const workflowPromises = workflows.map(async (workflow: any) => {
         let formId: string | null = null;
         let formName: string = "";
 
-        // ✅ Önce workflow'un kendi formId'sine bak (eğer varsa)
-        // NOT: WorkFlowDefinationListDto'da formId yok, ama WorkFlowDefination'da olabilir
-        // Detaylı bilgi için tek tek çekmek gerekebilir
-        
-        // ✅ Workflow detayını çek (formId için)
+        // Workflow detayını çek (formId için)
         try {
           const workflowDetail = await workflowApi.apiWorkFlowDefinationIdGet(workflow.id || "");
           formId = (workflowDetail.data as any)?.formId || null;
@@ -248,16 +243,13 @@ function WorkflowMyTasks() {
           // Detay çekilemezse devam et
         }
 
-        // ✅ Eğer workflow'da formId yoksa, defination'dan node'lardan bul
+        // Eğer workflow'da formId yoksa, defination'dan node'lardan bul
         if (!formId && workflow.defination) {
           try {
             const parsedDefination = JSON.parse(workflow.defination);
-            
-            // FormNode'dan formId'yi bul
             const formNode = parsedDefination.nodes?.find(
               (n: any) => n.type === "formNode" && n.data?.selectedFormId
             );
-
             if (formNode?.data?.selectedFormId) {
               formId = formNode.data.selectedFormId;
               formName = formNode.data.selectedFormName || formNode.data.name || "";
@@ -267,7 +259,7 @@ function WorkflowMyTasks() {
           }
         }
 
-        // ✅ Form bilgisini çek
+        // Form bilgisini çek
         if (formId) {
           try {
             const formResponse = await formApi.apiFormDataIdGet(formId);
@@ -277,16 +269,18 @@ function WorkflowMyTasks() {
           }
         }
 
-        // ✅ Tüm workflow'ları ekle (formId olsun ya da olmasın)
-        workflowsWithForms.push({
+        return {
           id: workflow.id,
           workflowName: workflow.workflowName || "İsimsiz Workflow",
           formId: formId || null,
           formName: formName || (formId ? "İsimsiz Form" : "Form bulunamadı"),
           defination: workflow.defination,
           hasForm: !!formId,
-        });
-      }
+        };
+      });
+
+      // Tümünü paralel olarak bekle
+      const workflowsWithForms = await Promise.all(workflowPromises);
 
       console.log(`📊 Toplam ${workflowsWithForms.length} workflow listelendi`);
       setAvailableWorkflows(workflowsWithForms);
