@@ -1,3 +1,5 @@
+const TenantAdminPage = lazy(() => import("pages/tenant-admin"));
+// Removed the misplaced TenantAdminPage route object
 const SpecialDaysPage = lazy(() => import("pages/specialdays/SpecialDaysPage"));
 /**
 =========================================================
@@ -20,6 +22,15 @@ Coded by www.creative-tim.com
 
   Once you add a new route on this file it will be visible automatically on
   the Sidenav.
+    {
+      type: "collapse",
+      name: "Tenant Admin (Yeni)",
+      key: "tenant-admin-page",
+      icon: <Icon fontSize="medium">admin_panel_settings</Icon>,
+      route: "/tenant-admin",
+      component: <TenantAdminPage />,
+      noCollapse: true,
+    },
 
   For adding a new route you can follow the existing routes in the routes array.
   1. The `type` key with the `collapse` value is used for a route.
@@ -133,6 +144,8 @@ const TenantsManagement = lazy(() => import("layouts/pages/tenants/tenantsmanage
 const TenantRoles = lazy(() => import("layouts/pages/tenants/tenantsmanagement/roles"));
 const TenantUsers = lazy(() => import("layouts/pages/tenants/tenantsmanagement/users"));
 const TenantPermissions = lazy(() => import("layouts/pages/tenants/tenantsmanagement/permissions"));
+const DepartmentManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement/department"));
+const PositionManagement = lazy(() => import("layouts/pages/tenants/tenantsmanagement/position"));
 const TenantRolesDetail = lazy(() => import("layouts/pages/tenantroles/detail"));
 const TenantUsersForTenant = lazy(() => import("layouts/pages/tenants/users"));
 const SuccessFactorsHome = lazy(() => import("layouts/pages/successfactors"));
@@ -178,6 +191,18 @@ const routes = [
         key: "tenant-users",
         route: "/tenant/users",
         component: <TenantUsers />,
+      },
+      {
+        name: "Departman Tanımlama",
+        key: "department-management",
+        route: "/tenant/department-management",
+        component: <DepartmentManagement />,
+      },
+      {
+        name: "Pozisyon Tanımlama",
+        key: "position-management",
+        route: "/tenant/position-management",
+        component: <PositionManagement />,
       },
     ],
   },
