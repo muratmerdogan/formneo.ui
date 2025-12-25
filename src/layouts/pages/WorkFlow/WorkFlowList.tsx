@@ -1,198 +1,314 @@
-//https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons/?tab=grid&icon=add&search=Add
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "@ui5/webcomponents-icons/dist/decline";
-import "@ui5/webcomponents-icons/dist/add";
 import { useNavigate } from "react-router-dom";
-import "@ui5/webcomponents-icons/dist/save";
-import "@ui5/webcomponents-icons/dist/delete";
-import { useForm, Controller } from "react-hook-form";
-import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme";
 import {
   Card,
-  MessageStrip,
-  ObjectPage,
-  ObjectPageHeader,
-  ObjectPageSection,
-  ObjectPageSubSection,
-  ObjectPageTitle,
-  Toolbar,
-  ToolbarButton,
-  VerticalAlign,
-} from "@ui5/webcomponents-react";
-import { Text } from "@ui5/webcomponents-react";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+  CardContent,
+  Typography,
+  Box,
+  Chip,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import {
-  BudgetPeriodApi,
-  BudgetPeriodInsertDto,
-  BudgetPeriodListDto,
-  BudgetPeriodUpdateDto,
-  Configuration,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Add as AddIcon,
+  AccountTree as AccountTreeIcon,
+} from "@mui/icons-material";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
+import {
   WorkFlowDefinationApi,
   WorkFlowDefinationListDto,
 } from "api/generated";
-import { AxiosResponse } from "axios";
-import { format, parseISO } from "date-fns";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import FilterTableMethod from "../talepYonetimi/components";
-import DataTable from "examples/Tables/DataTable";
-import MDBox from "components/MDBox";
-import GlobalCell from "../talepYonetimi/allTickets/tableData/globalCell";
-import { Icon, Typography } from "@mui/material";
-import MDButton from "components/MDButton";
-import Footer from "examples/Footer";
 import getConfiguration from "confiuration";
-// setTheme("sap_horizon");
-setTheme("sap_fiori_3");
-// setTheme("sap_belize");
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
+import { message } from "antd";
+
 function WorkFlowList() {
   const navigate = useNavigate();
   const [gridData, setGridData] = useState<WorkFlowDefinationListDto[]>([]);
-
-  const configuration = getConfiguration();
+  const [loading, setLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedWorkflow, setSelectedWorkflow] = useState<WorkFlowDefinationListDto | null>(null);
 
   useEffect(() => {
     getData();
-  }, []); //
+  }, []);
+
   async function getData() {
-    var conf = getConfiguration();
-    var api = new WorkFlowDefinationApi(conf);
-    var data = await api.apiWorkFlowDefinationGet();
-    setGridData(data.data);
+    try {
+      setLoading(true);
+      const conf = getConfiguration();
+      const api = new WorkFlowDefinationApi(conf);
+      const data = await api.apiWorkFlowDefinationGet();
+      setGridData(data.data || []);
+    } catch (error) {
+      console.error("Workflow listesi çekilirken hata:", error);
+      message.error("Workflow listesi yüklenirken bir hata oluştu");
+    } finally {
+      setLoading(false);
+    }
   }
-  function onNew(obj: any): void {
-    navigate("/CreateWorkFlow");
+
+  function handleNew() {
+    navigate("/WorkFlowList/detail");
   }
-  function onDelete(obj: any): void { }
-  function onEdit(obj: any): void {
-    navigate("/CreateWorkFlow?id=" + obj.cell.row.original.id);
+
+  function handleEdit(id: string) {
+    navigate(`/WorkFlowList/detail/${id}`);
   }
-  const tableData = {
-    columns: [
-      {
-        Header: (
-          <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>İş Akışı Kodu</div>
-        ),
-        accessor: "id",
 
-        Cell: ({ row, value, column }: any) => (
-          <GlobalCell value={value} columnName={column.id} testRow={row.original} />
-        ),
-      },
+  function handleDeleteClick(workflow: WorkFlowDefinationListDto) {
+    setSelectedWorkflow(workflow);
+    setDeleteDialogOpen(true);
+  }
 
-      {
-        Header: (
-          <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>İş Akışı Adı</div>
-        ),
-        accessor: "workflowName",
+  async function handleDeleteConfirm() {
+    if (!selectedWorkflow) return;
 
-        Cell: ({ row, value, column }: any) => (
-          <GlobalCell value={value} columnName={column.id} testRow={row.original} />
-        ),
-      },
+    try {
+      const conf = getConfiguration();
+      const api = new WorkFlowDefinationApi(conf);
+      
+      // DELETE endpoint'i yoksa, isDelete flag'i ile soft delete yapılabilir
+      // veya backend'e DELETE endpoint eklenmesi gerekebilir
+      // Şimdilik hata mesajı gösterelim
+      message.warning("Silme işlemi için backend'de DELETE endpoint'i tanımlanmalıdır");
+      
+      // Eğer backend'de DELETE endpoint varsa:
+      // await api.apiWorkFlowDefinationIdDelete(selectedWorkflow.id || "");
+      // message.success("Workflow başarıyla silindi");
+      // getData(); // Listeyi yenile
+      
+      setDeleteDialogOpen(false);
+      setSelectedWorkflow(null);
+    } catch (error: any) {
+      console.error("Workflow silinirken hata:", error);
+      message.error(error?.response?.data?.message || "Workflow silinirken bir hata oluştu");
+    }
+  }
 
-      {
-        accessor: "actions",
-        Header: (
-          <div style={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>işlemler</div>
+  const columns: GridColDef[] = [
+    {
+      field: "workflowName",
+      headerName: "İş Akışı Adı",
+      width: 300,
+      flex: 1,
+      renderCell: (params) => (
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <AccountTreeIcon sx={{ fontSize: 20, color: "primary.main" }} />
+          <Typography variant="body2" fontWeight={600}>
+            {params.value || "-"}
+          </Typography>
+        </Box>
+      ),
+    },
+    {
+      field: "isActive",
+      headerName: "Durum",
+      width: 150,
+      renderCell: (params) => (
+        <Chip
+          label={params.value ? "Aktif" : "Pasif"}
+          color={params.value ? "success" : "default"}
+          size="small"
+          sx={{ fontWeight: 600 }}
+        />
+      ),
+    },
+    {
+      field: "createdDate",
+      headerName: "Oluşturulma Tarihi",
+      width: 180,
+      renderCell: (params) =>
+        params.value ? (
+          <Typography variant="body2" color="textSecondary">
+            {format(new Date(params.value), "dd MMM yyyy HH:mm", { locale: tr })}
+          </Typography>
+        ) : (
+          "-"
         ),
-        Cell: ({ row }: any) => (
-          <MDBox mx={2}>
-            <Icon
-              sx={{ cursor: "pointer" }}
-              onClick={() => navigate(`/WorkFlowList/detail/${row.original.id}`)}
-              style={{ marginRight: "8px" }}
-            >
-              edit
-            </Icon>
+    },
+    {
+      field: "actions",
+      headerName: "İşlemler",
+      width: 150,
+      sortable: false,
+      renderCell: (params) => (
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <IconButton
+            size="small"
+            color="primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit(params.row.id);
+            }}
+            sx={{
+              "&:hover": {
+                backgroundColor: "primary.lighter",
+              },
+            }}
+          >
+            <EditIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            size="small"
+            color="error"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteClick(params.row);
+            }}
+            sx={{
+              "&:hover": {
+                backgroundColor: "error.lighter",
+              },
+            }}
+          >
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      ),
+    },
+  ];
 
-            <Icon sx={{ cursor: "pointer" }} onClick={() => onEdit(row.original.id)}>
-              delete
-            </Icon>
-          </MDBox>
-        ),
-      },
-    ],
-    rows: gridData,
-  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
-      <ObjectPage
-        mode="Default"
-        hidePinButton
-        style={{
-          height: "100%",
-          marginTop: "-15px",
-          backgroundColor: "#ffffff",
-          borderRadius: "12px",
-          boxShadow: "0 2px 12px 0 rgba(0,0,0,0.1)",
-        }}
-        titleArea={
-          <ObjectPageTitle
-            style={{
-              paddingTop: "24px",
-              paddingLeft: "24px",
-              paddingRight: "24px",
-              backgroundColor: "#ffffff",
-              cursor: "default",
-            }}
-            actionsBar={
-              <MDBox style={{ marginTop: "15px", marginRight: "15px" }}>
-                <MDButton
-                  variant="gradient"
-                  color="info"
-                  onClick={() => navigate(`/WorkFlowList/detail`)}
-                  size="small"
-                  startIcon={<Icon>add</Icon>}
+      <MDBox my={3}>
+        {/* Header */}
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="h5"
+                  component="h1"
                   sx={{
-                    marginRight: "0.5rem",
-                    bottom: "11px",
-                    height: "2.25rem",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-1px)",
-                    },
+                    fontWeight: 600,
+                    color: "#344767",
+                    marginBottom: "4px",
                   }}
                 >
-                  Yeni Onay Akışı
-                </MDButton>
-              </MDBox>
-            }
-          >
-            <MDBox>
-              <Typography
-                variant="h5"
-                component="h1"
+                  Onay Akışı Yönetimi
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#7b809a" }}>
+                  Onay akışlarını görüntüleyin, oluşturun ve yönetin
+                </Typography>
+              </Box>
+              <MDButton
+                variant="gradient"
+                color="info"
+                onClick={handleNew}
+                startIcon={<AddIcon />}
                 sx={{
-                  fontWeight: 600,
-                  color: "#344767",
-                  marginBottom: "4px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-1px)",
+                  },
                 }}
               >
-                Onay Akışı Yönetimi
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#7b809a",
-                }}
-              >
-                Onay Akışlarını görüntüleyin, oluşturun ve dahası
-              </Typography>
-            </MDBox>
-          </ObjectPageTitle>
-        }
-      >
-        <Card>
-          <MDBox paddingTop={3} height="525px">
-            <DataTable canSearch={true} table={tableData}></DataTable>
-          </MDBox>
+                Yeni Onay Akışı
+              </MDButton>
+            </Box>
+          </CardContent>
         </Card>
-      </ObjectPage>
+
+        {/* DataGrid */}
+        <Card>
+          <CardContent sx={{ p: 0 }}>
+            <div style={{ height: 600, width: "100%" }}>
+              <DataGrid
+                rows={gridData}
+                columns={columns}
+                loading={loading}
+                onRowClick={(params: GridRowParams) => {
+                  handleEdit(params.row.id as string);
+                }}
+                pageSizeOptions={[10, 25, 50, 100]}
+                initialState={{
+                  pagination: {
+                    paginationModel: { pageSize: 25 },
+                  },
+                }}
+                sx={{
+                  "& .MuiDataGrid-row": {
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor: "action.hover",
+                    },
+                  },
+                  "& .MuiDataGrid-cell:focus": {
+                    outline: "none",
+                  },
+                }}
+                localeText={{
+                  noRowsLabel: "Workflow bulunamadı",
+                  noResultsOverlayLabel: "Sonuç bulunamadı",
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </MDBox>
+
+      {/* Silme Onay Dialog'u */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => {
+          setDeleteDialogOpen(false);
+          setSelectedWorkflow(null);
+        }}
+      >
+        <DialogTitle>Workflow Sil</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <strong>{selectedWorkflow?.workflowName}</strong> adlı workflow&apos;u silmek istediğinize
+            emin misiniz?
+            <br />
+            <br />
+            Bu işlem geri alınamaz.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <MDButton
+            onClick={() => {
+              setDeleteDialogOpen(false);
+              setSelectedWorkflow(null);
+            }}
+            color="secondary"
+          >
+            İptal
+          </MDButton>
+          <MDButton
+            onClick={handleDeleteConfirm}
+            variant="gradient"
+            color="error"
+            autoFocus
+          >
+            Sil
+          </MDButton>
+        </DialogActions>
+      </Dialog>
+
       <Footer />
     </DashboardLayout>
   );
 }
+
 export default WorkFlowList;

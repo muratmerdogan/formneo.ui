@@ -9,6 +9,14 @@ import {
   Grid,
   Tabs,
   Tab,
+  TextField,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon,
+  Divider,
 } from "@mui/material";
 import {
   Assignment as AssignmentIcon,
@@ -16,6 +24,8 @@ import {
   PlayArrow as PlayArrowIcon,
   AddCircle as AddCircleIcon,
   List as ListIcon,
+  Search as SearchIcon,
+  Description as DescriptionIcon,
 } from "@mui/icons-material";
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -76,6 +86,7 @@ function WorkflowMyTasks() {
   const [loading, setLoading] = useState(true);
   const [loadingWorkflows, setLoadingWorkflows] = useState(true);
   const [filter, setFilter] = useState<"all" | "pending" | "in-progress" | "completed">("all");
+  const [workflowSearchQuery, setWorkflowSearchQuery] = useState("");
 
   useEffect(() => {
     if (activeTab === 0) {
@@ -688,13 +699,36 @@ function WorkflowMyTasks() {
           </>
         )}
 
-        {/* Yeni Süreç Başlat Sekmesi */}
+        {/* Yeni Süreç Başlat Sekmesi - Kompakt Liste */}
         {activeTab === 1 && (
           <>
+            {/* Arama Kutusu */}
+            <Card sx={{ mb: 2 }}>
+              <CardContent>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Workflow ara..."
+                  value={workflowSearchQuery}
+                  onChange={(e) => setWorkflowSearchQuery(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon sx={{ color: "text.secondary" }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Workflow Listesi */}
             {loadingWorkflows ? (
-              <Box sx={{ textAlign: "center", py: 4 }}>
-                <Typography>Yükleniyor...</Typography>
-              </Box>
+              <Card>
+                <CardContent sx={{ textAlign: "center", py: 4 }}>
+                  <Typography>Yükleniyor...</Typography>
+                </CardContent>
+              </Card>
             ) : availableWorkflows.length === 0 ? (
               <Card>
                 <CardContent sx={{ textAlign: "center", py: 4 }}>
@@ -708,80 +742,216 @@ function WorkflowMyTasks() {
                 </CardContent>
               </Card>
             ) : (
-              <Grid container spacing={2}>
-                {availableWorkflows.map((workflow) => (
-                  <Grid item xs={12} md={6} lg={4} key={workflow.id}>
-                    <Card
-                      sx={{
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        "&:hover": {
-                          boxShadow: 6,
-                          transform: "translateY(-2px)",
-                        },
-                      }}
-                      onClick={() => handleStartNewWorkflow(workflow)}
-                    >
-                      <CardContent sx={{ flex: 1 }}>
-                        {/* Başlık */}
-                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", mb: 2 }}>
-                          <Box sx={{ flex: 1 }}>
-                            <Typography variant="h6" fontWeight={600} gutterBottom>
-                              {workflow.workflowName}
+              <Card>
+                <CardContent sx={{ p: 0 }}>
+                  <List>
+                    {(() => {
+                      const filteredWorkflows = availableWorkflows.filter((workflow) => {
+                        if (!workflowSearchQuery.trim()) return true;
+                        const query = workflowSearchQuery.toLowerCase();
+                        return (
+                          workflow.workflowName?.toLowerCase().includes(query) ||
+                          workflow.formName?.toLowerCase().includes(query)
+                        );
+                      });
+
+                      if (filteredWorkflows.length === 0) {
+                        return (
+                          <Box sx={{ textAlign: "center", py: 4 }}>
+                            <Typography variant="body2" color="textSecondary">
+                              Arama sonucu bulunamadı
                             </Typography>
-                            {workflow.hasForm ? (
-                              <Typography variant="body2" color="textSecondary">
-                                Form: {workflow.formName}
-                              </Typography>
-                            ) : (
-                              <Typography variant="body2" color="error">
-                                Form bulunamadı
-                              </Typography>
-                            )}
                           </Box>
-                          <Chip 
-                            label={workflow.hasForm ? "Yeni" : "Form Yok"} 
-                            color={workflow.hasForm ? "primary" : "default"} 
-                            size="small" 
-                          />
-                        </Box>
+                        );
+                      }
 
-                        <Box sx={{ borderTop: 1, borderColor: "divider", my: 2 }} />
+                      return filteredWorkflows.map((workflow, index) => (
+                        <React.Fragment key={workflow.id}>
+                          <ListItem
+                            disablePadding
+                            sx={{
+                              position: "relative",
+                              "&:hover": {
+                                "&::before": {
+                                  opacity: 1,
+                                },
+                              },
+                              "&::before": {
+                                content: '""',
+                                position: "absolute",
+                                left: 0,
+                                top: 0,
+                                bottom: 0,
+                                width: 4,
+                                backgroundColor: workflow.hasForm ? "success.main" : "grey.400",
+                                opacity: 0,
+                                transition: "opacity 0.2s ease",
+                              },
+                            }}
+                          >
+                            <ListItemButton
+                              onClick={() => {
+                                if (workflow.hasForm) {
+                                  handleStartNewWorkflow(workflow);
+                                }
+                              }}
+                              disabled={!workflow.hasForm}
+                              sx={{
+                                py: 2,
+                                px: 3,
+                                transition: "all 0.2s ease-in-out",
+                                "&:hover": {
+                                  backgroundColor: "action.hover",
+                                  transform: "translateX(4px)",
+                                },
+                                "&.Mui-disabled": {
+                                  opacity: 0.6,
+                                },
+                              }}
+                            >
+                              {/* İkon Container */}
+                              <ListItemIcon sx={{ minWidth: 56 }}>
+                                <Box
+                                  sx={{
+                                    width: 48,
+                                    height: 48,
+                                    borderRadius: 2,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: workflow.hasForm
+                                      ? "success.lighter"
+                                      : "grey.100",
+                                    transition: "all 0.2s ease",
+                                    "&:hover": {
+                                      transform: "scale(1.05)",
+                                    },
+                                  }}
+                                >
+                                  <DescriptionIcon
+                                    sx={{
+                                      color: workflow.hasForm ? "success.main" : "text.disabled",
+                                      fontSize: 24,
+                                    }}
+                                  />
+                                </Box>
+                              </ListItemIcon>
 
-                        {/* Açıklama */}
-                        <Typography variant="body2" color="textSecondary">
-                          {workflow.hasForm 
-                            ? "Bu workflow'u başlatmak için tıklayın. Form açılacak ve süreç başlayacaktır."
-                            : "Bu workflow için form tanımlanmamış. Önce workflow'a form ekleyin."
-                          }
-                        </Typography>
-                      </CardContent>
+                              {/* İçerik */}
+                              <ListItemText
+                                primary={
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 1.5,
+                                      mb: 0.5,
+                                    }}
+                                  >
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight={600}
+                                      sx={{
+                                        fontSize: "1rem",
+                                        color: workflow.hasForm ? "text.primary" : "text.disabled",
+                                      }}
+                                    >
+                                      {workflow.workflowName}
+                                    </Typography>
+                                    {workflow.hasForm ? (
+                                      <Chip
+                                        label="Başlatılabilir"
+                                        size="small"
+                                        color="success"
+                                        sx={{
+                                          height: 22,
+                                          fontSize: "0.7rem",
+                                          fontWeight: 600,
+                                          "& .MuiChip-label": {
+                                            px: 1,
+                                          },
+                                        }}
+                                      />
+                                    ) : (
+                                      <Chip
+                                        label="Form Yok"
+                                        size="small"
+                                        variant="outlined"
+                                        sx={{
+                                          height: 22,
+                                          fontSize: "0.7rem",
+                                          borderColor: "grey.300",
+                                          color: "text.secondary",
+                                          "& .MuiChip-label": {
+                                            px: 1,
+                                          },
+                                        }}
+                                      />
+                                    )}
+                                  </Box>
+                                }
+                                secondary={
+                                  <Typography
+                                    variant="body2"
+                                    color={workflow.hasForm ? "text.secondary" : "error.main"}
+                                    sx={{
+                                      fontSize: "0.875rem",
+                                      mt: 0.5,
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 0.5,
+                                    }}
+                                  >
+                                    {workflow.hasForm ? (
+                                      <>
+                                        <DescriptionIcon sx={{ fontSize: 14 }} />
+                                        Form: {workflow.formName}
+                                      </>
+                                    ) : (
+                                      "Bu workflow için form tanımlanmamış"
+                                    )}
+                                  </Typography>
+                                }
+                              />
 
-                      {/* Footer */}
-                      <Box sx={{ p: 2, pt: 0 }}>
-                        <MDButton
-                          variant="gradient"
-                          color={workflow.hasForm ? "success" : "secondary"}
-                          fullWidth
-                          startIcon={<AddCircleIcon />}
-                          disabled={!workflow.hasForm}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (workflow.hasForm) {
-                              handleStartNewWorkflow(workflow);
-                            }
-                          }}
-                        >
-                          {workflow.hasForm ? "Başlat" : "Form Gerekli"}
-                        </MDButton>
-                      </Box>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
+                              {/* Aksiyon Butonu */}
+                              {workflow.hasForm && (
+                                <Box sx={{ ml: 2 }}>
+                                  <MDButton
+                                    variant="gradient"
+                                    color="success"
+                                    size="small"
+                                    startIcon={<AddCircleIcon />}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleStartNewWorkflow(workflow);
+                                    }}
+                                    sx={{
+                                      minWidth: 100,
+                                      fontWeight: 600,
+                                      textTransform: "none",
+                                      boxShadow: "none",
+                                      "&:hover": {
+                                        boxShadow: 2,
+                                        transform: "translateY(-1px)",
+                                      },
+                                    }}
+                                  >
+                                    Başlat
+                                  </MDButton>
+                                </Box>
+                              )}
+                            </ListItemButton>
+                          </ListItem>
+                          {index < filteredWorkflows.length - 1 && (
+                            <Divider sx={{ ml: 3, mr: 3 }} />
+                          )}
+                        </React.Fragment>
+                      ));
+                    })()}
+                  </List>
+                </CardContent>
+              </Card>
             )}
           </>
         )}
