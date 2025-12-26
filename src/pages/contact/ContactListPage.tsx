@@ -10,7 +10,7 @@ import MDTypography from "components/MDTypography";
 import DataGrid, { ColumnDef } from "../../components/ui/DataGrid"; 
 
 // API Servisleri (api.ts dosyasındaki GERÇEK isimlerle güncellendi)
-import { ContactApi } from "../../api/generated/api";
+import { CustomersApi } from "../../api/generated/api";
 import getConfiguration from "confiuration";
 
 export default function ContactListPage(): JSX.Element {
@@ -18,17 +18,15 @@ export default function ContactListPage(): JSX.Element {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         const fetchContacts = async () => {
             setLoading(true);
-          try {
-                const api = new ContactApi(getConfiguration());
-                const response = await api.apiContactGetAllContactsGet();
-                
-                // HATA BURADAYDI: response.data'yı direkt kullanıyoruz 
-                // Eğer hata verirse (any) diyerek TypeScript'i susturuyoruz
+            try {
+                const api = new CustomersApi(getConfiguration());
+                const response = await api.apiCustomersGet();
+                // response.data'yı direkt kullanıyoruz
                 const data = (response as any).data;
                 setContacts(data || []);
-                
             } catch (error) {
                 console.error("Mesajlar yüklenirken hata oluştu:", error);
                 setContacts([]);
